@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import AppMain from '../components/common/AppMain'
+import AppLogin from '../components/common/AppLogin'
 import MovieSearch from '../components/movie/MovieSearch.vue'
 import MovieContent from '../components/movie/MovieContent.vue'
 import AdminMain from '../components/admin/AdminMain.vue'
@@ -9,6 +10,10 @@ const routes = [
     {
         path: '/',
         component: AppMain
+    },
+    {
+        path: '/login',
+        component: AppLogin
     },
     {
         path: '/search',
