@@ -7,9 +7,6 @@
                 <router-link :to="`/content/${movie.id}`">
                     <span class="movie-inner">
                         <div class="thum" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original/'+movie.poster_path+')' }">
-                            <!-- <img
-                            v-if="movie.poster_path!=null"
-                            :src="'https://image.tmdb.org/t/p/original/'+movie.poster_path"> -->
                             <div class="vote-average">
                                 ⭐️
                                 {{ movie.vote_average.toFixed(1) }}
@@ -68,6 +65,7 @@ export default {
     }
     .movie {
         width: calc((100% - 80px)/5);
+        word-break: keep-all !important;
         cursor: pointer;
         overflow: visible;
     }

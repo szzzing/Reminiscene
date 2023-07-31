@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="container">
     made by 🐰szzzing
   </div>
 </template>
@@ -11,13 +11,8 @@ export default {
 </script>
 
 <style scoped>
-    .wrap {
+    .container {
         text-align: center;
         color: #aaa;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 60px 0;
     }
 </style>

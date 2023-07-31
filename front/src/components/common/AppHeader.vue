@@ -1,5 +1,5 @@
 <template>
-   <div class="wrap">
+   <div class="container">
         <div class="inner">
             <router-link to="/" class="logo">🌙</router-link>
             <router-link to="/login" class="login">로그인</router-link>
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style scoped>
-    .wrap {
+    .container {
         height: 60px;
         position: fixed;
         padding: 20px 0;

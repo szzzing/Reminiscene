@@ -1,16 +1,16 @@
-<template>
+fr<template>
     <div class="container">
         <router-link to="/">
             <div class="title">
                 🌙
             </div>
-            <div class="sub-title">관리자 페이지</div>
+            <div class="sub-title">어떤 영화가 궁금해?</div>
         </router-link>
         <div class="category">
-            <router-link class="category-item" to="/admin/join">회원가입</router-link>
-            <router-link class="category-item" to="/admin/login">로그인</router-link>
-            <router-link class="category-item" to="/admin/user">사용자 관리</router-link>
-            <router-link class="category-item" to="/admin/content">컨텐츠 관리</router-link>
+            <router-link class="category-item" to="/join">회원가입</router-link>
+            <router-link class="category-item" to="/login">로그인</router-link>
+            <router-link class="category-item" to="/search">영화 검색</router-link>
+            <router-link class="category-item" to="/admin">관리자</router-link>
         </div>
         <router-view></router-view>
      </div>
@@ -38,6 +38,7 @@
      }
      .category {
         display: flex;
+        justify-content: center;
         gap: 20px;
         max-width: 600px;
         margin: 60px auto;

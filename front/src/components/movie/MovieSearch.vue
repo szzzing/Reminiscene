@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="container">
         <div class="title-area">
             <div class="title">
                 🌙
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style scoped>
-    .wrap {
+    .container {
         max-width: 1280px;
     }
     div {

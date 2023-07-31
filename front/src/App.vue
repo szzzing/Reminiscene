@@ -1,8 +1,10 @@
 <template>
-    <div class="com">
+    <div class="wrap">
       <app-header></app-header>
-      <router-view></router-view>
-      <app-footer></app-footer>
+      <div class="flex-wrap">
+        <router-view></router-view>
+        <app-footer></app-footer>
+      </div>
     </div>
 </template>
 
@@ -37,11 +39,6 @@ export default {
   margin: 0;
   font-family: 'Toss Product Sans', TossFace;
   list-style: none;
-  word-break: keep-all !important;
-}
-.com {
-  min-height: 100vh;
-  position: relative;
 }
 body {
   background: #181818;
@@ -50,13 +47,19 @@ body {
   padding: 0;
   height: 100%;
 }
-.wrap {
+.flex-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+.container {
     width: calc(100% - 80px);
     margin: 0 auto;
-    padding: 60px 0 140px;
+    padding: 60px 0;
 }
 @media screen and (max-width:768px) {
-    .wrap {
+    .container {
         width: calc(100% - 40px);
         margin: 0 auto;
     }

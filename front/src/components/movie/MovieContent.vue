@@ -1,31 +1,32 @@
 <template>
-    <div id="content">
+    <div>
         <div class="backdrop" :style="{'background-image': 'url('+this.$store.state.details.backdrop_path+')' }">
-            <div class="area">
-                <div class="main inner">
-                    <div class="title">
-                        {{ this.$store.state.details.title }}
-                    </div>
-                    <div class="original-title" v-if="this.$store.state.details.title !=this.$store.state.details.original_title">
-                        {{ this.$store.state.details.original_title }}
-                    </div>
-                    <div class="genre-release">
-                        {{ [this.$store.state.details.genres,this.$store.state.details.release_date].join(" ・ ") }}
-                    </div>
-                    <div class="runtime">
-                        {{ this.$store.state.details.runtime+'분' }}
-                    </div>
+            <div class="container">
+                <div class="title">
+                    {{ this.$store.state.details.title }}
                 </div>
-                <div class="info"
-                    v-if="this.$store.state.details.overview!=''">
-                    <div class="inner">
-                        <div class="tagline">
-                            {{ this.$store.state.details.tagline }}
-                        </div>
-                        <div class="overview">
-                            {{ this.$store.state.details.overview }}
-                        </div>
-                    </div>
+                <div class="original-title" v-if="this.$store.state.details.title !=this.$store.state.details.original_title">
+                    {{ this.$store.state.details.original_title }}
+                </div>
+                <div class="genre-release"
+                v-if="this.$store.state.details.genres+this.$store.state.details.release_date!=''">
+                    {{ [this.$store.state.details.genres,this.$store.state.details.release_date].join(" ・ ") }}
+                </div>
+                <div class="runtime"
+                v-if="this.$store.state.details.runtime!=0">
+                    {{ this.$store.state.details.runtime+'분' }}
+                </div>
+            </div>
+        </div>
+        <div class="container"
+            v-if="this.$store.state.details.overview!=''">
+            <div class="inner">
+                <div class="tagline"
+                v-if="this.$store.state.details.tagline!=''">
+                    {{ this.$store.state.details.tagline }}
+                </div>
+                <div class="overview">
+                    {{ this.$store.state.details.overview }}
                 </div>
             </div>
         </div>
@@ -41,31 +42,22 @@ export default {
 </script>
 
 <style scoped>
-    #content {
-        margin: 0 !important;
-    }
     .backdrop {
-        padding: 60px;
         height: 100vh;
         background-size: cover;
         background-position: center;
+        height: 70vh;
         position: relative;
     }
-    .area {
+    .backdrop > .container {
         position: absolute;
+        bottom: 0;
         left: 0;
         right: 0;
-        bottom: 0;
     }
-    .main {
-        margin-bottom: 40px;
+    .container {
+        padding: 40px 0;
     }
-    .info {
-        backdrop-filter: blur(10px);
-        padding: 40px 0 60px;
-        background: rgba(0,0,0,0.5);
-    }
-    
     .title {
         font-size: 48px;
         font-weight: 700;
