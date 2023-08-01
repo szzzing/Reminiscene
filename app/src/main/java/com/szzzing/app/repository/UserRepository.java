@@ -20,4 +20,8 @@ public class UserRepository {
     public ArrayList<User> selectAll() {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectAll");
     }
+
+    public User login() {
+        return null;
+    }
 }

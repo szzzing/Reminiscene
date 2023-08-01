@@ -18,5 +18,6 @@
         <result column="reg_date" property="regDate"/>
         <result column="mod_date" property="modDate"/>
         <result column="role" property="role"/>
+        <result column="enable" property="enable"/>
     </resultMap>
 </mapper>

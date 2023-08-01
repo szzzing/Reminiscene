@@ -1,4 +1,4 @@
-package com.szzzing.app.auth;
+package com.szzzing.app.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

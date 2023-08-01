@@ -17,4 +17,5 @@ public class User {
     private Timestamp regDate;
     private Timestamp modDate;
     private char role;
+    private boolean enable;
 }

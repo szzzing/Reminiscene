@@ -3,10 +3,7 @@ package com.szzzing.app.controller;
 import com.szzzing.app.domain.User;
 import com.szzzing.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -22,8 +19,8 @@ public class UserController {
     }
     
     @PostMapping ("/login")
-    public void login() {
-        System.out.println("로그인");
+    public void login(@RequestBody User user) {
+        System.out.println("로그인: "+user.getId()+"/"+user.getPw());
     }
     
     @GetMapping("/selectAll")
