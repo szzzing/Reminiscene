@@ -36,7 +36,14 @@
 <script>
 export default {
     beforeCreate() {
-        this.$store.dispatch('getDetails', this.$route.params.id);
+        console.log(this.$route.params.id);
+        this.$store.dispatch('searchMovie', this.$route.params.id);
+        console.log(this.$route.params.id);
+    },
+    computed: {
+        movie() {
+            return this.$store.state.movie
+        }
     }
 }
 </script>

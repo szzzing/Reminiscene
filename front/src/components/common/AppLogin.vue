@@ -12,14 +12,17 @@
                 <input type="text" placeholder="아이디" v-model="id">
                 <input type="password" placeholder="비밀번호" v-model="pw">
             </div>
-            <div class="result" v-if="this.$store.state.query!=''">
-                <b>{{ this.$store.state.query }}</b>에 대한 영화를 보여줄게.
+            <div class="login-button"
+            v-on:click="this.login()">
+                로그인
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
@@ -27,10 +30,19 @@ export default {
             pw: '',
         }
     },
-    watch: {
-        query() {
-            this.$store.commit('setQuery', this.query);
-            this.$store.dispatch('searchList');
+    methods: {
+        login() {
+            const id = this.id.trim();
+            const pw = this.pw.trim();
+            if(id!='' && pw!='') {
+                console.log(this.id, this.pw);
+                axios.post("http://localhost:8080/login",{id, pw})
+                .then((response)=>{
+                    console.log(response);
+                });
+            } else {
+                alert("아이디와 비밀번호를 확인해주세요");
+            }
         }
     }
 }
@@ -82,9 +94,16 @@ export default {
     :focus {
         outline: none;
     }
-    .result {
-        font-size: 24px;
-        margin: 40px 0 60px;
-        color: #fff;
+    .login-button {
+        font-size: 18px;
+        font-weight: 500;
+        color: #181818;
+        background: #fff;
+        width: 248px;
+        height: 40px;
+        line-height: 40px;
+        margin: 20px auto;
+        border-radius: 16px;
+        cursor: pointer;
     }
 </style>
