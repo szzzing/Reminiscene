@@ -1,11 +1,6 @@
 <template>
     <div class="container">
-        <div class="title-area">
-            <div class="title">
-                🌙
-            </div>
-            <div class="sub-title">어떤 영화가 궁금해?</div>
-        </div>
+        <app-title></app-title>
         <div class="input-box">
             <input type="text" placeholder="엘리멘탈" v-model="query">
         </div>
@@ -17,11 +12,13 @@
 </template>
 
 <script>
+import AppTitle from '../common/AppTitle.vue';
 import MovieList from "./MovieList.vue";
 
 export default {
-  components: {
-    MovieList
+    components: {
+        AppTitle,
+        MovieList,
     },
     data() {
         return {
@@ -41,47 +38,26 @@ export default {
     .container {
         max-width: 1280px;
     }
-    div {
-        text-align: center;
-    }
-    .title {
-        margin: 0 0 12px;
-        font-size: 40px;
-        font-weight: 900;
-        text-align: center;
-        color: #fff;
-    }
-    .sub-title {
-        color: #aaa;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-    }
-    input[type=text] {
-        border: none;
-        width: 100%;
-        background: #f7f7f7;
-        font-size: 20px;
-        text-align: center;
-    }
-    input::placeholder {
-        color: #ddd;
-    }
     .input-box {
-        background: #f9f9f9;
+        background: var(--G50);
         max-width: 400px;
         height: 60px;
         line-height: 60px;
         border-radius: 16px;
-        padding: 0 20px;
-        margin: 20px auto 40px;
+        padding: 0 24px;
+        margin: 0 auto;
+    }
+    input {
+        font-size: 18px;
+        text-align: center;
     }
     :focus {
         outline: none;
     }
     .result {
         font-size: 24px;
+        text-align: center;
         margin: 40px 0 60px;
-        color: #fff;
+        color: var(--G1000);
     }
 </style>

@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import AppMain from '../components/common/AppMain'
-import AppLogin from '../components/common/AppLogin'
+import AppMain from '../components/main/AppMain'
+import AppJoin from '../components/main/AppJoin'
+import AppLogin from '../components/main/AppLogin'
 import MovieSearch from '../components/movie/MovieSearch.vue'
 import MovieContent from '../components/movie/MovieContent.vue'
 import AdminMain from '../components/admin/AdminMain.vue'
@@ -10,6 +11,10 @@ const routes = [
     {
         path: '/',
         component: AppMain
+    },
+    {
+        path: '/join',
+        component: AppJoin
     },
     {
         path: '/login',

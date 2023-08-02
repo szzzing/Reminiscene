@@ -1,12 +1,6 @@
 <template>
     <div class="container">
-        <div class="title-area">
-            <div class="title">
-                🌙
-            </div>
-            <div class="sub-title">어떤 영화가 궁금해?</div>
-        </div>
-        <div class="title">로그인</div>
+        <app-title></app-title>
         <div class="input-area">
             <div class="input-box">
                 <input type="text" placeholder="아이디" v-model="id">
@@ -17,13 +11,24 @@
                 로그인
             </div>
         </div>
+        <div class="option">
+            처음 방문하셨다면
+            <router-link class="option-item" to="/join">회원가입</router-link>
+        </div>
+        <div class="option">
+            <router-link class="option-item" to="/join">비밀번호를 잊어버리셨나요?</router-link>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import AppTitle from '../common/AppTitle.vue'
 
 export default {
+    components: {
+        AppTitle
+    },
     data() {
         return {
             id: '',
@@ -35,10 +40,13 @@ export default {
             const id = this.id.trim();
             const pw = this.pw.trim();
             if(id!='' && pw!='') {
-                console.log(this.id, this.pw);
                 axios.post("http://localhost:8080/login",{id, pw})
                 .then((response)=>{
                     console.log(response);
+                    this.$router.push({ path: '/' });
+                })
+                .catch(function() {
+                    alert("로그인에 실패했습니다.");
                 });
             } else {
                 alert("아이디와 비밀번호를 확인해주세요");
@@ -55,55 +63,36 @@ export default {
     div {
         text-align: center;
     }
-    .title-area {
-        margin-bottom: 100px;
-    }
-    .title {
-        margin: 0 0 12px;
-        font-size: 40px;
-        text-align: center;
-        color: #fff;
-    }
-    .sub-title {
-        color: #aaa;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-    }
-
     .input-area {
-        margin-top: 60px;
-    }
-    input {
-        border: none;
-        width: 100%;
-        background: #f7f7f7;
-        font-size: 20px;
-    }
-    input::placeholder {
-        color: #ddd;
+        max-width: 240px;
+        margin: 60px auto;
     }
     .input-box {
-        background: #f9f9f9;
-        max-width: 200px;
+        background: var(--G50);
         line-height: 36px;
         border-radius: 16px;
         padding: 12px 24px;
-        margin: 0 auto;
     }
-    :focus {
-        outline: none;
+    input {
+        font-size: 18px;
     }
     .login-button {
         font-size: 18px;
         font-weight: 500;
-        color: #181818;
-        background: #fff;
-        width: 248px;
-        height: 40px;
-        line-height: 40px;
+        color: var(--G0);
+        background: var(--G1000);
+        height: 48px;
+        line-height: 48px;
         margin: 20px auto;
         border-radius: 16px;
         cursor: pointer;
+    }
+    .option {
+        line-height: 30px;
+        color: var(--G400);
+    }
+    .option a {
+        font-weight: 500;
+        color: var(--FOCUS);
     }
 </style>

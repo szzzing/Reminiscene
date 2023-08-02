@@ -11,8 +11,11 @@ export default {
 </script>
 
 <style scoped>
-    .container {
-        text-align: center;
-        color: #aaa;
-    }
+.container {
+    padding: 0;
+    height: 160px;
+    line-height: 160px;
+    text-align: center;
+    color: var(--G400);
+}
 </style>

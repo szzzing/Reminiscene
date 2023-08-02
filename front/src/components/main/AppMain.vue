@@ -1,9 +1,11 @@
-<template>
+fr<template>
     <div class="container">
-        <app-title></app-title>
+        <router-link to="/">
+            <app-title></app-title>
+        </router-link>
         <div class="category">
-            <router-link class="category-item" to="/admin/user">사용자 관리</router-link>
-            <router-link class="category-item" to="/admin/content">컨텐츠 관리</router-link>
+            <router-link class="category-item" to="/search">영화 검색</router-link>
+            <router-link class="category-item" to="/admin">관리자</router-link>
         </div>
         <router-view></router-view>
      </div>
@@ -11,19 +13,18 @@
  
  <script>
  import AppTitle from '../common/AppTitle.vue'
-
  export default {
     components: {
         AppTitle
-    }
+    },
  }
  </script>
  
  <style scoped>
     .category {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
     }
     .category-item {
         width: 120px;

@@ -1,8 +1,12 @@
 <template>
    <div class="container">
         <div class="inner">
-            <router-link to="/" class="logo">🌙</router-link>
-            <router-link to="/login" class="login">로그인</router-link>
+            <router-link to="/" class="logo emoji">🌙</router-link>
+            <div class="themeBtn btn emoji"
+            @click="this.$store.commit('setTheme')">
+                {{ this.$store.state.theme ? "🌞" : "🌝" }}
+            </div>
+            <router-link to="/login" class="loginBtn">로그인</router-link>
         </div>
     </div>
 </template>
@@ -24,22 +28,28 @@ export default {
     }
     .inner {
         display: flex;
+        gap: 16px;
         width: 100%;
         align-items: center;
         justify-content: space-between;
     }
     .logo {
         font-size: 36px;
+        margin-right: auto;
     }
-    .login {
+    .loginBtn {
         height: 32px;
         line-height: 32px;
         padding: 0 16px;
         text-align: center;
         border-radius: 16px;
-        color: #181818;
-        background: #fff;
+        color: var(--G0);
+        background: var(--G1000);
         font-size: 14px;
+        cursor: pointer;
+    }
+    .themeBtn {
+        font-size: 28px;
         cursor: pointer;
     }
 </style>

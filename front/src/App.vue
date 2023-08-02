@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="wrap" v-bind:class="{ dark : !this.$store.state.theme }">
       <app-header></app-header>
       <div class="flex-wrap">
         <router-view></router-view>
@@ -39,19 +39,24 @@ export default {
   margin: 0;
   font-family: 'Toss Product Sans', TossFace;
   list-style: none;
+  color: var(--G1000);
 }
 body {
-  background: #181818;
-  color: #fff;
   margin: 0;
   padding: 0;
   height: 100%;
+}
+.wrap {
+  background: var(--G0);
 }
 .flex-wrap {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+}
+.flex-wrap > .container:first-child {
+  min-height: calc(100vh - 280px);
 }
 .container {
     width: calc(100% - 80px);
@@ -64,9 +69,18 @@ body {
         margin: 0 auto;
     }
 }
+
 a {
   text-decoration: none;
   color: unset;
+}
+input {
+  border: none;
+  width: 100%;
+  background: transparent;
+}
+input::placeholder {
+  color: var(--G300);
 }
 ::-webkit-scrollbar {
   width: 0px;
@@ -78,5 +92,54 @@ a {
 ::-webkit-scrollbar-thumb {
   background: var(--G50);
   border-radius: 5px;
+}
+:focus {
+	outline: 0;
+}
+
+.emoji {
+  filter: drop-shadow(0px 0px 6px var(--O200));
+}
+
+:root {
+	--G0: #ffffff;
+	--G50: #f9fafb;
+	--G100: #f7f9fb;
+	--G200: #eceef1;
+	--G300: #d1d6db;
+	--G400: #b0b8c1;
+	--G500: #8b95a1;
+	--G600: #6b7684;
+	--G700: #333;
+	--G800: #222;
+	--G900: #181818;
+	--G1000: #111;
+}
+.dark,
+.dark * {
+	--G1000: #ffffff;
+	--G900: #f7f9fb;
+	--G800: #ccc;
+	--G700: #bbb;
+	--G600: #a8a8a8;
+	--G500: #999;
+	--G400: #888;
+	--G300: #666;
+	--G200: #333;
+	--G100: #222;
+	--G50: #181818;
+	--G0: #111;
+}
+:root {
+  --O100: rgba(2, 32, 71, 0.05);
+	--O200: rgba(0, 27, 55, 0.08);
+	--O300: rgba(0, 29, 58, 0.18);
+	--O400: rgba(0, 29, 54, 0.31);
+	--O500: rgba(3, 24, 50, 0.46);
+	--O600: rgba(0, 19, 43, 0.58);
+	--O700: rgba(3, 18, 40, 0.7);
+	--O800: rgba(0, 12, 30, 0.8);
+	--O900: rgba(2, 9, 19, 0.91);
+  --FOCUS: #ffc400;
 }
 </style>

@@ -88,7 +88,7 @@ export default {
         display: block;
         border-radius: 16px;
         overflow: hidden;
-        background: #222;
+        background: var(--G1000);
     }
     .movie .info {
         text-align: center;
@@ -110,10 +110,10 @@ export default {
         text-align: center;
         word-break: keep-all !important;
         margin-bottom: 8px;
-        color: #fff;
+        color: var(--G0);
     }
     .movie .info .date {
-        color: #aaa;
+        color: var(--G400);
         font-size: 14px;
         margin-bottom: 4px;
     }
@@ -132,7 +132,7 @@ export default {
     }
     .next {
         text-align: center;
-        color: #fff;
+        color: var(--G200);
         margin: 60px 0 0;
         cursor: pointer;
     }

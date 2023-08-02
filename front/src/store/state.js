@@ -1,5 +1,6 @@
 export const state = {
     headerText: 'Reminiscene',
+    theme: true,
     query: '',
     details: {},
     searchList: {},

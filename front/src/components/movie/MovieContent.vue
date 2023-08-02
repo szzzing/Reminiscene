@@ -2,17 +2,17 @@
     <div>
         <div class="backdrop" :style="{'background-image': 'url('+this.$store.state.details.backdrop_path+')' }">
             <div class="container">
-                <div class="title">
+                <div class="title emoji">
                     {{ this.$store.state.details.title }}
                 </div>
-                <div class="original-title" v-if="this.$store.state.details.title !=this.$store.state.details.original_title">
+                <div class="original-title emoji" v-if="this.$store.state.details.title !=this.$store.state.details.original_title">
                     {{ this.$store.state.details.original_title }}
                 </div>
-                <div class="genre-release"
+                <div class="genre-release emoji"
                 v-if="this.$store.state.details.genres+this.$store.state.details.release_date!=''">
                     {{ [this.$store.state.details.genres,this.$store.state.details.release_date].join(" ・ ") }}
                 </div>
-                <div class="runtime"
+                <div class="runtime emoji"
                 v-if="this.$store.state.details.runtime!=0">
                     {{ this.$store.state.details.runtime+'분' }}
                 </div>
@@ -44,7 +44,7 @@ export default {
         movie() {
             return this.$store.state.movie
         }
-    }
+    },
 }
 </script>
 
@@ -55,6 +55,9 @@ export default {
         background-position: center;
         height: 70vh;
         position: relative;
+    }
+    .backdrop * {
+        color: #fff;
     }
     .backdrop > .container {
         position: absolute;
@@ -68,12 +71,10 @@ export default {
     .title {
         font-size: 48px;
         font-weight: 700;
-        filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.2));
     }
     .original-title {
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 400;
-        filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.2));
     }
     .genre-release {
         margin-top: 8px;
@@ -86,13 +87,11 @@ export default {
         font-weight: 500;
     }
     .tagline {
-        color: #fff;
         font-size: 24px;
         font-weight: 600;
         margin-bottom: 12px;
     }
     .overview {
-        color: #fff;
         font-size: 18px;
         line-height: 1.4;
     }

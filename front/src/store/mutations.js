@@ -31,5 +31,8 @@ export const mutations = {
     },
     setMaxPage(state, payload) {
         state.maxPage = payload
+    },
+    setTheme(state) {
+        state.theme = !state.theme;
     }
 }
