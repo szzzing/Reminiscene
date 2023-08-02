@@ -1,8 +1,14 @@
 package com.szzzing.app.security;
 
+import com.szzzing.app.repository.UserRepository;
+import com.szzzing.app.security.jwt.JwtAuthenticationFilter;
+import com.szzzing.app.security.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -17,15 +23,28 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final AuthenticationConfiguration authenticationConfiguration;
+
+    @Autowired
+    private final UserRepository userRepository;
+
+    @Autowired
+    private final CorsConfig corsConfig;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
+    AuthenticationManager authenticationManager() throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
+        http.csrf().disable()
+            .addFilter(corsConfig.corsFilter());
 
         http.authorizeHttpRequests()
             .requestMatchers("/", "/login", "/join", "/selectAll").permitAll()
@@ -36,6 +55,9 @@ public class SecurityConfig {
             .and()
             .formLogin().disable()
             .httpBasic().disable();
+
+        http.addFilter(new JwtAuthenticationFilter(authenticationManager()))
+            .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository));
 
         return http.build();
     }

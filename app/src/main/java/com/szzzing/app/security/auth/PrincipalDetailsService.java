@@ -17,6 +17,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     // 유저 정보를 불러와 UserDetails로 리턴
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        System.out.println("PrincipalDetailsService.loadUserByUsername() : "+id+"로 로그인 시도");
         User user = userRepository.selectOneById(id);
         if(user == null) {
             throw new UsernameNotFoundException(id);

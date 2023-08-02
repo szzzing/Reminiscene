@@ -1,6 +1,7 @@
 package com.szzzing.app.security.auth;
 
 import com.szzzing.app.domain.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 // spring security에서 사용자 정보를 담는 UserDetails 인터페이스 구현
+@Data
 public class PrincipalDetails implements UserDetails {
     private User user;
 

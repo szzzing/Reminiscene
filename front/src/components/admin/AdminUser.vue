@@ -23,7 +23,7 @@ export default {
     methods: {
         getUserData() {
             axios
-            .get('http://localhost:8080/')
+            .get('http://localhost:8080/admin/selectAll')
             .then(function(response) {
                 console.log(response);
             });
