@@ -29,8 +29,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     // 인증 요청시 실행되는 함수 -> /login
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("/login을 통한 인증 요청 : AuthenticationFilter.attemptAuthentication() 진입");
-
         // request에 있는 id,pw를 파싱해서 자바 Object로 받기
         ObjectMapper om = new ObjectMapper();
         User user = null;
@@ -45,17 +43,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 = new UsernamePasswordAuthenticationToken(user.getId(), user.getPw());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
-        PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
-        System.out.println("usernamepassword token 생성 : " + authenticationToken);
-
         return authentication;
     }
 
-    // JWT 토큰 생성해서 응답헤더에 담아주기
+    // JWT 토큰 생성해서 응답 헤더에 담아주기
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        System.out.println("JwtAuthenticationFilter.successfulAuthentication 진입");
-        
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 
         String jwtToken = JWT.create()
