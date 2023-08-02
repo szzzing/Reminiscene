@@ -24,4 +24,8 @@ public class UserRepository {
     public User login() {
         return null;
     }
+
+    public User selectOneById(String id) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneById", id);
+    }
 }

@@ -17,7 +17,10 @@ public class PrincipalDetailsService implements UserDetailsService {
     // 유저 정보를 불러와 UserDetails로 리턴
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        User user = userRepository.login();
+        User user = userRepository.selectOneById(id);
+        if(user == null) {
+            throw new UsernameNotFoundException(id);
+        }
         return new PrincipalDetails(user);
     }
 }
