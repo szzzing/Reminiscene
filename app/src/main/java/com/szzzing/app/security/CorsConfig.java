@@ -10,6 +10,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
+// cors 공격 관련 필터
 @Configuration
 public class CorsConfig {
     @Value("${front.url}") String url;

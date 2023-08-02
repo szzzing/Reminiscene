@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import java.io.IOException;
 
+// 인가 관련 필터
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UserRepository userRepository;
@@ -34,15 +35,15 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
-        // 응답 헤더에 함께 전송한 토큰 확인
+        // 요청을 보낼 때 헤더에 함께 담아 전송한 토큰 확인
         String token = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
         String id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asString();
-        // 아이디를 통해 존재 여부, 권한 확인
+        // 아이디를 통해 사용자 존재 여부, 권한 확인
         if(id != null) {
             User user = userRepository.selectOneById(id);
             PrincipalDetails principalDetails = new PrincipalDetails(user);
             Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
-            // 권한 관리를 위해 세션에 접근하여 값 저장
+            // 권한 관리를 위해 SecurityContext에 인증 정보 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

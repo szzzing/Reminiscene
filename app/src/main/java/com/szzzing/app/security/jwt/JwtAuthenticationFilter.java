@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.Date;
 
-// 인증 요청이 들어올 시 사용할 필터
+// 인증 관련 필터
 // 폼로그인을 비활성화했기 때문에 직접 UsernamePasswordAuthenticationFilter를 구현해주어야 함
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             e.printStackTrace();
         }
 
-        // usernamepassword 토큰 생성
+        // usernamepassword 토큰 생성 : 인증을 위해 id, pw 정보를 가지고 있는 토큰
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(user.getId(), user.getPw());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return authentication;
     }
 
-    // JWT 토큰 생성해서 응답 헤더에 담아주기
+    // 인증 성공 로직 : Jwt 토큰 생성, 응답 헤더에 담아 전송
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
