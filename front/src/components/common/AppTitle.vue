@@ -1,11 +1,13 @@
 <template>
     <div id="title">
-        <router-link to="/">
-            <div class="title emoji">
+        <div class="title emoji">
+            <router-link to="/">
                 🌙
-            </div>
-            <div class="sub-title">어떤 영화가 궁금해?</div>
-        </router-link>
+            </router-link>
+        </div>
+        <div class="sub-title">
+            <slot name="title"></slot>
+        </div>
     </div>
 </template>
 
@@ -17,19 +19,17 @@ export default {
 <style scoped>
     #title {
         max-width: 200px;
-        margin: 60px auto;
+        margin: 0 0 60px;
     }
     .title {
         margin: 0 0 12px;
         font-size: 40px;
         font-weight: 900;
-        text-align: center;
         color: var(--G0);
     }
     .sub-title {
-        color: var(--G400);
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
+        color: var(--G700);
+        font-size: 24px;
+        font-weight: 600;
     }
 </style>

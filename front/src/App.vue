@@ -3,19 +3,16 @@
       <app-header></app-header>
       <div class="flex-wrap">
         <router-view></router-view>
-        <app-footer></app-footer>
       </div>
     </div>
 </template>
 
 <script>
 import AppHeader from './components/common/AppHeader.vue'
-import AppFooter from './components/common/AppFooter.vue'
 
 export default {
   components: {
     AppHeader,
-    AppFooter,
   },
   data() {
     return {
@@ -58,12 +55,12 @@ body {
   min-height: 100vh;
 }
 .flex-wrap > .container:first-child {
-  min-height: calc(100vh - 280px);
+  min-height: calc(100vh);
+  padding: 100px 0 100px;
 }
 .container {
     width: calc(100% - 80px);
     margin: 0 auto;
-    padding: 60px 0;
 }
 @media screen and (max-width:768px) {
     .container {
@@ -120,10 +117,23 @@ input::placeholder {
   background: var(--G1000);
   height: 48px;
   line-height: 48px;
-  margin: 20px auto;
   border-radius: 16px;
   cursor: pointer;
 }
+
+.medium-button {
+  font-size: 16px;
+  font-weight: 500;
+  max-width: 240px;
+  text-align: center;
+  color: var(--G0);
+  background: var(--G1000);
+  height: 36px;
+  line-height: 36px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
 
 :root {
 	--G0: #ffffff;

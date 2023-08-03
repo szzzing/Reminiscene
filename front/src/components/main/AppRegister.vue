@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <app-title></app-title>
-    <div class="container">
+    <div class="flex-container">
+      <app-title>
+        <template v-slot:title>회원가입</template>
+      </app-title>
       <div class="inner">
         <div class="title id">🪪 아이디</div>
         <div class="sub-title">영문, 숫자, 특수문자 -, _를 포함해 6-12자 사이의 아이디를 만들어주세요.</div>
@@ -57,7 +59,7 @@
       <div class="inner">
         <div class="big-button"
         @click="register()">
-        가입하기
+        계정 만들기
         </div>
       </div>
     </div>
@@ -148,11 +150,12 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.flex-container {
   display: flex;
   flex-direction: column;
   gap: 48px;
   max-width: 600px;
+  margin: auto;
 }
 
 .title {
@@ -189,5 +192,9 @@ input {
 }
 .unchecked {
   border: 2px solid rgba(237, 106, 94, 0.5);;
+}
+.big-button {
+  width: 120px;
+  margin: 0 0 0 auto;
 }
 </style>

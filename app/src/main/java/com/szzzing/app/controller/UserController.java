@@ -22,7 +22,6 @@ public class UserController {
     @GetMapping("/admin/selectAll")
     public void selectAllUser() {
         ArrayList<User> list = userService.selectAll();
-
         System.out.println(list);
     }
 

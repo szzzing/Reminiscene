@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    made by 🐰szzzing
+    Copyright ⓒ szzzing🌙. All Rights Reserved
   </div>
 </template>
 
@@ -13,9 +13,9 @@ export default {
 <style scoped>
 .container {
     padding: 0;
-    height: 160px;
-    line-height: 160px;
+    height: 200px;
+    line-height: 200px;
     text-align: center;
-    color: var(--G400);
+    color: var(--G300);
 }
 </style>
