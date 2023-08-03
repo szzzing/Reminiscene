@@ -39,13 +39,7 @@ export default {
         max-width: 1280px;
     }
     .input-box {
-        background: var(--G50);
         max-width: 400px;
-        height: 60px;
-        line-height: 60px;
-        border-radius: 16px;
-        padding: 0 24px;
-        margin: 0 auto;
     }
     input {
         font-size: 18px;

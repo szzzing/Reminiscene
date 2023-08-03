@@ -3,8 +3,8 @@
         <div class="inner">
             <router-link to="/" class="logo emoji">🌙</router-link>
             <div class="themeBtn btn emoji"
-            @click="this.$store.commit('setTheme')">
-                {{ this.$store.state.theme ? "🌞" : "🌝" }}
+            @click="this.$store.commit('user/setTheme')">
+                {{ this.$store.state.user.theme ? "🌞" : "🌝" }}
             </div>
             <router-link to="/login" class="loginBtn">로그인</router-link>
         </div>

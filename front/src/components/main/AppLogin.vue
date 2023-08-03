@@ -3,20 +3,22 @@
         <app-title></app-title>
         <div class="input-area">
             <div class="input-box">
-                <input type="text" placeholder="아이디" v-model="id">
-                <input type="password" placeholder="비밀번호" v-model="pw">
+                <input type="text" placeholder="아이디" v-model="id"
+                @keyup.enter="this.login()">
+                <input type="password" placeholder="비밀번호" v-model="pw"
+                @keyup.enter="this.login()">
             </div>
-            <div class="login-button"
+            <div class="big-button"
             v-on:click="this.login()">
                 로그인
             </div>
         </div>
         <div class="option">
             처음 방문하셨다면
-            <router-link class="option-item" to="/join">회원가입</router-link>
+            <router-link class="option-item" to="/register">가입하기</router-link>
         </div>
         <div class="option">
-            <router-link class="option-item" to="/join">비밀번호를 잊어버리셨나요?</router-link>
+            <router-link class="option-item" to="/find">비밀번호를 잊으셨나요?</router-link>
         </div>
     </div>
 </template>
@@ -36,22 +38,27 @@ export default {
         }
     },
     methods: {
+        // 로그인
         login() {
             const id = this.id.trim();
             const pw = this.pw.trim();
+            
             if(id!='' && pw!='') {
                 axios.post("http://localhost:8080/login",{id, pw})
                 .then((response)=>{
-                    console.log(response);
-                    this.$router.push({ path: '/' });
+                    if(response.status == 200) {
+                        console.log(response.headers);
+                        this.$store.dispatch("user/getUser", id);
+                        this.$router.push({ path: '/' });
+                    }
                 })
                 .catch(function() {
                     alert("로그인에 실패했습니다.");
                 });
             } else {
-                alert("아이디와 비밀번호를 확인해주세요");
+                alert("아이디와 비밀번호를 입력해주세요.");
             }
-        }
+        },
     }
 }
 </script>
@@ -65,27 +72,16 @@ export default {
     }
     .input-area {
         max-width: 240px;
-        margin: 60px auto;
+        margin: 48px auto 24px;
     }
     .input-box {
-        background: var(--G50);
         line-height: 36px;
         border-radius: 16px;
         padding: 12px 24px;
+        height: unset;
     }
     input {
         font-size: 18px;
-    }
-    .login-button {
-        font-size: 18px;
-        font-weight: 500;
-        color: var(--G0);
-        background: var(--G1000);
-        height: 48px;
-        line-height: 48px;
-        margin: 20px auto;
-        border-radius: 16px;
-        cursor: pointer;
     }
     .option {
         line-height: 30px;

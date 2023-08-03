@@ -14,18 +14,19 @@ public class UserRepository {
     private final SqlSessionTemplate sqlSessionTemplate;
     private final String NAME_SPACE = "userMapper.";
 
-    public User insert(User user) {
+    public User insertOne(User user) {
         return user;
     }
+
     public ArrayList<User> selectAll() {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectAll");
     }
 
-    public User login() {
-        return null;
-    }
-
     public User selectOneById(String id) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneById", id);
+    }
+
+    public User selectOneByEmail(String email) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByEmail", email);
     }
 }

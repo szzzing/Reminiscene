@@ -16,7 +16,8 @@ export default {
 
 <style scoped>
     #title {
-        padding-bottom: 60px;
+        max-width: 200px;
+        margin: 60px auto;
     }
     .title {
         margin: 0 0 12px;

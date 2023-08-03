@@ -12,10 +12,11 @@ public class User {
     private String pw;
     private String email;
     private String nickname;
-    private char gender;
+    private String gender;
     private Date birthday;
     private Timestamp regDate;
     private Timestamp modDate;
-    private char role;
+    private String role;
     private boolean enable;
+    private String type;
 }

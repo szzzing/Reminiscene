@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap" v-bind:class="{ dark : !this.$store.state.theme }">
+    <div class="wrap" v-bind:class="{ dark : !this.$store.state.user.theme }">
       <app-header></app-header>
       <div class="flex-wrap">
         <router-view></router-view>
@@ -11,6 +11,7 @@
 <script>
 import AppHeader from './components/common/AppHeader.vue'
 import AppFooter from './components/common/AppFooter.vue'
+
 export default {
   components: {
     AppHeader,
@@ -40,6 +41,7 @@ export default {
   font-family: 'Toss Product Sans', TossFace;
   list-style: none;
   color: var(--G1000);
+  box-sizing: border-box;
 }
 body {
   margin: 0;
@@ -82,6 +84,14 @@ input {
 input::placeholder {
   color: var(--G300);
 }
+.input-box {
+    background: var(--G50);
+    height: 60px;
+    line-height: 60px;
+    border-radius: 16px;
+    padding: 0 24px;
+    margin: 0 auto;
+}
 ::-webkit-scrollbar {
   width: 0px;
 	height: 0;
@@ -99,6 +109,20 @@ input::placeholder {
 
 .emoji {
   filter: drop-shadow(0px 0px 6px var(--O200));
+}
+
+.big-button {
+  font-size: 18px;
+  font-weight: 500;
+  max-width: 240px;
+  text-align: center;
+  color: var(--G0);
+  background: var(--G1000);
+  height: 48px;
+  line-height: 48px;
+  margin: 20px auto;
+  border-radius: 16px;
+  cursor: pointer;
 }
 
 :root {

@@ -88,7 +88,12 @@ export default {
         display: block;
         border-radius: 16px;
         overflow: hidden;
-        background: var(--G1000);
+        background: var(--G0);
+        filter: drop-shadow(0px 0px 6px var(--O100));
+    }
+    .dark .movie-inner {
+        background: var(--G50);
+        filter: none;
     }
     .movie .info {
         text-align: center;
@@ -110,7 +115,7 @@ export default {
         text-align: center;
         word-break: keep-all !important;
         margin-bottom: 8px;
-        color: var(--G0);
+        
     }
     .movie .info .date {
         color: var(--G400);
@@ -118,7 +123,6 @@ export default {
         margin-bottom: 4px;
     }
     .movie .vote-average {
-        color: #fff;
         font-weight: 700;
         font-size: 14px;
         position: absolute;
@@ -128,7 +132,12 @@ export default {
         line-height: 32px;
         padding: 0px 12px 0px 10px;
         border-radius: 16px;
-        background: #222;
+        background: #f9fafb20;
+        box-shadow: 0px 0px 10px var(--O100);
+        backdrop-filter: blur(16px);
+    }
+    .dark .movie .vote-average {
+        background: #18181820;
     }
     .next {
         text-align: center;
