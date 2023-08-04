@@ -30,7 +30,7 @@ import AppTitle from '../common/AppTitle.vue'
 
 export default {
     components: {
-        AppTitle
+        AppTitle,
     },
     data() {
         return {

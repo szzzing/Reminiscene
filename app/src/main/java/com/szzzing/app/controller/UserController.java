@@ -49,5 +49,5 @@ public class UserController {
         return userService.selectOneByEmail(email) == null;
     }
 
-    // 회원가입
+    // 로그아웃
 }

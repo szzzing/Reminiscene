@@ -5,7 +5,7 @@
         <template v-slot:title>회원가입</template>
       </app-title>
       <div class="inner">
-        <div class="title id">🪪 아이디</div>
+        <div class="title id" ref="id">🪪 아이디</div>
         <div class="sub-title">영문, 숫자, 특수문자 -, _를 포함해 6-12자 사이의 아이디를 만들어주세요.</div>
         <div class="input-box"
         v-bind:class="{ 'checked' : this.id!='' && checkedId, 'unchecked' : this.id!='' && !checkedId }">
@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="inner pw">
+      <div class="inner pw" ref="pw">
         <div class="title">🔒 비밀번호</div>
         <div class="sub-title">영문, 숫자, 특수문자를 포함해 8-20자 사이의 비밀번호를 만들어주세요.</div>
         <div class="input-box"
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="inner pw2">
+      <div class="inner pw2" ref="pw2">
         <div class="title">🔐 비밀번호 확인</div>
         <div class="sub-title">비밀번호를 다시 입력해주세요.</div>
         <div class="input-box"
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="inner email">
+      <div class="inner email" ref="email">
         <div class="title">📨 이메일</div>
         <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
         <div class="input-box"
@@ -71,7 +71,7 @@ import AppTitle from '../common/AppTitle.vue'
 
 export default {
   components: {
-    AppTitle
+    AppTitle,
   },
   data() {
     return {
@@ -136,13 +136,28 @@ export default {
     },
     //  회원가입
     register() {
-      const id = this.id;
-      const pw = this.pw;
-      const email = this.email;
-      this.axios.post("/auth/register", { id, pw, email})
-      .then((response)=>{
-        console.log(response);
-      })
+      // 입력 여부 확인
+      if(!this.checkedId) {
+        this.$refs.id.scrollIntoView({behavior: "smooth"});
+        alert("아이디를 확인해주세요.");
+      } else if(!this.checkedPw) {
+        this.$refs.pw.scrollIntoView({behavior: "smooth"});
+        alert("비밀번호를 확인해주세요.");
+      } else if(!this.checkedPw2) {
+        this.$refs.pw2.scrollIntoView({behavior: "smooth"});
+        alert("비밀번호를 확인해주세요.");
+      } else if(!this.checkedEmail) {
+        this.$refs.email.scrollIntoView({behavior: "smooth"});
+        alert("이메일을 확인해주세요.");
+      } else {
+        const id = this.id;
+        const pw = this.pw;
+        const email = this.email;
+        this.axios.post("/auth/register", { id, pw, email})
+        .then((response)=>{
+          console.log(response);
+        })
+      }
     }
   }
 }
