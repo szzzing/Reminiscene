@@ -1,30 +1,30 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import AppMain from '../components/main/AppMain'
-import AppLogin from '../components/auth/AppLogin'
-import AppRegister from '../components/auth/AppRegister'
-import MovieSearch from '../components/movie/MovieSearch.vue'
-import MovieContent from '../components/movie/MovieContent.vue'
+import MainPage from '../components/main/MainPage'
+import LoginPage from '../components/auth/LoginPage'
+import RegisterPage from '../components/auth/RegisterPage'
+import ListPage from '../components/list/ListPage'
+import DetailPage from '../components/detail/DetailPage'
 
 const routes = [
     {
         path: '/',
-        component: AppMain
+        component: MainPage
     },
     {
         path: '/register',
-        component: AppRegister
+        component: RegisterPage
     },
     {
         path: '/login',
-        component: AppLogin
+        component: LoginPage
     },
     {
-        path: '/search',
-        component: MovieSearch
+        path: '/list',
+        component: ListPage
     },
     {
         path: '/content/:id',
-        component: MovieContent
+        component: DetailPage
     },
 ]
 

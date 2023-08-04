@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <app-title>
+        <title-item>
             <template v-slot:title>로그인</template>
-        </app-title>
+        </title-item>
         <div class="input-area">
             <div class="input-box">
                 <input type="text" placeholder="아이디" v-model="id"
@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import AppTitle from '../common/AppTitle.vue'
+import TitleItem from '../item/TitleItem.vue'
 
 export default {
     components: {
-        AppTitle,
+        TitleItem,
     },
     data() {
         return {
@@ -47,7 +47,7 @@ export default {
             if(id!='' && pw!='') {
                 this.axios.post("/login",{id, pw})
                 .then((response)=>{
-                    if(response.status == 200) {
+                    if(response.status==200) {
                         console.log(response.headers.authorization);
                         this.$store.commit("auth/setToken", response.headers.authorization);
                         this.$store.dispatch("auth/getUser", id);
@@ -73,7 +73,7 @@ export default {
         margin: 48px auto 24px;
     }
     .input-box {
-        line-height: 36px;
+        line-height: 48px;
         border-radius: 16px;
         padding: 12px 24px;
         height: unset;

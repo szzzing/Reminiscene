@@ -1,6 +1,6 @@
 <template>
     <div class="wrap" v-bind:class="{ dark : !this.$store.state.auth.theme }">
-      <app-header></app-header>
+      <header-item></header-item>
       <div class="flex-wrap">
         <router-view></router-view>
       </div>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import AppHeader from './components/common/AppHeader.vue'
+import HeaderItem from './components/common/HeaderItem.vue'
 
 export default {
   components: {
-    AppHeader,
+    HeaderItem,
   },
   data() {
     return {

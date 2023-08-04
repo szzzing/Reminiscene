@@ -1,24 +1,21 @@
 <template>
     <div class="container">
-        <app-title></app-title>
         <div class="input-box">
             <input type="text" placeholder="엘리멘탈" v-model="query">
         </div>
         <div class="result" v-if="this.$store.state.query!=''">
             <b>{{ this.$store.state.query }}</b>에 대한 영화를 보여줄게.
         </div>
-        <movie-list></movie-list>
+        <card-list></card-list>
     </div>
 </template>
 
 <script>
-import AppTitle from '../common/AppTitle.vue';
-import MovieList from "./MovieList.vue";
+import CardList from "./CardList.vue";
 
 export default {
     components: {
-        AppTitle,
-        MovieList,
+        CardList,
     },
     data() {
         return {
