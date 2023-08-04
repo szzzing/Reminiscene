@@ -49,14 +49,14 @@ export default {
                 .then((response)=>{
                     if(response.status == 200) {
                         console.log(response.headers.authorization);
-                        this.$store.commit("user/setToken", response.headers.authorization);
-                        this.$store.dispatch("user/getUser", id);
+                        this.$store.commit("auth/setToken", response.headers.authorization);
+                        this.$store.dispatch("auth/getUser", id);
                         this.$router.push({ path: '/' });
                     }
                 })
-                .catch(function() {
-                    alert("로그인에 실패했습니다.");
-                });
+                // .catch(function() {
+                //     alert("로그인에 실패했습니다.");
+                // });
             } else {
                 alert("아이디와 비밀번호를 입력해주세요.");
             }

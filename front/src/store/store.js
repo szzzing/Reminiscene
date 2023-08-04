@@ -1,16 +1,16 @@
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate';
-import { user } from './userStore.js'
-import { movie } from './movieStore.js'
+import { auth } from './modules/authStore.js'
+import { movie } from './modules/movieStore.js'
 
 export const store = new Vuex.Store({
     modules: {
-        user,
+        auth,
         movie,
     },
     plugins: [
         createPersistedState({
-            paths: ["user"],
+            paths: ["auth"],
             storage: window.sessionStorage,
         }),
     ]

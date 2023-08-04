@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap" v-bind:class="{ dark : !this.$store.state.user.theme }">
+    <div class="wrap" v-bind:class="{ dark : !this.$store.state.auth.theme }">
       <app-header></app-header>
       <div class="flex-wrap">
         <router-view></router-view>

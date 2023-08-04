@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const user = {
+export const auth = {
     namespaced: true,
     state: {
         user: {},
@@ -23,7 +23,7 @@ export const user = {
     },
     actions: {
         getUser(context, id) {
-            axios.get("http://localhost:8080/user/"+id)
+            axios.get("http://localhost:8080/auth/"+id)
             .then((response)=>{
                 if(response.status == 200) {
                     context.commit("setUser", response.data);
