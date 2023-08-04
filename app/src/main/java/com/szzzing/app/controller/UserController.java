@@ -28,25 +28,25 @@ public class UserController {
     }
 
     // 로그인 - 로그인시 유저 정보
-    @GetMapping("/user/{id}")
+    @GetMapping("/auth/{id}")
     public User loginInfo(@PathVariable String id) {
         return userService.selectOneById(id);
     }
 
     // 회원가입
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public int register() {
         return 0;
     }
 
     // 회원가입 - 아이디 중복 체크
-    @GetMapping("/user/check/id/{id}")
+    @GetMapping("/auth/check/id/{id}")
     public boolean checkAvailableId(@PathVariable String id) {
         return userService.selectOneById(id) == null;
     }
 
     // 회원가입 - 이메일 중복 체크
-    @GetMapping("/user/check/email/{email}")
+    @GetMapping("/auth/check/email/{email}")
     public boolean checkAvailableEmail(@PathVariable String email) {
         return userService.selectOneByEmail(email) == null;
     }

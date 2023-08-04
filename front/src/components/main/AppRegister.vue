@@ -68,9 +68,6 @@
 
 <script>
 import AppTitle from '../common/AppTitle.vue'
-import axios from 'axios';
-// 요청을 보낼 때 쿠키를 포함해서 보낸다.
-axios.defaults.withCredentials = true;
 
 export default {
   components: {
@@ -125,14 +122,14 @@ export default {
   methods: {
     //  아이디 중복 여부 체크
     checkId() {
-      axios.get("http://localhost:8080/user/check/id/"+this.id)
+      this.axios.get("/auth/check/id/"+this.id)
       .then((response)=>{
         this.checkedId = response.data;
       })
     },
     //  이메일 중복 여부 체크
     checkEmail() {
-      axios.get("http://localhost:8080/user/check/email/"+this.email)
+      this.axios.get("/auth/check/email/"+this.email)
       .then((response)=>{
         this.checkedEmail = response.data;
       })
@@ -142,7 +139,7 @@ export default {
       const id = this.id;
       const pw = this.pw;
       const email = this.email;
-      axios.post("http://localhost:8080/register", { id, pw, email})
+      this.axios.post("/auth/register", { id, pw, email})
       .then((response)=>{
         console.log(response);
       })
