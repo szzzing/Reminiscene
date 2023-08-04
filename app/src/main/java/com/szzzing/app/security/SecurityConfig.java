@@ -31,6 +31,7 @@ public class SecurityConfig {
 
     @Autowired
     private final CorsConfig corsConfig;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -49,6 +50,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
             .requestMatchers("/admin/**").hasRole("A")
+            .requestMatchers("/", "/auth/id/**", "/auth/email/**").permitAll()
             .anyRequest().permitAll();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

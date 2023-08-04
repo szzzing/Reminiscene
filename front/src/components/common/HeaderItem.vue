@@ -2,17 +2,33 @@
    <div class="container">
         <div class="inner">
             <router-link to="/" class="logo emoji">🌙</router-link>
-            <div class="themeBtn btn emoji"
+            <div class="themeBtn emoji"
             @click="this.$store.commit('auth/setTheme')">
                 {{ this.$store.state.auth.theme ? "🌞" : "🌝" }}
             </div>
-            <router-link to="/login" class="loginBtn">로그인</router-link>
+            <router-link v-if="this.$store.state.auth.user==null"
+            to="/login"
+            class="btn">
+                로그인
+            </router-link>
+            <router-link v-if="this.$store.state.auth.user!=null"
+            to="/"
+            class="btn"
+            @click="this.logout()">
+                로그아웃
+            </router-link>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    methods: {
+        logout() {
+            this.$store.commit("auth/setUser", null);
+            this.$store.commit("auth/setToken", '');
+        }
+    }
 }
 </script>
 
@@ -37,7 +53,7 @@ export default {
         font-size: 36px;
         margin-right: auto;
     }
-    .loginBtn {
+    .btn {
         height: 32px;
         line-height: 32px;
         padding: 0 16px;
