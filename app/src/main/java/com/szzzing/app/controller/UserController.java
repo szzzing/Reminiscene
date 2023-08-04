@@ -26,7 +26,7 @@ public class UserController {
     }
 
     // 로그인 - 로그인시 유저 정보
-    @GetMapping("/auth/{id}")
+    @GetMapping("/mypage/{id}")
     public User loginInfo(@PathVariable String id) {
         return userService.selectOneById(id);
     }
