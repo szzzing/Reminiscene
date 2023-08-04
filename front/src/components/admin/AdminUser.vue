@@ -17,14 +17,11 @@
 </template>
 
 <script>
-import axios from 'axios'
-axios.defaults.withCredentials = true;
-
 export default {
     methods: {
         getUserData() {
-            axios
-            .get('http://localhost:8080/admin/selectAll')
+            this.axios
+            .get('/admin/selectAll')
             .then(function(response) {
                 console.log(response);
             });

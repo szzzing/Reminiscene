@@ -64,14 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("id", principalDetails.getUser().getId())   // payload 부분에서 private 설정. private의 이름과 값 지정
                 .withClaim("email", principalDetails.getUser().getEmail())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET)); // 시크릿키, 해싱 알고리즘
-        // 쿠키 생성
-        Cookie cookie = new Cookie(JwtProperties.HEADER_STRING, URLEncoder.encode(JwtProperties.TOKEN_PREFIX+jwtToken, "utf-8"));
-        cookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
-        cookie.setPath("/");    // 모든 경로에서 접근 가능
-//        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
-        // 응답 헤더에 쿠키 추가
+        // 응답 헤더에 토큰 추가        
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
-
     }
 }

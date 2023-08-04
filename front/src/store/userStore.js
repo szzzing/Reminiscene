@@ -4,7 +4,8 @@ export const user = {
     namespaced: true,
     state: {
         user: {},
-        theme: false,
+        token: '',
+        theme: true,
     },
     getters: {
 
@@ -12,6 +13,9 @@ export const user = {
     mutations: {
         setUser(state, payload) {
             state.user = payload;
+        },
+        setToken(state, payload) {
+            state.token = payload;
         },
         setTheme(state) {
             state.theme = !state.theme;

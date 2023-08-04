@@ -26,11 +26,7 @@
 </template>
 
 <script>
-import axios from 'axios'
 import AppTitle from '../common/AppTitle.vue'
-
-axios.defaults.baseURL = "http://localhost:8080/";
-axios.defaults.withCredentials = true;  // 요청을 보낼 때 쿠키를 포함해서 보낸다.
 
 export default {
     components: {
@@ -49,14 +45,13 @@ export default {
             const pw = this.pw.trim();
             
             if(id!='' && pw!='') {
-                axios.post("http://localhost:8080/login",{id, pw})
+                this.axios.post("/login",{id, pw})
                 .then((response)=>{
                     if(response.status == 200) {
-                        console.log(axios.defaults.headers.common.Authorization)
-                        console.log(response);
+                        console.log(response.headers.authorization);
+                        this.$store.commit("user/setToken", response.headers.authorization);
                         this.$store.dispatch("user/getUser", id);
                         this.$router.push({ path: '/' });
-                        console.log(document.cookie);
                     }
                 })
                 .catch(function() {

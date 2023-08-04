@@ -1,14 +1,16 @@
 package com.szzzing.app.controller;
 
 import com.szzzing.app.domain.User;
+import com.szzzing.app.security.jwt.JwtProperties;
 import com.szzzing.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
-@CrossOrigin(origins = "http://localhost:8081")
+//@CrossOrigin(origins = "http://localhost:8081", allowedHeaders = "Authorization", maxAge = 1000*60*30)
 @RestController
 public class UserController {
 
