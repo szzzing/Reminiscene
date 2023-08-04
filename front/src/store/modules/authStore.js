@@ -23,7 +23,7 @@ export const auth = {
     },
     actions: {
         getUser(context, id) {
-            axios.get("http://localhost:8080/auth/"+id)
+            axios.get("http://localhost:8080/mypage/"+id)
             .then((response)=>{
                 if(response.status == 200) {
                     context.commit("setUser", response.data);
