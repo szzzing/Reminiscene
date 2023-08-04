@@ -69,6 +69,8 @@
 <script>
 import AppTitle from '../common/AppTitle.vue'
 import axios from 'axios';
+// 요청을 보낼 때 쿠키를 포함해서 보낸다.
+axios.defaults.withCredentials = true;
 
 export default {
   components: {

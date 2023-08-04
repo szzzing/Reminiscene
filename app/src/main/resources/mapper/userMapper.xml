@@ -5,30 +5,31 @@
 <mapper namespace="userMapper">
 
     <select id="selectAll" resultMap="userResultMap">
-        select * from user
+        select * from ta9_user
+        where user_role='U'
     </select>
 
     <select id="selectOneById" resultMap="userResultMap">
-        select * from user
-        where id=#{id}
+        select * from ta9_user
+        where user_id=#{id}
     </select>
 
     <select id="selectOneByEmail" resultMap="userResultMap">
-        select * from user
-        where email=#{email}
+        select * from ta9_user
+        where user_email=#{email}
     </select>
 
     <resultMap id="userResultMap" type="com.szzzing.app.domain.User">
-        <id column="id" property="id"/>
-        <result column="pw" property="pw"/>
-        <result column="email" property="email"/>
-        <result column="nickname" property="nickname"/>
-        <result column="gender" property="gender"/>
-        <result column="birthday" property="birthday"/>
-        <result column="reg_date" property="regDate"/>
-        <result column="mod_date" property="modDate"/>
-        <result column="role" property="role"/>
-        <result column="enable" property="enable"/>
-        <result column="type" property="type"/>
+        <id column="user_id" property="id"/>
+        <result column="user_pw" property="pw"/>
+        <result column="user_email" property="email"/>
+        <result column="user_nickname" property="nickname"/>
+        <result column="user_role" property="role"/>
+        <result column="user_enable" property="enable"/>
+        <result column="user_gender" property="gender"/>
+        <result column="user_type" property="type"/>
+        <result column="user_birthday" property="birthday"/>
+        <result column="user_reg_date" property="regDate"/>
+        <result column="user_mod_date" property="modDate"/>
     </resultMap>
 </mapper>

@@ -8,9 +8,13 @@ import com.szzzing.app.repository.UserRepository;
 import com.szzzing.app.security.auth.PrincipalDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +22,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Date;
 
 // 인증 관련 필터
@@ -59,8 +64,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("id", principalDetails.getUser().getId())   // payload 부분에서 private 설정. private의 이름과 값 지정
                 .withClaim("email", principalDetails.getUser().getEmail())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET)); // 시크릿키, 해싱 알고리즘
-        System.out.println(principalDetails.getUser());
-        response.addHeader("id", principalDetails.getUser().getId());
+        // 쿠키 생성
+        Cookie cookie = new Cookie(JwtProperties.HEADER_STRING, URLEncoder.encode(JwtProperties.TOKEN_PREFIX+jwtToken, "utf-8"));
+        cookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
+        cookie.setPath("/");    // 모든 경로에서 접근 가능
+//        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+        // 응답 헤더에 쿠키 추가
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
+
     }
 }
