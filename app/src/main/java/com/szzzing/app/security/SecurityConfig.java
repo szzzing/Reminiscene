@@ -48,7 +48,6 @@ public class SecurityConfig {
             .addFilter(corsConfig.corsFilter());
 
         http.authorizeHttpRequests()
-            .requestMatchers("/", "/login", "/join", "/selectAll").permitAll()
             .requestMatchers("/admin/**").hasRole("A")
             .anyRequest().permitAll();
 

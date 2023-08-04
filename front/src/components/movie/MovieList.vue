@@ -1,5 +1,5 @@
 <template>
-    <div id="movie-list" class="inner" v-if="this.$store.state.searchList.length>0">
+    <div id="movie-list" class="inner" v-if="this.$store.state.movie.searchList.length>0">
         <transition-group name="list" tag="ul" class="movies">
             <li class="movie"
                 v-for="(movie) in searchList" :key="movie"
@@ -25,7 +25,7 @@
             </li>
         </transition-group>
         <div class="next"
-            v-if="this.$store.state.page<this.$store.state.maxPage"
+            v-if="this.$store.state.page<this.$store.state.movie.maxPage"
             @click="this.nextPage()">
             다음 페이지
         </div>
@@ -33,27 +33,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-
 export default {
-    data() {
-        return {
-            isContent: false,
-            selected: ''
-        }
-    },
-    computed: {
-        ...mapState(['searchList'])
-    },
-    methods: {
-        clickContent(id) {
-            this.$store.dispatch('getDetails', id);
-        },
-        nextPage() {
-            this.$store.commit('setPage', this.$store.state.page+1);
-            this.$store.dispatch('searchList');
-        }
-    }
+
 }
 </script>
 

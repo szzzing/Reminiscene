@@ -13,9 +13,4 @@ public class RootController {
     public String home() {
         return "index.html";
     }
-
-    public static void main(String[] args) {
-        String pass = new BCryptPasswordEncoder().encode("tpwls120717");
-        System.out.println(pass);
-    }
 }

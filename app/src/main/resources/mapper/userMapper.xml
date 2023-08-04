@@ -4,6 +4,11 @@
 
 <mapper namespace="userMapper">
 
+    <insert id="insertOne">
+        insert into ta9_user
+        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default)
+    </insert>
+
     <select id="selectAll" resultMap="userResultMap">
         select * from ta9_user
         where user_role='U'

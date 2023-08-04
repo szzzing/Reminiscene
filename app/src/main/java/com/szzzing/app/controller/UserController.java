@@ -3,23 +3,21 @@ package com.szzzing.app.controller;
 import com.szzzing.app.domain.User;
 import com.szzzing.app.security.jwt.JwtProperties;
 import com.szzzing.app.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Properties;
 
-//@CrossOrigin(origins = "http://localhost:8081", allowedHeaders = "Authorization", maxAge = 1000*60*30)
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/admin/selectAll")
     public void selectAllUser() {
@@ -35,8 +33,8 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/auth/register")
-    public int register() {
-        return 0;
+    public int register(@RequestBody User user) {
+        return userService.register(user);
     }
 
     // 회원가입 - 아이디 중복 체크

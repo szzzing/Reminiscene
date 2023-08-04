@@ -4,6 +4,7 @@ import com.szzzing.app.domain.User;
 import com.szzzing.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,10 +14,7 @@ import java.util.ArrayList;
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public User insertOne(User user) {
-        return userRepository.insertOne(user);
-    }
+    private final PasswordEncoder passwordEncoder;
 
     public ArrayList<User> selectAll() {
         return userRepository.selectAll();
@@ -31,5 +29,15 @@ public class UserService {
     public User selectOneByEmail(String email) {
         User user = userRepository.selectOneByEmail(email);
         return user;
+    }
+    
+    // 회원가입
+    public int register(User user) {
+        String pw = passwordEncoder.encode(user.getPw());
+        user.setPw(pw);
+        user.setRole("U");
+        user.setEnable(true);
+        user.setType("N");
+        return userRepository.insertOne(user);
     }
 }

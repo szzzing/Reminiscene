@@ -54,9 +54,9 @@ export default {
                         this.$router.push({ path: '/' });
                     }
                 })
-                // .catch(function() {
-                //     alert("로그인에 실패했습니다.");
-                // });
+                .catch(function() {
+                    alert("로그인에 실패했습니다.");
+                });
             } else {
                 alert("아이디와 비밀번호를 입력해주세요.");
             }

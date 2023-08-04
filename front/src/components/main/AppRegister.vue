@@ -89,7 +89,7 @@ export default {
   watch: {
     //  아이디 사용 가능 여부, 사용 가능할 시 중복 여부 확인
     id() {
-      let reg = /^[a-zA-Z](?=.*[a-zA-Z0-9-_]).{5,11}$/g;
+      let reg = /^[a-zA-Z][a-zA-Z0-9-_]{5,11}$/g;
       const checked = reg.test(this.id);
       this.checkedId = checked;
       // 사용 가능할 시, 중복 여부 확인

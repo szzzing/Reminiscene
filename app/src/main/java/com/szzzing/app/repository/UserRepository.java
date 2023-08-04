@@ -14,8 +14,8 @@ public class UserRepository {
     private final SqlSessionTemplate sqlSessionTemplate;
     private final String NAME_SPACE = "userMapper.";
 
-    public User insertOne(User user) {
-        return user;
+    public int insertOne(User user) {
+        return sqlSessionTemplate.insert(NAME_SPACE+"insertOne", user);
     }
 
     public ArrayList<User> selectAll() {
