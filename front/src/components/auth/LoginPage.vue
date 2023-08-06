@@ -46,7 +46,8 @@ export default {
             
             if(id!='' && pw!='') {
                 this.axios.post("/login",{id, pw})
-                .then((response)=>{
+                .then(response=>{
+                    console.log(response);
                     if(response.status==200) {
                         console.log(response.headers.authorization);
                         this.$store.commit("auth/setToken", response.headers.authorization);
