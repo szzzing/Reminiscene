@@ -2,6 +2,7 @@ package com.szzzing.app.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.szzzing.app.domain.User;
 import com.szzzing.app.repository.UserRepository;
 import com.szzzing.app.security.auth.PrincipalDetails;
@@ -41,8 +42,14 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         // 헤더에 토큰이 있는 경우, 정보 확인
-        String token = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
-        String id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asString();
+        String id = null;
+        try {
+            String token = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
+            id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asString();
+        } catch(TokenExpiredException e) {
+            logger.info(e.getMessage());
+            response.setStatus(401);
+        }
 
         // 아이디를 통해 사용자 존재 여부, 권한 확인
         if(id != null) {
