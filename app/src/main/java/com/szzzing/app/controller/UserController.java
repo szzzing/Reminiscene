@@ -40,6 +40,7 @@ public class UserController {
     // 회원가입 - 아이디 중복 체크
     @GetMapping("/auth/check/id/{id}")
     public boolean checkAvailableId(@PathVariable String id) {
+        System.out.println("컨트롤러 메서드 진입");
         return userService.selectOneById(id) == null;
     }
 

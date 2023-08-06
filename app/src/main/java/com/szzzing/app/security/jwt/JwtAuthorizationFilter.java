@@ -43,12 +43,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         // 헤더에 토큰이 있는 경우, 정보 확인
         String id = null;
+        // 만료된 토큰인 경우, TokenExpiredException 발생
         try {
             String token = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
             id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asString();
         } catch(TokenExpiredException e) {
             logger.info(e.getMessage());
-            response.setStatus(401);
+            response.setStatus(901);
         }
 
         // 아이디를 통해 사용자 존재 여부, 권한 확인

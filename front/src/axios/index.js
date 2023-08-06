@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { store } from '../store/index'
+import { router } from '../router/index'
 
 // axios 전역 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -18,9 +19,13 @@ axios.interceptors.response.use(
         return config
     },
     error => {
-        console.log(error);
-        store.commit("auth/setToken", "");
-        store.commit("auth/setUser", null);
+        if(error.response.status == '901') {
+            alert("다시 로그인해주세요.");
+            router.push({ path: '/login' });
+            store.commit("auth/setToken", "");
+            store.commit("auth/setUser", null);
+        }
+        Promise.reject(error);
     }
 )
 

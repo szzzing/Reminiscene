@@ -50,7 +50,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
             .requestMatchers("/admin/**").hasRole("A")
-            .requestMatchers("/", "/auth/id/**", "/auth/email/**").permitAll()
+//            .requestMatchers("/auth/**").anonymous()
             .anyRequest().permitAll();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
