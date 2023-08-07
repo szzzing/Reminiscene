@@ -17,7 +17,7 @@
         </div>
         <div class="option">
             처음 방문하셨다면
-            <router-link class="option-item" to="/register">회원가입</router-link>
+            <router-link class="option-item" to="/auth/register">회원가입</router-link>
         </div>
         <div class="option">
             <router-link to="/find">비밀번호를 잊으셨나요?</router-link>
@@ -48,7 +48,6 @@ export default {
                 this.axios.post("/login",{id, pw})
                 .then(response=>{
                     if(response.status==200) {
-                        console.log(response.headers.authorization);
                         this.$store.commit("auth/setToken", response.headers.authorization);
                         this.$store.dispatch("auth/getUser", id);
                         this.$router.push({ path: '/' });

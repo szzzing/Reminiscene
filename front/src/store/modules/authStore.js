@@ -1,4 +1,4 @@
-import axios from 'axios'
+import anonymous from '@/axios/anonymousAxios';
 
 export const auth = {
     namespaced: true,
@@ -27,7 +27,7 @@ export const auth = {
     },
     actions: {
         getUser(context, id) {
-            axios.get("http://localhost:8080/mypage/"+id)
+            anonymous.get("http://localhost:8080/mypage/"+id)
             .then((response)=>{
                 if(response.status == 200) {
                     context.commit("setUser", response.data);

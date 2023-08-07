@@ -10,19 +10,7 @@
 </template>
  
 <script>
-import anonymous from '../../axios/anonymousAxios'
-
 export default {
-    methods: {
-        do() {
-            anonymous
-            .get('/api.themoviedb.org/3/search/movie?query='+12345+'&api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR&page='+1)
-            .then(function(response) {
-                console.log(response);
-            });
-            console.log('search');
-        }
-    }
 }
 </script>
 

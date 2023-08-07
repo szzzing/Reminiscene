@@ -1,7 +1,9 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
+import axios from '../axios/authAxios'
 import {store} from '../store/index'
 
 import MainPage from '../components/main/MainPage'
+import ErrorPage from '../components/error/ErrorPage'
 import LoginPage from '../components/auth/LoginPage'
 import RegisterPage from '../components/auth/RegisterPage'
 import ListPage from '../components/list/ListPage'
@@ -13,7 +15,11 @@ const routes = [
         component: MainPage
     },
     {
-        path: '/register',
+        path: '/error',
+        component: ErrorPage
+    },
+    {
+        path: '/auth/register',
         component: RegisterPage
     },
     {
@@ -25,9 +31,13 @@ const routes = [
         component: ListPage
     },
     {
-        path: '/content/:id',
+        path: '/detail/:id',
         component: DetailPage
     },
+    {
+        path: '/mypage',
+        component: MainPage
+    }
 ]
 
 const router = createRouter({
@@ -41,12 +51,30 @@ const router = createRouter({
 
 // 라우터 가드
 router.beforeEach(function (to, from, next) {
-    // to : 이동할 url
-    // from : 현재 url
-    // next : to에서 지정한 url로 이동하기 위해 꼭 호출해야 하는 함수
-    console.log("to", to);
-    console.log("from", from);
-    next();
+    console.log("페이지 이동 : ", from.fullPath, to.fullPath);
+
+    // 인증 처리
+    axios.get("/route").then(()=>{
+        // 1. 비인증 페이지 : 인증 상태일 시 에러페이지로
+        if(to.path.startsWith("/auth") || to.path.startsWith("/login")) {
+            if(store.state.auth.user!=null) {
+                next("/error");
+            } else {
+                next();
+            }
+        // 2. 마이페이지 : 비인증 상태일 시 로그인 페이지로
+        } else if(to.path.startsWith("/mypage")) {
+            if(store.state.auth.user==null) {
+                alert("로그인이 필요한 페이지입니다.\n로그인 페이지로 이동합니다.");
+                return next("/login");
+            } else {
+                next();
+            }
+        // 3. 기타
+        } else {
+            next();
+        }
+    });
 });
 
 export { router };
