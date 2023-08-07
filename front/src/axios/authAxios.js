@@ -24,7 +24,7 @@ axios.interceptors.response.use(
             store.commit("auth/logout");
             router.push({ path: '/login' });
         }
-        Promise.reject({error: "401"});
+        Promise.reject(error);
     }
 )
 

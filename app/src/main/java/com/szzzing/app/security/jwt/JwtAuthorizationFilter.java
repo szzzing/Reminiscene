@@ -30,8 +30,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        logger.info("토큰 검증");
+        logger.info(request.getRequestURI());
+
         // 헤더에 토큰을 담아 보냈는지(인증받은 사용자인지) 검사하는 과정
-        String header = request.getHeader(JwtProperties.HEADER_STRING);
+        String header = JwtUtil.getToken(request);
 
         // 헤더에 토큰이 없는 경우, JwtAuthorizationFilter을 통과하고 JwtAuthenticationFilter에서 로그인을 진행하도록 리턴
         if(header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
@@ -40,24 +43,21 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         // 헤더에 토큰이 있는 경우, 정보 확인
-        String id = null;
-        // 만료된 토큰인 경우, TokenExpiredException 발생
-        try {
-            String token = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
-            id = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asString();
-        } catch(TokenExpiredException e) {
-            logger.info(e.getMessage());
+        if(!JwtUtil.validateToken(header)) {
+            // 만료된 토큰인 경우, TokenExpiredException 발생
             response.setStatus(901);
+        } else {
+            // 아이디를 통해 사용자 존재 여부, 권한 확인
+            String id = JwtUtil.getId(header);
+            if(id != null) {
+                User user = userRepository.selectOneById(id);
+                PrincipalDetails principalDetails = new PrincipalDetails(user);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUser().getId(), null, principalDetails.getAuthorities());
+                // 권한 관리를 위해 SecurityContext에 인증 정보 저장
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
 
-        // 아이디를 통해 사용자 존재 여부, 권한 확인
-        if(id != null) {
-            User user = userRepository.selectOneById(id);
-            PrincipalDetails principalDetails = new PrincipalDetails(user);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUser().getId(), null, principalDetails.getAuthorities());
-            // 권한 관리를 위해 SecurityContext에 인증 정보 저장
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
         chain.doFilter(request, response);
     }
 }

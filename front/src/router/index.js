@@ -51,18 +51,16 @@ const router = createRouter({
 
 // 라우터 가드
 router.beforeEach(function (to, from, next) {
-    console.log("페이지 이동 : ", from.fullPath, to.fullPath);
-
     // 인증 처리
     axios.get("/route").then(()=>{
-        // 1. 비인증 페이지 : 인증 상태일 시 에러페이지로
+        // 1. anonymous() : 인증 상태일 시 에러페이지로
         if(to.path.startsWith("/auth") || to.path.startsWith("/login")) {
             if(store.state.auth.user!=null) {
                 next("/error");
             } else {
                 next();
             }
-        // 2. 마이페이지 : 비인증 상태일 시 로그인 페이지로
+        // 2. authorized() : 비인증 상태일 시 로그인 페이지로
         } else if(to.path.startsWith("/mypage")) {
             if(store.state.auth.user==null) {
                 alert("로그인이 필요한 페이지입니다.\n로그인 페이지로 이동합니다.");
@@ -70,7 +68,7 @@ router.beforeEach(function (to, from, next) {
             } else {
                 next();
             }
-        // 3. 기타
+        // 3. permitAll() : 처리 없이 route
         } else {
             next();
         }
