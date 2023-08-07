@@ -3,10 +3,18 @@
         <div class="input-box">
             <input type="text" placeholder="엘리멘탈" v-model="query">
         </div>
-        <div class="result" v-if="this.$store.state.query!=''">
-            <b>{{ this.$store.state.query }}</b>에 대한 영화를 보여줄게.
+        <div class="result" v-if="this.$store.state.movie.query!=''">
+            <b>{{ this.$store.state.movie.query }}</b>에 대한 영화를 보여줄게.
         </div>
-        <card-list></card-list>
+        
+        <card-list v-if="this.$store.state.movie.query!=''">
+        </card-list>
+        
+        <div class="next"
+            v-if="this.$store.state.movie.page<this.$store.state.movie.maxPage"
+            @click="this.nextPage()">
+            다음 페이지
+        </div>
     </div>
 </template>
 
@@ -22,10 +30,17 @@ export default {
             query: ''
         }
     },
+    methods: {
+        nextPage() {
+            const page = this.$store.state.movie.page+1;
+            this.$store.commit("movie/setPage", page);
+            this.$store.dispatch("movie/searchList");
+        }
+    },
     watch: {
         query() {
-            this.$store.commit('setQuery', this.query);
-            this.$store.dispatch('searchList');
+            this.$store.commit('movie/setQuery', this.query);
+            this.$store.dispatch('movie/searchList');
         }
     }
 }
@@ -50,5 +65,9 @@ export default {
         text-align: center;
         margin: 40px 0 60px;
         color: var(--G1000);
+    }
+    .next {
+        text-align: center;
+        margin-top: 40px;
     }
 </style>

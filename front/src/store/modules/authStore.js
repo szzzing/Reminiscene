@@ -3,8 +3,8 @@ import axios from 'axios'
 export const auth = {
     namespaced: true,
     state: {
-        user: {},
-        token: '',
+        user: null,
+        token: null,
         theme: true,
     },
     getters: {
@@ -20,6 +20,10 @@ export const auth = {
         setTheme(state) {
             state.theme = !state.theme;
         },
+        logout(state) {
+            state.user = null;
+            state.token = null;
+        }
     },
     actions: {
         getUser(context, id) {

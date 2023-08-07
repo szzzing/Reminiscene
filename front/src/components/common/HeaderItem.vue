@@ -7,14 +7,13 @@
                 {{ this.$store.state.auth.theme ? "🌞" : "🌝" }}
             </div>
             <router-link v-if="this.$store.state.auth.user==null"
-            to="/login"
-            class="btn">
+            to="/login" class="btn">
                 로그인
             </router-link>
             <router-link v-if="this.$store.state.auth.user!=null"
             to="/"
             class="btn"
-            @click="this.logout()">
+            @click="this.$store.commit('auth/logout')">
                 로그아웃
             </router-link>
         </div>
@@ -23,12 +22,6 @@
 
 <script>
 export default {
-    methods: {
-        logout() {
-            this.$store.commit("auth/setUser", null);
-            this.$store.commit("auth/setToken", '');
-        }
-    }
 }
 </script>
 

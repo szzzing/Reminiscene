@@ -1,10 +1,9 @@
 <template>
-    <div id="movie-list" class="inner" v-if="this.$store.state.movie.searchList.length>0">
+    <div id="movie-list">
         <transition-group name="list" tag="ul" class="movies">
             <li class="movie"
-                v-for="(movie) in searchList" :key="movie"
-                @click="clickContent(movie.id)">
-                <router-link :to="`/content/${movie.id}`">
+                v-for="(movie) in this.$store.state.movie.list" :key="movie">
+                <router-link :to="`/detail/${movie.id}`">
                     <span class="movie-inner">
                         <div class="thum" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original/'+movie.poster_path+')' }">
                             <div class="vote-average">
@@ -24,11 +23,6 @@
                 </router-link>
             </li>
         </transition-group>
-        <div class="next"
-            v-if="this.$store.state.page<this.$store.state.movie.maxPage"
-            @click="this.nextPage()">
-            다음 페이지
-        </div>
     </div>
 </template>
 
@@ -113,17 +107,12 @@ export default {
         line-height: 32px;
         padding: 0px 12px 0px 10px;
         border-radius: 16px;
-        background: #f9fafb20;
+        background: #f9fafb40;
         box-shadow: 0px 0px 10px var(--O100);
         backdrop-filter: blur(16px);
     }
     .dark .movie .vote-average {
         background: #18181820;
     }
-    .next {
-        text-align: center;
-        color: var(--G200);
-        margin: 60px 0 0;
-        cursor: pointer;
-    }
+    
 </style>

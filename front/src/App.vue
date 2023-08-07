@@ -11,6 +11,12 @@
 import HeaderItem from './components/common/HeaderItem.vue'
 
 export default {
+  created() {
+    console.log("app");
+  },
+  updated() {
+    console.log("updated");
+  },
   components: {
     HeaderItem,
   },

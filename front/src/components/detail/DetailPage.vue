@@ -1,32 +1,32 @@
 <template>
-    <div>
-        <div class="backdrop" :style="{'background-image': 'url('+this.$store.state.details.backdrop_path+')' }">
+    <div v-if="this.movie!=null">
+        <div class="backdrop" :style="{'background-image': 'url('+this.movie.backdrop_path+')' }">
             <div class="container">
                 <div class="title emoji">
-                    {{ this.$store.state.details.title }}
+                    {{ this.movie.title }}
                 </div>
-                <div class="original-title emoji" v-if="this.$store.state.details.title !=this.$store.state.details.original_title">
-                    {{ this.$store.state.details.original_title }}
+                <div class="original-title emoji" v-if="this.movie.title !=this.movie.original_title">
+                    {{ this.movie.original_title }}
                 </div>
                 <div class="genre-release emoji"
-                v-if="this.$store.state.details.genres+this.$store.state.details.release_date!=''">
-                    {{ [this.$store.state.details.genres,this.$store.state.details.release_date].join(" ・ ") }}
+                v-if="this.movie.genres+this.movie.release_date!=''">
+                    {{ [this.movie.genres,this.movie.release_date].join(" ・ ") }}
                 </div>
                 <div class="runtime emoji"
-                v-if="this.$store.state.details.runtime!=0">
-                    {{ this.$store.state.details.runtime+'분' }}
+                v-if="this.movie.runtime!=0">
+                    {{ this.movie.runtime+'분' }}
                 </div>
             </div>
         </div>
         <div class="container"
-            v-if="this.$store.state.details.overview!=''">
+            v-if="this.movie.overview!=''">
             <div class="inner">
                 <div class="tagline"
-                v-if="this.$store.state.details.tagline!=''">
-                    {{ this.$store.state.details.tagline }}
+                v-if="this.movie.tagline!=''">
+                    {{ this.movie.tagline }}
                 </div>
                 <div class="overview">
-                    {{ this.$store.state.details.overview }}
+                    {{ this.movie.overview }}
                 </div>
             </div>
         </div>
@@ -34,17 +34,35 @@
 </template>
 
 <script>
+import anonymous from '@/axios/anonymousAxios';
+
 export default {
     beforeCreate() {
-        console.log(this.$route.params.id);
-        this.$store.dispatch('searchMovie', this.$route.params.id);
-        console.log(this.$route.params.id);
+        const vm = this;
+        anonymous
+        .get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR')
+        .then(function(response) {
+            vm.movie = response.data;
+        });
     },
-    computed: {
-        movie() {
-            return this.$store.state.movie
+    data() {
+        return {
+            movie: null
         }
     },
+    watch: {
+        // 영화 상세정보 가공
+        movie() {
+            this.movie.release_date = this.movie.release_date.split('-').join('.');
+            this.movie.backdrop_path = 'https://image.tmdb.org/t/p/original/'+this.movie.backdrop_path
+            var genre = [];
+            for(var g of this.movie.genres) {
+                genre.push(g.name);
+            }
+            this.movie.genres = genre.join('/');
+            console.log(this.movie);
+        }
+    }
 }
 </script>
 
@@ -66,6 +84,7 @@ export default {
         right: 0;
     }
     .container {
+        max-width: 1280px;
         padding: 40px 0;
     }
     .title {

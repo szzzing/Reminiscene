@@ -1,4 +1,6 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
+import {store} from '../store/index'
+
 import MainPage from '../components/main/MainPage'
 import LoginPage from '../components/auth/LoginPage'
 import RegisterPage from '../components/auth/RegisterPage'
@@ -28,7 +30,7 @@ const routes = [
     },
 ]
 
-export const router = createRouter({
+const router = createRouter({
     history: createWebHashHistory(),
     // 페이지 이동 시 스크롤 탑 적용
     scrollBehavior() {
@@ -36,3 +38,15 @@ export const router = createRouter({
     },
     routes
 })
+
+// 라우터 가드
+router.beforeEach(function (to, from, next) {
+    // to : 이동할 url
+    // from : 현재 url
+    // next : to에서 지정한 url로 이동하기 위해 꼭 호출해야 하는 함수
+    console.log("to", to);
+    console.log("from", from);
+    next();
+});
+
+export { router };
