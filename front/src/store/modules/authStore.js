@@ -1,4 +1,5 @@
-import anonymous from '@/axios/anonymousAxios';
+import axios from '@/axios/authAxios';
+import {router} from '@/router/index';
 
 export const auth = {
     namespaced: true,
@@ -26,8 +27,21 @@ export const auth = {
         }
     },
     actions: {
+        login(context, {id, pw}) {
+            axios.post("/login",{id, pw})
+            .then(response=>{
+                if(response.status==200) {
+                    context.commit("setToken", response.headers.authorization);
+                    context.dispatch("getUser", id);
+                    router.push({ path: '/' });
+                }
+            })
+            .catch(()=>{
+                alert("로그인에 실패했어요🥺");
+            });
+        },
         getUser(context, id) {
-            anonymous.get("http://localhost:8080/mypage/"+id)
+            axios.get("http://localhost:8080/mypage/"+id)
             .then((response)=>{
                 if(response.status == 200) {
                     context.commit("setUser", response.data);

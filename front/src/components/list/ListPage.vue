@@ -5,6 +5,7 @@
         </div>
         <div class="result" v-if="this.$store.state.movie.query!=''">
             <b>{{ this.$store.state.movie.query }}</b>에 대한 영화를 보여줄게.
+            {{ this.word }}
         </div>
         
         <card-list v-if="this.$store.state.movie.query!=''">
@@ -27,7 +28,8 @@ export default {
     },
     data() {
         return {
-            query: ''
+            query: '',
+            word: ''
         }
     },
     methods: {

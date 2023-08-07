@@ -37,13 +37,14 @@
 import anonymous from '@/axios/anonymousAxios';
 
 export default {
-    beforeCreate() {
-        const vm = this;
-        anonymous
-        .get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR')
-        .then(function(response) {
-            vm.movie = response.data;
-        });
+    async beforeCreate() {
+        try {
+            const response = await anonymous
+            .get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
+            this.movie = response.data;
+        } catch(error) {
+            error;
+        }
     },
     data() {
         return {
@@ -60,7 +61,6 @@ export default {
                 genre.push(g.name);
             }
             this.movie.genres = genre.join('/');
-            console.log(this.movie);
         }
     }
 }

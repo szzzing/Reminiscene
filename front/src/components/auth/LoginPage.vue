@@ -45,17 +45,7 @@ export default {
             const pw = this.pw.trim();
             
             if(id!='' && pw!='') {
-                this.axios.post("/login",{id, pw})
-                .then(response=>{
-                    if(response.status==200) {
-                        this.$store.commit("auth/setToken", response.headers.authorization);
-                        this.$store.dispatch("auth/getUser", id);
-                        this.$router.push({ path: '/' });
-                    }
-                })
-                .catch(function() {
-                    alert("로그인에 실패했습니다.");
-                });
+                this.$store.dispatch("auth/login", {id, pw});
             } else {
                 alert("아이디와 비밀번호를 입력해주세요.");
             }

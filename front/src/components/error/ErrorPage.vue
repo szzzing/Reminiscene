@@ -1,21 +1,15 @@
 <template>
     <div class="container">
         <div class="inner">
-            <title-item>
-                <template v-slot:title>404</template>
-            </title-item>
-            <div class="content">존재하지 않는 페이지입니다.</div>
+            <div class="emoji">🚧</div>
+            <div class="title">404</div>
+            <div class="sub-title">존재하지 않는 페이지입니다.</div>
         </div>
     </div>
 </template>
 
 <script>
-import TitleItem from '../item/TitleItem.vue'
-
 export default {
-    components: {
-        TitleItem,
-    },
 }
 </script>
 
@@ -23,12 +17,16 @@ export default {
     .container {
         display: flex;
         align-items: center;
-        max-width: 600px;
+        max-width: 1280px;
     }
-    #title {
-        margin: 0 0 20px;
+    .emoji {
+        font-size: 60px;
     }
-    .content {
+    .title {
+        font-size: 36px;
+        font-weight: 700;
+    }
+    .sub-title {
         color: var(--G400);
     }
 </style>

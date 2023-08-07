@@ -17,7 +17,7 @@ anonymous.interceptors.response.use(
             router.push({ path: '/login' });
             store.commit("auth/logout");
         }
-        Promise.reject(error);
+        // Promise.reject(error);
     }
 )
 

@@ -20,11 +20,11 @@ axios.interceptors.response.use(
     },
     error => {
         if(error.response.status == '901') {
-            alert("다시 로그인해주세요.");
+            alert("인증이 만료되었어요🥺\n다시 로그인해주세요.");
             store.commit("auth/logout");
             router.push({ path: '/login' });
         }
-        Promise.reject(error);
+        // Promise.reject(error);
     }
 )
 
