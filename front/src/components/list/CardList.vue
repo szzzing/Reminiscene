@@ -107,7 +107,7 @@ export default {
         line-height: 32px;
         padding: 0px 12px 0px 10px;
         border-radius: 16px;
-        background: #f9fafb40;
+        background: #f9fafb50;
         box-shadow: 0px 0px 10px var(--O100);
         backdrop-filter: blur(16px);
     }

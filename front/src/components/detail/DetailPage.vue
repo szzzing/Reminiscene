@@ -2,17 +2,17 @@
     <div v-if="this.movie!=null">
         <div class="backdrop" :style="{'background-image': 'url('+this.movie.backdrop_path+')' }">
             <div class="container">
-                <div class="title emoji">
+                <div class="title shadow">
                     {{ this.movie.title }}
                 </div>
-                <div class="original-title emoji" v-if="this.movie.title !=this.movie.original_title">
+                <div class="original-title shadow" v-if="this.movie.title !=this.movie.original_title">
                     {{ this.movie.original_title }}
                 </div>
-                <div class="genre-release emoji"
+                <div class="genre-release shadow"
                 v-if="this.movie.genres+this.movie.release_date!=''">
                     {{ [this.movie.genres,this.movie.release_date].join(" ・ ") }}
                 </div>
-                <div class="runtime emoji"
+                <div class="runtime shadow"
                 v-if="this.movie.runtime!=0">
                     {{ this.movie.runtime+'분' }}
                 </div>
@@ -62,7 +62,16 @@ export default {
             }
             this.movie.genres = genre.join('/');
         }
-    }
+    },
+    // /list 페이지로 이동시 검색결과 유지
+    // 그 외 페이지로 이동시 검색결과 유지 x
+    beforeRouteLeave(to, from, next) {
+        if(!to.path.startsWith('/list')) {
+            this.$store.commit('movie/setQuery', '');
+            this.$store.dispatch('movie/searchList', {});
+        }
+        next();
+    },
 }
 </script>
 
@@ -112,6 +121,5 @@ export default {
     }
     .overview {
         font-size: 18px;
-        line-height: 1.4;
     }
 </style>

@@ -19,6 +19,7 @@ export const auth = {
             state.token = payload;
         },
         setTheme(state) {
+            document.documentElement.classList.toggle('dark');
             state.theme = !state.theme;
         },
         logout(state) {

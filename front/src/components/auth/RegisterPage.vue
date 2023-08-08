@@ -1,9 +1,9 @@
 <template>
     <div class="container">
+        <title-item>
+            <template v-slot:title>회원가입</template>
+        </title-item>
         <div class="flex-container">
-            <title-item>
-                <template v-slot:title>회원가입</template>
-            </title-item>
             <div class="inner">
                 <div class="title id" ref="id">🪪 아이디</div>
                 <div class="sub-title">영문, 숫자, 특수문자 -, _를 포함해 6-12자 사이의 아이디를 만들어주세요.</div>
@@ -158,11 +158,13 @@ export default {
 </script>
 
 <style scoped>
+.container {
+    max-width: 600px;
+}
 .flex-container {
     display: flex;
     flex-direction: column;
     gap: 48px;
-    max-width: 600px;
     margin: auto;
 }
 

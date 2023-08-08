@@ -1,27 +1,22 @@
 <template>
     <div class="container">
         <title-item>
-            <template v-slot:title>로그인</template>
+            <template v-slot:title>비밀번호 찾기</template>
         </title-item>
-        
+        <div class="sub-text">
+            가입시 계정 인증에 사용한 <b>이메일</b>을 입력해주세요.<br>
+            비밀번호를 바꿀 수 있는 링크를 보내드릴게요 🔑
+        </div>
+
         <div class="input-area">
             <div class="input-box">
-                <input type="text" placeholder="아이디" v-model="id"
-                @keyup.enter="this.login()">
-                <input type="password" placeholder="비밀번호" v-model="pw"
+                <input type="text" placeholder="이메일" v-model="email"
                 @keyup.enter="this.login()">
             </div>
             <div class="medium-button"
             v-on:click="this.login()">
-                로그인
+                링크 보내기
             </div>
-        </div>
-        <div class="option">
-            처음 방문하셨다면
-            <router-link class="option-item" to="/auth/register">회원가입</router-link>
-        </div>
-        <div class="option">
-            <router-link to="/auth/find">비밀번호를 잊으셨나요?</router-link>
         </div>
     </div>
 </template>
@@ -35,7 +30,7 @@ export default {
     },
     data() {
         return {
-            id: '',
+            email: '',
             pw: '',
         }
     },
@@ -59,8 +54,11 @@ export default {
     .container {
         max-width: 400px;
     }
+    .sub-text, .sub-text * {
+        color: var(--G500);
+    }
     .input-area {
-        margin: 48px auto 24px;
+        margin: 24px auto;
     }
     .input-box {
         line-height: 48px;
@@ -73,16 +71,7 @@ export default {
     }
     
     .medium-button {
-        width: 80px;
+        width: 100px;
         margin: 20px 0 0 auto;
-    }
-    .option {
-        line-height: 24px;
-        color: var(--G400);
-    }
-    .option-item {
-        font-weight: 500;
-        margin-left: 2px;
-        color: var(--FOCUS);
     }
 </style>

@@ -6,6 +6,7 @@ import MainPage from '../components/main/MainPage'
 import ErrorPage from '../components/error/ErrorPage'
 import LoginPage from '../components/auth/LoginPage'
 import RegisterPage from '../components/auth/RegisterPage'
+import FindPage from '../components/auth/FindPage'
 import ListPage from '../components/list/ListPage'
 import DetailPage from '../components/detail/DetailPage'
 
@@ -23,6 +24,10 @@ const routes = [
         component: RegisterPage
     },
     {
+        path: '/auth/find',
+        component: FindPage
+    },
+    {
         path: '/login',
         component: LoginPage
     },
@@ -32,7 +37,7 @@ const routes = [
     },
     {
         path: '/detail/:id',
-        component: DetailPage
+        component: DetailPage,
     },
     {
         path: '/mypage',

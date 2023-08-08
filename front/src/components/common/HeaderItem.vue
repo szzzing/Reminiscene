@@ -1,8 +1,8 @@
 <template>
    <div class="container">
         <div class="inner">
-            <router-link to="/" class="logo emoji">🌙</router-link>
-            <div class="themeBtn emoji"
+            <router-link to="/" class="logo shadow">🌙</router-link>
+            <div class="themeBtn shadow"
             @click="this.$store.commit('auth/setTheme')">
                 {{ this.$store.state.auth.theme ? "🌞" : "🌝" }}
             </div>

@@ -1,6 +1,6 @@
 <template>
     <div id="title">
-        <div class="title emoji">
+        <div class="title shadow">
             <router-link to="/">
                 🌙
             </router-link>
@@ -19,7 +19,7 @@ export default {
 <style scoped>
     #title {
         max-width: 200px;
-        margin: 0 0 60px;
+        margin: 0 0 72px;
     }
     .title {
         margin: 0 0 12px;
@@ -29,7 +29,7 @@ export default {
     }
     .sub-title {
         color: var(--G700);
-        font-size: 24px;
+        font-size: 28px;
         font-weight: 600;
     }
 </style>
