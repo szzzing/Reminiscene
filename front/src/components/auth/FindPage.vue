@@ -72,7 +72,7 @@ export default {
     }
     
     .medium-button {
-        width: 100px;
+        width: 108px;
         margin: 20px 0 0 auto;
     }
 </style>

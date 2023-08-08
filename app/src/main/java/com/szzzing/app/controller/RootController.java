@@ -18,7 +18,7 @@ public class RootController {
         return "index.html";
     }
 
-    // url 이동 관련 인증
+    // URL 이동시 수행 - 토큰 검증 및 사용자 정보 업데이트
     @GetMapping("/route")
     public void route(HttpServletRequest request, HttpServletResponse response) {
     }

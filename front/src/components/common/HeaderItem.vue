@@ -3,8 +3,8 @@
         <div class="inner">
             <router-link to="/" class="logo shadow">🌙</router-link>
             <div class="themeBtn shadow"
-            @click="this.$store.commit('auth/setTheme')">
-                {{ this.$store.state.auth.theme ? "🌞" : "🌝" }}
+            @click="this.$store.commit('local/setTheme')">
+                {{ this.$store.state.local.theme ? "🌞" : "🌝" }}
             </div>
             <router-link v-if="this.$store.state.auth.user==null"
             to="/login" class="btn">

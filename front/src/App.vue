@@ -1,5 +1,6 @@
 <template>
-    <div class="wrap">
+    <div class="wrap"
+    v-bind:class="{ dark : !this.$store.state.local.theme }">
         <header-item></header-item>
         <div class="flex-wrap">
             <router-view></router-view>

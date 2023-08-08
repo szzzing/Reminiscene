@@ -11,7 +11,7 @@
         <card-list v-if="this.$store.state.movie.query!=''">
         </card-list>
         
-        <div class="next"
+        <div class="next medium-button"
             v-if="this.$store.state.movie.page<this.$store.state.movie.maxPage"
             @click="this.nextPage()">
             다음 페이지
@@ -79,6 +79,7 @@ export default {
     }
     .next {
         text-align: center;
-        margin-top: 40px;
+        margin: 40px auto 0;
+        width: 108px;
     }
 </style>
