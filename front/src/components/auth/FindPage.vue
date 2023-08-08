@@ -42,6 +42,7 @@ export default {
             
             if(id!='' && pw!='') {
                 this.$store.dispatch("auth/login", {id, pw});
+                
             } else {
                 alert("아이디와 비밀번호를 입력해주세요.");
             }

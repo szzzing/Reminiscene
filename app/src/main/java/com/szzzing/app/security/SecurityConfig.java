@@ -58,7 +58,7 @@ public class SecurityConfig {
             .formLogin().disable()
             .httpBasic().disable();
 
-        http.addFilter(new JwtAuthenticationFilter(authenticationManager()))
+        http.addFilter(new JwtAuthenticationFilter(authenticationManager(), userRepository))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository));
 
         return http.build();

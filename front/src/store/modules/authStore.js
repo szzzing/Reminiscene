@@ -32,12 +32,18 @@ export const auth = {
             axios.post("/login",{id, pw})
             .then(response=>{
                 if(response.status==200) {
+                    // 토큰 저장
                     context.commit("setToken", response.headers.authorization);
-                    context.dispatch("getUser", id);
+                    // 사용자 정보 저장
+                    const user = JSON.parse(response.headers.user);
+                    user.nickname = decodeURIComponent(user.nickname);
+                    context.commit("setUser", user);
+                    // 메인 페이지로 이동
                     router.push({ path: '/' });
                 }
             })
-            .catch(()=>{
+            .catch((error)=>{
+                console.log(error);
                 alert("로그인에 실패했어요🥺");
             });
         },
