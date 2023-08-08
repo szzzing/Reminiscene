@@ -65,9 +65,9 @@ public class SecurityConfig {
     }
 
     // configure(WebSecurity web) is deprecated
-    // 시큐리티 설정을 ignore하는 uri 지정
+    // 시큐리티 필터를 무시하는 경로 지정
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/js/**", "/favicon.ico");    // 정적 저장소에 접근하면 시큐리티 설정을 무시하도록 함
+        return (web) -> web.ignoring().requestMatchers("/static/**");    // 정적 저장소에 접근하면 시큐리티 설정을 무시하도록 함
     }
 }
