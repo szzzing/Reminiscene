@@ -1,12 +1,11 @@
 <template>
-  <div class="container">
+<div class="container">
     Copyright ⓒ szzzing🌙. All Rights Reserved
-  </div>
+</div>
 </template>
 
 <script>
 export default {
-
 }
 </script>
 

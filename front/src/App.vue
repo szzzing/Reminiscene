@@ -1,7 +1,7 @@
 <template>
     <div class="wrap"
     v-bind:class="{ dark : !this.$store.state.local.theme }">
-        <header-item></header-item>
+        <header-component></header-component>
         <div class="flex-wrap">
             <router-view></router-view>
         </div>
@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import HeaderItem from './components/common/HeaderItem.vue'
+import HeaderComponent from './components/common/HeaderComponent.vue'
 
 export default {
     components: {
-        HeaderItem,
+        HeaderComponent,
     },
     data() {
         return {
@@ -24,7 +24,7 @@ export default {
         getList(list) {
             this.movieList = list;
         }
-    }
+    },
 }
 </script>
 

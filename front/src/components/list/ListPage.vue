@@ -8,8 +8,8 @@
             {{ this.word }}
         </div>
         
-        <card-list v-if="this.$store.state.movie.query!=''">
-        </card-list>
+        <list-component v-if="this.$store.state.movie.query!=''">
+        </list-component>
         
         <div class="next medium-button"
             v-if="this.$store.state.movie.page<this.$store.state.movie.maxPage"
@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import CardList from "./CardList.vue";
+import ListComponent from "./ListComponent.vue";
 
 export default {
     components: {
-        CardList,
+        ListComponent,
     },
     data() {
         return {

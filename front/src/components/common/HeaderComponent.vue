@@ -10,18 +10,22 @@
             to="/login" class="btn">
                 로그인
             </router-link>
-            <router-link v-if="this.$store.state.auth.user!=null"
-            to="/"
+            <a v-if="this.$store.state.auth.user!=null"
             class="btn"
-            @click="this.$store.commit('auth/logout')">
+            @click="this.logout()">
                 로그아웃
-            </router-link>
+            </a>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    methods: {
+        logout() {
+            this.$store.commit('auth/logout');
+        }
+    }
 }
 </script>
 

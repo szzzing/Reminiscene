@@ -1,5 +1,5 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import axios from '../axios/authAxios'
+import authAxios from '../axios/authAxios'
 import {store} from '../store/index'
 
 import MainPage from '../components/main/MainPage'
@@ -41,7 +41,7 @@ const routes = [
     },
     {
         path: '/mypage',
-        component: MainPage
+        component: MainPage,
     }
 ]
 
@@ -56,8 +56,15 @@ const router = createRouter({
 
 // 라우터 가드
 router.beforeEach(function (to, from, next) {
+
+    // 페이지 위치 정보 저장
+    if(to.path!='/login' && !to.path.startsWith('/auth')) {
+        store.state.local.location = to.path;
+    }
+    console.log(store.state.local.location);
+
     // 인증 처리
-    axios.get("/route").then(()=>{
+    authAxios.get("/route").then(()=>{
         // 1. anonymous() : 인증 상태일 시 에러페이지로
         if(to.path.startsWith("/auth") || to.path.startsWith("/login")) {
             if(store.state.auth.user!=null) {
@@ -69,6 +76,7 @@ router.beforeEach(function (to, from, next) {
         } else if(to.path.startsWith("/mypage")) {
             if(store.state.auth.user==null) {
                 alert("로그인이 필요한 페이지입니다.\n로그인 페이지로 이동합니다.");
+                console.log("로그인 후 이동할 페이지",to.path);
                 return next("/login");
             } else {
                 next();
@@ -77,6 +85,8 @@ router.beforeEach(function (to, from, next) {
         } else {
             next();
         }
+    }).catch((error)=>{
+        console.log("router", error);
     });
 });
 
