@@ -1,6 +1,6 @@
 import apiAxios from '../../axios/apiAxios'
 
-export const movie = {
+const movie = {
     namespaced: true,
     state: {
         query: '',
@@ -56,3 +56,5 @@ export const movie = {
         },
     }
 };
+
+export default movie;

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { router } from '../router/index'
-import { store } from '../store/index'
+import router from '../router/index'
+import store from '../store/index'
 
 const apiAxios = axios.create({
     baseURL: 'https://',
@@ -17,12 +17,7 @@ apiAxios.interceptors.response.use(
         return config
     },
     error => {
-        console.log(error);
-        // if(error.response.status == '901') {
-        //     alert("다시 로그인해주세요.");
-        //     router.push({ path: '/login' });
-        //     store.commit("auth/logout");
-        // }
+        console.log("apiAxios", error);
     }
 )
 

@@ -1,4 +1,4 @@
-export const local = {
+const local = {
     namespaced: true,
     state: {
         theme: true,
@@ -14,3 +14,5 @@ export const local = {
         },
     },
 };
+
+export default local;

@@ -1,8 +1,8 @@
 import authAxios from '@/axios/authAxios';
-import {router} from '@/router/index';
-import {store} from '../index'
+import router from '@/router/index';
+import store from '../index'
 
-export const auth = {
+const auth = {
     namespaced: true,
     state: {
         user: null,
@@ -46,3 +46,5 @@ export const auth = {
         },
     }
 };
+
+export default auth;

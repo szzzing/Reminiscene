@@ -1,6 +1,6 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 import authAxios from '../axios/authAxios'
-import {store} from '../store/index'
+import store from '../store/index'
 
 import MainPage from '../components/main/MainPage'
 import ErrorPage from '../components/error/ErrorPage'
@@ -61,10 +61,9 @@ router.beforeEach(function (to, from, next) {
     if(to.path!='/login' && !to.path.startsWith('/auth')) {
         store.state.local.location = to.path;
     }
-    console.log(store.state.local.location);
 
     // 인증 처리
-    authAxios.get("/route").then(()=>{
+    authAxios.get("/route").then(() => {
         // 1. anonymous() : 인증 상태일 시 에러페이지로
         if(to.path.startsWith("/auth") || to.path.startsWith("/login")) {
             if(store.state.auth.user!=null) {
@@ -75,7 +74,6 @@ router.beforeEach(function (to, from, next) {
         // 2. authorized() : 비인증 상태일 시 로그인 페이지로
         } else if(to.path.startsWith("/mypage")) {
             if(store.state.auth.user==null) {
-                console.log("로그인 후 이동할 페이지",to.path);
                 return next("/login");
             } else {
                 next();
@@ -89,4 +87,4 @@ router.beforeEach(function (to, from, next) {
     });
 });
 
-export { router };
+export default router;

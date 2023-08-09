@@ -2,8 +2,13 @@
     <div class="container">
         <div class="inner">
             <div class="emoji">🚧</div>
-            <div class="title">404</div>
-            <div class="sub-title">존재하지 않는 페이지입니다.</div>
+            <div class="title">
+                페이지가<br>
+                존재하지 않아요
+            </div>
+            <div class="sub-title">
+                <router-link>메인 페이지로 이동할게요</router-link>
+            </div>
         </div>
     </div>
 </template>
