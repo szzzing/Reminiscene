@@ -1,6 +1,6 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import authAxios from '../axios/authAxios'
-import store from '../store/index'
+import store from '@/store/index'
+import axios from '@/axios/index'
 
 import MainPage from '../components/main/MainPage'
 import ErrorPage from '../components/error/ErrorPage'
@@ -58,22 +58,27 @@ const router = createRouter({
 router.beforeEach(function (to, from, next) {
 
     // 페이지 위치 정보 저장
-    if(to.path!='/login' && !to.path.startsWith('/auth')) {
+    if(to.path!='/login' && !to.path.startsWith('/auth') && !to.path.endsWith("/error")) {
         store.state.local.location = to.path;
     }
+    console.log(store.state.local.location);
 
     // 인증 처리
-    authAxios.get("/route").then(() => {
+    axios.get("/route").then(() => {
         // 1. anonymous() : 인증 상태일 시 에러페이지로
-        if(to.path.startsWith("/auth") || to.path.startsWith("/login")) {
+        if(to.path.startsWith("/auth") || to.path.endsWith("/login")) {
+            console.log("비인증상태여야함");
             if(store.state.auth.user!=null) {
+                console.log("현재 인증상태");
                 next("/error");
             } else {
                 next();
             }
         // 2. authorized() : 비인증 상태일 시 로그인 페이지로
         } else if(to.path.startsWith("/mypage")) {
+            console.log("인증상태여야함");
             if(store.state.auth.user==null) {
+                console.log("현재 비인증상태");
                 return next("/login");
             } else {
                 next();

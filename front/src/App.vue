@@ -1,6 +1,5 @@
 <template>
-    <div class="wrap"
-    v-bind:class="{ dark : !this.$store.state.local.theme }">
+    <div class="wrap">
         <header-component></header-component>
         <div class="flex-wrap">
             <router-view></router-view>
@@ -25,6 +24,12 @@ export default {
             this.movieList = list;
         }
     },
+    // 테마 상태 반영
+    created() {
+        if(!this.$store.state.local.theme) {
+            document.documentElement.classList.add('dark');
+        }
+    }
 }
 </script>
 

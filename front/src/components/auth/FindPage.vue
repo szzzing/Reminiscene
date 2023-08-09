@@ -11,10 +11,10 @@
         <div class="input-area">
             <div class="input-box">
                 <input type="text" placeholder="이메일" v-model="email"
-                @keyup.enter="this.login()">
+                @keyup.enter="this.send()">
             </div>
             <div class="medium-button"
-            v-on:click="this.login()">
+            v-on:click="this.send()">
                 링크 보내기
             </div>
         </div>
@@ -31,21 +31,12 @@ export default {
     data() {
         return {
             email: '',
-            pw: '',
         }
     },
     methods: {
-        // 로그인
-        login() {
-            const id = this.id.trim();
-            const pw = this.pw.trim();
-            
-            if(id!='' && pw!='') {
-                this.$store.dispatch("auth/login", {id, pw});
-                
-            } else {
-                alert("아이디와 비밀번호를 입력해주세요.");
-            }
+        // 이메일 보내기
+        send() {
+
         },
     }
 }

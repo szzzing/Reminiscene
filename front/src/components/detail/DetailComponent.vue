@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import apiAxios from '@/axios/apiAxios';
+import movieAxios from '@/axios/movieAxios';
 
 export default {
     async beforeCreate() {
         try {
-            const response = await apiAxios
+            const response = await movieAxios
             .get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
             this.movie = response.data;
         } catch(error) {

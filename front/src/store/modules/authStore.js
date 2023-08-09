@@ -1,5 +1,5 @@
-import authAxios from '@/axios/authAxios';
 import router from '@/router/index';
+import axios from '@/axios/index'
 import store from '../index'
 
 const auth = {
@@ -28,7 +28,7 @@ const auth = {
     },
     actions: {
         login(context, {id, pw}) {
-            authAxios.post("/login",{id, pw})
+            axios.post("/login",{id, pw})
             .then(response=>{
                 if(response.headers.auth=="IS_AUTHENTICATED") {
                     // 토큰 저장

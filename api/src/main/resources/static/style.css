@@ -137,7 +137,7 @@ input::placeholder {
     --G1000: #111;
 }
 
-.wrap.dark {
+:root.dark {
     --G1000: #ffffff;
     --G900: #f7f9fb;
     --G800: #ccc;

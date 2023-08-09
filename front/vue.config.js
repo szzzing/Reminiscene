@@ -17,5 +17,5 @@ module.exports = {
             }
         }
     },
-    outputDir: "../app/src/main/resources/static",
+    outputDir: "../api/src/main/resources/static",
 }

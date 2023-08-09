@@ -9,7 +9,7 @@ const local = {
             state.location = payload;
         },
         setTheme(state) {
-            // document.documentElement.classList.toggle('dark');
+            document.documentElement.classList.toggle('dark');
             state.theme = !state.theme;
         },
     },
