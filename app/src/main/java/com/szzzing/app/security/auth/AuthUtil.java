@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class AuthUtil {
 
     // 유저 정보를 응답 헤더에 담는 메서드
-    public static void setUserHeader(HttpServletResponse response, User user) {
+    public static String userToJson(User user) {
 
         // 보안을 위해 비밀번호 삭제
         user.setPw(null);
@@ -23,6 +23,7 @@ public class AuthUtil {
         // json 객체로 변환
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        response.addHeader("user", json);
+
+        return json;
     }
 }

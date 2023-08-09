@@ -75,7 +75,6 @@ router.beforeEach(function (to, from, next) {
         // 2. authorized() : 비인증 상태일 시 로그인 페이지로
         } else if(to.path.startsWith("/mypage")) {
             if(store.state.auth.user==null) {
-                alert("로그인이 필요한 페이지입니다.\n로그인 페이지로 이동합니다.");
                 console.log("로그인 후 이동할 페이지",to.path);
                 return next("/login");
             } else {
@@ -86,7 +85,7 @@ router.beforeEach(function (to, from, next) {
             next();
         }
     }).catch((error)=>{
-        console.log("router", error);
+        console.log("router 에러 : ", error);
     });
 });
 

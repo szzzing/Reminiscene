@@ -8,7 +8,7 @@ axios.defaults.baseURL = "http://localhost:8080";
 // 요청을 보낼 때 상태에 저장된 token을 함께 전송
 axios.interceptors.request.use(
     config => {
-        config.headers.authorization = store.state.auth.token;
+        config.headers.token = store.state.auth.token;
         return config;
     },
 );
@@ -18,20 +18,19 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     config => {
         // 토큰 저장
-        store.commit("auth/setToken", config.headers.authorization);
+        store.commit("auth/setToken", config.headers.token);
         // 사용자 정보 저장
-        if(config.headers.user != null) {
-            store.commit("auth/setUser", JSON.parse(config.headers.user));
+        store.commit("auth/setUser", config.headers.user==null ? null : JSON.parse(config.headers.user));
+
+        if(config.headers.auth=="IS_EXPIRED") {
+            store.commit("auth/logout");
+            alert("오랫동안 접속하지 않아 로그아웃 되었어요🥺");
+            router.push({ path: '/login' });
         }
         return config
     },
     error => {
-        if(error.response.status == '901') {
-            store.commit("auth/logout");
-            alert("인증이 만료되었어요🥺\n다시 로그인해주세요.");
-            router.push({ path: '/login' });
-        }
-        // Promise.reject(error);
+        console.log(error);
     }
 )
 

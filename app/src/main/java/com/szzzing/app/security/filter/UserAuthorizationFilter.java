@@ -1,12 +1,12 @@
-package com.szzzing.app.security.jwt;
+package com.szzzing.app.security.filter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.szzzing.app.domain.User;
 import com.szzzing.app.repository.UserRepository;
 import com.szzzing.app.security.auth.AuthUtil;
+import com.szzzing.app.security.auth.AuthenticationProperties;
 import com.szzzing.app.security.auth.PrincipalDetails;
+import com.szzzing.app.security.jwt.JwtProperties;
+import com.szzzing.app.security.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,33 +20,32 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.io.IOException;
 
 // 인가 관련 필터
-public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+public class UserAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UserRepository userRepository;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
+    public UserAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
         super(authenticationManager);
         this.userRepository = userRepository;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        logger.info("토큰 검증");
-        logger.info(request.getRequestURI());
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        logger.info("토큰 검증 - "+request.getRequestURI());
 
         // 헤더에 토큰을 담아 보냈는지(인증받은 사용자인지) 검사하는 과정
         String token = JwtUtil.getToken(request);
 
-        // 헤더에 토큰이 없는 경우, JwtAuthorizationFilter을 통과하고 JwtAuthenticationFilter에서 로그인을 진행하도록 리턴
+        // 헤더에 토큰이 없는 경우, JwtAuthorizationFilter을 통과하고 리턴
         if(token == null || !token.startsWith(JwtProperties.TOKEN_PREFIX)) {
-            chain.doFilter(request, response);
+            filterChain.doFilter(request, response);
             return;
         }
 
         // 헤더에 토큰이 있는 경우, 정보 확인
         if(!JwtUtil.validateToken(token)) {
             // 만료된 토큰 - TokenExpiredException 발생
-            response.setStatus(901);
+            response.setHeader("auth", AuthenticationProperties.IS_EXPIRED);
         } else {
             // 유효한 토큰 - 아이디를 통해 사용자 존재 여부/권한 확인
             String id = JwtUtil.getId(token);
@@ -58,11 +57,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUser().getId(), null, principalDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                // 응답 헤더에 토큰과 유저 정보 추가
+                // 응답 헤더에 토큰, 유저 정보, 인증 정보 추가
                 response.setHeader(JwtProperties.HEADER_STRING, token);
-                AuthUtil.setUserHeader(response, user);
+                response.setHeader("user", AuthUtil.userToJson(user));
+                response.setHeader("auth", user==null ? AuthenticationProperties.AUTHENTICATION_FAILED : AuthenticationProperties.IS_AUTHENTICATIED);
             }
         }
-        chain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }

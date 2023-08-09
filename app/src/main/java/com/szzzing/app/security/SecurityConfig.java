@@ -1,8 +1,8 @@
 package com.szzzing.app.security;
 
 import com.szzzing.app.repository.UserRepository;
-import com.szzzing.app.security.jwt.JwtAuthenticationFilter;
-import com.szzzing.app.security.jwt.JwtAuthorizationFilter;
+import com.szzzing.app.security.filter.UserAuthenticationFilter;
+import com.szzzing.app.security.filter.UserAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -58,8 +58,9 @@ public class SecurityConfig {
             .formLogin().disable()
             .httpBasic().disable();
 
-        http.addFilter(new JwtAuthenticationFilter(authenticationManager(), userRepository))
-            .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository));
+        http
+            .addFilter(new UserAuthorizationFilter(authenticationManager(), userRepository))
+            .addFilter(new UserAuthenticationFilter(authenticationManager(), userRepository));
 
         return http.build();
     }
