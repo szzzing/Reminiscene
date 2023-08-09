@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userMapper">
+
+    <insert id="insertOne">
+        insert into ta9_user
+        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default)
+    </insert>
+
+    <select id="selectAll" resultMap="userResultMap">
+        select * from ta9_user
+        where user_role='U'
+    </select>
+
+    <select id="selectOneById" resultMap="userResultMap">
+        select * from ta9_user
+        where user_id=#{id}
+    </select>
+
+    <select id="selectOneByEmail" resultMap="userResultMap">
+        select * from ta9_user
+        where user_email=#{email}
+    </select>
+
+    <resultMap id="userResultMap" type="com.szzzing.api.domain.User">
+        <id column="user_id" property="id"/>
+        <result column="user_pw" property="pw"/>
+        <result column="user_email" property="email"/>
+        <result column="user_nickname" property="nickname"/>
+        <result column="user_role" property="role"/>
+        <result column="user_enable" property="enable"/>
+        <result column="user_gender" property="gendeusr"/>
+        <result column="user_type" property="type"/>
+        <result column="user_birthday" property="birthday"/>
+        <result column="user_reg_date" property="regDate"/>
+        <result column="user_mod_date" property="modDate"/>
+    </resultMap>
+</mapper>
