@@ -42,6 +42,10 @@ const routes = [
     {
         path: '/mypage',
         component: MainPage,
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/error',
     }
 ]
 
@@ -61,34 +65,10 @@ router.beforeEach(function (to, from, next) {
     if(to.path!='/login' && !to.path.startsWith('/auth') && !to.path.endsWith("/error")) {
         store.state.local.location = to.path;
     }
-    console.log(store.state.local.location);
 
     // 인증 처리
-    axios.get("/route").then(() => {
-        // 1. anonymous() : 인증 상태일 시 에러페이지로
-        if(to.path.startsWith("/auth") || to.path.endsWith("/login")) {
-            console.log("비인증상태여야함");
-            if(store.state.auth.user!=null) {
-                console.log("현재 인증상태");
-                next("/error");
-            } else {
-                next();
-            }
-        // 2. authorized() : 비인증 상태일 시 로그인 페이지로
-        } else if(to.path.startsWith("/mypage")) {
-            console.log("인증상태여야함");
-            if(store.state.auth.user==null) {
-                console.log("현재 비인증상태");
-                return next("/login");
-            } else {
-                next();
-            }
-        // 3. permitAll() : 처리 없이 route
-        } else {
-            next();
-        }
-    }).catch((error)=>{
-        console.log("router 에러 : ", error);
+    axios.get("/route"+to.path).then(() => {
+        next();
     });
 });
 

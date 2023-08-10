@@ -11,15 +11,17 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.io.IOException;
 
-// 인가 관련 필터
 public class UserAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UserRepository userRepository;
@@ -30,39 +32,40 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         logger.info("토큰 검증 - "+request.getRequestURI());
 
         // 헤더에 토큰을 담아 보냈는지(인증받은 사용자인지) 검사하는 과정
         String token = JwtUtil.getToken(request);
 
-        // 헤더에 토큰이 없는 경우, JwtAuthorizationFilter을 통과하고 리턴
-        if(token == null || !token.startsWith(JwtProperties.TOKEN_PREFIX)) {
-            filterChain.doFilter(request, response);
+        // 헤더에 토큰이 없는 경우
+        if(token == null || !token.startsWith(JwtProperties.TOKEN_PREFIX) || !JwtUtil.validateToken(token)) {
+            chain.doFilter(request, response);
             return;
         }
 
-        // 헤더에 토큰이 있는 경우, 정보 확인
+        // 토큰이 있지만 만료된 경우
         if(!JwtUtil.validateToken(token)) {
-            // 만료된 토큰 - TokenExpiredException 발생
-            response.setHeader("auth", AuthenticationProperties.IS_EXPIRED);
-        } else {
-            // 유효한 토큰 - 아이디를 통해 사용자 존재 여부/권한 확인
-            String id = JwtUtil.getId(token);
-            if(id != null) {
-                User user = userRepository.selectOneById(id);
-
-                // 권한 관리를 위해 SecurityContext에 인증 정보 저장
-                PrincipalDetails principalDetails = new PrincipalDetails(user);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUser().getId(), null, principalDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                // 응답 헤더에 토큰, 유저 정보, 인증 정보 추가
-                response.setHeader(JwtProperties.HEADER_STRING, token);
-                response.setHeader("user", AuthUtil.userToJson(user));
-                response.setHeader("auth", user==null ? AuthenticationProperties.AUTHENTICATION_FAILED : AuthenticationProperties.IS_AUTHENTICATIED);
-            }
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            chain.doFilter(request, response);
+            return;
         }
-        filterChain.doFilter(request, response);
+
+        // 유효한 토큰인 경우 - 아이디를 통해 사용자 존재 여부/권한 확인
+        String id = JwtUtil.getId(token);
+        if(id != null) {
+            User user = userRepository.selectOneById(id);
+
+            // 권한 관리를 위해 SecurityContext에 인증 정보 저장
+            PrincipalDetails principalDetails = new PrincipalDetails(user);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUser().getId(), null, principalDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // 응답 헤더에 토큰, 유저 정보, 인증 정보 추가
+            response.setHeader(JwtProperties.HEADER_STRING, token);
+            response.setHeader("user", AuthUtil.userToJson(user));
+        }
+
+        chain.doFilter(request, response);
     }
 }

@@ -12,20 +12,47 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     (config) => {
         console.log("전역 인터셉터 동작");
+
+        // 1. 인증이 필요하진 않지만, 토큰 만료로 로그아웃된 경우
+        if(store.state.auth.token!=null && config.headers.token==null) {
+            store.commit("auth/logout");
+            alert("오랫동안 접속하지 않아 로그아웃 되었어요🥺");
+        }
         // 토큰 저장
         store.commit("auth/setToken", config.headers.token);
         // 사용자 정보 저장
         store.commit("auth/setUser", config.headers.user==null ? null : JSON.parse(config.headers.user));
 
-        if(config.headers.auth=="IS_EXPIRED") {
-            store.commit("auth/logout");
-            alert("오랫동안 접속하지 않아 로그아웃 되었어요🥺");
-            router.push({ path: '/login' });
-        }
-        return config
+        return config;
     },
     (error) => {
-        console.log(error);
+        console.log("전역 인터셉터 에러", error);
+
+        // 1. 미인증으로 인한 에러
+        if(error.response.status==401) {
+
+            // 1) 토큰 만료롤 인한 로그아웃 시
+            if(store.state.auth.token!=null) {
+                store.commit("auth/logout");
+                alert("오랫동안 접속하지 않아 로그아웃 되었어요🥺");
+            }
+            // 2) 로그인 페이지로 이동
+            router.push({ path: '/login' });
+        }
+
+        // 2. 권한 부족으로 인한 에러
+        if(error.response.status==403) {
+
+            // 1) 로그인이 안되어있으면 로그인페이지로
+            if(store.state.auth.token==null) {
+                router.push({ path: '/login' });
+
+            // 2) 로그인이 되어있으면 에러페이지로
+            } else if(store.state.auth.token!=null) {
+                router.push({ path: '/error' });
+            }
+            router.push({ path: '/login' });
+        }
     }
 );
 
