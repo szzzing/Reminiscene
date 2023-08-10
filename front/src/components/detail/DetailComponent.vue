@@ -43,7 +43,7 @@ export default {
             .get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
             this.movie = response.data;
         } catch(error) {
-            console.log("detailpage : beforeCreate", error);
+            this.$router.push('/error');
         }
     },
     data() {
@@ -62,15 +62,6 @@ export default {
             }
             this.movie.genres = genre.join('/');
         },
-    },
-    // /list 페이지로 이동시 검색결과 유지
-    // 그 외 페이지로 이동시 검색결과 유지 x
-    beforeRouteLeave(to, from, next) {
-        if(!to.path.startsWith('/list') && !to.path.startsWith('/login')) {
-            this.$store.commit('movie/setQuery', '');
-            this.$store.dispatch('movie/searchList', {});
-        }
-        next();
     },
 }
 </script>

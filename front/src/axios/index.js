@@ -16,7 +16,7 @@ axios.interceptors.response.use(
         // 1. 인증이 필요하진 않지만, 토큰 만료로 로그아웃된 경우
         if(store.state.auth.token!=null && config.headers.token==null) {
             store.commit("auth/logout");
-            alert("오랫동안 접속하지 않아 로그아웃 되었어요🥺");
+            alert("로그인 한지 오래 되어서 로그아웃 되었어요🥺");
         }
         // 토큰 저장
         store.commit("auth/setToken", config.headers.token);
