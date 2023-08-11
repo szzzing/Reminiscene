@@ -194,11 +194,11 @@ input {
 }
 
 .fa-circle-check {
-    color: rgba(99, 206, 86);
+    color: var(--GREEN);
 }
 
 .fa-circle-xmark {
-    color: rgba(237, 106, 94);
+    color: var(--RED);
 }
 
 .checked {

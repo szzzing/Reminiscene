@@ -54,7 +54,7 @@ export default {
             width: calc((100% - 40px)/3);
         }
     }
-    @media screen and (max-width:479px) {
+    @media screen and (max-width:600px) {
         .movie {
             width: calc((100% - 20px)/2);
         }

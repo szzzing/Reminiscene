@@ -5,16 +5,7 @@
 
 <script>
 export default {
-    computed: {
-        user() {
-            return this.$store.state.auth.user;
-        }
-    },
-    watch: {
-        user() {
-            console.log("로그아웃 감지");
-        }
-    }
+
 }
 </script>
 

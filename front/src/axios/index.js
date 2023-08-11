@@ -51,7 +51,6 @@ axios.interceptors.response.use(
             } else if(store.state.auth.token!=null) {
                 router.push({ path: '/error' });
             }
-            router.push({ path: '/login' });
         }
     }
 );

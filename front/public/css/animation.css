@@ -1,0 +1,12 @@
+.vibration {
+    animation: vibrate 0.05s infinite alternate;
+}
+
+@keyframes vibrate {
+    0% {
+        transform: translateX(-1px);
+    }
+    100% {
+        transform: translateX(1px);
+    }
+}

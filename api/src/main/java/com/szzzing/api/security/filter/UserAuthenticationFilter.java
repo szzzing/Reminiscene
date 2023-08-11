@@ -69,20 +69,12 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         // 응답 헤더에 사용자 정보 추가
         User user = userRepository.selectOneById(principalDetails.getUser().getId());
         response.setHeader("user", AuthUtil.userToJson(user));
-
-        // 응답 헤더에 인증 정보 추가
-        response.setHeader("auth", AuthenticationProperties.IS_AUTHENTICATIED);
     }
 
     // 인증 실패 로직
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         logger.info("로그인 실패");
-
-        // 응답 헤더에 인증 정보 추가
-        response.setHeader("auth", AuthenticationProperties.AUTHENTICATION_FAILED);
-
-        // 401 대신 200 반환
-        response.setStatus(200);
+        response.setStatus(401);
     }
 }

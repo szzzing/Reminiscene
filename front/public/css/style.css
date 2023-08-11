@@ -163,4 +163,6 @@ input::placeholder {
     --O800: rgba(0, 12, 30, 0.8);
     --O900: rgba(2, 9, 19, 0.91);
     --FOCUS: #ffc400;
+    --RED: rgba(237, 106, 94);
+    --GREEN: rgba(99, 206, 86);
 }
