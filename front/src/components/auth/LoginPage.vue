@@ -1,11 +1,23 @@
 <template>
     <div class="container">
-        <title-item>
+        
+        <alert-component v-bind:alert="undo">
+            <template v-slot:emoji>⚠️</template>
+            <template v-slot:text>아이디와 비밀번호를 입력해주세요.</template>
+        </alert-component>
+       
+        <alert-component v-bind:alert="failed">
+            <template v-slot:emoji>🥺</template>
+            <template v-slot:text>정확한 로그인 정보를 입력해주세요.</template>
+        </alert-component>
+        
+        <title-component>
+            <template v-slot:emoji>🔑</template>
             <template v-slot:title>로그인</template>
-        </title-item>
+        </title-component>
         
         <div class="input-area">
-            <div class="input-box" :class="{ 'vibration' : vibrate }">
+            <div class="input-box">
                 <input type="text" placeholder="아이디" v-model="id"
                 @keyup.enter="this.login()">
                 <input type="password" placeholder="비밀번호" v-model="pw"
@@ -27,17 +39,20 @@
 </template>
 
 <script>
-import TitleItem from '../item/TitleItem.vue'
+import TitleComponent from '../item/TitleComponent.vue'
+import AlertComponent from '../modal/AlertComponent.vue'
 
 export default {
     components: {
-        TitleItem,
+        TitleComponent,
+        AlertComponent,
     },
     data() {
         return {
             id: '',
             pw: '',
-            vibrate: false,
+            undo: false,
+            failed: false,
         }
     },
     methods: {
@@ -57,11 +72,12 @@ export default {
                     this.$router.push({ path: this.$store.state.local.location==null ? '/' : this.$store.state.local.location });
                 })
                 .catch(()=>{
-                    alert("로그인에 실패했어요🥺");
-                    
+                    this.failed = true;
+                    setTimeout(() => this.failed = false, 3000);
                 });
             } else {
-                alert("아이디와 비밀번호를 입력해주세요");
+                this.undo = true;
+                setTimeout(() => this.undo = false, 3000);
             }
         },
     }

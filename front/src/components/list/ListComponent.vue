@@ -44,7 +44,7 @@ export default {
         cursor: pointer;
         overflow: visible;
     }
-    @media screen and (max-width:1023px) {
+    @media screen and (max-width:1179px) {
         .movie {
             width: calc((100% - 60px)/4);
         }

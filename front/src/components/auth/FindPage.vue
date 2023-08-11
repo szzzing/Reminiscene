@@ -1,8 +1,9 @@
 <template>
     <div class="container">
-        <title-item>
+        <title-component>
+            <template v-slot:emoji>🔎</template>
             <template v-slot:title>비밀번호 찾기</template>
-        </title-item>
+        </title-component>
         <div class="sub-text">
             가입시 계정 인증에 사용한 <b>이메일</b>을 입력해주세요.<br>
             비밀번호를 바꿀 수 있는 링크를 보내드릴게요 🔑
@@ -22,11 +23,11 @@
 </template>
 
 <script>
-import TitleItem from '../item/TitleItem.vue'
+import TitleComponent from '../item/TitleComponent.vue'
 
 export default {
     components: {
-        TitleItem,
+        TitleComponent,
     },
     data() {
         return {
