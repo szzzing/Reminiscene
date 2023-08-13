@@ -5,6 +5,7 @@ import com.szzzing.api.domain.User;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 
 public class AuthUtil {
 
@@ -17,6 +18,7 @@ public class AuthUtil {
         if(user.getNickname()!=null) {
             user.setNickname(URLEncoder.encode(user.getNickname(), StandardCharsets.UTF_8));
         }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
         // json 객체로 변환
         Gson gson = new Gson();

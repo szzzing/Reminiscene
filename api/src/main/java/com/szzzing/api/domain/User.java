@@ -3,7 +3,6 @@ package com.szzzing.api.domain;
 import lombok.Data;
 
 import java.sql.Timestamp;
-import java.sql.Date;
 
 
 @Data
@@ -13,7 +12,7 @@ public class User {
     private String email;
     private String nickname;
     private String gender;
-    private Date birthday;
+    private Timestamp birthday;
     private Timestamp regDate;
     private Timestamp modDate;
     private String role;

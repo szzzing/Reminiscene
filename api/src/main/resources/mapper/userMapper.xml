@@ -36,7 +36,7 @@
         <result column="user_nickname" property="nickname"/>
         <result column="user_role" property="role"/>
         <result column="user_enable" property="enable"/>
-        <result column="user_gender" property="gendeusr"/>
+        <result column="user_gender" property="gender"/>
         <result column="user_type" property="type"/>
         <result column="user_birthday" property="birthday"/>
         <result column="user_reg_date" property="regDate"/>

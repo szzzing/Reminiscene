@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="inner email" ref="email">
+            <div class="inner" ref="email">
                 <div class="title">📫 이메일</div>
                 <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
                 <div class="input-box"
@@ -34,8 +34,38 @@
                 </div>
             </div>
 
+            <div class="inner" ref="gender">
+                <div class="title">🪞 성별</div>
+                <div class="sub-title">성별을 선택해주세요.</div>
+                <div class="select-box">
+                    <div class="select-item" v-bind:class="{ 'selected' : this.gender=='M' }"
+                    @click="this.selectGender('M')">
+                        <div class="emoji">👨</div>
+                        <div class="label">남자</div>
+                    </div>
+                    <div class="select-item" v-bind:class="{ 'selected' : this.gender=='F' }"
+                    @click="this.selectGender('F')">
+                        <div class="emoji">👩</div>
+                        <div class="label">여자</div>
+                    </div>
+                    <div class="select-item" v-bind:class="{ 'selected' : this.gender==null }"
+                    @click="this.selectGender(null)">
+                        <div class="emoji">🧑</div>
+                        <div class="label">비공개</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inner" ref="birthday">
+                <div class="title">🎂 생일</div>
+                <div class="sub-title">태어난 날을 입력해주세요.</div>
+                <div class="input-box">
+                    <input type="date" min="1900-01-01" max="2023-08-30" v-model="this.birthday">
+                </div>
+            </div>
+
             <div class="inner">
-                <div class="big-button" @click="register()">
+                <div class="big-button" @click="modify()">
                     수정하기
                 </div>
             </div>
@@ -56,6 +86,9 @@ export default {
         return {
             nickname: this.$store.state.auth.user.nickname,
             email: this.$store.state.auth.user.email,
+            gender: this.$store.state.auth.user.gender,
+            birthday: this.$store.state.auth.user.birthday,
+
             //  사용 가능 여부 옵션
             checkedNickname: true,
             checkedEmail: true,
@@ -110,8 +143,13 @@ export default {
             }
 
         },
-        //  회원가입
-        register() {
+        //  성별 선택
+        selectGender(gender) {
+            this.gender = gender;
+        },
+
+        //  내 정보 수정
+        modify() {
             // 입력 여부 확인
             if (!this.checkedNickname) {
                 this.$refs.nickname.scrollIntoView({ behavior: "smooth" });
@@ -120,17 +158,19 @@ export default {
                 this.$refs.email.scrollIntoView({ behavior: "smooth" });
                 this.alert("이메일을 확인해주세요.");
             } else {
-                const id = this.id;
+                const nickname = this.nickname;
                 const email = this.email;
-                this.axios.post("/mypage/modify", { id, email })
-                    .then((response) => {
-                        if(response.status==200) {
-                            alert("회원가입에 성공했습니다.");
-                            this.$router.push({ path: '/login' });
-                        }
+                const gender = this.gender;
+                const birthday = this.birthday;
+                this.axios.post("/mypage/modify", { nickname, email, gender, birthday })
+                    .then(() => {
+                        alert("내 정보를 수정했어요.");
+                        this.$router.push({ path: '/mypage' });
                     });
             }
         },
+
+        // 입력 관련 메세지
         alert(message) {
             this.undo = true;
             this.message = message;
@@ -162,14 +202,38 @@ export default {
     font-size: 18px;
 }
 
-.input-box {
+.input-box, .select-box {
     margin: 12px 0 0;
     display: flex;
-    gap: 16px;
+    gap: 20px;
     align-items: center;
 }
 
 input {
+    font-size: 18px;
+}
+
+.select-item > * {
+    text-align: center;
+    filter: grayscale(100%);
+    color: var(--G500);
+    cursor: pointer;
+}
+.select-item.selected > * {
+    filter: grayscale(0%);
+    color: var(--G1000);
+}
+.select-item > .emoji {
+    opacity: 0.5;
+}
+.select-item.selected > .emoji {
+    opacity: 1;
+}
+.select-item .emoji {
+    font-size: 48px;
+    line-height: 1.2;
+}
+.select-item .label {
     font-size: 18px;
 }
 
