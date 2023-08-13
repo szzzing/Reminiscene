@@ -194,6 +194,7 @@ export default {
 
 .sub-title {
     color: var(--G400);
+    font-size: 18px;
 }
 
 .input-box {

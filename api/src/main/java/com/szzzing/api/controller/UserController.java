@@ -21,12 +21,6 @@ public class UserController {
         System.out.println(list);
     }
 
-    // 로그인 - 로그인시 유저 정보
-    @GetMapping("/mypage/{id}")
-    public User loginInfo(@PathVariable String id) {
-        return userService.selectOneById(id);
-    }
-
     // 회원가입
     @PostMapping("/auth/register")
     public int register(@RequestBody User user) {
@@ -35,15 +29,26 @@ public class UserController {
 
     // 회원가입 - 아이디 중복 체크
     @GetMapping("/auth/check/id/{id}")
-    public boolean checkAvailableId(@PathVariable String id) {
-        return userService.selectOneById(id) == null;
+    public boolean authCheckId(@PathVariable String id) {
+        return userService.authCheckId(id);
     }
 
     // 회원가입 - 이메일 중복 체크
     @GetMapping("/auth/check/email/{email}")
-    public boolean checkAvailableEmail(@PathVariable String email) {
-        return userService.selectOneByEmail(email) == null;
+    public boolean authCheckEmail(@PathVariable String email) {
+        return userService.authCheckEmail(email);
     }
 
-    // 로그아웃
+    // 마이페이지
+
+    // 마이페이지 - 닉네임 중복 체크
+    @GetMapping("/mypage/check/nickname/{nickname}")
+    public boolean mypageCheckNickname(@PathVariable String nickname) {
+        return userService.mypageCheckNickname(nickname);
+    }
+
+    @GetMapping("/mypage/check/email/{email}")
+    public boolean mypageCheckEmail(@PathVariable String email) {
+        return userService.mypageCheckEmail(email);
+    }
 }

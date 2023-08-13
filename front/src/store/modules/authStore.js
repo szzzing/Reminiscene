@@ -7,6 +7,7 @@ const auth = {
     state: {
         user: null,
         token: null,
+        loginAlert: false,
     },
     getters: {
 
@@ -24,6 +25,11 @@ const auth = {
         logout(state) {
             state.user = null;
             state.token = null;
+            
+        },
+        setLoginAlert(state) {
+            state.loginAlert = true;
+            setTimeout(() => state.loginAlert = false, 3000);
         }
     },
     actions: {

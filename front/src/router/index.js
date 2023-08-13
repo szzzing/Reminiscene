@@ -2,13 +2,15 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 import store from '@/store/index'
 import axios from '@/axios/index'
 
-import MainPage from '../components/main/MainPage'
-import ErrorPage from '../components/error/ErrorPage'
-import LoginPage from '../components/auth/LoginPage'
-import RegisterPage from '../components/auth/RegisterPage'
-import FindPage from '../components/auth/FindPage'
-import ListPage from '../components/list/ListPage'
-import DetailPage from '../components/detail/DetailPage'
+import MainPage from '@/components/main/MainPage'
+import ErrorPage from '@/components/error/ErrorPage'
+import LoginPage from '@/components/auth/LoginPage'
+import RegisterPage from '@/components/auth/RegisterPage'
+import FindPage from '@/components/auth/FindPage'
+import ListPage from '@/components/list/ListPage'
+import DetailPage from '@/components/detail/DetailPage'
+import MyPage from '@/components/mypage/MyPage'
+import ModifyPage from '@/components/mypage/ModifyPage'
 
 const routes = [
     {
@@ -41,7 +43,11 @@ const routes = [
     },
     {
         path: '/mypage',
-        component: MainPage,
+        component: MyPage,
+    },
+    {
+        path: '/mypage/modify',
+        component: ModifyPage,
     },
     {
         path: '/:pathMatch(.*)*',

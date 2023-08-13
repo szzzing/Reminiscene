@@ -29,4 +29,8 @@ public class UserRepository {
     public User selectOneByEmail(String email) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByEmail", email);
     }
+
+    public User selectOneByNickname(String nickname) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByNickname", nickname);
+    }
 }

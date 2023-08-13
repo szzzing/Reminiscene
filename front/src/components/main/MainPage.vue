@@ -2,7 +2,7 @@
     <div class="container">
         <div class="category">
             <router-link class="category-item" to="/list">영화 검색</router-link>
-            <router-link class="category-item" to="/admin">관리자</router-link>
+            <router-link class="category-item" to="/mypage">마이페이지</router-link>
         </div>
         <div v-if="this.$store.state.auth.user!=null">{{ this.$store.state.auth.user.nickname }} 님</div>
         <router-view></router-view>

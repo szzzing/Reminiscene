@@ -19,15 +19,14 @@ public class UserService {
         return userRepository.selectAll();
     }
 
-    public User selectOneById(String id) {
+    public boolean authCheckId(String id) {
         User user = userRepository.selectOneById(id);
-        if(user!=null) user.setPw(null);
-        return user;
+        return user == null;
     }
 
-    public User selectOneByEmail(String email) {
+    public boolean authCheckEmail(String email) {
         User user = userRepository.selectOneByEmail(email);
-        return user;
+        return user == null;
     }
     
     // 회원가입
@@ -38,5 +37,15 @@ public class UserService {
         user.setEnable(true);
         user.setType("N");
         return userRepository.insertOne(user);
+    }
+
+    public boolean mypageCheckNickname(String nickname) {
+        User user = userRepository.selectOneByNickname(nickname);
+        return user == null;
+    }
+
+    public boolean mypageCheckEmail(String email) {
+        User user = userRepository.selectOneByEmail(email);
+        return user == null;
     }
 }
