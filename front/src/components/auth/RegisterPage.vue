@@ -1,11 +1,6 @@
 <template>
     <div class="container">
 
-        <alert-component v-bind:alert="undo">
-            <template v-slot:emoji>⚠️</template>
-            <template v-slot:text>{{ message }}</template>
-        </alert-component>
-
         <title-component>
             <template v-slot:emoji>🪪</template>
             <template v-slot:title>회원가입</template>
@@ -67,12 +62,10 @@
 
 <script>
 import TitleComponent from '../item/TitleComponent.vue'
-import AlertComponent from '../modal/AlertComponent.vue';
 
 export default {
     components: {
         TitleComponent,
-        AlertComponent,
     },
     data() {
         return {
@@ -143,16 +136,16 @@ export default {
             // 입력 여부 확인
             if (!this.checkedId) {
                 this.$refs.id.scrollIntoView({ behavior: "smooth" });
-                this.alert("아이디를 확인해주세요.");
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"아이디를 확인해주세요." });
             } else if (!this.checkedPw) {
                 this.$refs.pw.scrollIntoView({ behavior: "smooth" });
-                this.alert("비밀번호를 확인해주세요.");
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"비밀번호를 확인해주세요." });
             } else if (!this.checkedPw2) {
                 this.$refs.pw2.scrollIntoView({ behavior: "smooth" });
-                this.alert("비밀번호를 확인해주세요.");
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"비밀번호를 확인해주세요." });
             } else if (!this.checkedEmail) {
                 this.$refs.email.scrollIntoView({ behavior: "smooth" });
-                this.alert("이메일을 확인해주세요.");
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"이메일을 확인해주세요." });
             } else {
                 const id = this.id;
                 const pw = this.pw;

@@ -11,10 +11,10 @@
                 <div class="title nickname" ref="nickname">🙂 닉네임</div>
                 <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.nickname != '' && checkedNickname, 'unchecked': this.nickname != '' && !checkedNickname }">
+                    v-bind:class="{ 'checked': this.nickname != this.$store.state.auth.user.nickname && checkedNickname, 'unchecked': !checkedNickname }">
                     <input type="text" v-model="nickname">
-                    <i class="fa-solid fa-circle-check" v-if="this.nickname != '' && checkedNickname"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.nickname != '' && !checkedNickname"></i>
+                    <i class="fa-solid fa-circle-check" v-if="this.nickname != this.$store.state.auth.user.nickname && checkedNickname"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="this.nickname != this.$store.state.auth.user.nickname && !checkedNickname"></i>
                 </div>
             </div>
 
@@ -22,10 +22,10 @@
                 <div class="title">📫 이메일</div>
                 <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.email != '' && checkedEmail, 'unchecked': this.email != '' && !checkedEmail }">
+                    v-bind:class="{ 'checked': this.email != this.$store.state.auth.user.email && checkedEmail, 'unchecked': !checkedEmail }">
                     <input type="text" v-model="email">
-                    <i class="fa-solid fa-circle-check" v-if="this.email != '' && checkedEmail"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.email != '' && !checkedEmail"></i>
+                    <i class="fa-solid fa-circle-check" v-if="this.email != this.$store.state.auth.user.email && checkedEmail"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="this.email != this.$store.state.auth.user.email && !checkedEmail"></i>
                 </div>
             </div>
 

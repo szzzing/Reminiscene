@@ -5,32 +5,32 @@
 <mapper namespace="userMapper">
 
     <insert id="insertOne">
-        insert into ta9_user
+        insert into user
         values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default)
     </insert>
 
     <select id="selectAll" resultMap="userResultMap">
-        select * from ta9_user
+        select * from user
         where user_role='U'
     </select>
 
     <select id="selectOneById" resultMap="userResultMap">
-        select * from ta9_user
+        select * from user
         where user_id=#{id}
     </select>
 
     <select id="selectOneByNickname" resultMap="userResultMap">
-        select * from ta9_user
+        select * from user
         where user_nickname=#{nickname}
     </select>
 
     <select id="selectOneByEmail" resultMap="userResultMap">
-        select * from ta9_user
+        select * from user
         where user_email=#{email}
     </select>
 
     <update id="updateOne">
-        update ta9_user
+        update user
         set user_nickname = #{nickname},
             user_email = #{email},
             user_gender = #{gender},
