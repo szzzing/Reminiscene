@@ -1,11 +1,11 @@
 <template>
     <transition name="alert">
-        <div id="alert" v-if="this.$store.state.local.alert">
+        <div id="alert" v-if="this.$store.state.modal.alert">
             <div class="emoji">
-                {{ this.$store.state.local.alertEmoji }}
+                {{ this.$store.state.modal.alertEmoji }}
             </div>
             <div class="text">
-                {{ this.$store.state.local.alertText }}
+                {{ this.$store.state.modal.alertText }}
             </div>
         </div>
     </transition>

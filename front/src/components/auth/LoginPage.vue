@@ -60,10 +60,10 @@ export default {
                     this.$router.push({ path: this.$store.state.local.location==null ? '/' : this.$store.state.local.location });
                 })
                 .catch(()=>{
-                    this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"로그인에 실패했어요." });
+                    this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"로그인에 실패했어요." });
                 });
             } else {
-                this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"아이디와 비밀번호를 입력해주세요." });
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"아이디와 비밀번호를 입력해주세요." });
             }
         },
     }

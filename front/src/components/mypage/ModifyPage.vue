@@ -146,10 +146,10 @@ export default {
             // 입력 여부 확인
             if (!this.checkedNickname) {
                 this.$refs.nickname.scrollIntoView({ behavior: "smooth" });
-                this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"닉네임을 확인해주세요." });
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"닉네임을 확인해주세요." });
             } else if (!this.checkedEmail) {
                 this.$refs.email.scrollIntoView({ behavior: "smooth" });
-                this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"이메일을 확인해주세요." });
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"이메일을 확인해주세요." });
             } else {
                 const nickname = this.nickname;
                 const email = this.email;
@@ -157,7 +157,7 @@ export default {
                 const birthday = this.birthday;
                 this.axios.post("/mypage/modify", { nickname, email, gender, birthday })
                     .then(() => {
-                        this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"내 정보를 수정했어요." });
+                        this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"내 정보를 수정했어요." });
                         this.$router.push({ path: '/mypage' });
                     });
             }
