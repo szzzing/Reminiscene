@@ -52,6 +52,9 @@ axios.interceptors.response.use(
                 router.push({ path: '/error' });
             }
         }
+
+        // 에러 되던지기
+        return Promise.reject(error);
     }
 );
 

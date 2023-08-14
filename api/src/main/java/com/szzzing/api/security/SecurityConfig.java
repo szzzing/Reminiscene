@@ -58,6 +58,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
             // api 요청 관련
             .requestMatchers("/admin/**").hasRole("A")
+            .requestMatchers("/mypage/**").hasRole("U")
             .requestMatchers("/auth/**").anonymous()
             // 라우터 관련
             .requestMatchers("/route/auth/**", "/route/login").anonymous()

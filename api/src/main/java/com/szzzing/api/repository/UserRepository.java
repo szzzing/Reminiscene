@@ -33,4 +33,8 @@ public class UserRepository {
     public User selectOneByNickname(String nickname) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByNickname", nickname);
     }
+
+    public int updateOne(User user) {
+        return sqlSessionTemplate.update(NAME_SPACE+"updateOne", user);
+    }
 }

@@ -39,6 +39,13 @@ public class UserService {
         return userRepository.insertOne(user);
     }
 
+
+    // 내 정보 수정
+    public boolean mypageModify(User user) {
+        int result = userRepository.updateOne(user);
+        return result>=0;
+    }
+
     public boolean mypageCheckNickname(String nickname) {
         User user = userRepository.selectOneByNickname(nickname);
         return user == null;

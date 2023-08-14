@@ -29,6 +29,17 @@
         where user_email=#{email}
     </select>
 
+    <update id="updateOne">
+        update ta9_user
+        set user_nickname = #{nickname},
+            user_email = #{email},
+            user_gender = #{gender},
+        <if test="birthday != null">
+            user_birthday = #{birthday},
+        </if>
+            user_mod_date = current_timestamp
+    </update>
+
     <resultMap id="userResultMap" type="com.szzzing.api.domain.User">
         <id column="user_id" property="id"/>
         <result column="user_pw" property="pw"/>

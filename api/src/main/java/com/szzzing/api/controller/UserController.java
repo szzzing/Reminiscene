@@ -47,7 +47,7 @@ public class UserController {
     @PostMapping("/mypage/modify")
     public boolean mypageModify(@RequestBody User user) {
         log.info(user.toString());
-        return false;
+        return userService.mypageModify(user);
     }
 
     // 마이페이지 - 내 정보 수정 - 닉네임 중복 체크

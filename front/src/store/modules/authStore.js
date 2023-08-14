@@ -1,3 +1,5 @@
+import store from '@/store/index'
+
 const auth = {
     namespaced: true,
     state: {
@@ -37,6 +39,7 @@ const auth = {
         logout(state) {
             state.user = null;
             state.token = null;
+            store.commit("local/setAlert", { alertEmoji:"🖐️", alertText:"로그아웃 되었어요." });
         },
     },
     actions: {
