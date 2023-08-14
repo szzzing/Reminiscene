@@ -8,6 +8,12 @@
 
         <div class="flex-container">
             <div class="inner">
+                <div class="preview-image" :style="{'background-image': 'url('+this.profileImage+')' }">
+                    <div class="no-image" v-if="profileImage==null">👤</div>
+                    <input type="file" accept="image/*" class="profile-image" ref="profileImage" @change="setProfileImage">
+                </div>
+            </div>
+            <div class="inner">
                 <div class="title nickname" ref="nickname">🙂 닉네임</div>
                 <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
                 <div class="input-box"
@@ -77,6 +83,7 @@ export default {
     },
     data() {
         return {
+            profileImage: null,
             nickname: this.$store.state.auth.user.nickname,
             email: this.$store.state.auth.user.email,
             gender: this.$store.state.auth.user.gender,
@@ -113,6 +120,17 @@ export default {
         }
     },
     methods: {
+        //  프사 업로드
+        setProfileImage(event) {
+            // 사진이 있을 시 사진 주소, 없을 시 null
+            if(this.$refs.profileImage.value!='') {
+                const url = URL.createObjectURL(event.target.files[0]);
+                this.profileImage = url;
+            } else {
+                this.profileImage = null;
+            }
+        },
+
         //  아이디 중복 여부 체크
         checkNickname() {
             if(this.nickname==this.$store.state.auth.user.nickname) {
@@ -136,6 +154,7 @@ export default {
             }
 
         },
+        
         //  성별 선택
         selectGender(gender) {
             this.gender = gender;
@@ -182,6 +201,29 @@ export default {
     flex-direction: column;
     gap: 48px;
     margin: auto;
+}
+
+.preview-image, .profile-image {
+    width: 180px;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    background-color: var(--G50);
+    position: relative;
+}
+.profile-image {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.no-image {
+    font-size: 96px;
+    text-align: center;
+    line-height: 180px;
 }
 
 .title {

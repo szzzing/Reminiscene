@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div class="profile-area">
-            <div class="profile-image"></div>
+            <div class="profile-image">
+            </div>
             <div class="nickname">
                 {{ this.$store.state.auth.user!=null ? this.$store.state.auth.user.nickname : "찌니" }}
             </div>
@@ -15,7 +16,6 @@
 
 <script>
 export default {
-
 }
 </script>
 
