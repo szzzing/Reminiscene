@@ -61,7 +61,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         // 토큰 생성
         String jwtToken = JwtUtil.createToken(principalDetails);
         // 응답 헤더에 토큰 추가
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
+        response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
 
         // 응답 헤더에 사용자 정보 추가
         User user = userRepository.selectOneById(principalDetails.getUser().getId());

@@ -17,7 +17,6 @@ axios.interceptors.response.use(
         if(store.state.auth.token!=null && config.headers.token==null) {
             store.commit("auth/logout");
             store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"인증이 만료되어 로그아웃되었어요." });
-            console.log(store.state.local.alert);
         }
         // 토큰 저장
         store.commit("auth/setToken", config.headers.token);

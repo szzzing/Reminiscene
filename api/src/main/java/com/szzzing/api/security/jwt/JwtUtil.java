@@ -21,6 +21,8 @@ public class JwtUtil {
                 .withClaim("email", principalDetails.getUser().getEmail())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET)); // 시크릿키, 해싱 알고리즘
 
+        token = JwtProperties.TOKEN_PREFIX + token;
+
         return token;
     }
 

@@ -25,7 +25,7 @@ const auth = {
             
                 const parts = payload.birthday.split(/ |, /);
                 const month = (months.indexOf(parts[0]) + 1).toString().padStart(2, '0');
-                const day = parts[1];
+                const day = parts[1].padStart(2, '0');
                 const year = parts[2];
 
                 payload.birthday = `${year}-${month}-${day}`;

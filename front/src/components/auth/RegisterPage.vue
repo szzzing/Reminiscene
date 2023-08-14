@@ -160,7 +160,7 @@ export default {
                 this.axios.post("/auth/register", { id, pw, email })
                     .then((response) => {
                         if(response.status==200) {
-                            alert("회원가입에 성공했습니다.");
+                            this.$store.commit("modal/setAlert", { alertEmoji:"🎉", alertText:"회원가입에 성공했어요." });
                             this.$router.push({ path: '/login' });
                         }
                     })

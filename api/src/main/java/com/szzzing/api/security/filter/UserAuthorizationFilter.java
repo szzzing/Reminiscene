@@ -58,8 +58,13 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
             Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUser().getId(), null, principalDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            // 새로운 토큰 발급
+            String newToken = JwtUtil.createToken(principalDetails);
+            logger.info("old token : "+token);
+            logger.info("new token : "+newToken);
+
             // 응답 헤더에 토큰, 유저 정보, 인증 정보 추가
-            response.setHeader(JwtProperties.HEADER_STRING, token);
+            response.setHeader(JwtProperties.HEADER_STRING, newToken);
             response.setHeader("user", AuthUtil.userToJson(user));
         }
 
