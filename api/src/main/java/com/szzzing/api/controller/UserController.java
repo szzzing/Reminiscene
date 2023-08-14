@@ -2,6 +2,8 @@ package com.szzzing.api.controller;
 
 import com.szzzing.api.domain.User;
 import com.szzzing.api.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,7 +47,8 @@ public class UserController {
 
     // 마이페이지 - 내 정보 수정
     @PostMapping("/mypage/modify")
-    public boolean mypageModify(@RequestBody User user) {
+    public boolean mypageModify(@RequestBody User user, HttpServletRequest request) {
+        user.setId(request.getUserPrincipal().getName());
         log.info(user.toString());
         return userService.mypageModify(user);
     }
