@@ -16,8 +16,7 @@ axios.interceptors.response.use(
         // 1. 인증이 필요하진 않지만, 토큰 만료로 로그아웃된 경우
         if(store.state.auth.token!=null && config.headers.token==null) {
             store.commit("auth/logout");
-            // alert("로그인 한지 오래 되어서 로그아웃 되었어요🥺");
-            store.commit("auth/setLoginAlert");
+            store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"다시 로그인해주세요." });
         }
         // 토큰 저장
         store.commit("auth/setToken", config.headers.token);
@@ -35,8 +34,7 @@ axios.interceptors.response.use(
             // 1) 토큰 만료롤 인한 로그아웃 시
             if(store.state.auth.token!=null) {
                 store.commit("auth/logout");
-                // alert("오랫동안 접속하지 않아 로그아웃 되었어요🥺");
-                store.commit("auth/setLoginAlert");
+                store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"다시 로그인해주세요." });
             }
             // 2) 로그인 페이지로 이동
             router.push({ path: '/login' });

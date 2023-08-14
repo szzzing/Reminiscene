@@ -10,7 +10,7 @@ import FindPage from '@/components/auth/FindPage'
 import ListPage from '@/components/list/ListPage'
 import DetailPage from '@/components/detail/DetailPage'
 import MyPage from '@/components/mypage/MyPage'
-import ModifyComponent from '@/components/mypage/ModifyComponent'
+import ModifyPage from '@/components/mypage/ModifyPage'
 
 const routes = [
     {
@@ -44,12 +44,10 @@ const routes = [
     {
         path: '/mypage',
         component: MyPage,
-        children: [
-            {
-                path: '/modify',
-                component: ModifyComponent,
-            },
-        ]
+    },
+    {
+        path: '/mypage/modify',
+        component: ModifyPage,
     },
     {
         path: '/:pathMatch(.*)*',

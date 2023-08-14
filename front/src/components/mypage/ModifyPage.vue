@@ -1,11 +1,6 @@
 <template>
     <div class="container">
 
-        <alert-component v-bind:alert="undo">
-            <template v-slot:emoji>⚠️</template>
-            <template v-slot:text>{{ message }}</template>
-        </alert-component>
-
         <title-component>
             <template v-slot:emoji>😃</template>
             <template v-slot:title>내 정보 수정</template>
@@ -75,12 +70,10 @@
 
 <script>
 import TitleComponent from '../item/TitleComponent.vue'
-import AlertComponent from '../modal/AlertComponent.vue';
 
 export default {
     components: {
         TitleComponent,
-        AlertComponent,
     },
     data() {
         return {
@@ -153,10 +146,10 @@ export default {
             // 입력 여부 확인
             if (!this.checkedNickname) {
                 this.$refs.nickname.scrollIntoView({ behavior: "smooth" });
-                this.alert("닉네임을 확인해주세요.");
+                this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"닉네임을 확인해주세요." });
             } else if (!this.checkedEmail) {
                 this.$refs.email.scrollIntoView({ behavior: "smooth" });
-                this.alert("이메일을 확인해주세요.");
+                this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"이메일을 확인해주세요." });
             } else {
                 const nickname = this.nickname;
                 const email = this.email;
@@ -164,7 +157,7 @@ export default {
                 const birthday = this.birthday;
                 this.axios.post("/mypage/modify", { nickname, email, gender, birthday })
                     .then(() => {
-                        alert("내 정보를 수정했어요.");
+                        this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"내 정보를 수정했어요." });
                         this.$router.push({ path: '/mypage' });
                     });
             }

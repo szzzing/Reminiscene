@@ -1,24 +1,22 @@
 <template>
-    <div class="wrap">
         <header-component></header-component>
-        <alert-component v-bind:alert="this.$store.state.auth.loginAlert">
-            <template v-slot:emoji>⚠️</template>
-            <template v-slot:text>인증이 만료되어 로그아웃 되었어요</template>
-        </alert-component>
-        <div class="flex-wrap">
+        <alert-component></alert-component>
+        <div class="wrap">
             <router-view></router-view>
+            <footer-component></footer-component>
         </div>
-    </div>
 </template>
 
 <script>
 import HeaderComponent from './components/common/HeaderComponent.vue'
 import AlertComponent from './components/modal/AlertComponent.vue';
+import FooterComponent from './components/common/FooterComponent.vue';
 
 export default {
     components: {
         HeaderComponent,
         AlertComponent,
+        FooterComponent,
     },
     data() {
         return {

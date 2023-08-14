@@ -1,16 +1,6 @@
 <template>
     <div class="container">
-        
-        <alert-component v-bind:alert="undo">
-            <template v-slot:emoji>⚠️</template>
-            <template v-slot:text>아이디와 비밀번호를 입력해주세요.</template>
-        </alert-component>
-       
-        <alert-component v-bind:alert="failed">
-            <template v-slot:emoji>🥺</template>
-            <template v-slot:text>정확한 로그인 정보를 입력해주세요.</template>
-        </alert-component>
-        
+
         <title-component>
             <template v-slot:emoji>🔑</template>
             <template v-slot:title>로그인</template>
@@ -40,12 +30,10 @@
 
 <script>
 import TitleComponent from '../item/TitleComponent.vue'
-import AlertComponent from '../modal/AlertComponent.vue'
 
 export default {
     components: {
         TitleComponent,
-        AlertComponent,
     },
     data() {
         return {
@@ -72,12 +60,10 @@ export default {
                     this.$router.push({ path: this.$store.state.local.location==null ? '/' : this.$store.state.local.location });
                 })
                 .catch(()=>{
-                    this.failed = true;
-                    setTimeout(() => this.failed = false, 3000);
+                    this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"로그인에 실패했어요." });
                 });
             } else {
-                this.undo = true;
-                setTimeout(() => this.undo = false, 3000);
+                this.$store.commit("local/setAlert", { alertEmoji:"⚠️", alertText:"아이디와 비밀번호를 입력해주세요." });
             }
         },
     }

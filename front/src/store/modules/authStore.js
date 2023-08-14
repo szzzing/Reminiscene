@@ -1,13 +1,8 @@
-// import router from '@/router/index';
-// import axios from '@/axios/index'
-// import store from '../index'
-
 const auth = {
     namespaced: true,
     state: {
         user: null,
         token: null,
-        loginAlert: false,
     },
     getters: {
 
@@ -43,10 +38,6 @@ const auth = {
             state.user = null;
             state.token = null;
         },
-        setLoginAlert(state) {
-            state.loginAlert = true;
-            setTimeout(() => state.loginAlert = false, 3000);
-        }
     },
     actions: {
 

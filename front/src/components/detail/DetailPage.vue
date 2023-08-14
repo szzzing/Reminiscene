@@ -27,9 +27,8 @@ export default {
 </script>
 
 <style scoped>
-.flex-wrap>.container:first-child {
-    min-height: calc(100vh);
-    padding: 0 0 100px;
+.wrap>.container:first-child {
+    padding: 0;
     width: 100%;
 }
 </style>

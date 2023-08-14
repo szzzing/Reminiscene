@@ -1,11 +1,11 @@
 <template>
     <transition name="alert">
-        <div id="alert" v-if="alert">
+        <div id="alert" v-if="this.$store.state.local.alert">
             <div class="emoji">
-                <slot name="emoji"></slot>
+                {{ this.$store.state.local.alertEmoji }}
             </div>
             <div class="text">
-                <slot name="text"></slot>
+                {{ this.$store.state.local.alertText }}
             </div>
         </div>
     </transition>
@@ -13,9 +13,6 @@
 
 <script>
 export default {
-    props: [
-        'alert',
-    ],
 }
 </script>
 

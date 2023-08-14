@@ -20,23 +20,20 @@ body {
 
 .wrap {
     background: var(--G0);
-}
-
-.flex-wrap {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 100px;
     min-height: 100vh;
-}
-
-.flex-wrap>.container:first-child {
-    min-height: calc(100vh);
-    padding: 100px 0 100px;
 }
 
 .container {
     width: calc(100% - 80px);
     margin: 0 auto;
+}
+
+.wrap>.container:first-child {
+    padding: 100px 0 0;
 }
 
 @media screen and (max-width:768px) {
