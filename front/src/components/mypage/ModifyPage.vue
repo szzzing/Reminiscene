@@ -121,10 +121,10 @@ export default {
     },
     methods: {
         //  프사 업로드
-        setProfileImage(event) {
+        setProfileImage() {
             // 사진이 있을 시 사진 주소, 없을 시 null
             if(this.$refs.profileImage.value!='') {
-                const url = URL.createObjectURL(event.target.files[0]);
+                const url = URL.createObjectURL(this.$refs.profileImage.files[0]);
                 this.profileImage = url;
             } else {
                 this.profileImage = null;
