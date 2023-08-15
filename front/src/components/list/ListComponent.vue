@@ -10,6 +10,9 @@
                                 ⭐️
                                 {{ movie.vote_average.toFixed(1) }}
                             </div>
+                            <div class="no-image" v-if="!movie.poster_path">
+                                🌙
+                            </div>
                         </div>
                         <div class="info">
                             <div class="title">
@@ -80,6 +83,14 @@ export default {
         padding-top: 150%;
         background-size: cover;
         background-position: center;
+        background-color: var(--G1000);
+        display: flex;
+        justify-content: center;
+    }
+    .no-image {
+        font-size: 36px;
+        position: absolute;
+        top: calc((100% - 50px)/2);
     }
     .movie .thum img {
         width: 240px;
@@ -89,7 +100,7 @@ export default {
         font-weight: 600;
         text-align: center;
         word-break: keep-all !important;
-        margin-bottom: 8px;
+        margin: 4px 0 8px;
         
     }
     .movie .info .date {

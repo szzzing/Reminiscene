@@ -8,6 +8,8 @@
 
         <div class="flex-container">
             <div class="inner">
+                <div class="title nickname" ref="nickname">📸 프로필 이미지</div>
+                <div class="sub-title">이미지로 나를 표현해 보세요.</div>
                 <div class="preview-image" :style="{'background-image': 'url('+this.profileImage+')' }">
                     <div class="no-image" v-if="profileImage==null">👤</div>
                     <input type="file" accept="image/*" class="profile-image" ref="profileImage" @change="setProfileImage">
@@ -211,6 +213,13 @@ export default {
     border-radius: 50%;
     background-color: var(--G50);
     position: relative;
+    cursor: pointer;
+}
+.preview-image {
+    margin: 20px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .profile-image {
     opacity: 0;
@@ -222,8 +231,6 @@ export default {
 }
 .no-image {
     font-size: 96px;
-    text-align: center;
-    line-height: 180px;
 }
 
 .title {
