@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="input-box">
-            <input type="text" placeholder="엘리멘탈" v-model="query">
+            <input type="text" placeholder="오펜하이머" v-model="query">
         </div>
         <div class="result" v-if="this.$store.state.movie.query!=''">
             <b>{{ this.$store.state.movie.query }}</b>에 대한 영화를 보여줄게.
