@@ -16,6 +16,11 @@ const auth = {
                 payload.nickname = decodeURIComponent(payload.nickname);
             }
 
+            // 프로필 사진 변환
+            if(payload != null && payload.profileImage != null) {
+                payload.profileImage = store.state.local.fileDir+payload.profileImage;
+            }
+
             // 생일 변환
             if(payload != null && payload.birthday != null) {
                 const months = [

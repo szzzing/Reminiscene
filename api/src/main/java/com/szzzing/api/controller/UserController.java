@@ -54,7 +54,7 @@ public class UserController {
         user.setEmail(email);
         user.setNickname(nickname);
         user.setBirthday(DateUtil.StringToTimestamp(birthday));
-        return userService.mypageModify(user);
+        return userService.mypageModify(user, profileImage);
     }
 
     // 마이페이지 - 내 정보 수정 - 닉네임 중복 체크

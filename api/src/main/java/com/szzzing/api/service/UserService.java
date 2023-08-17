@@ -2,12 +2,16 @@ package com.szzzing.api.service;
 
 import com.szzzing.api.domain.User;
 import com.szzzing.api.repository.UserRepository;
+import com.szzzing.api.util.FileUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -41,8 +45,23 @@ public class UserService {
 
 
     // 내 정보 수정
-    public boolean mypageModify(User user) {
+    public boolean mypageModify(User user, MultipartFile profileImage) {
         int result = userRepository.updateOne(user);
+        String original = user.getProfileImage();
+
+        // 업로드한 사진이 있고, 그 사진이 기존 프로필사진과 다를 때
+        if(profileImage!=null) {
+            log.info("새로운 사진 업로드 : "+profileImage);
+            String renameName = FileUtil.renameFile(profileImage);
+            FileUtil.uploadFile(profileImage, renameName);
+            // 이전에 존재하는 사진 파일 지우기
+            if(user.getProfileImage()!=null) {
+
+            }
+        // 업로드한 사진이 없는 경우
+        } else {
+
+        }
         return result>=0;
     }
 

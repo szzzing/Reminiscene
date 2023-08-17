@@ -6,7 +6,7 @@
 
     <insert id="insertOne">
         insert into user
-        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default)
+        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default, null)
     </insert>
 
     <select id="selectAll" resultMap="userResultMap">

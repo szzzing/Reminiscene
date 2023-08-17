@@ -3,6 +3,7 @@ const local = {
     state: {
         theme: true,
         location: null,
+        fileDir: "/upload/",
     },
     mutations: {
         setLocation(state, payload) {

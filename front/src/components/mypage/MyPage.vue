@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="profile-area">
-            <div class="profile-image">
+            <div class="profile-image" :style="{'background-image': 'url(' + this.$store.state.auth.user.profileImage + ')' }">
             </div>
             <div class="nickname">
                 {{ this.$store.state.auth.user!=null ? this.$store.state.auth.user.nickname : "찌니" }}
@@ -28,7 +28,6 @@ export default {
     font-weight: 500;
 }
 .profile-image {
-    background-image: url("../../../public/profile.png");
     width: 180px;
     height: 180px;
     background-size: cover;

@@ -10,7 +10,7 @@
             <div class="inner">
                 <div class="title nickname" ref="nickname">🤳🏻 프로필 이미지</div>
                 <div class="sub-title">이미지로 나를 표현해 보세요.</div>
-                <div class="preview-image" :style="{'background-image': 'url('+this.profileImage+')' }">
+                <div class="preview-image" :style="{'background-image': 'url('+ this.profileImage + ')' }">
                     <div class="no-image" v-if="profileImage==null">👤</div>
                     <input type="file" accept="image/*" class="profile-image" ref="profileImage" @change="setProfileImage">
                 </div>
