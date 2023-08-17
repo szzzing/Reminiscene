@@ -2,6 +2,7 @@
     <div class="container">
         <div class="profile-area">
             <div class="profile-image" :style="{'background-image': 'url(' + this.$store.state.auth.user.profileImage + ')' }">
+                <div class="no-image" v-if="!this.$store.state.auth.user.profileImage">👤</div>
             </div>
             <div class="nickname">
                 {{ this.$store.state.auth.user!=null ? this.$store.state.auth.user.nickname : "찌니" }}
@@ -33,7 +34,15 @@ export default {
     background-size: cover;
     background-position: center;
     border-radius: 50%;
+    background-color: var(--G50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+.no-image {
+    font-size: 96px;
+}
+
 .modify {
     margin-left: 4px;
     font-size: 20px;

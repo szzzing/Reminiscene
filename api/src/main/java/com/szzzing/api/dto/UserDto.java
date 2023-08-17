@@ -1,4 +1,4 @@
-package com.szzzing.api.domain;
+package com.szzzing.api.dto;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 
 @Data
-public class User {
+public class UserDto {
     private String id;
     private String pw;
     private String email;

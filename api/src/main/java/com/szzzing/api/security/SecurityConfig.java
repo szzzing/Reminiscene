@@ -82,6 +82,6 @@ public class SecurityConfig {
     // 시큐리티 필터를 무시하는 경로 지정
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "*.ico");    // 정적 저장소에 접근하면 시큐리티 설정을 무시하도록 함
+        return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/upload/**", "*.ico");    // 정적 저장소에 접근하면 시큐리티 설정을 무시하도록 함
     }
 }

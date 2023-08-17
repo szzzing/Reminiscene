@@ -14,9 +14,6 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsConfig {
     @Value("${front.url}") static String url;
 
-    public static void main(String[] args) {
-        System.out.println(url);
-    }
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -29,11 +29,4 @@ export default {
         text-align: center;
         font-size: 16px;
     }
-    .preview-image {
-        margin: 20px 0 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-image: url('../../../../../Reminiscene/upload/profile.png');
-    }
 </style>

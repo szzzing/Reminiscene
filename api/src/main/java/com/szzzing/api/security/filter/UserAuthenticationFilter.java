@@ -1,7 +1,7 @@
 package com.szzzing.api.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.szzzing.api.domain.User;
+import com.szzzing.api.dto.UserDto;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.security.auth.AuthUtil;
 import com.szzzing.api.security.auth.PrincipalDetails;
@@ -34,9 +34,9 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         logger.info("인증 요청");
         // request에 있는 id,pw를 파싱해서 자바 Object로 받기
         ObjectMapper om = new ObjectMapper();
-        User authInfo = null;
+        UserDto authInfo = null;
         try {
-            authInfo = om.readValue(request.getInputStream(), User.class);
+            authInfo = om.readValue(request.getInputStream(), UserDto.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,8 +64,8 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
 
         // 응답 헤더에 사용자 정보 추가
-        User user = userRepository.selectOneById(principalDetails.getUser().getId());
-        response.setHeader("user", AuthUtil.userToJson(user));
+        UserDto userDto = userRepository.selectOneById(principalDetails.getUserDto().getId());
+        response.setHeader("user", AuthUtil.userToJson(userDto));
     }
 
     // 인증 실패 로직

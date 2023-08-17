@@ -1,6 +1,7 @@
 package com.szzzing.api.controller;
 
-import com.szzzing.api.domain.User;
+import com.szzzing.api.dto.UserDto;
+import com.szzzing.api.dto.UserModifyDto;
 import com.szzzing.api.service.UserService;
 import com.szzzing.api.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,14 +23,14 @@ public class UserController {
 
     @GetMapping("/admin/selectAll")
     public void selectAllUser() {
-        ArrayList<User> list = userService.selectAll();
+        ArrayList<UserDto> list = userService.selectAll();
         System.out.println(list);
     }
 
     // 회원가입
     @PostMapping("/auth/register")
-    public int register(@RequestBody User user) {
-        return userService.register(user);
+    public int register(@RequestBody UserDto userDto) {
+        return userService.register(userDto);
     }
 
     // 회원가입 - 아이디 중복 체크
@@ -48,13 +49,9 @@ public class UserController {
 
     // 마이페이지 - 내 정보 수정
     @PostMapping("/mypage/modify")
-    public boolean mypageModify(String nickname, String email, String gender, String birthday, MultipartFile profileImage, HttpServletRequest request) {
-        User user = new User();
-        user.setId(request.getUserPrincipal().getName());
-        user.setEmail(email);
-        user.setNickname(nickname);
-        user.setBirthday(DateUtil.StringToTimestamp(birthday));
-        return userService.mypageModify(user, profileImage);
+    public boolean mypageModify(@ModelAttribute UserModifyDto userModifyDto, HttpServletRequest request) {
+        userModifyDto.setId(request.getUserPrincipal().getName());
+        return userService.mypageModify(userModifyDto);
     }
 
     // 마이페이지 - 내 정보 수정 - 닉네임 중복 체크

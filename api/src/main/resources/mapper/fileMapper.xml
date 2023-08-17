@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fileMapper">
+
+    <insert id="insertOne">
+        insert into file
+        values(#{originalName}, #{renameName}, default, #{size})
+    </insert>
+
+    <delete id="deleteOne">
+        delete from file
+        where file_rename_name=#{renameName}
+    </delete>
+
+    <resultMap id="fileResultMap" type="com.szzzing.api.dto.FileDto">
+        <result column="file_original_name" property="originalName"/>
+        <result column="file_rename_name" property="renameName"/>
+        <result column="file_create_date" property="createDate"/>
+        <result column="file_size" property="size"/>
+    </resultMap>
+</mapper>

@@ -1,6 +1,6 @@
 package com.szzzing.api.security.filter;
 
-import com.szzzing.api.domain.User;
+import com.szzzing.api.dto.UserDto;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.security.auth.AuthUtil;
 import com.szzzing.api.security.auth.PrincipalDetails;
@@ -51,21 +51,19 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
         // 유효한 토큰인 경우 - 아이디를 통해 사용자 존재 여부/권한 확인
         String id = JwtUtil.getId(token);
         if(id != null) {
-            User user = userRepository.selectOneById(id);
+            UserDto userDto = userRepository.selectOneById(id);
 
             // 권한 관리를 위해 SecurityContext에 인증 정보 저장
-            PrincipalDetails principalDetails = new PrincipalDetails(user);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUser().getId(), null, principalDetails.getAuthorities());
+            PrincipalDetails principalDetails = new PrincipalDetails(userDto);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails.getUserDto().getId(), null, principalDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // 새로운 토큰 발급
             String newToken = JwtUtil.createToken(principalDetails);
-            logger.info("old token : "+token);
-            logger.info("new token : "+newToken);
 
             // 응답 헤더에 토큰, 유저 정보, 인증 정보 추가
             response.setHeader(JwtProperties.HEADER_STRING, newToken);
-            response.setHeader("user", AuthUtil.userToJson(user));
+            response.setHeader("user", AuthUtil.userToJson(userDto));
         }
 
         chain.doFilter(request, response);

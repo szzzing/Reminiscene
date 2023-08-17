@@ -1,5 +1,6 @@
 package com.szzzing.api.util;
 
+import com.szzzing.api.dto.FileDto;
 import error.FileException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +21,23 @@ import java.util.UUID;
 public class FileUtil {
     private final static String dir = "../../Reminiscene/upload/";
 
+    // 파일 객체 생성
+    public static FileDto getFileDto(MultipartFile multipartFile) {
+        if(multipartFile==null) return null;
+
+        FileDto fileDto = new FileDto();
+        fileDto.setOriginalName(multipartFile.getOriginalFilename());
+        fileDto.setRenameName(renameFile(multipartFile));
+        fileDto.setSize(multipartFile.getSize());
+        log.info(fileDto.toString());
+
+        return fileDto;
+    }
+
     // 파일 업로드
-    public static void uploadFile(MultipartFile multipartFile, String renameName) {
+    public static void uploadFile(MultipartFile multipartFile, FileDto fileDto) {
         // File.seperator 는 OS종속적
-        Path location = Paths.get(dir + File.separator + renameName);
-        log.info(dir);
-        log.info(location.toString());
+        Path location = Paths.get(dir + File.separator + fileDto.getRenameName());
         try {
             // inputstream을 가져와 파일 저장
             // 파일명이 기존에 존재하면 덮어씀

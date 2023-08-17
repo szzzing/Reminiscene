@@ -8,15 +8,16 @@
 
         <div class="flex-container">
             <div class="inner">
-                <div class="title nickname" ref="nickname">🤳🏻 프로필 이미지</div>
+                <div class="title" ref="profile-image">🤳🏻 프로필 이미지</div>
                 <div class="sub-title">이미지로 나를 표현해 보세요.</div>
-                <div class="preview-image" :style="{'background-image': 'url('+ this.profileImage + ')' }">
-                    <div class="no-image" v-if="profileImage==null">👤</div>
-                    <input type="file" accept="image/*" class="profile-image" ref="profileImage" @change="setProfileImage">
+                <div class="preview-image" :style="{'background-image': 'url(' + this.previewImage + ')' }">
+                    <div class="no-image" v-if="previewImage==null">👤</div>
+                    <input type="file" accept="image/*" class="profile-image" ref="uploadImage" @change="setPreviewImage">
                 </div>
             </div>
+
             <div class="inner">
-                <div class="title nickname" ref="nickname">💛 닉네임</div>
+                <div class="title" ref="nickname">💛 닉네임</div>
                 <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.nickname != this.$store.state.auth.user.nickname && checkedNickname, 'unchecked': !checkedNickname }">
@@ -85,7 +86,8 @@ export default {
     },
     data() {
         return {
-            profileImage: this.$store.state.auth.user.profileImage,
+            previewImage: this.$store.state.auth.user.profileImage,
+            originalImage: this.$store.state.auth.user.profileImage,
             nickname: this.$store.state.auth.user.nickname,
             email: this.$store.state.auth.user.email,
             gender: this.$store.state.auth.user.gender,
@@ -123,13 +125,13 @@ export default {
     },
     methods: {
         //  프사 업로드
-        setProfileImage() {
+        setPreviewImage() {
             // 사진이 있을 시 사진 주소, 없을 시 null
-            if(this.$refs.profileImage.value!='') {
-                const url = URL.createObjectURL(this.$refs.profileImage.files[0]);
-                this.profileImage = url;
+            if(this.$refs.uploadImage.value!='') {
+                const url = URL.createObjectURL(this.$refs.uploadImage.files[0]);
+                this.previewImage = url;
             } else {
-                this.profileImage = null;
+                this.previewImage = null;
             }
         },
 
@@ -178,9 +180,21 @@ export default {
                 
                 formData.append("nickname", this.nickname);
                 formData.append("email", this.email);
-                formData.append("gender", this.gender);
-                formData.append("birthday", this.birthday);
-                formData.append("profileImage", this.$refs.profileImage.files[0]);
+                if(this.gender) {
+                    formData.append("gender", this.gender);
+                }
+                if(this.birthday) {
+                    formData.append("birthday", this.birthday);
+                }
+                if(this.originalImage) {
+                    formData.append("originalImage", this.originalImage);
+                }
+                if(this.previewImage) {
+                    formData.append("newImage", this.previewImage);
+                }
+                if(this.$refs.uploadImage.files[0]) {
+                    formData.append("uploadFile", this.$refs.uploadImage.files[0]);
+                }
                 
                 this.axios.post("/mypage/modify", formData, {
                         headers: {

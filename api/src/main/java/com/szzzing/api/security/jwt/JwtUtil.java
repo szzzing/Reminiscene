@@ -17,8 +17,8 @@ public class JwtUtil {
         String token = JWT.create()
                 .withSubject(principalDetails.getUsername())    // jwt 이름
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))  // 만료시간
-                .withClaim("id", principalDetails.getUser().getId())   // payload 부분에서 private 설정. private의 이름과 값 지정
-                .withClaim("email", principalDetails.getUser().getEmail())
+                .withClaim("id", principalDetails.getUserDto().getId())   // payload 부분에서 private 설정. private의 이름과 값 지정
+                .withClaim("email", principalDetails.getUserDto().getEmail())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET)); // 시크릿키, 해싱 알고리즘
 
         token = JwtProperties.TOKEN_PREFIX + token;
