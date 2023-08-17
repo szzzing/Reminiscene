@@ -51,5 +51,6 @@
         <result column="user_birthday" property="birthday"/>
         <result column="user_reg_date" property="regDate"/>
         <result column="user_mod_date" property="modDate"/>
+        <result column="user_profile_image" property="profileImage"/>
     </resultMap>
 </mapper>

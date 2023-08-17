@@ -2,12 +2,13 @@ package com.szzzing.api.controller;
 
 import com.szzzing.api.domain.User;
 import com.szzzing.api.service.UserService;
+import com.szzzing.api.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -47,9 +48,12 @@ public class UserController {
 
     // 마이페이지 - 내 정보 수정
     @PostMapping("/mypage/modify")
-    public boolean mypageModify(@RequestBody User user, HttpServletRequest request) {
+    public boolean mypageModify(String nickname, String email, String gender, String birthday, MultipartFile profileImage, HttpServletRequest request) {
+        User user = new User();
         user.setId(request.getUserPrincipal().getName());
-        log.info(user.toString());
+        user.setEmail(email);
+        user.setNickname(nickname);
+        user.setBirthday(DateUtil.StringToTimestamp(birthday));
         return userService.mypageModify(user);
     }
 

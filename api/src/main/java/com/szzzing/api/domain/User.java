@@ -18,4 +18,5 @@ public class User {
     private String role;
     private boolean enable;
     private String type;
+    private String profileImage;
 }
