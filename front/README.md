@@ -1,5 +1,3 @@
-# vue-movie
-
 ## Project setup
 ```
 npm install
