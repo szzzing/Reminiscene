@@ -8,7 +8,7 @@
 
         <div class="flex-container">
             <div class="inner">
-                <div class="title nickname" ref="nickname">📸 프로필 이미지</div>
+                <div class="title nickname" ref="nickname">🤳🏻 프로필 이미지</div>
                 <div class="sub-title">이미지로 나를 표현해 보세요.</div>
                 <div class="preview-image" :style="{'background-image': 'url('+this.profileImage+')' }">
                     <div class="no-image" v-if="profileImage==null">👤</div>
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="inner">
-                <div class="title nickname" ref="nickname">🙂 닉네임</div>
+                <div class="title nickname" ref="nickname">💛 닉네임</div>
                 <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.nickname != this.$store.state.auth.user.nickname && checkedNickname, 'unchecked': !checkedNickname }">
@@ -38,22 +38,22 @@
             </div>
 
             <div class="inner" ref="gender">
-                <div class="title">🪞 성별</div>
+                <div class="title">⚧️ 성별</div>
                 <div class="sub-title">성별을 선택해주세요.</div>
                 <div class="select-box">
                     <div class="select-item" v-bind:class="{ 'selected' : this.gender=='M' }"
                     @click="this.selectGender('M')">
-                        <div class="emoji">👨</div>
+                        <div class="emoji">👨🏻</div>
                         <div class="label">남자</div>
                     </div>
                     <div class="select-item" v-bind:class="{ 'selected' : this.gender=='F' }"
                     @click="this.selectGender('F')">
-                        <div class="emoji">👩</div>
+                        <div class="emoji">👩🏻</div>
                         <div class="label">여자</div>
                     </div>
                     <div class="select-item" v-bind:class="{ 'selected' : this.gender==null }"
                     @click="this.selectGender(null)">
-                        <div class="emoji">🧑</div>
+                        <div class="emoji">🧑🏻‍🦲</div>
                         <div class="label">비공개</div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ export default {
     },
     data() {
         return {
-            profileImage: null,
+            profileImage: this.$store.state.auth.user.profileImage,
             nickname: this.$store.state.auth.user.nickname,
             email: this.$store.state.auth.user.email,
             gender: this.$store.state.auth.user.gender,
@@ -171,13 +171,22 @@ export default {
             } else if (!this.checkedEmail) {
                 this.$refs.email.scrollIntoView({ behavior: "smooth" });
                 this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"이메일을 확인해주세요." });
+            
+            // 입력시 데이터 전송
             } else {
-                const nickname = this.nickname;
-                const email = this.email;
-                const gender = this.gender;
-                const birthday = this.birthday;
-                this.axios.post("/mypage/modify", { nickname, email, gender, birthday })
-                    .then(() => {
+                const formData = new FormData();
+                
+                formData.append("nickname", this.nickname);
+                formData.append("email", this.email);
+                formData.append("gender", this.gender);
+                formData.append("birthday", this.birthday);
+                formData.append("profileImage", this.$refs.profileImage.files[0]);
+                
+                this.axios.post("/mypage/modify", formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }).then(() => {
                         this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"내 정보를 수정했어요." });
                         this.$router.push({ path: '/mypage' });
                     });
