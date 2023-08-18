@@ -10,10 +10,9 @@
             <div class="inner">
                 <div class="title" ref="profile-image">🤳🏻 프로필 이미지</div>
                 <div class="sub-title">이미지로 나를 표현해 보세요.</div>
-                <div class="preview-image" :style="{'background-image': 'url(' + this.previewImage + ')' }">
-                    <div class="no-image" v-if="previewImage==null">👤</div>
-                    <input type="file" accept="image/*" class="profile-image" ref="uploadImage" @change="setPreviewImage">
-                </div>
+                <div class="preview-image" v-if="previewImage" :style="{'background-image': 'url(' + this.previewImage + ')' }"></div>
+                <div class="no-image" v-if="!previewImage">👤</div>
+                <input type="file" accept="image/*" class="profile-image" ref="uploadImage" @change="setPreviewImage">
             </div>
 
             <div class="inner">
@@ -230,8 +229,11 @@ export default {
     gap: 48px;
     margin: auto;
 }
+.inner {
+    position: relative;
+}
 
-.preview-image, .profile-image {
+.preview-image, .profile-image, .no-image {
     width: 180px;
     height: 180px;
     background-size: cover;
@@ -241,7 +243,7 @@ export default {
     position: relative;
     cursor: pointer;
 }
-.preview-image {
+.preview-image, .no-image {
     margin: 20px 0 0;
     display: flex;
     align-items: center;
@@ -250,10 +252,10 @@ export default {
 .profile-image {
     opacity: 0;
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 180px;
+    height: 180px;
 }
 .no-image {
     font-size: 96px;

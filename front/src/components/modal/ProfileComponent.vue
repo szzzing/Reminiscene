@@ -1,10 +1,9 @@
 <template>
     <transition name="smooth">
-        <div id="profile-modal" v-if="this.$store.state.modal.profile">
+        <div id="profile-modal" v-if="this.$store.state.modal.profile" v-click-outside="closeProfile">
             <div class="inner">
-                <div class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }">
-                    <div class="no-image" v-if="!user.profileImage">👤</div>
-                </div>
+                <div class="profile-image" v-if="user.profileImage" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
+                <div class="no-image" v-if="!user.profileImage">👤</div>
                 <div class="profile-info">
                     <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
                     <div class="id">{{ "@" + user.id }}</div>
@@ -28,6 +27,10 @@ export default {
     methods: {
         logout() {
             this.$store.commit('auth/logout');
+        },
+        closeProfile() {
+            console.log("누름");
+            this.$store.commit("modal/setProfile", false);
         }
     },
 }
@@ -69,7 +72,7 @@ export default {
     gap: 8px;
     justify-content: center;
 }
-.profile-image {
+.profile-image, .no-image {
     width: 80px;
     height: 80px;
     background-size: cover;

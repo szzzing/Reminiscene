@@ -1,9 +1,9 @@
 <template>
     <div class="container">
         <div class="profile-area">
-            <div class="profile-image" :style="{'background-image': 'url(' + this.$store.state.auth.user.profileImage + ')' }">
-                <div class="no-image" v-if="!this.$store.state.auth.user.profileImage">👤</div>
-            </div>
+            <div class="profile-image" v-if="this.$store.state.auth.user.profileImage"
+            :style="{'background-image': 'url(' + this.$store.state.auth.user.profileImage + ')' }"></div>
+            <div class="no-image" v-if="!this.$store.state.auth.user.profileImage">👤</div>
             <div class="nickname">
                 {{ this.$store.state.auth.user!=null ? this.$store.state.auth.user.nickname : "찌니" }}
             </div>
@@ -28,7 +28,7 @@ export default {
     font-size: 24px;
     font-weight: 500;
 }
-.profile-image {
+.profile-image, .no-image {
     width: 180px;
     height: 180px;
     background-size: cover;

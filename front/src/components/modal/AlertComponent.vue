@@ -1,5 +1,5 @@
 <template>
-    <transition name="alert">
+    <transition name="smooth">
         <div id="alert" v-if="this.$store.state.modal.alert">
             <div class="emoji">
                 {{ this.$store.state.modal.alertEmoji }}
@@ -38,14 +38,5 @@ export default {
 }
 .emoji {
     font-size: 20px;
-}
-.alert-enter-active,
-.alert-leave-active {
-    transition: all 0.3s linear;
-}
-
-.alert-enter-from,
-.alert-leave-to {
-    opacity: 0;
 }
 </style>

@@ -10,11 +10,9 @@
             to="/login" class="small-button">
                 로그인
             </router-link>
-            <div v-if="this.$store.state.auth.user!=null"
-            @click="clickProfile"
-            class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }">
-                <div class="no-image" v-if="!user.profileImage">👤</div>
-            </div>
+            <div v-if="user && user.profileImage" @click="clickProfile"
+            class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
+            <div class="no-image" v-if="user && !user.profileImage">👤</div>
         </div>
     </div>
 </template>
@@ -60,7 +58,7 @@ export default {
     font-size: 28px;
     cursor: pointer;
 }
-.profile-image {
+.profile-image, .no-image {
     width: 48px;
     height: 48px;
     background-size: cover;
