@@ -45,6 +45,7 @@ const auth = {
         logout(state) {
             state.user = null;
             state.token = null;
+            store.commit("modal/setProfile", false);
             store.commit("modal/setAlert", { alertEmoji:"🖐️", alertText:"로그아웃 되었어요." });
         },
     },

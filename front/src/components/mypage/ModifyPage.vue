@@ -140,7 +140,7 @@ export default {
             if(this.nickname==this.$store.state.auth.user.nickname) {
                 this.checkedNickname = true;
             } else {
-                this.axios.get("/mypage/check/nickname/" + this.nickname)
+                this.axios.get("/user/me/check/nickname/" + this.nickname)
                     .then((response) => {
                         this.checkedNickname = response.data;
                     })
@@ -151,7 +151,7 @@ export default {
             if(this.email==this.$store.state.auth.user.email) {
                 this.checkedEmail = true;
             } else {
-                this.axios.get("/mypage/check/email/" + this.email)
+                this.axios.get("/user/me/check/email/" + this.email)
                     .then((response) => {
                         this.checkedEmail = response.data;
                     })
@@ -177,9 +177,10 @@ export default {
             // 입력시 데이터 전송
             } else {
                 const formData = new FormData();
-                
-                formData.append("nickname", this.nickname);
                 formData.append("email", this.email);
+                if(this.nickname) {
+                    formData.append("nickname", this.nickname);
+                }
                 if(this.gender) {
                     formData.append("gender", this.gender);
                 }
@@ -196,13 +197,15 @@ export default {
                     formData.append("uploadFile", this.$refs.uploadImage.files[0]);
                 }
                 
-                this.axios.post("/mypage/modify", formData, {
+                this.axios.post("/user/me/modify", formData, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                         },
                     }).then(() => {
-                        this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"내 정보를 수정했어요." });
+                        this.$store.commit("modal/setAlert", { alertEmoji:"😀", alertText:"내 정보를 수정했어요." });
                         this.$router.push({ path: '/mypage' });
+                    }).catch(()=>{
+                        this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"다시 시도해주세요." });
                     });
             }
         },

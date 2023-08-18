@@ -10,3 +10,14 @@
         transform: translateX(1px);
     }
 }
+
+/* smooth */
+.smooth-enter-active,
+.smooth-leave-active {
+    transition: all 0.3s linear;
+}
+
+.smooth-enter-from,
+.smooth-leave-to {
+    opacity: 0;
+}

@@ -1,5 +1,6 @@
 <template>
         <header-component></header-component>
+        <profile-component></profile-component>
         <alert-component></alert-component>
         <div class="wrap">
             <router-view></router-view>
@@ -11,12 +12,14 @@
 import HeaderComponent from './components/common/HeaderComponent.vue'
 import AlertComponent from './components/modal/AlertComponent.vue';
 import FooterComponent from './components/common/FooterComponent.vue';
+import ProfileComponent from './components/modal/ProfileComponent.vue';
 
 export default {
     components: {
         HeaderComponent,
         AlertComponent,
         FooterComponent,
+        ProfileComponent,
     },
     data() {
         return {

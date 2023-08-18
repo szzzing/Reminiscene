@@ -4,6 +4,7 @@ const modal = {
         alert: false,
         alertEmoji: null,
         alertText: null,
+        profile: false,
     },
     mutations: {
         setAlert(state, {alertEmoji, alertText}) {
@@ -14,6 +15,9 @@ const modal = {
                 state.alert = false;
             }, 3000);
         },
+        setProfile(state, payload) {
+            state.profile = payload;
+        }
     },
 };
 
