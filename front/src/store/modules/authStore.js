@@ -11,11 +11,6 @@ const auth = {
     },
     mutations: {
         setUser(state, payload) {
-            
-            // 프사 변환
-            if(payload && payload.profileImage) {
-                payload.profileImage = store.state.local.fileDir + payload.profileImage;
-            }
 
             // 닉네임 변환
             if(payload != null && payload.nickname != null) {

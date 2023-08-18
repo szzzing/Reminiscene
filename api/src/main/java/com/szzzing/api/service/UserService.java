@@ -23,6 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
     private final PasswordEncoder passwordEncoder;
+    private final String profieDir = "/upload/profile/";
 
     public ArrayList<UserDto> selectAll() {
         return userRepository.selectAll();
@@ -51,8 +52,8 @@ public class UserService {
     // 내 정보 수정
     public boolean mypageModify(UserModifyDto userModifyDto) throws RuntimeException {
 
-        if(userModifyDto.getOriginalImage()!=null) userModifyDto.setOriginalImage(userModifyDto.getOriginalImage().replace("/upload/", ""));
-        if(userModifyDto.getNewImage()!=null) userModifyDto.setNewImage(userModifyDto.getNewImage().replace("/upload/", ""));
+        if(userModifyDto.getOriginalImage()!=null) userModifyDto.setOriginalImage(userModifyDto.getOriginalImage().replace(profieDir, ""));
+        if(userModifyDto.getNewImage()!=null) userModifyDto.setNewImage(userModifyDto.getNewImage().replace(profieDir, ""));
         FileDto fileDto = FileUtil.getFileDto(userModifyDto.getUploadFile());
 
         /*
@@ -74,7 +75,7 @@ public class UserService {
             FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto);
             fileRepository.insertOne(fileDto);
             // 사용자 정보 수정
-            userModifyDto.setNewImage(fileDto.getRenameName());
+            userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
 
         // 3. 프로필 사진 업로드 - 기존사진삭제
         } else if(userModifyDto.getOriginalImage()!=null && fileDto!=null) {
@@ -85,12 +86,12 @@ public class UserService {
             FileUtil.deleteFile(userModifyDto.getOriginalImage());
             fileRepository.deleteOne(userModifyDto.getOriginalImage());
             // 사용자 정보
-            userModifyDto.setNewImage(fileDto.getRenameName());
+            userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
         }
         // 4. 프로필 사진 그대로
         else {
             // 사용자 정보
-            userModifyDto.setNewImage(userModifyDto.getOriginalImage());
+            userModifyDto.setNewImage(profieDir+userModifyDto.getOriginalImage());
         }
         // 사용자 정보 수정
         int result = userRepository.updateOne(userModifyDto);

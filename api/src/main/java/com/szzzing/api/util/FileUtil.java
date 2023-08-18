@@ -19,7 +19,8 @@ import java.util.UUID;
 
 @Slf4j
 public class FileUtil {
-    private final static String dir = "../../Reminiscene/upload/";
+    private final static String dir = "../../Reminiscene/upload/profile/";
+    private final static String url = "/upload/profile/";
 
     // 파일 객체 생성
     public static FileDto getFileDto(MultipartFile multipartFile) {
@@ -28,8 +29,8 @@ public class FileUtil {
         FileDto fileDto = new FileDto();
         fileDto.setOriginalName(multipartFile.getOriginalFilename());
         fileDto.setRenameName(renameFile(multipartFile));
+        fileDto.setDirectory(url);
         fileDto.setSize(multipartFile.getSize());
-        log.info(fileDto.toString());
 
         return fileDto;
     }

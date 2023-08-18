@@ -6,7 +6,7 @@
 
     <insert id="insertOne">
         insert into file
-        values(#{originalName}, #{renameName}, default, #{size})
+        values(#{originalName}, #{renameName}, #{directory}, default, #{size})
     </insert>
 
     <delete id="deleteOne">
@@ -17,6 +17,7 @@
     <resultMap id="fileResultMap" type="com.szzzing.api.dto.FileDto">
         <result column="file_original_name" property="originalName"/>
         <result column="file_rename_name" property="renameName"/>
+        <result column="file_directory" property="directory"/>
         <result column="file_create_date" property="createDate"/>
         <result column="file_size" property="size"/>
     </resultMap>

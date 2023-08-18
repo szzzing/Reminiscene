@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 public class FileDto {
     private String originalName;
     private String renameName;
+    private String directory;
     private Timestamp createDate;
     private long size;
 }
