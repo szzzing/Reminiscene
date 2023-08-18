@@ -39,13 +39,13 @@ public class UserService {
     }
     
     // 회원가입
-    public int register(UserDto userDto) {
+    public boolean register(UserDto userDto) {
         String pw = passwordEncoder.encode(userDto.getPw());
         userDto.setPw(pw);
         userDto.setRole("U");
         userDto.setEnable(true);
         userDto.setType("N");
-        return userRepository.insertOne(userDto);
+        return userRepository.insertOne(userDto)>0;
     }
 
     // 내 정보 수정
@@ -95,7 +95,7 @@ public class UserService {
         // 사용자 정보 수정
         int result = userRepository.updateOne(userModifyDto);
 
-        return result>=0;
+        return result>0;
     }
 
     public boolean mypageCheckNickname(String nickname) {

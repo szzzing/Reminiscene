@@ -57,9 +57,9 @@ public class SecurityConfig {
         // 페이지별 권한 설정
         http.authorizeHttpRequests()
             // api 요청 관련
-            .requestMatchers("/admin/**").hasRole("A")
-            .requestMatchers("/mypage/**").hasRole("U")
-            .requestMatchers("/auth/**").anonymous()
+            .requestMatchers("/admin/**").anonymous()
+            .requestMatchers("/user/me/**").hasRole("U")
+            .requestMatchers("/user/auth/**").anonymous()
             // 라우터 관련
             .requestMatchers("/route/auth/**", "/route/login").anonymous()
             .requestMatchers("/route/list", "/route/detail").permitAll()
