@@ -23,7 +23,13 @@ public class MovieRepository {
         return sqlSessionTemplate.update(NAME_SPACE+"updateOneRate", rateDto);
     }
 
+    public int deleteOneRate(RateDto rateDto) {
+        return sqlSessionTemplate.delete(NAME_SPACE+"deleteOneRate", rateDto);
+    }
+
     public StatusDto selectOneStatus(HashMap<String, String> map) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneStatus", map);
     }
+
+
 }

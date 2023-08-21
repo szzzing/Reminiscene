@@ -6,7 +6,7 @@
 
     <select id="selectOneStatus" resultMap="statusResultMap">
         select
-            (select rate_rate from rate where rate_user_id=#{userId} and rate_movie_id=#{movieId}) status_rate,
+            ifnull((select rate_star from rate where rate_user_id=#{userId} and rate_movie_id=#{movieId}), 0) status_rate,
             (select count(*) from comment where comment_user_id=#{userId} and comment_movie_id=#{movieId})>0 status_is_comment,
             (select count(*) from watching where watching_user_id=#{userId} and watching_movie_id=#{movieId})>0 status_is_watching,
             (select count(*) from bookmark where bookmark_user_id=#{userId} and bookmark_movie_id=#{movieId})>0 status_is_bookmark
@@ -15,14 +15,19 @@
 
     <insert id="insertOneRate">
         insert into rate
-        values(#{movieId}, #{userId}, #{rate})
+        values(#{movieId}, #{userId}, #{star})
     </insert>
 
     <update id="updateOneRate">
         update rate
-        set rate = #{rate}
-        where movie_id = #{movieId} and user_id = #{userId}
+        set rate_star = #{star}
+        where rate_movie_id = #{movieId} and rate_user_id = #{userId}
     </update>
+
+    <delete id="deleteOneRate">
+        delete from rate
+        where rate_movie_id = #{movieId} and rate_user_id = #{userId}
+    </delete>
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
         <result column="status_rate" property="rate"/>

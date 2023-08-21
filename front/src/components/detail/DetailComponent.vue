@@ -25,7 +25,7 @@
             </div>
 
             <div class="inner">
-                <rate-component></rate-component>
+                <rate-component v-bind:movie="movie"></rate-component>
                 <div class="info-area max-size" v-if="movie.overview!=''">
                     <div class="tagline" v-if="movie.tagline!=''">{{ movie.tagline }}</div>
                     <div class="overview">{{ movie.overview }}</div>
@@ -40,7 +40,7 @@ import movieAxios from '@/axios/movieAxios';
 import RateComponent from './RateComponent.vue';
 
 export default {
-    async created() {
+    async beforeCreate() {
         try {
             const response = await movieAxios
             .get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');

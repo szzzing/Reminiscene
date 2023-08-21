@@ -26,20 +26,29 @@ public class MovieController {
         map.put("movieId", movieId);
         map.put("userId", userId);
         StatusDto statusDto = movieService.getStatus(map);
-        log.info(statusDto.toString());
         return new ResponseEntity<StatusDto>(statusDto, statusDto!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    // 별점
     @PostMapping ("/rate")
     public ResponseEntity addRate(@RequestBody RateDto rateDto) {
-        log.info(rateDto.toString());
         boolean result = movieService.addRate(rateDto);
+        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @PutMapping("/{movieId}/rate/{userId}")
+    public ResponseEntity updateRate(@RequestBody RateDto rateDto, @PathVariable String movieId, @PathVariable String userId) {
+        rateDto.setMovieId(movieId);
+        rateDto.setUserId(userId);
+        boolean result = movieService.updateRate(rateDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    @PutMapping("/rate")
-    public ResponseEntity updateRate(@RequestBody RateDto rateDto) {
-        boolean result = movieService.updateRate(rateDto);
+    @DeleteMapping("/{movieId}/rate/{userId}")
+    public ResponseEntity deleteRate(@PathVariable String movieId, @PathVariable String userId) {
+        RateDto rateDto = new RateDto();
+        rateDto.setMovieId(movieId);
+        rateDto.setUserId(userId);
+        log.info(rateDto.toString());
+        boolean result = movieService.deleteRate(rateDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

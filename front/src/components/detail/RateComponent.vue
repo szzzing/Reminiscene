@@ -30,12 +30,16 @@
 </template>
 
 <script>
+let userId;
+let movieId;
+
 export default {
     // 유저 상태 정보 받아오기
     async created() {
+        userId = this.$store.state.auth.user.id;
+        movieId = this.$route.params.id;
+
         if(this.$store.state.auth.user) {
-            const userId = this.$store.state.auth.user.id;
-            const movieId = this.$route.params.id;
 
             try {
                 const response = await this.axios.get("/movie/"+movieId+"/status/"+userId);
@@ -50,12 +54,15 @@ export default {
     },
     data() {
         return {
-            rate: null,
+            rate: 0,
             isComment: false,
             isWatching: false,
             isBookmark: false,
         }
     },
+    props: [
+       'movie',
+    ],
     watch: {
         rate() {
             const nodes = document.querySelectorAll(".star > .emoji");
@@ -86,9 +93,31 @@ export default {
     // 클릭 이벤트
     methods: {
         // 별점 클릭
-        rating(payload) {
-            this.rate = payload;
-            console.log(this.rate);
+        rating(star) {
+            // 별점 삽입
+            if(!this.rate) {
+                this.axios.post("/movie/rate", {userId, movieId, star})
+                .then(()=>{
+                    this.rate = star;
+                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
+                });
+            }
+            // 별점 수정
+            else if(this.rate && this.rate!=star) {
+                this.axios.put("/movie/"+movieId+"/rate/"+userId, {star})
+                .then(()=>{
+                    this.rate = star;
+                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
+                });
+            }
+            // 별점 삭제
+            else {
+                this.axios.delete("/movie/"+movieId+"/rate/"+userId)
+                .then(()=>{
+                    this.rate = 0;
+                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"의 별점을 삭제했어요." });
+                });
+            }
         },
     },
 }

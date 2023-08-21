@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class RateDto {
-    private int movieId;
+    private String movieId;
     private String userId;
-    private int rate;
+    private int star;
 }

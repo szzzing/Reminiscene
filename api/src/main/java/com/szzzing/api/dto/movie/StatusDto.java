@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class StatusDto {
-    private Integer rate;
+    private int rate;
     private boolean isComment;
     private boolean isBookmark;
     private boolean isWatching;

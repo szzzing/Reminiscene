@@ -22,6 +22,10 @@ public class MovieService {
         return movieRepository.updateOneRate(rateDto) > 0;
     }
 
+    public boolean deleteRate(RateDto rateDto) {
+        return movieRepository.deleteOneRate(rateDto) > 0;
+    }
+
     public StatusDto getStatus(HashMap<String, String> map) {
         return movieRepository.selectOneStatus(map);
     }
