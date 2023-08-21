@@ -1,7 +1,7 @@
 package com.szzzing.api.security.auth;
 
 import com.google.gson.Gson;
-import com.szzzing.api.dto.UserDto;
+import com.szzzing.api.dto.user.UserDto;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

@@ -14,11 +14,11 @@
         where file_rename_name=#{renameName}
     </delete>
 
-    <resultMap id="fileResultMap" type="com.szzzing.api.dto.FileDto">
+    <resultMap id="fileResultMap" type="com.szzzing.api.dto.common.FileDto">
         <result column="file_original_name" property="originalName"/>
         <result column="file_rename_name" property="renameName"/>
         <result column="file_directory" property="directory"/>
-        <result column="file_create_date" property="createDate"/>
+        <result column="file_cre_date" property="creDate"/>
         <result column="file_size" property="size"/>
     </resultMap>
 </mapper>

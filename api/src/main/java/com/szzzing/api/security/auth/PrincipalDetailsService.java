@@ -1,6 +1,6 @@
 package com.szzzing.api.security.auth;
 
-import com.szzzing.api.dto.UserDto;
+import com.szzzing.api.dto.user.UserDto;
 import com.szzzing.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

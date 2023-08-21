@@ -1,8 +1,8 @@
 package com.szzzing.api.service;
 
-import com.szzzing.api.dto.FileDto;
-import com.szzzing.api.dto.UserDto;
-import com.szzzing.api.dto.UserModifyDto;
+import com.szzzing.api.dto.common.FileDto;
+import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.dto.user.UserModifyDto;
 import com.szzzing.api.repository.FileRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.util.FileUtil;

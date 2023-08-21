@@ -1,6 +1,6 @@
 package com.szzzing.api.security.auth;
 
-import com.szzzing.api.dto.UserDto;
+import com.szzzing.api.dto.user.UserDto;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

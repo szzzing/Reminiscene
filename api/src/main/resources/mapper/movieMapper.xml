@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="movieMapper">
+
+    <select id="selectOneStatus" resultMap="statusResultMap">
+        select
+            (select rate_rate from rate where rate_user_id=#{userId} and rate_movie_id=#{movieId}) status_rate,
+            (select count(*) from comment where comment_user_id=#{userId} and comment_movie_id=#{movieId})>0 status_is_comment,
+            (select count(*) from watching where watching_user_id=#{userId} and watching_movie_id=#{movieId})>0 status_is_watching,
+            (select count(*) from bookmark where bookmark_user_id=#{userId} and bookmark_movie_id=#{movieId})>0 status_is_bookmark
+        from dual
+    </select>
+
+    <insert id="insertOneRate">
+        insert into rate
+        values(#{movieId}, #{userId}, #{rate})
+    </insert>
+
+    <update id="updateOneRate">
+        update rate
+        set rate = #{rate}
+        where movie_id = #{movieId} and user_id = #{userId}
+    </update>
+
+    <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
+        <result column="status_rate" property="rate"/>
+        <result column="status_is_comment" property="isComment"/>
+        <result column="status_is_watching" property="isWatching"/>
+        <result column="status_is_bookmark" property="isBookmark"/>
+    </resultMap>
+
+</mapper>

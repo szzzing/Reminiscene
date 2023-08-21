@@ -1,7 +1,7 @@
 package com.szzzing.api.repository;
 
-import com.szzzing.api.dto.UserDto;
-import com.szzzing.api.dto.UserModifyDto;
+import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.dto.user.UserModifyDto;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;

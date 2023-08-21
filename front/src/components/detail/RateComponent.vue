@@ -3,26 +3,26 @@
         <div class="option">
             <div class="item">
                 <div class="star">
-                    <div class="emoji rate-5" value="5" @click="rate">⭐️</div>
-                    <div class="emoji rate-4" value="4" @click="rate">⭐️</div>
-                    <div class="emoji rate-3" value="3" @click="rate">⭐️</div>
-                    <div class="emoji rate-2" value="2" @click="rate">⭐️</div>
-                    <div class="emoji rate-1" value="1" @click="rate">⭐️</div>
+                    <div class="emoji rate-5" value="5" @click="this.rating(5)">⭐️</div>
+                    <div class="emoji rate-4" value="4" @click="this.rating(4)">⭐️</div>
+                    <div class="emoji rate-3" value="3" @click="this.rating(3)">⭐️</div>
+                    <div class="emoji rate-2" value="2" @click="this.rating(2)">⭐️</div>
+                    <div class="emoji rate-1" value="1" @click="this.rating(1)">⭐️</div>
                 </div>
                 <div class="text">평가하기</div>
             </div>
         </div>
         <div class="option">
-            <div class="item" ref="comment" @click="comment">
-                <div class="emoji">📝</div>
+            <div class="item" ref="comment" @click="this.isComment = !this.isComment">
+                <div class="emoji" :class="{'selected' : isComment}">📝</div>
                 <div class="text">코멘트</div>
             </div>
-            <div class="item" ref="bookmark" @click="bookmark">
-                <div class="emoji">🙏</div>
+            <div class="item" ref="bookmark" @click="this.isBookmark = !this.isBookmark">
+                <div class="emoji" :class="{'selected' : isBookmark}">🙏</div>
                 <div class="text">보고싶어요</div>
             </div>
-            <div class="item" ref="watching" @click="watching">
-                <div class="emoji">😎</div>
+            <div class="item" ref="watching" @click="this.isWatching = !this.isWatching">
+                <div class="emoji" :class="{'selected' : isWatching}">😎</div>
                 <div class="text">보는 중</div>
             </div>
         </div>
@@ -31,34 +31,64 @@
 
 <script>
 export default {
-    methods: {
-        // 별점 클릭
-        rate(event) {
-            const target = event.target.getAttribute("value");
-            const nodes = document.querySelectorAll(".star > .emoji");
+    // 유저 상태 정보 받아오기
+    async created() {
+        if(this.$store.state.auth.user) {
+            const userId = this.$store.state.auth.user.id;
+            const movieId = this.$route.params.id;
 
+            try {
+                const response = await this.axios.get("/movie/"+movieId+"/status/"+userId);
+                this.rate = response.data.rate;
+                this.isComment = response.data.comment;
+                this.isWatching = response.data.watching;
+                this.isBookmark = response.data.bookmark;
+            } catch(error) {
+                this.$router.push('/error');
+            }
+        }
+    },
+    data() {
+        return {
+            rate: null,
+            isComment: false,
+            isWatching: false,
+            isBookmark: false,
+        }
+    },
+    watch: {
+        rate() {
+            const nodes = document.querySelectorAll(".star > .emoji");
             for(let i=4 ; i>=0 ; i--) {
-                if(5-i<=target) {
+                if(5-i<=this.rate) {
                     nodes[i].classList.add("selected");
                 } else {
                     nodes[i].classList.remove("selected");
                 }
             }
         },
-        comment() {
+        isComment() {
             const parent = this.$refs.comment;
             const emoji = parent.firstChild;
             emoji.classList.toggle("selected");
         },
-        bookmark() {
+        isBookmark() {
             const parent = this.$refs.bookmark;
             const emoji = parent.firstChild;
             emoji.classList.toggle("selected");
         },
-        watching() {
+        isWatching() {
             const parent = this.$refs.watching;
             const emoji = parent.firstChild;
             emoji.classList.toggle("selected");
+        },
+    },
+    // 클릭 이벤트
+    methods: {
+        // 별점 클릭
+        rating(payload) {
+            this.rate = payload;
+            console.log(this.rate);
         },
     },
 }

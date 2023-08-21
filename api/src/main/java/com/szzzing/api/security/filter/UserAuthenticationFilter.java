@@ -1,7 +1,7 @@
 package com.szzzing.api.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.szzzing.api.dto.UserDto;
+import com.szzzing.api.dto.user.UserDto;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.security.auth.AuthUtil;
 import com.szzzing.api.security.auth.PrincipalDetails;

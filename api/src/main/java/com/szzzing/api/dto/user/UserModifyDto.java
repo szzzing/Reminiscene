@@ -1,4 +1,4 @@
-package com.szzzing.api.dto;
+package com.szzzing.api.dto.user;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

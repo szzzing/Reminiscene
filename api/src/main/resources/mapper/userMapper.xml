@@ -40,7 +40,7 @@
         where user_id = #{id}
     </update>
 
-    <resultMap id="userResultMap" type="com.szzzing.api.dto.UserDto">
+    <resultMap id="userResultMap" type="com.szzzing.api.dto.user.UserDto">
         <id column="user_id" property="id"/>
         <result column="user_pw" property="pw"/>
         <result column="user_email" property="email"/>
