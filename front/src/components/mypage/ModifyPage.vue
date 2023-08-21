@@ -44,12 +44,12 @@
                     <div class="select-item" v-bind:class="{ 'selected' : this.gender=='M' }"
                     @click="this.selectGender('M')">
                         <div class="emoji">👨🏻</div>
-                        <div class="label">남자</div>
+                        <div class="label">남성</div>
                     </div>
                     <div class="select-item" v-bind:class="{ 'selected' : this.gender=='F' }"
                     @click="this.selectGender('F')">
                         <div class="emoji">👩🏻</div>
-                        <div class="label">여자</div>
+                        <div class="label">여성</div>
                     </div>
                     <div class="select-item" v-bind:class="{ 'selected' : this.gender==null }"
                     @click="this.selectGender(null)">

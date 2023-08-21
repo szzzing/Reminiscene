@@ -1,6 +1,6 @@
 <template>
     <transition name="smooth">
-        <div id="alert" v-if="this.$store.state.modal.alert">
+        <div id="alert" class="item-shadow" v-if="this.$store.state.modal.alert">
             <div class="emoji">
                 {{ this.$store.state.modal.alertEmoji }}
             </div>
@@ -19,7 +19,6 @@ export default {
 <style>
 #alert {
     position: fixed;
-    background: var(--G0);
     color: var(--G1000);
     top: 40px;
     left: 50%;
@@ -31,9 +30,8 @@ export default {
     align-items: center;
     padding: 20px 24px;
     border-radius: 16px;
-    filter: drop-shadow(0px 0px 10px var(--O100));
 }
-.dark #alert {
+.dark .item-shadow {
     background: var(--G50);
 }
 .emoji {

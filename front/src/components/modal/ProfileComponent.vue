@@ -1,6 +1,6 @@
 <template>
     <transition name="smooth">
-        <div id="profile-modal" v-if="this.$store.state.modal.profile" v-click-outside="closeProfile">
+        <div id="profile-modal" class="item-shadow" v-if="this.$store.state.modal.profile" v-click-outside="closeProfile">
             <div class="inner">
                 <div class="profile-image" v-if="user.profileImage" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
                 <div class="no-image" v-if="!user.profileImage">👤</div>
@@ -38,7 +38,7 @@ export default {
 
 <style scoped>
 #profile-modal {
-    background: var(--G0);
+    z-index: 9999;
     padding: 20px;
     border-radius: 16px;
     position: fixed;
@@ -47,19 +47,9 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    filter: drop-shadow(0px 0px 6px var(--O100));
 }
-.dark #profile-modal {
+.dark .item-shadow {
     background: var(--G50);
-    filter: none;
-}
-@media screen and (max-width:768px) {
-    #profile-modal {
-        right: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
 }
 .inner {
     display: flex;

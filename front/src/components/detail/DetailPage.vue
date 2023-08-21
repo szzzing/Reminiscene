@@ -1,18 +1,16 @@
 <template>
-    <div class="container">
         <detail-component></detail-component>
-        <review-component></review-component>
-    </div>
+        <comment-component></comment-component>
 </template>
 
 <script>
 import DetailComponent from './DetailComponent.vue'
-import ReviewComponent from './ReviewComponent.vue'
+import CommentComponent from './CommentComponent.vue'
 
 export default {
     components: { 
         DetailComponent,
-        ReviewComponent,
+        CommentComponent,
     },
     // /list 페이지로 이동시 검색결과 유지
     // 그 외 페이지로 이동시 검색결과 유지 x
@@ -27,8 +25,5 @@ export default {
 </script>
 
 <style scoped>
-.wrap>.container:first-child {
-    padding: 0;
-    width: 100%;
-}
+
 </style>

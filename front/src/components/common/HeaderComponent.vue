@@ -59,8 +59,8 @@ export default {
     cursor: pointer;
 }
 .profile-image, .no-image {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
@@ -71,6 +71,6 @@ export default {
     cursor: pointer;
 }
 .no-image {
-    font-size: 28px;
+    font-size: 20px;
 }
 </style>

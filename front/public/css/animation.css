@@ -1,7 +1,4 @@
-.vibration {
-    animation: vibrate 0.05s infinite alternate;
-}
-
+/* vibrate */
 @keyframes vibrate {
     0% {
         transform: translateX(-1px);
@@ -10,6 +7,10 @@
         transform: translateX(1px);
     }
 }
+.vibration {
+    animation: vibrate 0.05s infinite alternate;
+}
+
 
 /* smooth */
 .smooth-enter-active,
@@ -20,4 +21,27 @@
 .smooth-enter-from,
 .smooth-leave-to {
     opacity: 0;
+}
+
+/* scale */
+@keyframes scale {
+    from, 20% {
+        animation-timing-function: ease-out;
+        transform: scale(0);
+    }
+    60% {
+      animation-timing-function: ease-in-out;
+      transform: scale(1.2);
+    }
+    80% {
+        transform: scale(0.9);
+    }
+    to {
+        filter: none;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.scale {
+    animation: scale 0.5s alternate;
 }

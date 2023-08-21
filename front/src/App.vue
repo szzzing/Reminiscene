@@ -1,11 +1,12 @@
 <template>
-        <header-component></header-component>
-        <profile-component></profile-component>
-        <alert-component></alert-component>
-        <div class="wrap">
-            <router-view></router-view>
-            <footer-component></footer-component>
-        </div>
+    <header-component></header-component>
+    <profile-component></profile-component>
+    <alert-component></alert-component>
+
+    <div class="wrap">
+        <router-view></router-view>
+    </div>
+    <footer-component></footer-component>
 </template>
 
 <script>
@@ -41,5 +42,11 @@ export default {
 </script>
 
 <style>
-
+    #app {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 100px;
+        min-height: 100vh;
+    }
 </style>

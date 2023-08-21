@@ -19,11 +19,7 @@ body {
 }
 
 .wrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 100px;
-    min-height: 100vh;
+    flex-grow: 1;
 }
 
 .container {
@@ -33,14 +29,6 @@ body {
 
 .wrap>.container:first-child {
     padding: 100px 0 0;
-    flex-grow: 1;
-}
-
-@media screen and (max-width:768px) {
-    .container {
-        width: calc(100% - 40px);
-        margin: 0 auto;
-    }
 }
 
 .input-box {
@@ -145,4 +133,21 @@ input:autofill:active {
     background: var(--G1000);
     font-size: 14px;
     cursor: pointer;
+}
+
+.item-shadow {
+    background: var(--G0);
+    filter: drop-shadow(0px 0px 6px var(--O100));
+}
+.dark .item-shadow {
+    background: var(--G50);
+    filter: none;
+}
+
+img[src$=".gif"], img[src$=".png"], img[src$=".jpeg"], img[src$=".jpg"] {
+    image-rendering: -moz-crisp-edges; /* Firefox */
+    image-rendering: -o-crisp-edges; /* Opera */
+    image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
 }
