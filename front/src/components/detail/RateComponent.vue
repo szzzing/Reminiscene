@@ -131,14 +131,14 @@ export default {
             if(this.isWish) {
                 this.axios.delete("/movie/wish/"+movieId)
                 .then(()=>{
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 위시리스트에서 삭제했어요." });
+                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶지 않아요." });
                 });
             }
             // 삽입
             else {
                 this.axios.post("/movie/wish/"+movieId)
                 .then(()=>{
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 위시리스트에 추가했어요." });
+                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶어요." });
                 });
             }
             this.isWish = !this.isWish;
