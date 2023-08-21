@@ -19,10 +19,10 @@
                 <div class="title" ref="nickname">💛 닉네임</div>
                 <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.nickname != this.$store.state.auth.user.nickname && checkedNickname, 'unchecked': !checkedNickname }">
+                    v-bind:class="{ 'checked': checkedNickname, 'unchecked': !checkedNickname }">
                     <input type="text" v-model="nickname">
-                    <i class="fa-solid fa-circle-check" v-if="this.nickname != this.$store.state.auth.user.nickname && checkedNickname"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.nickname != this.$store.state.auth.user.nickname && !checkedNickname"></i>
+                    <i class="fa-solid fa-circle-check" v-if="checkedNickname"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="!checkedNickname"></i>
                 </div>
             </div>
 
@@ -30,10 +30,10 @@
                 <div class="title">📫 이메일</div>
                 <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.email != this.$store.state.auth.user.email && checkedEmail, 'unchecked': !checkedEmail }">
+                    v-bind:class="{ 'checked': checkedEmail, 'unchecked': !checkedEmail }">
                     <input type="text" v-model="email">
-                    <i class="fa-solid fa-circle-check" v-if="this.email != this.$store.state.auth.user.email && checkedEmail"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.email != this.$store.state.auth.user.email && !checkedEmail"></i>
+                    <i class="fa-solid fa-circle-check" v-if="checkedEmail"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="!checkedEmail"></i>
                 </div>
             </div>
 
@@ -136,26 +136,20 @@ export default {
 
         //  아이디 중복 여부 체크
         checkNickname() {
-            if(this.nickname==this.$store.state.auth.user.nickname) {
-                this.checkedNickname = true;
-            } else {
-                this.axios.get("/user/me/check/nickname/" + this.nickname)
-                    .then((response) => {
-                        this.checkedNickname = response.data;
-                    })
-            }
+            const params = {nickname : this.nickname};
+            this.axios.get("/user", {params})
+                .then((response) => {
+                    console.log(response.data);
+                    this.checkedNickname = response.data;
+                })
         },
         //  이메일 중복 여부 체크
         checkEmail() {
-            if(this.email==this.$store.state.auth.user.email) {
-                this.checkedEmail = true;
-            } else {
-                this.axios.get("/user/me/check/email/" + this.email)
-                    .then((response) => {
-                        this.checkedEmail = response.data;
-                    })
-            }
-
+            const params = {email : this.email};
+            this.axios.get("/user", {params})
+                .then((response) => {
+                    this.checkedEmail = response.data;
+                })
         },
         
         //  성별 선택
@@ -196,7 +190,7 @@ export default {
                     formData.append("uploadFile", this.$refs.uploadImage.files[0]);
                 }
                 
-                this.axios.post("/user/me/modify", formData, {
+                this.axios.put("/user/"+this.$store.state.auth.user.id, formData, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                         },

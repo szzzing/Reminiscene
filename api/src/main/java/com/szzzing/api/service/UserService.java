@@ -12,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Slf4j
 @Service
@@ -25,20 +27,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final String profieDir = "/upload/profile/";
 
-    public ArrayList<UserDto> selectAll() {
-        return userRepository.selectAll();
-    }
-
-    public boolean authCheckId(String id) {
-        UserDto userDto = userRepository.selectOneById(id);
-        return userDto == null;
-    }
-
-    public boolean authCheckEmail(String email) {
-        UserDto userDto = userRepository.selectOneByEmail(email);
-        return userDto == null;
-    }
-    
     // 회원가입
     public boolean register(UserDto userDto) {
         String pw = passwordEncoder.encode(userDto.getPw());
@@ -99,13 +87,17 @@ public class UserService {
         return result>0;
     }
 
-    public boolean mypageCheckNickname(String nickname) {
-        UserDto userDto = userRepository.selectOneByNickname(nickname);
-        return userDto == null;
+    public boolean check(Principal principal, String id, String email, String nickname) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", principal==null ? null : principal.getName());
+        map.put("id", id);
+        map.put("email", email);
+        map.put("nickname", nickname);
+        log.info(map.toString());
+
+        if(id!=null) return userRepository.selectOneById(id) == null;
+        else if(nickname!=null) return userRepository.selectOneByNickname(map) == null;
+        else return userRepository.selectOneByEmail(map) == null;
     }
 
-    public boolean mypageCheckEmail(String email) {
-        UserDto userDto = userRepository.selectOneByEmail(email);
-        return userDto == null;
-    }
 }

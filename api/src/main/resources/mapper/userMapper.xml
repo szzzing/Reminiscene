@@ -22,11 +22,17 @@
     <select id="selectOneByNickname" resultMap="userResultMap">
         select * from user
         where user_nickname=#{nickname}
+        <if test="userId!=null">
+            and user_id!=#{userId}
+        </if>
     </select>
 
     <select id="selectOneByEmail" resultMap="userResultMap">
         select * from user
         where user_email=#{email}
+        <if test="userId!=null">
+            and user_id!=#{userId}
+        </if>
     </select>
 
     <update id="updateOne">

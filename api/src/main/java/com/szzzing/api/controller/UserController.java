@@ -8,10 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,52 +19,27 @@ import java.util.ArrayList;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-
-    @GetMapping("/auth/selectAll")
-    public ResponseEntity<ArrayList<UserDto>> selectAllUser() {
-        ArrayList<UserDto> list = userService.selectAll();
-        return new ResponseEntity(list, HttpStatus.OK);
-    }
 
     // 회원가입
-    @PostMapping("/auth/register")
+    @PostMapping("")
     public ResponseEntity register(@RequestBody UserDto userDto) {
         boolean result = userService.register(userDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 회원가입 - 아이디 중복 체크
-    @GetMapping("/auth/check/id/{id}")
-    public boolean authCheckId(@PathVariable String id) {
-        return userService.authCheckId(id);
+    // 아이디/이메일 중복 체크
+    @GetMapping("")
+    public ResponseEntity check(@RequestParam(value="id", required=false) String id, @RequestParam(value="email", required=false) String email, @RequestParam(value="nickname", required=false) String nickname, HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        boolean result = userService.check(principal, id, email, nickname);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
-
-    // 회원가입 - 이메일 중복 체크
-    @GetMapping("/auth/check/email/{email}")
-    public boolean authCheckEmail(@PathVariable String email) {
-        return userService.authCheckEmail(email);
-    }
-
-    // 마이페이지
 
     // 마이페이지 - 내 정보 수정
-    @PostMapping("/me/modify")
+    @PutMapping("/{id}")
     public ResponseEntity mypageModify(@ModelAttribute UserModifyDto userModifyDto, HttpServletRequest request) {
         userModifyDto.setId(request.getUserPrincipal().getName());
         boolean result = userService.mypageModify(userModifyDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    // 마이페이지 - 내 정보 수정 - 닉네임 중복 체크
-    @GetMapping("/me/check/nickname/{nickname}")
-    public boolean mypageCheckNickname(@PathVariable String nickname) {
-        return userService.mypageCheckNickname(nickname);
-    }
-
-    // 마이페지이 - 내 정보 수정 - 이메일 중복 체크
-    @GetMapping("/me/check/email/{email}")
-    public boolean mypageCheckEmail(@PathVariable String email) {
-        return userService.mypageCheckEmail(email);
     }
 }

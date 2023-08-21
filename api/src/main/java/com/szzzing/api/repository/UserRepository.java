@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,20 +20,16 @@ public class UserRepository {
         return sqlSessionTemplate.insert(NAME_SPACE+"insertOne", userDto);
     }
 
-    public ArrayList<UserDto> selectAll() {
-        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectAll");
-    }
-
     public UserDto selectOneById(String id) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneById", id);
     }
 
-    public UserDto selectOneByEmail(String email) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByEmail", email);
+    public UserDto selectOneByEmail(HashMap map) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByEmail", map);
     }
 
-    public UserDto selectOneByNickname(String nickname) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByNickname", nickname);
+    public UserDto selectOneByNickname(HashMap map) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByNickname", map);
     }
 
     public int updateOne(UserModifyDto userModifyDto) {
