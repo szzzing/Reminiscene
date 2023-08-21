@@ -6,6 +6,6 @@ import lombok.Data;
 public class StatusDto {
     private int rate;
     private boolean isComment;
-    private boolean isBookmark;
+    private boolean isWish;
     private boolean isWatching;
 }

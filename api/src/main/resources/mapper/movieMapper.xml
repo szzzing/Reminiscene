@@ -9,9 +9,10 @@
             ifnull((select rate_star from rate where rate_user_id=#{userId} and rate_movie_id=#{movieId}), 0) status_rate,
             (select count(*) from comment where comment_user_id=#{userId} and comment_movie_id=#{movieId})>0 status_is_comment,
             (select count(*) from watching where watching_user_id=#{userId} and watching_movie_id=#{movieId})>0 status_is_watching,
-            (select count(*) from bookmark where bookmark_user_id=#{userId} and bookmark_movie_id=#{movieId})>0 status_is_bookmark
+            (select count(*) from wish where wish_user_id=#{userId} and wish_movie_id=#{movieId})>0 status_is_wish
         from dual
     </select>
+
 
     <insert id="insertOneRate">
         insert into rate
@@ -29,11 +30,34 @@
         where rate_movie_id = #{movieId} and rate_user_id = #{userId}
     </delete>
 
+
+    <insert id="insertOneWish">
+        insert into wish
+        values(#{movieId}, #{userId})
+    </insert>
+
+    <delete id="deleteOneWish">
+        delete from wish
+        where wish_movie_id = #{movieId} and wish_user_id = #{userId}
+    </delete>
+
+
+    <insert id="insertOneWatching">
+        insert into watching
+        values(#{movieId}, #{userId})
+    </insert>
+
+    <delete id="deleteOneWatching">
+        delete from watching
+        where watching_movie_id = #{movieId} and watching_user_id = #{userId}
+    </delete>
+
+
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
         <result column="status_rate" property="rate"/>
         <result column="status_is_comment" property="isComment"/>
         <result column="status_is_watching" property="isWatching"/>
-        <result column="status_is_bookmark" property="isBookmark"/>
+        <result column="status_is_wish" property="isWish"/>
     </resultMap>
 
 </mapper>

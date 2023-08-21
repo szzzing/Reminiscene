@@ -87,6 +87,21 @@ export default {
     cursor: pointer;
     background: var(--G50);
 }
+@media screen and (max-width:960px) {
+    .item {
+        flex-basis: calc((100% - 40px)/3);
+    }
+}
+@media screen and (max-width:800px) {
+    .item {
+        flex-basis: calc((100% - 20px)/2);
+    }
+}
+@media screen and (max-width:500px) {
+    .item {
+        flex-basis: 100%;
+    }
+}
 .profile {
     display: flex;
     align-items: center;
@@ -97,6 +112,11 @@ export default {
     padding: 20px 0;
     border-top: 1px solid var(--G100);
     border-bottom: 1px solid var(--G100);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
 }
 .interest {
     display: flex;
@@ -106,12 +126,16 @@ export default {
 .nickname {
     flex-grow: 1;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .status {
     background: var(--G200);
     border-radius: 16px;
     padding: 4px 10px;
     font-size: 14px;
+    flex-shrink: 0;
 }
 
 .profile-image, .no-image {
