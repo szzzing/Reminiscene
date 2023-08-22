@@ -1,10 +1,8 @@
 package com.szzzing.api.repository;
 
-import com.szzzing.api.dto.movie.RateDto;
-import com.szzzing.api.dto.movie.StatusDto;
-import com.szzzing.api.dto.movie.WatchingDto;
-import com.szzzing.api.dto.movie.WishDto;
+import com.szzzing.api.dto.movie.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +10,7 @@ import java.util.HashMap;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class MovieRepository {
 
     private final SqlSessionTemplate sqlSessionTemplate;
@@ -47,5 +46,17 @@ public class MovieRepository {
 
     public int deleteOneWatching(WatchingDto watchingDto) {
         return sqlSessionTemplate.delete(NAME_SPACE+"deleteOneWatching", watchingDto);
+    }
+
+    public int insertOneComment(CommentDto commentDto) {
+        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneComment", commentDto);
+    }
+
+    public CommentDto selectOneComment(CommentDto commentDto) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneComment", commentDto);
+    }
+
+    public int updateOneComment(CommentDto commentDto) {
+        return sqlSessionTemplate.update(NAME_SPACE+"updateOneComment", commentDto);
     }
 }

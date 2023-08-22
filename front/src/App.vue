@@ -3,7 +3,7 @@
     <profile-component></profile-component>
     <alert-component></alert-component>
 
-    <div class="wrap">
+    <div class="wrap" @click="this.closeProfile()">
         <router-view></router-view>
     </div>
     <footer-component></footer-component>
@@ -30,6 +30,9 @@ export default {
     methods: {
         getList(list) {
             this.movieList = list;
+        },
+        closeProfile() {
+            this.$store.commit("modal/setProfile", false);
         }
     },
     // 테마 상태 반영

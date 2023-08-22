@@ -1,4 +1,9 @@
 <template>
+    <comment-modal-component v-bind:movie="movie" v-if="this.commentModal"
+    v-on:closeCommentModal="this.commentModal=false"
+    v-on:addComment="this.isComment = true"
+    v-bind:isComment="isComment">
+    </comment-modal-component>
     <div class="user-area">
         <div class="option">
             <div class="item">
@@ -13,7 +18,7 @@
             </div>
         </div>
         <div class="option">
-            <div class="item" ref="comment" @click="this.isComment = !this.isComment">
+            <div class="item" ref="comment" @click="this.clickComment()">
                 <div class="emoji" :class="{'selected' : isComment}">📝</div>
                 <div class="text">코멘트</div>
             </div>
@@ -30,17 +35,18 @@
 </template>
 
 <script>
-let movieId;
+import CommentModalComponent from './CommentModalComponent.vue';
 
 export default {
+    components: {
+        CommentModalComponent,
+    },
     // 유저 상태 정보 받아오기
     async created() {
         if(this.$store.state.auth.user) {
 
-            movieId = this.$route.params.id;
-
             try {
-                const response = await this.axios.get("/movie/status/"+movieId);
+                const response = await this.axios.get("/movie/status/"+this.movie.id);
                 this.rate = response.data.rate;
                 this.isComment = response.data.comment;
                 this.isWatching = response.data.watching;
@@ -52,6 +58,7 @@ export default {
     },
     data() {
         return {
+            commentModal: false,
             rate: 0,
             isComment: false,
             isWatching: false,
@@ -100,67 +107,87 @@ export default {
         // 별점 클릭
         clickRate(star) {
             // 별점 삽입
-            if(!this.rate) {
-                this.axios.post("/movie/rate/"+movieId, {star})
-                .then(()=>{
-                    this.rate = star;
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
-                });
-            }
-            // 별점 수정
-            else if(this.rate && this.rate!=star) {
-                this.axios.put("/movie/rate/"+movieId, {star})
-                .then(()=>{
-                    this.rate = star;
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
-                });
-            }
-            // 별점 삭제
-            else {
-                this.axios.delete("/movie/rate/"+movieId)
-                .then(()=>{
-                    this.rate = 0;
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"의 별점을 삭제했어요." });
-                });
+            if(this.$store.state.auth.user) {
+                if(!this.rate) {
+                    this.axios.post("/movie/rate/"+this.movie.id, {star})
+                    .then(()=>{
+                        this.rate = star;
+                        this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
+                    });
+                }
+                // 별점 수정
+                else if(this.rate && this.rate!=star) {
+                    this.axios.put("/movie/rate/"+this.movie.id, {star})
+                    .then(()=>{
+                        this.rate = star;
+                        this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
+                    });
+                }
+                // 별점 삭제
+                else {
+                    this.axios.delete("/movie/rate/"+this.movie.id)
+                    .then(()=>{
+                        this.rate = 0;
+                        this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"의 별점을 삭제했어요." });
+                    });
+                }
+            } else {
+                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
         },
 
         // 보고싶어요 클릭
         clickWish() {
-            // 삭제
-            if(this.isWish) {
-                this.axios.delete("/movie/wish/"+movieId)
-                .then(()=>{
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶지 않아요." });
-                });
+            if(this.$store.state.auth.user) {
+
+                // 삭제
+                if(this.isWish) {
+                    this.axios.delete("/movie/wish/"+this.movie.id)
+                    .then(()=>{
+                        this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶지 않아요." });
+                    });
+                }
+                // 삽입
+                else {
+                    this.axios.post("/movie/wish/"+this.movie.id)
+                    .then(()=>{
+                        this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶어요." });
+                    });
+                }
+                this.isWish = !this.isWish;
+
+            } else {
+                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
-            // 삽입
-            else {
-                this.axios.post("/movie/wish/"+movieId)
-                .then(()=>{
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶어요." });
-                });
-            }
-            this.isWish = !this.isWish;
         },
 
         // 보는중 클릭
         clickWatching() {
-            // 삭제
-            if(this.isWatching) {
-                this.axios.delete("/movie/watching/"+movieId)
-                .then(()=>{
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 그만볼래요." });
-                });
+            if(this.$store.state.auth.user) {
+                // 삭제
+                if(this.isWatching) {
+                    this.axios.delete("/movie/watching/"+this.movie.id)
+                    .then(()=>{
+                        this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 그만볼래요." });
+                    });
+                }
+                // 삽입
+                else {
+                    this.axios.post("/movie/watching/"+this.movie.id)
+                    .then(()=>{
+                        this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고있어요." });
+                    });
+                }
+                this.isWatching = !this.isWatching;
+
+            } else {
+                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
-            // 삽입
-            else {
-                this.axios.post("/movie/watching/"+movieId)
-                .then(()=>{
-                    this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고있어요." });
-                });
-            }
-            this.isWatching = !this.isWatching;
+        },
+
+        // 코멘트 클릭
+        clickComment() {
+            this.commentModal = true;
         }
     },
 }

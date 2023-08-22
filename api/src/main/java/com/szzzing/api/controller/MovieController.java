@@ -1,9 +1,7 @@
 package com.szzzing.api.controller;
 
-import com.szzzing.api.dto.movie.RateDto;
-import com.szzzing.api.dto.movie.StatusDto;
-import com.szzzing.api.dto.movie.WatchingDto;
-import com.szzzing.api.dto.movie.WishDto;
+import com.szzzing.api.dto.movie.*;
+import com.szzzing.api.dto.user.UserDto;
 import com.szzzing.api.service.MovieService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,17 +12,18 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.stream.events.Comment;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/movie")
 @Slf4j
 public class MovieController {
 
     private final MovieService movieService;
 
-    @GetMapping("/status/{movieId}")
+    @GetMapping("/movie/status/{movieId}")
     public ResponseEntity<StatusDto> getStatus(HttpServletRequest request, @PathVariable String movieId) {
         HashMap<String, String> map = new HashMap();
         map.put("movieId", movieId);
@@ -34,21 +33,21 @@ public class MovieController {
     }
 
     // 별점
-    @PostMapping ("/rate/{movieId}")
+    @PostMapping ("/movie/rate/{movieId}")
     public ResponseEntity addRate(@RequestBody RateDto rateDto, HttpServletRequest request, @PathVariable String movieId) {
         rateDto.setUserId(request.getUserPrincipal().getName());
         rateDto.setMovieId(movieId);
         boolean result = movieService.addRate(rateDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @PutMapping("/rate/{movieId}")
+    @PutMapping("/movie/rate/{movieId}")
     public ResponseEntity updateRate(@RequestBody RateDto rateDto, HttpServletRequest request, @PathVariable String movieId) {
         rateDto.setUserId(request.getUserPrincipal().getName());
         rateDto.setMovieId(movieId);
         boolean result = movieService.updateRate(rateDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @DeleteMapping("/rate/{movieId}")
+    @DeleteMapping("/movie/rate/{movieId}")
     public ResponseEntity deleteRate(HttpServletRequest request, @PathVariable String movieId) {
         RateDto rateDto = new RateDto();
         rateDto.setUserId(request.getUserPrincipal().getName());
@@ -58,7 +57,7 @@ public class MovieController {
     }
 
     // 보고싶어요
-    @PostMapping("/wish/{movieId}")
+    @PostMapping("/movie/wish/{movieId}")
     public ResponseEntity addWish(HttpServletRequest request, @PathVariable String movieId) {
         WishDto wishDto = new WishDto();
         wishDto.setUserId(request.getUserPrincipal().getName());
@@ -66,7 +65,7 @@ public class MovieController {
         boolean result = movieService.addWish(wishDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @DeleteMapping ("/wish/{movieId}")
+    @DeleteMapping ("/movie/wish/{movieId}")
     public ResponseEntity deleteWish(HttpServletRequest request, @PathVariable String movieId) {
         WishDto wishDto = new WishDto();
         wishDto.setUserId(request.getUserPrincipal().getName());
@@ -76,7 +75,7 @@ public class MovieController {
     }
 
     // 보는 중
-    @PostMapping("/watching/{movieId}")
+    @PostMapping("/movie/watching/{movieId}")
     public ResponseEntity addWatching(HttpServletRequest request, @PathVariable String movieId) {
         WatchingDto watchingDto = new WatchingDto();
         watchingDto.setUserId(request.getUserPrincipal().getName());
@@ -84,12 +83,30 @@ public class MovieController {
         boolean result = movieService.addWatching(watchingDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @DeleteMapping ("/watching/{movieId}")
+    @DeleteMapping ("/movie/watching/{movieId}")
     public ResponseEntity deleteWatching(HttpServletRequest request, @PathVariable String movieId) {
         WatchingDto watchingDto = new WatchingDto();
         watchingDto.setUserId(request.getUserPrincipal().getName());
         watchingDto.setMovieId(movieId);
         boolean result = movieService.deleteWatching(watchingDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    // 코멘트
+    @PostMapping("/comment")
+    public ResponseEntity addComment(@RequestBody CommentDto commentDto) {
+        boolean result = movieService.addComment(commentDto);
+        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @PutMapping("/comment")
+    public ResponseEntity modifyComment(@RequestBody CommentDto commentDto) {
+        boolean result = movieService.modifyComment(commentDto);
+        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @GetMapping("/comment")
+    public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentDto commentDto) {
+        log.info(commentDto.toString());
+        CommentDto result = movieService.getComment(commentDto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

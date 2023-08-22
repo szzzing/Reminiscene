@@ -6,11 +6,12 @@ import java.sql.Timestamp;
 
 @Data
 public class CommentDto {
-    private int id;
+    private Integer id;
     private String movieId;
     private String userId;
     private String nickname;
-    private String status;
+    private boolean isWatching;
+    private boolean isWish;
     private int rate;
     private String content;
     private boolean isSpoiler;

@@ -57,8 +57,7 @@ public class SecurityConfig {
         // 페이지별 권한 설정
         http.authorizeHttpRequests()
             // api 요청 관련
-            .requestMatchers("/admin/**").anonymous()
-            .requestMatchers("/movie/**").hasRole("U")
+            .requestMatchers("/movie/**", "/comment").hasRole("U")
             // 라우터 관련
             .requestMatchers("/route/auth/**", "/route/login").anonymous()
             .requestMatchers("/route/list", "/route/detail").permitAll()

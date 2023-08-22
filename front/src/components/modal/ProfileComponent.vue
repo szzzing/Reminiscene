@@ -1,6 +1,6 @@
 <template>
     <transition name="smooth">
-        <div id="profile-modal" class="item-shadow" v-if="this.$store.state.modal.profile" v-click-outside="closeProfile">
+        <div id="profile-modal" class="item-shadow" v-if="this.$store.state.modal.profile" @click.stop="">
             <div class="inner">
                 <div class="profile-image" v-if="user.profileImage" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
                 <div class="no-image" v-if="!user.profileImage">👤</div>

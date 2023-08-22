@@ -1,6 +1,6 @@
 <template>
-        <detail-component></detail-component>
-        <comment-component></comment-component>
+    <detail-component></detail-component>
+    <comment-component></comment-component>
 </template>
 
 <script>

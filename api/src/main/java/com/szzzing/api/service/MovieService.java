@@ -1,13 +1,11 @@
 package com.szzzing.api.service;
 
-import com.szzzing.api.dto.movie.RateDto;
-import com.szzzing.api.dto.movie.StatusDto;
-import com.szzzing.api.dto.movie.WatchingDto;
-import com.szzzing.api.dto.movie.WishDto;
+import com.szzzing.api.dto.movie.*;
 import com.szzzing.api.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Service
@@ -46,5 +44,17 @@ public class MovieService {
 
     public boolean deleteWatching(WatchingDto watchingDto) {
         return movieRepository.deleteOneWatching(watchingDto) > 0;
+    }
+
+    public boolean addComment(CommentDto commentDto) {
+        return movieRepository.insertOneComment(commentDto) > 0;
+    }
+
+    public CommentDto getComment(CommentDto commentDto) {
+        return movieRepository.selectOneComment(commentDto);
+    }
+
+    public boolean modifyComment(CommentDto commentDto) {
+        return movieRepository.updateOneComment(commentDto) > 0;
     }
 }
