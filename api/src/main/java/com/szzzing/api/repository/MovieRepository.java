@@ -1,5 +1,6 @@
 package com.szzzing.api.repository;
 
+import com.szzzing.api.dto.comment.CommentDto;
 import com.szzzing.api.dto.movie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

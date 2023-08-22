@@ -1,8 +1,11 @@
 <template>
     <div id="comment" class="container">
-        <div class="title">
-            코멘트
-            <span class="sub-title">3000+</span>
+        <div class="inner">
+            <div class="title">
+                코멘트
+                <span class="sub-title">3000+</span>
+            </div>
+            <router-link :to="`/detail/${this.movie.id}/comment`">전체보기</router-link>
         </div>
         <div class="best-comment">
             <div class="item">
@@ -51,6 +54,9 @@ export default {
             user: this.$store.state.auth.user,
         }
     },
+    props: [
+        'movie',
+    ]
 }
 </script>
 
@@ -61,6 +67,11 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .title {
     font-size: 24px;

@@ -52,30 +52,6 @@
         where watching_movie_id = #{movieId} and watching_user_id = #{userId}
     </delete>
 
-    <insert id="insertOneComment">
-        insert into comment
-        values(default, #{movieId}, #{userId}, #{content}, #{isSpoiler}, default, default)
-    </insert>
-
-    <select id="selectOneComment" resultMap="commentResultMap">
-        select * from comment
-        where
-        <if test="id!=null">
-            comment_id=#{id}
-        </if>
-        <if test="id==null and userId!=null and movieId!=null">
-            comment_user_id=#{userId} and comment_movie_id=#{movieId}
-        </if>
-    </select>
-
-    <update id="updateOneComment">
-        update comment
-        set comment_content=#{content},
-            comment_is_spoiler=#{isSpoiler},
-            comment_mod_date=current_timestamp
-        where comment_user_id=#{userId} and comment_movie_id=#{movieId}
-    </update>
-
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
         <result column="status_rate" property="rate"/>
@@ -84,7 +60,7 @@
         <result column="status_is_wish" property="isWish"/>
     </resultMap>
 
-    <resultMap id="commentResultMap" type="com.szzzing.api.dto.movie.CommentDto">
+    <resultMap id="commentResultMap" type="com.szzzing.api.dto.comment.CommentDto">
         <result column="comment_id" property="id"/>
         <result column="comment_movie_id" property="movieId"/>
         <result column="comment_user_id" property="userId"/>

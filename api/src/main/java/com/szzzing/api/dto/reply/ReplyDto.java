@@ -1,4 +1,4 @@
-package com.szzzing.api.dto.movie;
+package com.szzzing.api.dto.reply;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import java.sql.Date;
 @Data
 public class ReplyDto {
     private int id;
-    private String writer;
+    private String userId;
     private String nickname;
     private int refId;
     private Date creDate;

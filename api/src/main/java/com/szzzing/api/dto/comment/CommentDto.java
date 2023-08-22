@@ -1,4 +1,4 @@
-package com.szzzing.api.dto.movie;
+package com.szzzing.api.dto.comment;
 
 import lombok.Data;
 
@@ -10,6 +10,7 @@ public class CommentDto {
     private String movieId;
     private String userId;
     private String nickname;
+    private String profileImage;
     private boolean isWatching;
     private boolean isWish;
     private int rate;

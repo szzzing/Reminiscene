@@ -1,11 +1,11 @@
 package com.szzzing.api.service;
 
+import com.szzzing.api.dto.comment.CommentDto;
 import com.szzzing.api.dto.movie.*;
 import com.szzzing.api.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 @Service

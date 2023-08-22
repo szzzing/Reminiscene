@@ -18,4 +18,8 @@ public class RouteController {
     @GetMapping("/{path1}/{path2}")
     public void route3() {
     }
+
+    @GetMapping("/{path1}/{path2}/{path3}")
+    public void route4() {
+    }
 }

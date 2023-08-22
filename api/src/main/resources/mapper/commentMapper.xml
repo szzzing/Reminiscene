@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commentMapper">
+
+    <insert id="insertOneComment">
+        insert into comment
+        values(default, #{movieId}, #{userId}, #{content}, #{isSpoiler}, default, default)
+    </insert>
+
+    <select id="selectOneComment" resultMap="commentResultMap">
+        select * from comment
+        where
+        <if test="id!=null">
+            comment_id=#{id}
+        </if>
+        <if test="id==null and userId!=null and movieId!=null">
+            comment_user_id=#{userId} and comment_movie_id=#{movieId}
+        </if>
+    </select>
+
+    <update id="updateOneComment">
+        update comment
+        set comment_content=#{content},
+            comment_is_spoiler=#{isSpoiler},
+            comment_mod_date=current_timestamp
+        where comment_user_id=#{userId} and comment_movie_id=#{movieId}
+    </update>
+
+    <select id="selectCommentList" resultMap="commentResultMap">
+        select c.*, u.*,
+            (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as watching_count,
+            (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as wish_count
+        from comment c
+            join user u on comment_user_id = user_id
+        where comment_movie_id=#{movieId}
+        <choose>
+            <when test='sort==null || sort.equals("recent")'>
+                order by comment_id desc
+            </when>
+            <when test='sort.equals("famous")'>
+                order by comment_like_count desc
+            </when>
+            <when test='sort.equals("rate")'>
+                order by comment_rate desc
+            </when>
+        </choose>
+        limit #{limit} offset #{offset}
+    </select>
+
+
+    <resultMap id="commentResultMap" type="com.szzzing.api.dto.comment.CommentDto">
+        <result column="comment_id" property="id"/>
+        <result column="comment_movie_id" property="movieId"/>
+        <result column="comment_user_id" property="userId"/>
+        <result column="user_nickname" property="nickname"/>
+        <result column="user_profile_image" property="profileImage"/>
+        <result column="comment_content" property="content"/>
+        <result column="comment_is_wish" property="isWish"/>
+        <result column="comment_is_watching" property="isWatching"/>
+        <result column="comment_rate" property="rate"/>
+        <result column="comment_is_spoiler" property="isSpoiler"/>
+        <result column="like_count" property="likeCount"/>
+        <result column="reply_count" property="replyCount"/>
+        <result column="comment_cre_date" property="creDate"/>
+        <result column="comment_mod_date" property="modDate"/>
+    </resultMap>
+</mapper>

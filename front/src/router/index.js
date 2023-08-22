@@ -9,6 +9,7 @@ import RegisterPage from '@/components/auth/RegisterPage'
 import FindPage from '@/components/auth/FindPage'
 import ListPage from '@/components/list/ListPage'
 import DetailPage from '@/components/detail/DetailPage'
+import CommentPage from '@/components/comment/CommentPage'
 import MyPage from '@/components/mypage/MyPage'
 import ModifyPage from '@/components/mypage/ModifyPage'
 
@@ -40,6 +41,10 @@ const routes = [
     {
         path: '/detail/:id',
         component: DetailPage,
+    },
+    {
+        path: '/detail/:id/comment',
+        component: CommentPage,
     },
     {
         path: '/mypage',
