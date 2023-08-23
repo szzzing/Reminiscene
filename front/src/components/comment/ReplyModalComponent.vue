@@ -70,6 +70,8 @@ export default {
             this.axios.post("/reply", params)
             .then((response)=>{
                 console.log(response);
+                this.$emit('reloadReply');
+                this.$emit('closeReplyModal');
             });
         },
     }

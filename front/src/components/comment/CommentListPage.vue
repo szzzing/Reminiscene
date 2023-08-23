@@ -10,14 +10,14 @@
                         {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
                     </div>
                 </div>
-                <div class="text" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
+                    <div class="text" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
                 <div class="interest">
                     <div class="like">👍 {{ comment.likeCount }}</div>
                     <div class="reply">💭 {{ comment.replyCount }}</div>
                 </div>
             </router-link>
         </transition-group>
-        <div class="view-more medium-button" @click="this.page = this.page+1">더보기</div>
+        <div class="view-more small-button" @click="this.page = this.page+1">더보기</div>
     </div>
 </template>
 
@@ -52,7 +52,6 @@ export default {
             }
             this.axios.get("/movie/"+this.$route.params.id+"/comment", {params})
             .then((response)=>{
-                console.log(response.data)
                 for(var c of response.data.list) {
                     this.list.push(c);
                 }
@@ -82,9 +81,9 @@ export default {
     gap: 24px;
 }
 
-.medium-button {
+.small-button {
     width: 80px;
-    margin: 16px auto 0;
+    margin: 60px auto 0;
 }
 .item {
     border-radius: 16px;
@@ -99,6 +98,9 @@ export default {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+.spoiler {
+    filter: blur(8px);
 }
 .text {
     flex-grow: 1;

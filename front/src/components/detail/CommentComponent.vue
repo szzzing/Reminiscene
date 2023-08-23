@@ -17,7 +17,7 @@
                         {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
                     </div>
                 </div>
-                <div class="text" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
+                <div class="text">{{ comment.content }}</div>
                 <div class="interest">
                     <div class="like">👍 {{ comment.likeCount }}</div>
                     <div class="reply">💭 {{ comment.replyCount }}</div>

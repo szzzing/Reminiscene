@@ -1,14 +1,14 @@
 <template>
-    <reply-modal-component v-bind:comment="comment"
-    v-if="this.comment && this.replyModal"
-    v-on:closeReplyModal="this.replyModal=false">
-    </reply-modal-component>
+
     <div id="comment" class="container" v-if="this.comment">
         <div class="inner">
             <div class="profile">
                 <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
                 <div class="no-image" v-if="!comment.profileImage">👤</div>
-                <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
+                <div>
+                    <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
+                    <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
+                </div>
             </div>
             <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
                 {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
@@ -16,7 +16,6 @@
             <div class="content">
                 <div class="text" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
             </div>
-            <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
         </div>
         <div class="inner">
             <div class="movie" v-if="this.movie">
@@ -29,22 +28,18 @@
             </div>
         </div>
 
-        <div class="inner">
-            <div class="option">
-                <div class="like-button">👍 좋아요</div>
-                <div class="reply-button" @click="this.clickReply()">💭 댓글</div>
-            </div>
-        </div>
+        <reply-list-component v-bind:comment="comment"></reply-list-component>
+        
     </div>
 </template>
 
 <script>
 import movieAxios from '@/axios/movieAxios';
-import ReplyModalComponent from './ReplyModalComponent.vue';
+import ReplyListComponent from './ReplyListComponent.vue';
 
 export default {
     components: {
-        ReplyModalComponent,
+        ReplyListComponent,
     },
     async created() {
         const params = {
@@ -66,17 +61,6 @@ export default {
             id: this.$route.params.id,
             comment: null,
             movie: null,
-            replyModal: false,
-        }
-    },
-    methods: {
-        clickReply() {
-            console.log("옴");
-            if(this.$store.state.auth.user) {
-                this.replyModal = true;
-            } else {
-                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
-            }
         }
     },
     watch: {
@@ -101,7 +85,7 @@ export default {
 
 <style scoped>
 .container {
-    max-width: 800px;
+    max-width: 1280px;
     display: flex;
     flex-direction: column;
     gap: 60px;
@@ -117,12 +101,12 @@ export default {
     gap: 8px;
 }
 .profile-image, .no-image {
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
-    background-color: var(--G200);
+    background-color: var(--G100);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,11 +116,12 @@ export default {
     font-size: 16px;
 }
 .nickname {
-    font-size: 18px;
+    /* font-size: 18px; */
     font-weight: 500;
 }
 .create-date {
     color: var(--G400);
+    font-size: 14px;
 }
 .status {
     border-radius: 16px;

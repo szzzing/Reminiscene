@@ -46,6 +46,7 @@ public class CommentController {
         commentSelectDto.setSort(sort);
 
         CommentListDto result = commentService.getMovieComment(commentSelectDto);
+        result.setPage(page);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

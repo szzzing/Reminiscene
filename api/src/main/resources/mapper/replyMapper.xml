@@ -4,21 +4,29 @@
 
 <mapper namespace="replyMapper">
 
+    <insert id="insertOneReply">
+        insert into reply
+        values(default, #{userId}, #{refId}, #{content}, default, default, default)
+    </insert>
 
-    <resultMap id="commentResultMap" type="com.szzzing.api.dto.comment.CommentDto">
-        <result column="comment_id" property="id"/>
-        <result column="comment_movie_id" property="movieId"/>
-        <result column="comment_user_id" property="userId"/>
-        <result column="user_nickname" property="nickname"/>
+    <select id="selectReplyList" resultMap="replyResultMap">
+        select r.*, u.*
+        from reply r
+            join user u on reply_user_id = user_id
+        where reply_enable = true and reply_ref_id=#{refId}
+        order by reply_id desc
+        limit #{limit} offset #{offset}
+    </select>
+
+    <resultMap id="replyResultMap" type="com.szzzing.api.dto.reply.ReplyDto">
+        <id column="reply_id" property="id"/>
+        <result column="reply_user_id" property="userId"/>
         <result column="user_profile_image" property="profileImage"/>
-        <result column="comment_content" property="content"/>
-        <result column="is_wish" property="isWish"/>
-        <result column="is_watching" property="isWatching"/>
-        <result column="comment_rate" property="rate"/>
-        <result column="comment_is_spoiler" property="isSpoiler"/>
-        <result column="like_count" property="likeCount"/>
-        <result column="reply_count" property="replyCount"/>
-        <result column="comment_cre_date" property="creDate"/>
-        <result column="comment_mod_date" property="modDate"/>
+        <result column="user_nickname" property="nickname"/>
+        <result column="reply_ref_id" property="refId"/>
+        <result column="reply_content" property="content"/>
+        <result column="reply_cre_date" property="creDate"/>
+        <result column="reply_mod_date" property="modDate"/>
     </resultMap>
+
 </mapper>
