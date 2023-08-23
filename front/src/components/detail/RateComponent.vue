@@ -191,7 +191,11 @@ export default {
 
         // 코멘트 클릭
         clickComment() {
-            this.commentModal = true;
+            if(this.$store.state.auth.user) {
+                this.commentModal = true;
+            } else {
+                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
+            }
         }
     },
 }

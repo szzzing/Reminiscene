@@ -10,6 +10,7 @@ public class ReplyDto {
     private String userId;
     private String nickname;
     private int refId;
+    private String content;
     private Date creDate;
     private Date modDate;
 }

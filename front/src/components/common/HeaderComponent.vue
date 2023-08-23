@@ -12,7 +12,7 @@
             </router-link>
             <div v-if="user && user.profileImage" @click="clickProfile"
             class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
-            <div class="no-image" v-if="user && !user.profileImage">👤</div>
+            <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile">👤</div>
         </div>
     </div>
 </template>

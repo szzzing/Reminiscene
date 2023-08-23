@@ -7,56 +7,55 @@
             </div>
             <router-link :to="`/detail/${this.movie.id}/comment`">전체보기</router-link>
         </div>
-        <div class="best-comment">
-            <div class="item">
+        <transition-group name="list" tag="div" class="best-comment">
+            <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
                 <div class="profile">
-                    <div v-if="user && user.profileImage" class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
-                    <!-- <div class="no-image" v-if="user && !user.profileImage">👤</div> -->
-                    <div class="no-image" v-if="!user">👤</div>
-                    <div class="nickname">찌니</div>
-                    <div class="status">🙏 보고싶어요</div>
+                    <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
+                    <div class="no-image" v-if="!comment.profileImage">👤</div>
+                    <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
+                    <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
+                        {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
+                    </div>
                 </div>
-                <div class="text">
-                    줄리어스 로버트 오펜하이머..<br>
-                    줄리어스 로버트 오펜하이머..<br>
-                    자기 이야기가 영화로 만들어진다니.<br>
-                    로버트는 얼마나 좋았을까.
-                </div>
+                <div class="text" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
                 <div class="interest">
-                    <div class="like">👍 20</div>
-                    <div class="reply">💭 8</div>
+                    <div class="like">👍 {{ comment.likeCount }}</div>
+                    <div class="reply">💭 {{ comment.replyCount }}</div>
                 </div>
-            </div>
-            <div class="item item-shadow">
-                <div class="profile">
-                    <div v-if="user && user.profileImage" class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
-                    <!-- <div class="no-image" v-if="user && !user.profileImage">👤</div> -->
-                    <div class="no-image" v-if="!user">👤</div>
-                    <div class="nickname">찌니</div>
-                    <div class="status">🙏 보고싶어요</div>
-                </div>
-                <div class="text">
-                    8월 14일 입대 진짜 피눈물나네 ㅋㅋㅋㅋ
-                </div>
-                <div class="interest">
-                    <div class="like">👍 20</div>
-                    <div class="reply">💭 8</div>
-                </div>
-            </div>
-        </div>
+            </router-link>
+        </transition-group>
     </div>
 </template>
 
 <script>
 export default {
+    created() {
+        this.getFamousComment();
+    },
     data() {
         return {
             user: this.$store.state.auth.user,
+            list: [],
         }
     },
     props: [
         'movie',
     ],
+    methods: {
+        getFamousComment() {
+            const params = {
+                page: 1,
+                sort: "famous",
+            }
+            this.axios.get("/movie/"+this.$route.params.id+"/comment", {params})
+            .then((response)=>{
+                console.log(response.data)
+                for(var c of response.data.list) {
+                    this.list.push(c);
+                }
+            })
+        },
+    },
 }
 </script>
 
@@ -142,11 +141,16 @@ export default {
     text-overflow: ellipsis;
 }
 .status {
-    background: var(--G200);
     border-radius: 16px;
-    padding: 4px 10px;
+    border: 1px solid var(--G200);
+    background: var(--G0);
+    padding: 3px 10px;
     font-size: 14px;
     flex-shrink: 0;
+}
+.dark .status {
+    background: var(--G100);
+    /* border: none; */
 }
 
 .profile-image, .no-image {

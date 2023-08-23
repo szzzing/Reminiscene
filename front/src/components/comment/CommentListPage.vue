@@ -5,8 +5,10 @@
                 <div class="profile">
                     <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
                     <div class="no-image" v-if="!comment.profileImage">👤</div>
-                    <div class="nickname">{{ comment.userId }}</div>
-                    <div class="status">🙏 보고싶어요</div>
+                    <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
+                    <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
+                        {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
+                    </div>
                 </div>
                 <div class="text" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
                 <div class="interest">
@@ -77,7 +79,7 @@ export default {
 .inner {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
 .medium-button {
@@ -103,11 +105,6 @@ export default {
     padding: 20px 0;
     border-top: 1px solid var(--G100);
     border-bottom: 1px solid var(--G100);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7;
 }
 .interest {
     display: flex;
@@ -122,11 +119,16 @@ export default {
     text-overflow: ellipsis;
 }
 .status {
-    background: var(--G200);
     border-radius: 16px;
-    padding: 4px 10px;
+    border: 1px solid var(--G200);
+    background: var(--G0);
+    padding: 3px 10px;
     font-size: 14px;
     flex-shrink: 0;
+}
+.dark .status {
+    background: var(--G100);
+    /* border: none; */
 }
 
 .profile-image, .no-image {

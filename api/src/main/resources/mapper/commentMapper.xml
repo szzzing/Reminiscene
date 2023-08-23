@@ -11,9 +11,11 @@
 
     <select id="selectOneComment" resultMap="commentResultMap">
         select c.*, u.*,
-            (select count(*) from watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
-            (select count(*) from wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
-            ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate
+            ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate,
+            (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
+            (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
+            (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
+            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id) as reply_count
         from comment c
             join user u on comment_user_id = user_id
         where
@@ -35,9 +37,11 @@
 
     <select id="selectCommentList" resultMap="commentResultMap">
         select c.*, u.*,
+            ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate,
             (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
             (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
-            ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate
+            (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
+            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id) as reply_count
         from comment c
             join user u on comment_user_id = user_id
         where comment_movie_id=#{movieId}
@@ -46,10 +50,10 @@
                 order by comment_id desc
             </when>
             <when test='sort.equals("famous")'>
-                order by comment_like_count desc
+                order by like_count+reply_count, comment_id desc
             </when>
             <when test='sort.equals("rate")'>
-                order by comment_rate desc
+                order by comment_rate, comment_id desc
             </when>
         </choose>
         limit #{limit} offset #{offset}
@@ -63,10 +67,10 @@
         <result column="user_nickname" property="nickname"/>
         <result column="user_profile_image" property="profileImage"/>
         <result column="comment_content" property="content"/>
-        <result column="is_wish" property="isWish"/>
-        <result column="is_watching" property="isWatching"/>
         <result column="comment_rate" property="rate"/>
         <result column="comment_is_spoiler" property="isSpoiler"/>
+        <result column="is_wish" property="isWish"/>
+        <result column="is_watching" property="isWatching"/>
         <result column="like_count" property="likeCount"/>
         <result column="reply_count" property="replyCount"/>
         <result column="comment_cre_date" property="creDate"/>
