@@ -1,5 +1,5 @@
 <template>
-    <div id="comment" class="container">
+    <div id="comment" class="container" v-if="this.movie">
         <div class="inner">
             <div class="title">
                 코멘트
@@ -56,7 +56,7 @@ export default {
     },
     props: [
         'movie',
-    ]
+    ],
 }
 </script>
 

@@ -5,11 +5,13 @@ import com.szzzing.api.dto.comment.CommentListDto;
 import com.szzzing.api.dto.comment.CommentSelectDto;
 import com.szzzing.api.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class CommentController {
@@ -29,8 +31,9 @@ public class CommentController {
     }
     @GetMapping("/comment")
     public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentDto commentDto) {
+        log.info(commentDto.toString());
         CommentDto result = commentService.getComment(commentDto);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/movie/{movieId}/comment")

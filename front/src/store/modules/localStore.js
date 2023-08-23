@@ -3,6 +3,7 @@ const local = {
     state: {
         theme: true,
         location: null,
+        title: "Reminiscene"
     },
     mutations: {
         setLocation(state, payload) {

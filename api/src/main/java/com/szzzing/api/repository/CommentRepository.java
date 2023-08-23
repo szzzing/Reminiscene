@@ -35,7 +35,6 @@ public class CommentRepository {
     }
 
     public ArrayList<CommentDto> selectCommentList(CommentSelectDto commentSelectDto) {
-        log.info("들어옴");
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectCommentList", commentSelectDto);
     }
 }

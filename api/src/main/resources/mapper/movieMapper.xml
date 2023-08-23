@@ -59,20 +59,4 @@
         <result column="status_is_watching" property="isWatching"/>
         <result column="status_is_wish" property="isWish"/>
     </resultMap>
-
-    <resultMap id="commentResultMap" type="com.szzzing.api.dto.comment.CommentDto">
-        <result column="comment_id" property="id"/>
-        <result column="comment_movie_id" property="movieId"/>
-        <result column="comment_user_id" property="userId"/>
-        <result column="comment_user_nickname" property="nickname"/>
-        <result column="comment_content" property="content"/>
-        <result column="comment_is_wish" property="isWish"/>
-        <result column="comment_is_watching" property="isWatching"/>
-        <result column="comment_rate" property="rate"/>
-        <result column="comment_is_spoiler" property="isSpoiler"/>
-        <result column="comment_like_count" property="likeCount"/>
-        <result column="comment_reply_count" property="replyCount"/>
-        <result column="comment_cre_date" property="creDate"/>
-        <result column="comment_mod_date" property="modDate"/>
-    </resultMap>
 </mapper>

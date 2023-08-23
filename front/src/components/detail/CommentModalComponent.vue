@@ -34,11 +34,13 @@ export default {
             movieId: this.movie.id,
             userId: this.$store.state.auth.user.id,
         }
-        this.axios.get("/comment", {params})
-        .then((response)=>{
-            this.text = response.data.content;
-            this.isSpoiler = response.data.spoiler;
-        });
+        if(this.isComment) {
+            this.axios.get("/comment", {params})
+            .then((response)=>{
+                this.text = response.data.content;
+                this.isSpoiler = response.data.spoiler;
+            });
+        }
     },
     data() {
         return {

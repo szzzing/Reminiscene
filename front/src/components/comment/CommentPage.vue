@@ -1,48 +1,72 @@
 <template>
-    <div id="comment-list" class="container">
-        <transition-group name="list" tag="div" class="inner">
-            <div class="item" v-for="(comment) in this.list" :key="comment">
-                <div class="profile">
-                    <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
-                    <div class="no-image" v-if="!comment.profileImage">👤</div>
-                    <div class="nickname">{{ comment.userId }}</div>
-                    <div class="status">🙏 보고싶어요</div>
-                </div>
-                <div class="text">
-                    {{ comment.content }}
-                </div>
-                <div class="interest">
-                    <div class="like">👍 {{ comment.likeCount }}</div>
-                    <div class="reply">💭 {{ comment.replyCount }}</div>
+    <div id="comment" class="container">
+        <div class="inner" v-if="this.comment">
+            <div class="profile">
+                <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
+                <div class="no-image" v-if="!comment.profileImage">👤</div>
+                <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
+            </div>
+            <div class="content">
+                <div class="text" v-html="comment.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
+            </div>
+            <div class="movie" v-if="this.movie">
+                <img class="poster" :src="movie.poster_path" @click="$router.push({ path: '/detail/'+this.movie.id })">
+                <div class="info">
+                    <div class="title">{{ movie.title }}</div>
+                    <div class="genre">{{ movie.genres }}</div>
+                    <router-link :to="`/detail/${this.movie.id}/comment`" class="more-comment">👉 {{ movie.title }}의 다른 코멘트 보러가기</router-link>
                 </div>
             </div>
-        </transition-group>
+            <div class="interest">
+                <div class="like">👍 {{ comment.likeCount }}</div>
+                <div class="reply">💭 {{ comment.replyCount }}</div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-export default {
-    beforeCreate() {
-        const params = {
-            page: this.page,
-            sort: this.sort,
-        }
+import movieAxios from '@/axios/movieAxios';
 
-        this.axios.get("/movie/"+this.$route.params.id+"/comment", {params})
-        .then((response)=>{
-            console.log(response.data)
-            for(var c of response.data.list) {
-                this.list.push(c);
-            }
-        })
+export default {
+    async created() {
+        const params = {
+            id: this.id,
+        }
+        try {
+            // 코멘트 정보
+            const comment = await this.axios.get('/comment', {params});
+            this.comment = comment.data;
+            // 영화 정보
+            const movie = await movieAxios.get('api.themoviedb.org/3/movie/'+this.comment.movieId+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
+            this.movie = movie.data;
+        } catch(error) {
+            this.$router.push('/error');
+        }
     },
     data() {
         return {
-            user: this.$store.state.auth.user,
-            page: null,
-            sort: null,
-            list: [],
+            id: this.$route.params.id,
+            comment: null,
+            movie: null,
         }
+    },
+    watch: {
+        // 영화 상세정보 가공
+        movie() {
+            this.movie.release_date = this.movie.release_date.split('-').join('.');
+            if(this.movie.backdrop_path) {
+                this.movie.backdrop_path = 'https://image.tmdb.org/t/p/original/'+this.movie.backdrop_path;
+            }
+            if(this.movie.poster_path) {
+                this.movie.poster_path = 'https://image.tmdb.org/t/p/original/'+this.movie.poster_path;
+            }
+            var genre = [];
+            for(var g of this.movie.genres) {
+                genre.push(g.name);
+            }
+            this.movie.genres = genre.join('/');
+        },
     },
 }
 </script>
@@ -51,66 +75,16 @@ export default {
 .container {
     max-width: 800px;
 }
-.title {
-    font-size: 24px;
-    font-weight: 700;
-}
-.sub-title {
-    font-weight: 400;
-    color: var(--FOCUS);
-    margin-left: 4px;
-}
-
 .inner {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-.item {
-    border-radius: 16px;
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    cursor: pointer;
-    background: var(--G50);
+    gap: 16px;
 }
 .profile {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.text {
-    flex-grow: 1;
-    padding: 20px 0;
-    border-top: 1px solid var(--G100);
-    border-bottom: 1px solid var(--G100);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7;
-}
-.interest {
-    display: flex;
-    gap: 16px;
-}
-
-.nickname {
-    flex-grow: 1;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.status {
-    background: var(--G200);
-    border-radius: 16px;
-    padding: 4px 10px;
-    font-size: 14px;
-    flex-shrink: 0;
-}
-
 .profile-image, .no-image {
     width: 30px;
     height: 30px;
@@ -126,8 +100,39 @@ export default {
 .no-image {
     font-size: 16px;
 }
-.interest * {
+.nickname {
+    font-size: 18px;
+    font-weight: 500;
+}
+.movie {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
+}
+.poster {
+    width: 80px;
+    object-fit: cover;
+    cursor: pointer;
+}
+.info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.movie .title {
+    font-weight: 700;
+}
+.movie .genre {
     color: var(--G500);
-    font-size: 14px;
+    flex-grow: 1;
+}
+.movie .more-comment {
+    cursor: pointer;
+    font-weight: 500;
+}
+.interest {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
 }
 </style>
