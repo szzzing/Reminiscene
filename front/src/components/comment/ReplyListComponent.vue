@@ -22,7 +22,7 @@
 
     <div class="inner">
         <div class="like-reply">
-            <div class="like-button">👍 좋아요</div>
+            <div class="like-button" @click="this.clickLike()" :class="{'selected' : this.comment.userLike}">👍 좋아요</div>
             <div class="reply-button" @click="this.clickReply()">💭 댓글</div>
         </div>
     </div>
@@ -82,6 +82,29 @@ export default {
         }
     },
     methods: {
+        // 좋아요
+        clickLike() {
+            // 삭제
+            if(this.userLike) {
+                this.addLike();
+            // 추가
+            } else {
+                this.deleteLike();
+            }
+        },
+        addLike() {
+            this.axios.post('/like')
+            .then((response)=>{
+                console.log(response);
+            });
+        },
+        deleteLike() {
+            this.axios.delete('/like')
+            .then((response)=>{
+                console.log(response);
+            });
+        },
+
         // 조회
         getReply() {
             const params = {
@@ -199,7 +222,11 @@ export default {
     padding: 12px 0;
     margin: 4px 0;
     cursor: pointer;
+    color: var(--G600);
     transition: all 0.2s;
+}
+.like-button.selected {
+    color: var(--FOCUS);
 }
 .reply-button:hover,
 .like-button:hover {

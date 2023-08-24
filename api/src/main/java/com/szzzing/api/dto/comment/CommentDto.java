@@ -20,4 +20,5 @@ public class CommentDto {
     private int replyCount;
     private Timestamp creDate;
     private Timestamp modDate;
+    private boolean userLike;
 }

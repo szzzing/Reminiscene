@@ -26,8 +26,8 @@ public class CommentRepository {
         return sqlSessionTemplate.insert(NAME_SPACE+"insertOneComment", commentDto);
     }
 
-    public CommentDto selectOneComment(CommentDto commentDto) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneComment", commentDto);
+    public CommentDto selectOneComment(CommentSelectDto commentSelectDto) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneComment", commentSelectDto);
     }
 
     public int updateOneComment(CommentDto commentDto) {

@@ -31,17 +31,17 @@ public class CommentController {
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @GetMapping("/comment")
-    public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentDto commentDto) {
-        log.info(commentDto.toString());
-        CommentDto result = commentService.getComment(commentDto);
+    public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentSelectDto commentSelectDto) {
+        log.info(commentSelectDto.toString());
+        CommentDto result = commentService.getComment(commentSelectDto);
         return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/movie/{movieId}/comment")
     public ResponseEntity<CommentListDto> getMovieComment(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="sort", required = false) String sort, @PathVariable String movieId, HttpServletRequest request) {
-        String user = null;
+        String loginUser = null;
         if(request.getUserPrincipal()!=null) {
-            user = request.getUserPrincipal().getName();
+            loginUser = request.getUserPrincipal().getName();
         }
 
         if(page==null) page = 1;
@@ -50,7 +50,7 @@ public class CommentController {
         commentSelectDto.setMovieId(movieId);
         commentSelectDto.setOffset(page);
         commentSelectDto.setSort(sort);
-        commentSelectDto.setUser(user);
+        commentSelectDto.setLoginUser(loginUser);
 
         CommentListDto result = commentService.getMovieComment(commentSelectDto);
         result.setPage(page);

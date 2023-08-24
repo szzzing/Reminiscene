@@ -15,7 +15,13 @@
             (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
             (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
             (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
-            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id) as reply_count
+            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
+            <if test="loginUser!=null">
+                ,(select count(*)>0 from pandora3_ojt.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
+            </if>
+            <if test="loginUser==null">
+                ,false as user_like
+            </if>
         from comment c
             join user u on comment_user_id = user_id
         where
@@ -41,7 +47,13 @@
             (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
             (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
             (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
-            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id) as reply_count
+            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
+            <if test="loginUser!=null">
+                ,(select count(*)>0 from pandora3_ojt.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
+            </if>
+            <if test="loginUser==null">
+                ,false as user_like
+            </if>
         from comment c
             join user u on comment_user_id = user_id
         where comment_movie_id=#{movieId}
@@ -75,5 +87,6 @@
         <result column="reply_count" property="replyCount"/>
         <result column="comment_cre_date" property="creDate"/>
         <result column="comment_mod_date" property="modDate"/>
+        <result column="user_like" property="userLike"/>
     </resultMap>
 </mapper>

@@ -23,8 +23,8 @@ public class CommentService {
         return commentRepository.insertOneComment(commentDto) > 0;
     }
 
-    public CommentDto getComment(CommentDto commentDto) {
-        return commentRepository.selectOneComment(commentDto);
+    public CommentDto getComment(CommentSelectDto commentSelectDto) {
+        return commentRepository.selectOneComment(commentSelectDto );
     }
 
     public boolean modifyComment(CommentDto commentDto) {
