@@ -16,6 +16,10 @@ public class ReplyService {
         return replyRepository.insertOneReply(replyDto) > 0;
     }
 
+    public boolean modifyReply(ReplyDto replyDto) {
+        return replyRepository.updateOneReply(replyDto) > 0;
+    }
+
     public ReplyListDto getReplyList(ReplySelectDto replySelectDto) {
         ReplyListDto replyListDto = new ReplyListDto();
         replyListDto.setList(replyRepository.selectReviewList(replySelectDto));

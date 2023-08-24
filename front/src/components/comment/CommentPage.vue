@@ -170,24 +170,4 @@ export default {
     display: flex;
     gap: 16px;
 }
-.option {
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid var(--G200);
-    border-bottom: 1px solid var(--G200);
-    gap: 2px;
-}
-.option > * {
-    flex-grow: 1;
-    text-align: center;
-    border-radius: 4px;
-    padding: 12px 0;
-    margin: 4px 0;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.reply-button:hover,
-.like-button:hover {
-    background: var(--G50);
-}
 </style>

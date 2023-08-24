@@ -21,6 +21,10 @@ public class ReplyRepository {
         return sqlSessionTemplate.insert(NAME_SPACE+"insertOneReply", replyDto);
     }
 
+    public int updateOneReply(ReplyDto replyDto) {
+        return sqlSessionTemplate.update(NAME_SPACE+"updateOneReply", replyDto);
+    }
+
     public ArrayList<ReplyDto> selectReviewList(ReplySelectDto replySelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectReplyList", replySelectDto);
     }

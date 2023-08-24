@@ -19,8 +19,14 @@ public class ReplyController {
 
     @PostMapping("/reply")
     public ResponseEntity addReply(@RequestBody ReplyDto replyDto) {
-        log.info(replyDto.toString());
         boolean result = replyService.addReply(replyDto);
+        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping("/reply")
+    public ResponseEntity modifyReply(@RequestBody ReplyDto replyDto) {
+        log.info(replyDto.toString());
+        boolean result = replyService.modifyReply(replyDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

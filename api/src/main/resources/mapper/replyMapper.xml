@@ -9,6 +9,12 @@
         values(default, #{userId}, #{refId}, #{content}, default, default, default)
     </insert>
 
+    <update id="updateOneReply">
+        update reply
+        set reply_content=#{content}, reply_mod_date=current_timestamp
+        where reply_id=#{id}
+    </update>
+
     <select id="selectReplyList" resultMap="replyResultMap">
         select r.*, u.*
         from reply r

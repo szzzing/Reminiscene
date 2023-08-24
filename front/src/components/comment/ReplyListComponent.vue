@@ -1,9 +1,17 @@
 <template>
+    <!-- 댓글 작성 모달 -->
     <reply-modal-component v-bind:comment="comment"
     v-if="this.comment && this.replyModal"
     v-on:closeReplyModal="this.replyModal=false"
     v-on:reloadReply="this.page=null">
     </reply-modal-component>
+
+    <!-- 댓글 수정 모달 -->
+    <modify-modal-component v-bind:reply="reply"
+    v-if="this.reply && this.modifyModal"
+    v-on:closeModifyModal="this.modifyModal=false"
+    v-on:updateReply="this.updateReply">
+    </modify-modal-component>
 
     <div class="inner">
         <div class="like-reply">
@@ -20,8 +28,9 @@
                 <div class="info">
                     <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}</div>
                     <div class="option">
-                        <div class="modify-button">수정</div>
-                        <div class="modify-button">삭제</div>
+                        <div class="modify-button" @click="this.clickModify(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">수정</div>
+                        <div class="delete-button" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">삭제</div>
+                        <div class="report-button" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id!=reply.userId">신고</div>
                     </div>
                 </div>
                 <div class="content" v-html="reply.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
@@ -29,14 +38,17 @@
             </div>
         </div>
     </transition-group>
+    <div class="view-more small-button" @click="this.page = this.page+1">더보기</div>
 </template>
 
 <script>
+import ModifyModalComponent from './ModifyModalComponent.vue';
 import ReplyModalComponent from './ReplyModalComponent.vue';
 
 export default {
     components: {
         ReplyModalComponent,
+        ModifyModalComponent,
     },
     created() {
         this.getReply();
@@ -46,7 +58,9 @@ export default {
             refId: this.$route.params.id,
             page: null,
             list: [],
+            reply: null,
             replyModal: false,
+            modifyModal: false,
         }
     },
     props: [
@@ -60,17 +74,19 @@ export default {
     methods: {
         getReply() {
             const params = {
-            refId: this.refId,
+                refId: this.refId,
+                page: this.page,
             }
             this.axios.get("/comment/"+this.refId+"/reply", {params})
             .then((response)=>{
+                if(this.page==1 || !this.page) {
+                    this.list = response.data.list;
+                } else {
+                    for(var r of response.data.list) {
+                        this.list.push(r);
+                    }
+                }
                 this.page = response.data.page;
-                if(this.page==1) {
-                    this.list = [];
-                }
-                for(var r of response.data.list) {
-                    this.list.push(r);
-                }
             });
         },
         clickReply() {
@@ -80,6 +96,13 @@ export default {
                 this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
         },
+        clickModify(reply) {
+            this.reply = reply;
+            this.modifyModal = true;
+        },
+        updateReply(params) {
+            this.list.find(e => e.id===params.id).content = params.content;
+        }
     },
 }
 </script>
@@ -156,5 +179,9 @@ export default {
 .reply-button:hover,
 .like-button:hover {
     background: var(--G50);
+}
+.small-button {
+    width: 80px;
+    margin: 60px auto 0;
 }
 </style>

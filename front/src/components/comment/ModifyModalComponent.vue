@@ -1,18 +1,18 @@
 <template>
     <transition name="smooth">
-        <div id="comment-modal" class="modal-mask" @click="$emit('closeReplyModal')">
+        <div id="comment-modal" class="modal-mask" @click="$emit('closeModifyModal')">
             <div class="modal-wrapper">
                 <div class="modal-container item-shadow" @click.stop="">
                     <div class="inner">
-                        <div class="title">댓글</div>
-                        <i class="close fa-solid fa-circle-xmark" @click="$emit('closeReplyModal')"></i>
+                        <div class="title">수정</div>
+                        <i class="close fa-solid fa-circle-xmark" @click="$emit('closeModifyModal')"></i>
                     </div>
                     <div class="inner">
                         <textarea class="text" v-model="this.text" placeholder="이 코멘트에 대한 생각을 자유롭게 표현해주세요."></textarea>
                     </div>
                     <div class="inner">
                         <div class="count-text">{{ this.textCount }}/1000</div>
-                        <div class="medium-button" @click="this.addReply()" :class="{'disabled': this.textCount==0 || this.textCount>4000 }">저장</div>
+                        <div class="medium-button" @click="this.modifyReply()" :class="{'disabled': this.textCount==0 || this.textCount>4000 }">저장</div>
                     </div>
                 </div>
             </div>
@@ -24,16 +24,13 @@
 const LINE_FEED = 10;
 
 export default {
-    beforeCreate() {
-        
-    },
     data() {
         return {
-            text: '',
+            text: this.reply.content,
         }
     },
     props: [
-        'comment',
+        'reply',
     ],
     computed: {
         textCount() {
@@ -61,17 +58,17 @@ export default {
                 return 0;
             }
         },
-        addReply() {
+        modifyReply() {
             const params = {
-                refId: this.comment.id,
-                userId: this.$store.state.auth.user.id,
+                id: this.reply.id,
                 content: this.text,
             };
-            this.axios.post("/reply", params)
-            .then(()=>{
-                this.$emit('reloadReply');
-                this.$emit('closeReplyModal');
-                this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "댓글을 남겼어요." });
+            this.axios.put("/reply", params)
+            .then((response)=>{
+                console.log(response);
+                this.$emit('updateReply', params);
+                this.$emit('closeModifyModal');
+                this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "댓글을 수정했어요." });
             });
         },
     }
