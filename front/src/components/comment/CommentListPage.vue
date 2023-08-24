@@ -1,5 +1,10 @@
 <template>
     <div id="comment-list" class="container">
+
+        <div class="inner">
+            <div class="title">{{ this.movie.title }}</div>
+        </div>
+
         <transition-group name="list" tag="div" class="inner">
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
                 <div class="profile">
@@ -22,9 +27,12 @@
 </template>
 
 <script>
+import movieAxios from '@/axios/movieAxios';
+
 export default {
     created() {
         this.getComment();
+        this.getMovie();
     },
     data() {
         return {
@@ -32,6 +40,7 @@ export default {
             page: 1,
             sort: null,
             list: [],
+            movie: null,
         }
     },
     watch: {
@@ -45,7 +54,13 @@ export default {
         }
     },
     methods: {
-       getComment() {
+        getMovie() {
+            movieAxios.get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR')
+            .then((response)=>{
+                this.movie = response.data;
+            });
+        },
+        getComment() {
             const params = {
                 page: this.page,
                 sort: this.sort,

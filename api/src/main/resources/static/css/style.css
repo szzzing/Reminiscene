@@ -9,7 +9,6 @@
     color: var(--G1000);
     box-sizing: border-box;
     line-height: 1.6;
-    white-space: pre-wrap;
 }
 
 body {
@@ -21,6 +20,7 @@ body {
 
 .wrap {
     flex-grow: 1;
+    white-space: pre-wrap;
 }
 
 .container {
