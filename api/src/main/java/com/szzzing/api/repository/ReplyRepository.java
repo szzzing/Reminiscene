@@ -25,7 +25,12 @@ public class ReplyRepository {
         return sqlSessionTemplate.update(NAME_SPACE+"updateOneReply", replyDto);
     }
 
+    public int deleteOneReply(int id) {
+        return sqlSessionTemplate.update(NAME_SPACE+"deleteOneReply", id);
+    }
+
     public ArrayList<ReplyDto> selectReviewList(ReplySelectDto replySelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectReplyList", replySelectDto);
     }
+
 }

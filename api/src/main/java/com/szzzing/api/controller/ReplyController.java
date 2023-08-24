@@ -25,9 +25,14 @@ public class ReplyController {
 
     @PutMapping("/reply")
     public ResponseEntity modifyReply(@RequestBody ReplyDto replyDto) {
-        log.info(replyDto.toString());
         boolean result = replyService.modifyReply(replyDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @DeleteMapping("/reply/{id}")
+    public ResponseEntity deleteReply(@PathVariable int id) {
+        boolean result = replyService.deleteReply(id);
+        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/comment/{refId}/reply")

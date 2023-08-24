@@ -50,7 +50,7 @@
                 order by comment_id desc
             </when>
             <when test='sort.equals("famous")'>
-                order by like_count+reply_count, comment_id desc
+                order by like_count desc, reply_count desc, comment_id desc
             </when>
             <when test='sort.equals("rate")'>
                 order by comment_rate, comment_id desc

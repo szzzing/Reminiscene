@@ -5,9 +5,10 @@ import lombok.Data;
 @Data
 public class CommentSelectDto {
     private String movieId;
-    private final int limit = 2;
+    private final int limit = 4;
     private int offset;
     private String sort;
+    private String user;    // 로그인시 코멘트 좋아요 여부 체크
 
     public void setOffset(int page) {
         offset = limit * (page-1);

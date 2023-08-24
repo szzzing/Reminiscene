@@ -15,6 +15,12 @@
         where reply_id=#{id}
     </update>
 
+    <update id="deleteOneReply">
+        update reply
+        set reply_enable = false
+        where reply_id=#{id}
+    </update>
+
     <select id="selectReplyList" resultMap="replyResultMap">
         select r.*, u.*
         from reply r

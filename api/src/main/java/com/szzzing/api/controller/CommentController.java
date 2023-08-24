@@ -4,6 +4,7 @@ import com.szzzing.api.dto.comment.CommentDto;
 import com.szzzing.api.dto.comment.CommentListDto;
 import com.szzzing.api.dto.comment.CommentSelectDto;
 import com.szzzing.api.service.CommentService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,13 +38,19 @@ public class CommentController {
     }
 
     @GetMapping("/movie/{movieId}/comment")
-    public ResponseEntity<CommentListDto> getMovieComment(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="sort", required = false) String sort, @PathVariable String movieId) {
+    public ResponseEntity<CommentListDto> getMovieComment(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="sort", required = false) String sort, @PathVariable String movieId, HttpServletRequest request) {
+        String user = null;
+        if(request.getUserPrincipal()!=null) {
+            user = request.getUserPrincipal().getName();
+        }
+
         if(page==null) page = 1;
 
         CommentSelectDto commentSelectDto = new CommentSelectDto();
         commentSelectDto.setMovieId(movieId);
         commentSelectDto.setOffset(page);
         commentSelectDto.setSort(sort);
+        commentSelectDto.setUser(user);
 
         CommentListDto result = commentService.getMovieComment(commentSelectDto);
         result.setPage(page);

@@ -13,6 +13,13 @@
     v-on:updateReply="this.updateReply">
     </modify-modal-component>
 
+    <!-- 댓글 삭제 모달 -->
+    <delete-modal-component v-bind:reply="reply"
+    v-if="this.reply && this.deleteModal"
+    v-on:closeDeleteModal="this.deleteModal=false"
+    v-on:removeReply="this.removeReply">
+    </delete-modal-component>
+
     <div class="inner">
         <div class="like-reply">
             <div class="like-button">👍 좋아요</div>
@@ -26,10 +33,10 @@
             <div v-if="!reply.profileImage" class="no-image">👤</div>
             <div class="text-area">
                 <div class="info">
-                    <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}</div>
+                    <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}{{ reply.userId==this.comment.userId ? " (작성자)" : "" }}</div>
                     <div class="option">
                         <div class="modify-button" @click="this.clickModify(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">수정</div>
-                        <div class="delete-button" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">삭제</div>
+                        <div class="delete-button" @click="this.clickDelete(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">삭제</div>
                         <div class="report-button" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id!=reply.userId">신고</div>
                     </div>
                 </div>
@@ -42,6 +49,7 @@
 </template>
 
 <script>
+import DeleteModalComponent from './DeleteModalComponent.vue';
 import ModifyModalComponent from './ModifyModalComponent.vue';
 import ReplyModalComponent from './ReplyModalComponent.vue';
 
@@ -49,6 +57,7 @@ export default {
     components: {
         ReplyModalComponent,
         ModifyModalComponent,
+        DeleteModalComponent,
     },
     created() {
         this.getReply();
@@ -61,6 +70,7 @@ export default {
             reply: null,
             replyModal: false,
             modifyModal: false,
+            deleteModal: false,
         }
     },
     props: [
@@ -72,6 +82,7 @@ export default {
         }
     },
     methods: {
+        // 조회
         getReply() {
             const params = {
                 refId: this.refId,
@@ -89,6 +100,8 @@ export default {
                 this.page = response.data.page;
             });
         },
+
+        //작성
         clickReply() {
             if(this.$store.state.auth.user) {
                 this.replyModal = true;
@@ -96,12 +109,24 @@ export default {
                 this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
         },
+
+        // 수정
         clickModify(reply) {
             this.reply = reply;
             this.modifyModal = true;
         },
         updateReply(params) {
             this.list.find(e => e.id===params.id).content = params.content;
+        },
+
+        // 삭제
+        clickDelete(reply) {
+            this.reply = reply;
+            this.deleteModal = true;
+        },
+        removeReply(replyId) {
+            const index = this.list.find(e => e.id===replyId);
+            this.list.splice(index, 1);
         }
     },
 }

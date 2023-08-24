@@ -1,6 +1,6 @@
 <template>
     <transition name="smooth">
-        <div id="comment-modal" class="modal-mask" @click="$emit('closeReplyModal')">
+        <div id="reply-modal" class="modal-mask" @click="$emit('closeReplyModal')">
             <div class="modal-wrapper">
                 <div class="modal-container item-shadow" @click.stop="">
                     <div class="inner">

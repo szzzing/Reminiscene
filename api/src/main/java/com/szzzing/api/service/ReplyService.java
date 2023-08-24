@@ -20,9 +20,14 @@ public class ReplyService {
         return replyRepository.updateOneReply(replyDto) > 0;
     }
 
+    public boolean deleteReply(int id) {
+        return replyRepository.deleteOneReply(id) > 0;
+    }
+
     public ReplyListDto getReplyList(ReplySelectDto replySelectDto) {
         ReplyListDto replyListDto = new ReplyListDto();
         replyListDto.setList(replyRepository.selectReviewList(replySelectDto));
         return replyListDto;
     }
+
 }
