@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #alert {
     position: fixed;
     color: var(--G1000);

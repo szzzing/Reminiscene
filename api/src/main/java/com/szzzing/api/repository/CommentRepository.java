@@ -2,6 +2,7 @@ package com.szzzing.api.repository;
 
 import com.szzzing.api.dto.comment.CommentDto;
 import com.szzzing.api.dto.comment.CommentSelectDto;
+import com.szzzing.api.dto.comment.LikeDto;
 import com.szzzing.api.dto.movie.RateDto;
 import com.szzzing.api.dto.movie.StatusDto;
 import com.szzzing.api.dto.movie.WatchingDto;
@@ -36,5 +37,13 @@ public class CommentRepository {
 
     public ArrayList<CommentDto> selectCommentList(CommentSelectDto commentSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectCommentList", commentSelectDto);
+    }
+
+    public int insertOneLike(LikeDto likeDto) {
+        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneLike", likeDto);
+    }
+
+    public int deleteOneLike(LikeDto likeDto) {
+        return sqlSessionTemplate.delete(NAME_SPACE+"deleteOneLike", likeDto);
     }
 }

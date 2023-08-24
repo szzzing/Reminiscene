@@ -54,6 +54,11 @@ axios.interceptors.response.use(
             }
         }
 
+        // 3. 서버 에러
+        if(error.response.status==500) {
+            store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"다시 시도해주세요." });
+        }
+
         // 에러 되던지기
         return Promise.reject(error);
     }

@@ -28,7 +28,9 @@
             </div>
         </div>
 
-        <reply-list-component v-bind:comment="comment"></reply-list-component>
+        <reply-list-component
+        v-bind:comment="comment"
+        @updateUserLike="this.updateUserLike"></reply-list-component>
         
     </div>
 </template>
@@ -80,6 +82,12 @@ export default {
             this.movie.genres = genre.join('/');
         },
     },
+    methods: {
+        updateUserLike(param) {
+            console.log(param);
+            this.comment.userLike = param;
+        }
+    }
 }
 </script>
 

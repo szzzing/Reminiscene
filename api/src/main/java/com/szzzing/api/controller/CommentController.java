@@ -3,6 +3,7 @@ package com.szzzing.api.controller;
 import com.szzzing.api.dto.comment.CommentDto;
 import com.szzzing.api.dto.comment.CommentListDto;
 import com.szzzing.api.dto.comment.CommentSelectDto;
+import com.szzzing.api.dto.comment.LikeDto;
 import com.szzzing.api.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -31,19 +32,17 @@ public class CommentController {
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @GetMapping("/comment")
-    public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentSelectDto commentSelectDto) {
-        log.info(commentSelectDto.toString());
+    public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentSelectDto commentSelectDto, HttpServletRequest request) {
+        String loginUser  = request.getUserPrincipal()==null ? null : request.getUserPrincipal().getName();
+        commentSelectDto.setLoginUser(loginUser);
+
         CommentDto result = commentService.getComment(commentSelectDto);
         return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/movie/{movieId}/comment")
     public ResponseEntity<CommentListDto> getMovieComment(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="sort", required = false) String sort, @PathVariable String movieId, HttpServletRequest request) {
-        String loginUser = null;
-        if(request.getUserPrincipal()!=null) {
-            loginUser = request.getUserPrincipal().getName();
-        }
-
+        String loginUser  = request.getUserPrincipal()==null ? null : request.getUserPrincipal().getName();
         if(page==null) page = 1;
 
         CommentSelectDto commentSelectDto = new CommentSelectDto();
@@ -56,5 +55,23 @@ public class CommentController {
         result.setPage(page);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 좋아요
+    @PostMapping("/like")
+    public ResponseEntity addLike(@RequestBody LikeDto likeDto) {
+        boolean result = commentService.addLike(likeDto);
+        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @DeleteMapping ("/like/{commentId}")
+    public ResponseEntity deleteLike(@PathVariable String commentId, HttpServletRequest request) {
+        LikeDto likeDto = new LikeDto();
+        String userId = request.getUserPrincipal().getName();
+        likeDto.setCommentId(Integer.valueOf(commentId));
+        likeDto.setUserId(userId);
+
+
+        boolean result = commentService.deleteLike(likeDto);
+        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

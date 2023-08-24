@@ -3,6 +3,7 @@ package com.szzzing.api.service;
 import com.szzzing.api.dto.comment.CommentDto;
 import com.szzzing.api.dto.comment.CommentListDto;
 import com.szzzing.api.dto.comment.CommentSelectDto;
+import com.szzzing.api.dto.comment.LikeDto;
 import com.szzzing.api.dto.movie.RateDto;
 import com.szzzing.api.dto.movie.StatusDto;
 import com.szzzing.api.dto.movie.WatchingDto;
@@ -24,7 +25,7 @@ public class CommentService {
     }
 
     public CommentDto getComment(CommentSelectDto commentSelectDto) {
-        return commentRepository.selectOneComment(commentSelectDto );
+        return commentRepository.selectOneComment(commentSelectDto);
     }
 
     public boolean modifyComment(CommentDto commentDto) {
@@ -35,5 +36,13 @@ public class CommentService {
         CommentListDto result = new CommentListDto();
         result.setList(commentRepository.selectCommentList(commentSelectDto));
         return result;
+    }
+
+    public boolean addLike(LikeDto likeDto) {
+        return commentRepository.insertOneLike(likeDto) > 0;
+    }
+
+    public boolean deleteLike(LikeDto likeDto) {
+        return commentRepository.deleteOneLike(likeDto) > 0;
     }
 }

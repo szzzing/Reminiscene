@@ -72,6 +72,17 @@
     </select>
 
 
+    <insert id="insertOneLike">
+        insert into pandora3_ojt.like
+        values(#{userId}, #{commentId})
+    </insert>
+
+    <delete id="deleteOneLike">
+        delete from pandora3_ojt.like
+        where like_user_id = #{userId} and like_comment_id = #{commentId}
+    </delete>
+
+
     <resultMap id="commentResultMap" type="com.szzzing.api.dto.comment.CommentDto">
         <result column="comment_id" property="id"/>
         <result column="comment_movie_id" property="movieId"/>

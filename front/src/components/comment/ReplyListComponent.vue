@@ -22,8 +22,14 @@
 
     <div class="inner">
         <div class="like-reply">
-            <div class="like-button" @click="this.clickLike()" :class="{'selected' : this.comment.userLike}">👍 좋아요</div>
-            <div class="reply-button" @click="this.clickReply()">💭 댓글</div>
+            <div class="like-button" @click="this.clickLike()" :class="{'selected' : this.comment.userLike}">
+                <div class="emoji">👍</div>
+                <div class="text">좋아요</div>
+            </div>
+            <div class="reply-button" @click="this.clickReply()">
+                <div class="emoji">💭</div>
+                <div class="text">댓글</div>
+            </div>
         </div>
     </div>
 
@@ -84,24 +90,35 @@ export default {
     methods: {
         // 좋아요
         clickLike() {
-            // 삭제
-            if(this.userLike) {
-                this.addLike();
-            // 추가
+            if(this.$store.state.auth.user) {
+                // 삭제
+                if(this.comment.userLike) {
+                    this.deleteLike();
+                    // 추가
+                } else {
+                    this.addLike();
+                }
             } else {
-                this.deleteLike();
+                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
         },
         addLike() {
-            this.axios.post('/like')
-            .then((response)=>{
-                console.log(response);
+            const params = {
+                userId : this.$store.state.auth.user.id,
+                commentId : this.comment.id,
+            }
+            this.axios.post('/like', params)
+            .then(()=>{
+                this.$emit("updateUserLike", true);
+                this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "이 코멘트를 좋아해요." });
             });
         },
         deleteLike() {
-            this.axios.delete('/like')
-            .then((response)=>{
-                console.log(response);
+            const userId = this.$store.state.auth.user.id;
+            this.axios.delete('/like/'+this.comment.id, {userId})
+            .then(()=>{
+                this.$emit("updateUserLike", false);
+                this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "이 코멘트의 좋아요를 취소했어요." });
             });
         },
 
@@ -222,10 +239,23 @@ export default {
     padding: 12px 0;
     margin: 4px 0;
     cursor: pointer;
-    color: var(--G600);
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+.like-reply * {
     transition: all 0.2s;
 }
-.like-button.selected {
+.like-reply .text {
+    color: var(--G600);
+}
+.like-button .emoji {
+    opacity: 0.5;
+}
+.selected.like-button .emoji,
+.selected.like-button .text {
+    opacity: 1;
     color: var(--FOCUS);
 }
 .reply-button:hover,
