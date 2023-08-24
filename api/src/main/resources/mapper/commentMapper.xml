@@ -9,6 +9,11 @@
         values(default, #{movieId}, #{userId}, #{content}, #{isSpoiler}, default, default)
     </insert>
 
+    <select id="selectCommentListCount" resultType="_int">
+        select count(*) from comment c
+        where comment_movie_id=#{movieId}
+    </select>
+
     <select id="selectOneComment" resultMap="commentResultMap">
         select c.*, u.*,
             ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate,

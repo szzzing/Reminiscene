@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public class CommentListDto {
     private ArrayList<CommentDto> list;
     private int page;
+    private int listCount;
 }

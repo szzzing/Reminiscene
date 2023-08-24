@@ -58,6 +58,7 @@ public class CommentController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+
     // 좋아요
     @PostMapping("/like")
     public ResponseEntity addLike(@RequestBody LikeDto likeDto) {
@@ -70,7 +71,6 @@ public class CommentController {
         String userId = request.getUserPrincipal().getName();
         likeDto.setCommentId(Integer.valueOf(commentId));
         likeDto.setUserId(userId);
-
 
         boolean result = commentService.deleteLike(likeDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);

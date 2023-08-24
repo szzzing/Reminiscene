@@ -30,7 +30,7 @@
 
         <reply-list-component
         v-bind:comment="comment"
-        @updateUserLike="this.updateUserLike"></reply-list-component>
+        v-on:updateUserLike="this.updateUserLike"></reply-list-component>
         
     </div>
 </template>

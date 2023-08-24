@@ -46,7 +46,7 @@
                         <div class="report-button" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id!=reply.userId">신고</div>
                     </div>
                 </div>
-                <div class="content" v-html="reply.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div>
+                <div class="content" v-html="reply.content.replace(/(?:\r\n|\r|\n)/g, '<br/>').replace(/</, '\<').replace(/>/, '\>')"></div>
                 <div class="create-date">{{ reply.creDate.substr(0,10).replace(/-/g, ".") }}</div>
             </div>
         </div>
@@ -87,6 +87,9 @@ export default {
             this.getReply();
         }
     },
+    emits: [
+        'updateUserLike',
+    ],
     methods: {
         // 좋아요
         clickLike() {

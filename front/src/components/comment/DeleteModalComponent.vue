@@ -79,7 +79,7 @@ export default {
     padding: 20px 20px 0;
 }
 .inner:last-child {
-    border-top: 1px solid var(--G200);
+    border-top: 1px solid var(--G100);
 }
 .emoji {
     font-size: 36px;
@@ -90,6 +90,6 @@ export default {
     cursor: pointer;
 }
 .button:first-child {
-    border-right: 1px solid var(--G200);
+    border-right: 1px solid var(--G100);
 }
 </style>

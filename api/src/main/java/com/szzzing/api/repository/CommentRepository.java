@@ -27,6 +27,10 @@ public class CommentRepository {
         return sqlSessionTemplate.insert(NAME_SPACE+"insertOneComment", commentDto);
     }
 
+    public int selectCommentListCount(CommentSelectDto commentSelectDto) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCommentListCount", commentSelectDto);
+    }
+
     public CommentDto selectOneComment(CommentSelectDto commentSelectDto) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneComment", commentSelectDto);
     }

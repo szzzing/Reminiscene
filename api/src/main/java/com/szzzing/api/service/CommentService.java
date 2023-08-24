@@ -34,6 +34,7 @@ public class CommentService {
 
     public CommentListDto getMovieComment(CommentSelectDto commentSelectDto) {
         CommentListDto result = new CommentListDto();
+        result.setListCount(commentRepository.selectCommentListCount(commentSelectDto));
         result.setList(commentRepository.selectCommentList(commentSelectDto));
         return result;
     }

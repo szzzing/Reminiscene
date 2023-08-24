@@ -3,7 +3,7 @@
         <div class="inner">
             <div class="title">
                 코멘트
-                <span class="sub-title">3000+</span>
+                <span class="sub-title">{{ this.listCount }}</span>
             </div>
             <router-link :to="`/detail/${this.movie.id}/comment`">전체보기</router-link>
         </div>
@@ -36,6 +36,7 @@ export default {
         return {
             user: this.$store.state.auth.user,
             list: [],
+            listCount: null,
         }
     },
     props: [
@@ -49,7 +50,7 @@ export default {
             }
             this.axios.get("/movie/"+this.$route.params.id+"/comment", {params})
             .then((response)=>{
-                console.log(response.data)
+                this.listCount = response.data.listCount;
                 for(var c of response.data.list) {
                     this.list.push(c);
                 }

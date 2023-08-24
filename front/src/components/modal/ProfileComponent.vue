@@ -10,8 +10,8 @@
                 </div>
             </div>
             <div class="inner">
-                <router-link to="/mypage" class="small-button">마이페이지</router-link>
-                <a class="small-button unset" @click="this.logout()">로그아웃</a>
+                <router-link to="/mypage">마이페이지</router-link>
+                <div @click="this.logout()">로그아웃</div>
             </div>
         </div>
     </transition>
@@ -39,7 +39,6 @@ export default {
 <style scoped>
 #profile-modal {
     z-index: 9999;
-    padding: 20px;
     border-radius: 16px;
     position: fixed;
     right: 40px;
@@ -53,15 +52,26 @@ export default {
 }
 .inner {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .inner:first-child {
     gap: 16px;
     align-items: center;
+    padding: 20px 20px 0;
 }
 .inner:last-child {
-    gap: 8px;
-    justify-content: center;
+    border-top: 1px solid var(--G100);
 }
+.inner:last-child > *:first-child {
+    border-right: 1px solid var(--G100);
+}
+.inner:last-child > * {
+    padding: 12px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .profile-image, .no-image {
     width: 80px;
     height: 80px;
@@ -83,18 +93,5 @@ export default {
 }
 .id {
     color: var(--G500);
-}
-.small-button.unset {
-    color: unset;
-    background: unset;
-}
-.alert-enter-active,
-.alert-leave-active {
-    transition: all 0.3s linear;
-}
-
-.alert-enter-from,
-.alert-leave-to {
-    opacity: 0;
 }
 </style>
