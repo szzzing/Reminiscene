@@ -8,7 +8,8 @@
     list-style: none;
     color: var(--G1000);
     box-sizing: border-box;
-    line-height: 1.4;
+    line-height: 1.6;
+    white-space: pre-wrap;
 }
 
 body {

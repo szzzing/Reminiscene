@@ -117,12 +117,11 @@ export default {
     display: flex;
     align-items: center;
     gap: 8px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--G100);
 }
 .text {
     flex-grow: 1;
-    padding: 20px 0;
-    border-top: 1px solid var(--G100);
-    border-bottom: 1px solid var(--G100);
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
@@ -132,6 +131,8 @@ export default {
 .interest {
     display: flex;
     gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid var(--G100);
 }
 
 .nickname {
