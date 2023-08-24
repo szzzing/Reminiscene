@@ -1,22 +1,35 @@
 <template>
     <div class="container">
         <div class="profile-area">
-            <div class="profile-image" v-if="this.$store.state.auth.user.profileImage"
-            :style="{'background-image': 'url(' + this.$store.state.auth.user.profileImage + ')' }"></div>
-            <div class="no-image" v-if="!this.$store.state.auth.user.profileImage">👤</div>
-            <div class="nickname">
-                {{ this.$store.state.auth.user!=null ? this.$store.state.auth.user.nickname : "찌니" }}
+            <div class="profile-image" v-if="this.user.profileImage"
+            :style="{'background-image': 'url(' + this.user.profileImage + ')' }"></div>
+            <div class="no-image" v-if="!this.user.profileImage">👤</div>
+            <div class="info">
+                <div class="basic-info">
+                    <div class="nickname">
+                        {{ this.user.nickname }}
+                    </div>
+                    <div class="id">
+                        {{ "@" + this.user.id }}
+                    </div>
+                </div>
+                <div class="more-info">
+                    <div class="birthday">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.') : "비공개" }}</div>
+                    <div class="gender">⚧️ {{ this.user.gender ? (this.user.gender=='F' ? "여성" : "남성") : "비공개" }}</div>
+                </div>
             </div>
-            <div class="id">
-                {{ this.$store.state.auth.user!=null ? "@"+this.$store.state.auth.user.id : "@szzzing" }}
-                <router-link class="modify" to="/mypage/modify">⚙️</router-link>
-            </div>
+            <router-link class="modify" to="/mypage/modify">⚙️</router-link>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            user: this.$store.state.auth.user,
+        }
+    },
 }
 </script>
 
@@ -27,6 +40,11 @@ export default {
 .title {
     font-size: 24px;
     font-weight: 500;
+}
+.profile-area {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 .profile-image, .no-image {
     width: 180px;
@@ -48,12 +66,31 @@ export default {
     font-size: 20px;
 }
 .nickname {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
-    margin-top: 16px;
 }
 .id {
     font-size: 20px;
-    color: var(--G600);
+    color: var(--G500);
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.basic-info,
+.more-info {
+    display: flex;
+    align-items: center;
+}
+.basic-info {
+    gap: 8px;
+}
+.more-info {
+    flex-direction: column;
+    align-items: normal;
+}
+.birthday, .gender {
+    color: var(--G400);
 }
 </style>

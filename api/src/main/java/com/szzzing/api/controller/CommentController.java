@@ -35,6 +35,7 @@ public class CommentController {
     public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentSelectDto commentSelectDto, HttpServletRequest request) {
         String loginUser  = request.getUserPrincipal()==null ? null : request.getUserPrincipal().getName();
         commentSelectDto.setLoginUser(loginUser);
+        log.info(commentSelectDto.toString());
 
         CommentDto result = commentService.getComment(commentSelectDto);
         return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
