@@ -1,7 +1,7 @@
 <template>
     <div id="movie-list">
         <transition-group name="list" tag="div" class="list">
-            <router-link class="item item-shadow" v-for="(movie) in this.$store.state.movie.list" :key="movie" :to="`/detail/${movie.id}`">
+            <router-link class="item item-shadow" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
                 <div class="thum" v-if="movie.poster_path"
                 :style="{'background-image': 'url(https://image.tmdb.org/t/p/original/'+movie.poster_path+')' }">
                     <div class="vote-average">
@@ -26,8 +26,11 @@
 </template>
 
 <script>
-export default {
 
+export default {
+    props: [
+        'list',
+    ]
 }
 </script>
 

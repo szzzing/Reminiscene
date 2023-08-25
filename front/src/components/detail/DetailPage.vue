@@ -18,7 +18,7 @@ export default {
     beforeRouteLeave(to, from, next) {
         if(!to.path.startsWith('/list') && !to.path.startsWith('/login')) {
             this.$store.commit('movie/setQuery', '');
-            this.$store.dispatch('movie/searchList', {});
+            this.$store.commit('movie/setList', []);
         }
         next();
     },
@@ -33,7 +33,7 @@ export default {
     },
     data() {
         return {
-            movie: null
+            movie: null,
         }
     },
     watch: {

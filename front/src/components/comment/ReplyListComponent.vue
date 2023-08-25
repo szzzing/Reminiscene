@@ -100,6 +100,7 @@ export default {
     methods: {
         // 댓글 조회
         getReply($state) {
+            console.log($state);
             const params = {
                 refId: this.refId,
                 page: this.page,
