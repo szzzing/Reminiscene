@@ -79,6 +79,7 @@ export default {
     },
     data() {
         return {
+            state: null,
             refId: this.$route.params.id,
             page: 1,
             list: [],
@@ -100,7 +101,7 @@ export default {
     methods: {
         // 댓글 조회
         getReply($state) {
-            console.log($state);
+            this.state = $state;
             const params = {
                 refId: this.refId,
                 page: this.page,
@@ -121,7 +122,7 @@ export default {
         reloadReply() {
             this.page = 1;
             this.list = [];
-            this.getReply();
+            this.state.reset();
         },
 
         //작성
