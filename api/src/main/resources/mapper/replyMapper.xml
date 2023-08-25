@@ -30,6 +30,11 @@
         limit #{limit} offset #{offset}
     </select>
 
+    <insert id="insertOneReport">
+        insert into report
+        values(default, #{userId}, #{replyId}, #{content}, default, default)
+    </insert>
+
     <resultMap id="replyResultMap" type="com.szzzing.api.dto.reply.ReplyDto">
         <id column="reply_id" property="id"/>
         <result column="reply_user_id" property="userId"/>

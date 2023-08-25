@@ -3,7 +3,7 @@
     <reply-modal-component v-bind:comment="comment"
     v-if="this.comment && this.replyModal"
     v-on:closeReplyModal="this.replyModal=false"
-    v-on:reloadReply="this.page=null">
+    v-on:reloadReply="this.reloadReply">
     </reply-modal-component>
 
     <!-- 댓글 수정 모달 -->
@@ -20,6 +20,12 @@
     v-on:removeReply="this.removeReply">
     </delete-modal-component>
 
+    <!-- 댓글 신고 모달 -->
+    <report-modal-component v-bind:reply="reply"
+    v-if="this.reply && this.reportModal"
+    v-on:closeReportModal="this.reportModal=false">
+    </report-modal-component>
+
     <div class="inner">
         <div class="like-reply">
             <div class="like-button" @click="this.clickLike()" :class="{'selected' : this.comment.userLike}">
@@ -33,65 +39,118 @@
         </div>
     </div>
 
-    <transition-group name="list" tag="div" id="reply-list">
-        <div class="reply" v-for="(reply) in this.list" :key="reply">
-            <div v-if="reply.profileImage" class="profile-image" :style="{'background-image': 'url(' + reply.profileImage + ')' }"></div>
-            <div v-if="!reply.profileImage" class="no-image">👤</div>
-            <div class="text-area">
-                <div class="info">
-                    <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}{{ reply.userId==this.comment.userId ? " (작성자)" : "" }}</div>
-                    <div class="option">
-                        <div class="modify-button" @click="this.clickModify(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">수정</div>
-                        <div class="delete-button" @click="this.clickDelete(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">삭제</div>
-                        <div class="report-button" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id!=reply.userId">신고</div>
+    <div class="inner">
+        <transition-group name="list" tag="div" id="reply-list">
+            <div class="reply" v-for="(reply) in this.list" :key="reply">
+                <div v-if="reply.profileImage" class="profile-image" :style="{'background-image': 'url(' + reply.profileImage + ')' }"></div>
+                <div v-if="!reply.profileImage" class="no-image">👤</div>
+                <div class="text-area">
+                    <div class="info">
+                        <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}{{ reply.userId==this.comment.userId ? " (작성자)" : "" }}</div>
+                        <div class="option">
+                            <div class="modify-button" @click="this.clickModify(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">수정</div>
+                            <div class="delete-button" @click="this.clickDelete(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id==reply.userId">삭제</div>
+                            <div class="report-button" @click="this.clickReport(reply)" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id!=reply.userId">신고</div>
+                        </div>
                     </div>
+                    <div class="content">{{ reply.content }}</div>
+                    <div class="create-date">{{ reply.creDate.substr(0,10).replace(/-/g, ".") }}</div>
                 </div>
-                <!-- <div class="content" v-html="reply.content.replace(/(?:\r\n|\r|\n)/g, '<br/>')"></div> -->
-                <div class="content">{{ reply.content }}</div>
-                <div class="create-date">{{ reply.creDate.substr(0,10).replace(/-/g, ".") }}</div>
             </div>
-        </div>
-    </transition-group>
-    <div class="view-more small-button" @click="this.page = this.page+1">더보기</div>
+        </transition-group>
+        <infinite-loading @infinite="getReply"></infinite-loading>
+    </div>
 </template>
 
 <script>
+import { InfiniteLoading } from 'infinite-loading-vue3-ts';
 import DeleteModalComponent from './DeleteModalComponent.vue';
 import ModifyModalComponent from './ModifyModalComponent.vue';
 import ReplyModalComponent from './ReplyModalComponent.vue';
+import ReportModalComponent from './ReportModalComponent.vue';
 
 export default {
     components: {
         ReplyModalComponent,
         ModifyModalComponent,
         DeleteModalComponent,
-    },
-    created() {
-        this.getReply();
+        ReportModalComponent,
+        InfiniteLoading,
     },
     data() {
         return {
             refId: this.$route.params.id,
-            page: null,
+            page: 1,
             list: [],
             reply: null,
             replyModal: false,
             modifyModal: false,
             deleteModal: false,
+            reportModal: false,
         }
     },
     props: [
         'comment',
     ],
-    watch: {
-        page() {
-            this.getReply();
-        }
-    },
+
     emits: [
         'updateUserLike',
     ],
+
     methods: {
+        // 댓글 조회
+        getReply($state) {
+            const params = {
+                refId: this.refId,
+                page: this.page,
+            }
+            this.axios.get("/comment/"+this.refId+"/reply", {params})
+            .then((response)=>{
+                if(!response.data.list.length==0) {
+                    this.list.push(...response.data.list);
+                    this.page = response.data.page + 1;
+                    $state.loaded();
+
+                } else {
+                    $state.complete();
+                }
+            });
+        },
+
+        reloadReply() {
+            this.page = 1;
+            this.list = [];
+            this.getReply();
+        },
+
+        //작성
+        clickReply() {
+            if(this.$store.state.auth.user) {
+                this.replyModal = true;
+            } else {
+                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
+            }
+        },
+
+        // 수정
+        clickModify(reply) {
+            this.reply = reply;
+            this.modifyModal = true;
+        },
+        updateReply(params) {
+            this.list.find(e => e.id===params.id).content = params.content;
+        },
+
+        // 삭제
+        clickDelete(reply) {
+            this.reply = reply;
+            this.deleteModal = true;
+        },
+        removeReply(replyId) {
+            const index = this.list.find(e => e.id===replyId);
+            this.list.splice(index, 1);
+        },
+
         // 좋아요
         clickLike() {
             if(this.$store.state.auth.user) {
@@ -126,51 +185,10 @@ export default {
             });
         },
 
-        // 조회
-        getReply() {
-            const params = {
-                refId: this.refId,
-                page: this.page,
-            }
-            this.axios.get("/comment/"+this.refId+"/reply", {params})
-            .then((response)=>{
-                if(this.page==1 || !this.page) {
-                    this.list = response.data.list;
-                } else {
-                    for(var r of response.data.list) {
-                        this.list.push(r);
-                    }
-                }
-                this.page = response.data.page;
-            });
-        },
-
-        //작성
-        clickReply() {
-            if(this.$store.state.auth.user) {
-                this.replyModal = true;
-            } else {
-                this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
-            }
-        },
-
-        // 수정
-        clickModify(reply) {
+        // 신고
+        clickReport(reply) {
             this.reply = reply;
-            this.modifyModal = true;
-        },
-        updateReply(params) {
-            this.list.find(e => e.id===params.id).content = params.content;
-        },
-
-        // 삭제
-        clickDelete(reply) {
-            this.reply = reply;
-            this.deleteModal = true;
-        },
-        removeReply(replyId) {
-            const index = this.list.find(e => e.id===replyId);
-            this.list.splice(index, 1);
+            this.reportModal = true;
         }
     },
 }

@@ -2,6 +2,7 @@ package com.szzzing.api.repository;
 
 import com.szzzing.api.dto.reply.ReplyDto;
 import com.szzzing.api.dto.reply.ReplySelectDto;
+import com.szzzing.api.dto.reply.ReportDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,4 +34,7 @@ public class ReplyRepository {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectReplyList", replySelectDto);
     }
 
+    public int insertOneReport(ReportDto reportDto) {
+        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneReport", reportDto);
+    }
 }

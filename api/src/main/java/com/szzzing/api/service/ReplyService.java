@@ -3,6 +3,7 @@ package com.szzzing.api.service;
 import com.szzzing.api.dto.reply.ReplyDto;
 import com.szzzing.api.dto.reply.ReplyListDto;
 import com.szzzing.api.dto.reply.ReplySelectDto;
+import com.szzzing.api.dto.reply.ReportDto;
 import com.szzzing.api.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,7 @@ public class ReplyService {
         return replyListDto;
     }
 
+    public boolean addReport(ReportDto reportDto) {
+        return replyRepository.insertOneReport(reportDto) > 0;
+    }
 }

@@ -5,7 +5,7 @@
                 코멘트
                 <span class="sub-title">{{ this.listCount }}</span>
             </div>
-            <router-link :to="`/detail/${this.movie.id}/comment`">전체보기</router-link>
+            <router-link :to="`/detail/${this.movie.id}/comment`">더보기</router-link>
         </div>
         <transition-group name="list" tag="div" class="best-comment">
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">

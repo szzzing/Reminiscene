@@ -1,8 +1,8 @@
 <template>
-    <div id="comment-list" class="container">
+    <div id="comment-list" class="container" v-if="this.movie && this.list">
 
         <div class="inner">
-            <div class="title">{{ this.movie.title }}</div>
+            <div class="title">{{ this.movie.title+"의 코멘트" }}</div>
         </div>
 
         <transition-group name="list" tag="div" class="inner">
@@ -22,16 +22,20 @@
                 </div>
             </router-link>
         </transition-group>
-        <div class="view-more small-button" @click="this.page = this.page+1">더보기</div>
     </div>
+
+    <infinite-loading @infinite="getComment"></infinite-loading>
 </template>
 
 <script>
 import movieAxios from '@/axios/movieAxios';
+import { InfiniteLoading } from 'infinite-loading-vue3-ts';
 
 export default {
+    components: {
+        InfiniteLoading,
+    },
     created() {
-        this.getComment();
         this.getMovie();
     },
     data() {
@@ -43,16 +47,6 @@ export default {
             movie: null,
         }
     },
-    watch: {
-        page() {
-            if(this.page==1) {
-                this.list = [];
-                this.getComment();
-            } else {
-                this.getComment();
-            }
-        }
-    },
     methods: {
         getMovie() {
             movieAxios.get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR')
@@ -60,15 +54,19 @@ export default {
                 this.movie = response.data;
             });
         },
-        getComment() {
+        getComment($state) {
             const params = {
                 page: this.page,
                 sort: this.sort,
             }
             this.axios.get("/movie/"+this.$route.params.id+"/comment", {params})
             .then((response)=>{
-                for(var c of response.data.list) {
-                    this.list.push(c);
+                if(response.data.list.length!=0) {
+                    this.list.push(...response.data.list);
+                    this.page = response.data.page + 1;
+                    $state.loaded();
+                } else {
+                    $state.complete();
                 }
             })
         },
@@ -78,7 +76,10 @@ export default {
 
 <style scoped>
 .container {
-    max-width: 800px;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
 }
 .title {
     font-size: 24px;

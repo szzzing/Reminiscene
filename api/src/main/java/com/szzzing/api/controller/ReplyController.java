@@ -3,7 +3,10 @@ package com.szzzing.api.controller;
 import com.szzzing.api.dto.reply.ReplyDto;
 import com.szzzing.api.dto.reply.ReplyListDto;
 import com.szzzing.api.dto.reply.ReplySelectDto;
+import com.szzzing.api.dto.reply.ReportDto;
 import com.szzzing.api.service.ReplyService;
+import jakarta.servlet.http.HttpServletRequest;
+import jdk.javadoc.doclet.Reporter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -47,5 +50,15 @@ public class ReplyController {
         result.setPage(page);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    // 신고
+    @PostMapping("/report")
+    public ResponseEntity addReport(@RequestBody ReportDto reportDto, HttpServletRequest request) {
+        String userId = request.getUserPrincipal().getName();
+        reportDto.setUserId(userId);
+        boolean result = replyService.addReport(reportDto);
+        return new ResponseEntity<>(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

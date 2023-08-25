@@ -69,6 +69,8 @@ export default {
 .inner:last-child > * {
     padding: 12px 20px;
     font-size: 14px;
+    flex-grow: 1;
+    text-align: center;
     cursor: pointer;
 }
 
