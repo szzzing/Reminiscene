@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="input-box">
-            <input type="text" placeholder="오펜하이머" v-model="query">
+            <input type="text" placeholder="오펜하이머" :value="query" @input="changeQuery">
         </div>
         <div class="result" v-if="this.query!=''">
             <b>{{ this.query }}</b>에 대한 영화를 보여줄게.
@@ -37,25 +37,31 @@ export default {
     methods: {
         getList($state) {
             this.state = $state;
-            const vm = this;
-
+            
             this.movieAxios.get('api.themoviedb.org/3/search/movie?query='+this.query+'&api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR&page='+this.page)
-            .then(function(response) {
+            .then((response)=>{
                 if(response.data.results.length!=0) {
-                    vm.list.push(...response.data.results);
-                    vm.page = response.data.page + 1;
+                    if(response.data.page==1) {
+                        this.list = response.data.results;
+                    } else {
+                        this.list.push(...response.data.results);
+                    }
+                    this.page = response.data.page+1;
                     $state.loaded();
                 } else {
                     $state.complete();
                 }
-            });
+            })
+        },
+        changeQuery(e) {
+            this.query = e.target.value;
         },
     },
-
+    
     watch: {
         query() {
-            this.list = [];
             this.page = 1;
+            this.list = [];
             this.state.reset();
         },
     },
@@ -66,6 +72,7 @@ export default {
         if(!to.path.startsWith('/detail')) {
             this.$store.commit('movie/setQuery', '');
             this.$store.commit('movie/setList', []);
+            this.$store.commit('movie/setPage', 1);
         } else {
             this.$store.commit('movie/setQuery', this.query);
             this.$store.commit('movie/setList', this.list);
