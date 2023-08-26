@@ -1,11 +1,11 @@
 <template>
-    <div id="comment" class="container" v-if="this.movie">
+    <div id="comment" v-if="this.movie">
         <div class="inner">
             <div class="title">
                 코멘트
                 <span class="sub-title">{{ this.listCount }}</span>
             </div>
-            <router-link :to="`/detail/${this.movie.id}/comment`">더보기</router-link>
+            <router-link class="view-more" :to="`/detail/${this.movie.id}/comment`">더보기</router-link>
         </div>
         <transition-group name="list" tag="div" class="best-comment">
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
@@ -61,9 +61,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    padding: 60px 0 0;
-    max-width: 1280px;
+#comment {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -87,6 +85,9 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+}
+.view-more {
+    color: var(--G400);
 }
 .item {
     border-radius: 16px;

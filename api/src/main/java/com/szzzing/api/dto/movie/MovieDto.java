@@ -5,9 +5,8 @@ import lombok.Data;
 @Data
 public class MovieDto {
     private String id;
-    private int avgRate;
+    private float avgRate;
     private int rateCount;
-    private int commentCount;
+    private int wishCount;
     private int watchingCount;
-    private int bookmarkCount;
 }

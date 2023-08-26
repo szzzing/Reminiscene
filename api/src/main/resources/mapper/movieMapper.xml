@@ -53,10 +53,29 @@
     </delete>
 
 
+    <select id="selectOneMovie" resultMap="movieResultMap">
+        select
+            #{id} as movie_id,
+            round((select avg(rate_star) from pandora3_ojt.rate where rate_movie_id=#{id}), 2) as movie_avg_rate,
+            (select count(rate_star) from pandora3_ojt.rate where rate_movie_id=#{id}) as movie_rate_count,
+            (select count(*) from pandora3_ojt.wish where wish_movie_id = #{id}) as movie_wish_count,
+            (select count(*) from pandora3_ojt.watching where watching_movie_id = #{id}) as movie_watching_count
+        from dual;
+    </select>
+
+
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
         <result column="status_rate" property="rate"/>
         <result column="status_is_comment" property="isComment"/>
         <result column="status_is_watching" property="isWatching"/>
         <result column="status_is_wish" property="isWish"/>
+    </resultMap>
+
+    <resultMap id="movieResultMap" type="com.szzzing.api.dto.movie.MovieDto">
+        <result column="movie_id" property="id"/>
+        <result column="movie_avg_rate" property="avgRate"/>
+        <result column="movie_rate_count" property="rateCount"/>
+        <result column="movie_wish_count" property="wishCount"/>
+        <result column="movie_watching_count" property="watchingCount"/>
     </resultMap>
 </mapper>

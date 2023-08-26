@@ -1,17 +1,25 @@
 <template>
-    <detail-component v-bind:movie="movie"></detail-component>
-    <comment-component v-bind:movie="movie"></comment-component>
+    <backdrop-component v-bind:movie="movie"></backdrop-component>
+    <div class="container">
+        <detail-component v-bind:movie="movie"></detail-component>
+        <stastics-component></stastics-component>
+        <comment-component v-bind:movie="movie"></comment-component>
+    </div>
 </template>
 
 <script>
 import DetailComponent from './DetailComponent.vue'
 import CommentComponent from './CommentComponent.vue'
+import BackdropComponent from './BackdropComponent.vue';
+import StasticsComponent from './StasticsComponent.vue';
 import movieAxios from '@/axios/movieAxios';
 
 export default {
     components: { 
         DetailComponent,
         CommentComponent,
+        BackdropComponent,
+        StasticsComponent,
     },
     // /list 페이지로 이동시 검색결과 유지
     // 그 외 페이지로 이동시 검색결과 유지 x
@@ -57,5 +65,11 @@ export default {
 </script>
 
 <style scoped>
-
+.container {
+    margin-top: 40px;
+    max-width: 1280px;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+}
 </style>

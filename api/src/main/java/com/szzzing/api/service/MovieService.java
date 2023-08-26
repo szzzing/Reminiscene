@@ -57,4 +57,8 @@ public class MovieService {
     public boolean modifyComment(CommentDto commentDto) {
         return movieRepository.updateOneComment(commentDto) > 0;
     }
+
+    public MovieDto getMovie(String id) {
+        return movieRepository.selectOneMovie(id);
+    }
 }

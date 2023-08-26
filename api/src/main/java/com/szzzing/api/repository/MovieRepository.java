@@ -60,4 +60,8 @@ public class MovieRepository {
     public int updateOneComment(CommentDto commentDto) {
         return sqlSessionTemplate.update(NAME_SPACE+"updateOneComment", commentDto);
     }
+
+    public MovieDto selectOneMovie(String id) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneMovie", id);
+    }
 }
