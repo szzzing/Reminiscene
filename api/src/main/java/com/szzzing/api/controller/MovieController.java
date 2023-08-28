@@ -88,7 +88,6 @@ public class MovieController {
     @GetMapping("/movie/{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable String id) {
         MovieDto result = movieService.getMovie(id);
-        log.info(result.toString());
         return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

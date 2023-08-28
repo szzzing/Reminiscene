@@ -103,15 +103,24 @@ export default {
     .item {
         flex-basis: calc((100% - 40px)/3);
     }
+    .item:nth-child(3) ~ .item {
+        display: none;
+    }
 }
 @media screen and (max-width:800px) {
     .item {
         flex-basis: calc((100% - 20px)/2);
     }
+    .item:nth-child(2) ~ .item {
+        display: none;
+    }
 }
 @media screen and (max-width:500px) {
     .item {
         flex-basis: 100%;
+    }
+    .item:nth-child(1) ~ .item {
+        display: none;
     }
 }
 .profile {

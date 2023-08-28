@@ -20,6 +20,41 @@
             </div>
             <router-link class="modify" to="/mypage/modify">⚙️</router-link>
         </div>
+
+        <div class="activity-area">
+            <router-link to="/mypage/wish" class="item item-shadow">
+                <div class="emoji shadow">🙏</div>
+                <div class="title">보고싶은<br>영화</div>
+                <div class="count">
+                    <div class="number">12</div>
+                    <div class="text">개</div>
+                </div>
+            </router-link>
+            <router-link to="/mypage" class="item item-shadow">
+                <div class="emoji shadow">😎</div>
+                <div class="title">보고있는<br>영화</div>
+                <div class="count">
+                    <div class="number">0</div>
+                    <div class="text">개</div>
+                </div>
+            </router-link>
+            <router-link to="/mypage" class="item item-shadow">
+                <div class="emoji shadow">📝</div>
+                <div class="title">내가 쓴<br>코멘트</div>
+                <div class="count">
+                    <div class="number">28</div>
+                    <div class="text">개</div>
+                </div>
+            </router-link>
+            <router-link to="/mypage" class="item item-shadow">
+                <div class="emoji shadow">👍</div>
+                <div class="title">좋아하는<br>코멘트</div>
+                <div class="count">
+                    <div class="number">60</div>
+                    <div class="text">개</div>
+                </div>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -35,11 +70,10 @@ export default {
 
 <style scoped>
 .container {
-    max-width: 800px;
-}
-.title {
-    font-size: 24px;
-    font-weight: 500;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
 }
 .profile-area {
     display: flex;
@@ -92,5 +126,46 @@ export default {
 }
 .birthday, .gender {
     color: var(--G400);
+}
+
+.activity-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 24px;
+}
+.item {
+    border-radius: 16px;
+    padding: 20px;
+    flex-grow: 1;
+    width: calc((100% - 72px)/4);
+    position: relative;
+}
+@media screen and (max-width:676px) {
+    .item {
+        width: calc((100% - 24px)/2);
+    }
+}
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 16px;
+    line-height: 1.2;
+}
+.emoji {
+    font-size: 40px;
+    position: absolute;
+    top: -32px;
+}
+.count {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.number {
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 16px;
+    line-height: 1.1;
 }
 </style>

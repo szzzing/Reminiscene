@@ -77,6 +77,9 @@ const router = createRouter({
 // 라우터 가드
 router.beforeEach(function (to, from, next) {
 
+    // 프로필 모달 닫기
+    store.commit("modal/setProfile", false);
+
     // 페이지 위치 정보 저장
     if(to.path!='/login' && !to.path.startsWith('/auth') && !to.path.endsWith("/error")) {
         store.state.local.location = to.path;

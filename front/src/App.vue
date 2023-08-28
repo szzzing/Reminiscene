@@ -40,7 +40,7 @@ export default {
         if(!this.$store.state.local.theme) {
             document.documentElement.classList.add('dark');
         }
-    }
+    },
 }
 </script>
 

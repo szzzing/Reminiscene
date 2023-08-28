@@ -5,6 +5,7 @@ const movie = {
         query: '',
         list: [],
         page: 1,
+        state: null,
     },
     mutations: {
         setQuery(state, payload) {
@@ -16,8 +17,11 @@ const movie = {
         },
 
         setPage(state, payload) {
-            state.page = payload
+            state.page = payload;
         },
+        setState(state, payload) {
+            state.state = payload;
+        }
     },
 };
 

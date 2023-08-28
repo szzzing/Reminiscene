@@ -1,20 +1,18 @@
 <template>
-    <transition name="smooth">
-        <div id="profile-modal" class="item-shadow" v-if="this.$store.state.modal.profile" @click.stop="">
-            <div class="inner">
-                <div class="profile-image" v-if="user.profileImage" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
-                <div class="no-image" v-if="!user.profileImage">👤</div>
-                <div class="profile-info">
-                    <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
-                    <div class="id">{{ "@" + user.id }}</div>
-                </div>
-            </div>
-            <div class="inner">
-                <router-link to="/mypage">마이페이지</router-link>
-                <div @click="this.logout()">로그아웃</div>
+    <div id="profile-modal" class="item-shadow" v-if="this.$store.state.modal.profile" @click.stop="">
+        <div class="inner">
+            <div class="profile-image" v-if="user.profileImage" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
+            <div class="no-image" v-if="!user.profileImage">👤</div>
+            <div class="profile-info">
+                <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
+                <div class="id">{{ "@" + user.id }}</div>
             </div>
         </div>
-    </transition>
+        <div class="inner">
+            <router-link to="/mypage">마이페이지</router-link>
+            <div @click="this.logout()">로그아웃</div>
+        </div>
+    </div>
 </template>
 
 <script>

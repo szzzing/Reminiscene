@@ -3,7 +3,7 @@
         <div class="avg-rate">
             <div class="emoji">⭐️</div>
             <div class="value">{{ this.avgRate }}</div>
-            <div class="discription">{{ this.rateCount+"명의 별점" }}</div>
+            <div class="discription">{{ this.rateCount+"명의 평가" }}</div>
         </div>
         <div class="wish-count">
             <div class="emoji">🙏</div>
@@ -62,6 +62,8 @@ export default {
     line-height: 1.4;
 }
 .value {
+    font-size: 18px;
+    line-height: 1.4;
     font-weight: 700;
 }
 </style>

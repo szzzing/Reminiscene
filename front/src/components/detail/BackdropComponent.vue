@@ -9,7 +9,7 @@
                     {{ movie.original_title }}
                 </div>
                 <div class="genre-release shadow" v-if="movie.genres+movie.release_date!=''">
-                    {{ [movie.genres, movie.release_date].join(" ・ ") }}
+                    {{ movie.genres!='' && movie.release_date!='' ? [movie.genres, movie.release_date].join(" ・ ") : movie.genres+movie.release_date }}
                 </div>
                 <div class="runtime shadow" v-if="movie.runtime!=0">
                     {{ movie.runtime+'분' }}
@@ -23,7 +23,7 @@
 export default {
     props: [
         'movie',
-    ]
+    ],
 }
 </script>
 
