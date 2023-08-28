@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 @Slf4j
@@ -89,15 +88,15 @@ public class UserService {
 
     public boolean check(Principal principal, String id, String email, String nickname) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("userId", principal==null ? null : principal.getName());
+        map.put("loginUser", principal==null ? null : principal.getName());
         map.put("id", id);
         map.put("email", email);
         map.put("nickname", nickname);
         log.info(map.toString());
 
-        if(id!=null) return userRepository.selectOneById(id) == null;
-        else if(nickname!=null) return userRepository.selectOneByNickname(map) == null;
-        else return userRepository.selectOneByEmail(map) == null;
+        if(id!=null) return userRepository.selectOneUser(id) == null;
+        else if(nickname!=null) return userRepository.selectCountByNickname(map) == 0;
+        else return userRepository.selectCountByEmail(map) == 0;
     }
 
 }

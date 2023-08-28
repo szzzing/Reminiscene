@@ -88,10 +88,10 @@ export default {
 }
 
 .nickname {
-    font-size: 18px;
     font-weight: 600;
 }
 .id {
+    font-size: 14px;
     color: var(--G500);
 }
 </style>

@@ -15,23 +15,33 @@
     </select>
 
     <select id="selectOneById" resultMap="userResultMap">
-        select * from user
+        select u.*,
+               (select count(*) from wish where wish_user_id=#{id}) as user_wish_count,
+               (select count(*) from watching where watching_user_id=#{id}) as user_watching_count,
+               (select count(*) from pandora3_ojt.like where like_user_id=#{id}) as user_like_count,
+               (select count(*) from pandora3_ojt.comment where comment_user_id=#{id}) as user_comment_count
+        from user u
         where user_id=#{id}
     </select>
 
-    <select id="selectOneByNickname" resultMap="userResultMap">
-        select * from user
+    <select id="selectCountById" resultType="_int">
+        select count(*) from user
+        where user_id=#{id}
+    </select>
+
+    <select id="selectCountByNickname" resultType="_int">
+        select count(*) from user
         where user_nickname=#{nickname}
         <if test="userId!=null">
-            and user_id!=#{userId}
+            and user_id!=#{loginUser}
         </if>
     </select>
 
-    <select id="selectOneByEmail" resultMap="userResultMap">
-        select * from user
+    <select id="selectCountByEmail" resultType="_int">
+        select count(*) from user
         where user_email=#{email}
         <if test="userId!=null">
-            and user_id!=#{userId}
+            and user_id!=#{loginUser}
         </if>
     </select>
 
@@ -59,5 +69,9 @@
         <result column="user_reg_date" property="regDate"/>
         <result column="user_mod_date" property="modDate"/>
         <result column="user_profile_image" property="profileImage"/>
+        <result column="user_wish_count" property="wishCount"/>
+        <result column="user_watching_count" property="watchingCount"/>
+        <result column="user_like_count" property="likeCount"/>
+        <result column="user_comment_count" property="commentCount"/>
     </resultMap>
 </mapper>

@@ -19,4 +19,8 @@ public class UserDto {
     private boolean enable;
     private String type;
     private String profileImage;
+    private int wishCount;
+    private int watchingCount;
+    private int commentCount;
+    private int likeCount;
 }

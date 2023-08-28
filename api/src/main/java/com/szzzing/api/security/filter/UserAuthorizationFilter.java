@@ -51,7 +51,7 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
         // 유효한 토큰인 경우 - 아이디를 통해 사용자 존재 여부/권한 확인
         String id = JwtUtil.getId(token);
         if(id != null) {
-            UserDto userDto = userRepository.selectOneById(id);
+            UserDto userDto = userRepository.selectOneUser(id);
 
             // 권한 관리를 위해 SecurityContext에 인증 정보 저장
             PrincipalDetails principalDetails = new PrincipalDetails(userDto);

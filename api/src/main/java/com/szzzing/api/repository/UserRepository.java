@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 @Repository
@@ -20,16 +19,20 @@ public class UserRepository {
         return sqlSessionTemplate.insert(NAME_SPACE+"insertOne", userDto);
     }
 
-    public UserDto selectOneById(String id) {
+    public UserDto selectOneUser(String id) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneById", id);
     }
 
-    public UserDto selectOneByEmail(HashMap map) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByEmail", map);
+    public int selectCountById(HashMap map) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountById", map);
     }
 
-    public UserDto selectOneByNickname(HashMap map) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByNickname", map);
+    public int selectCountByEmail(HashMap map) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountByEmail", map);
+    }
+
+    public int selectCountByNickname(HashMap map) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountByNickname", map);
     }
 
     public int updateOne(UserModifyDto userModifyDto) {

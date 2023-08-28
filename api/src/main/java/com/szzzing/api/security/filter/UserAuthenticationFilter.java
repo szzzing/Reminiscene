@@ -64,7 +64,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
 
         // 응답 헤더에 사용자 정보 추가
-        UserDto userDto = userRepository.selectOneById(principalDetails.getUserDto().getId());
+        UserDto userDto = userRepository.selectOneUser(principalDetails.getUserDto().getId());
         response.setHeader("user", AuthUtil.userToJson(userDto));
     }
 

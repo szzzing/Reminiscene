@@ -26,32 +26,28 @@
                 <div class="emoji shadow">🙏</div>
                 <div class="title">보고싶은<br>영화</div>
                 <div class="count">
-                    <div class="number">12</div>
-                    <div class="text">개</div>
+                    <div class="number">{{ this.user.wishCount }}</div>
                 </div>
             </router-link>
-            <router-link to="/mypage" class="item item-shadow">
+            <router-link to="/mypage/watching" class="item item-shadow">
                 <div class="emoji shadow">😎</div>
                 <div class="title">보고있는<br>영화</div>
                 <div class="count">
-                    <div class="number">0</div>
-                    <div class="text">개</div>
+                    <div class="number">{{ this.user.watchingCount }}</div>
                 </div>
             </router-link>
-            <router-link to="/mypage" class="item item-shadow">
+            <router-link to="/mypage/comment" class="item item-shadow">
                 <div class="emoji shadow">📝</div>
                 <div class="title">내가 쓴<br>코멘트</div>
                 <div class="count">
-                    <div class="number">28</div>
-                    <div class="text">개</div>
+                    <div class="number">{{ this.user.commentCount }}</div>
                 </div>
             </router-link>
-            <router-link to="/mypage" class="item item-shadow">
+            <router-link to="/mypage/like" class="item item-shadow">
                 <div class="emoji shadow">👍</div>
                 <div class="title">좋아하는<br>코멘트</div>
                 <div class="count">
-                    <div class="number">60</div>
-                    <div class="text">개</div>
+                    <div class="number">{{ this.user.likeCount }}</div>
                 </div>
             </router-link>
         </div>
@@ -135,10 +131,13 @@ export default {
 }
 .item {
     border-radius: 16px;
-    padding: 20px;
+    padding: 36px 20px 20px;
     flex-grow: 1;
     width: calc((100% - 72px)/4);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
 }
 @media screen and (max-width:676px) {
     .item {
@@ -148,8 +147,8 @@ export default {
 .title {
     font-size: 18px;
     font-weight: 600;
-    margin-top: 16px;
     line-height: 1.2;
+    margin: 0 4px;
 }
 .emoji {
     font-size: 40px;
@@ -161,11 +160,11 @@ export default {
     gap: 4px;
     justify-content: flex-end;
     align-items: flex-end;
+    margin: 0 4px;
 }
 .number {
     font-size: 30px;
     font-weight: 700;
-    margin-top: 16px;
     line-height: 1.1;
 }
 </style>
