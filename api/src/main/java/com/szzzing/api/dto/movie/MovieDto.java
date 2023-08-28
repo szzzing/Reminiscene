@@ -3,7 +3,7 @@ package com.szzzing.api.dto.movie;
 import lombok.Data;
 
 @Data
-public class MovieDto {
+public class StasticsDto {
     private String id;
     private float avgRate;
     private int rateCount;

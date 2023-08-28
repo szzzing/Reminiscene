@@ -31,6 +31,11 @@
                 </div>
             </router-link>
         </transition-group>
+        <empty-component v-if="this.list.length==0">
+            <template v-slot:text>
+                작성한 코멘트가 없어요.
+            </template>
+        </empty-component>
         <infinite-loading @infinite="getList"></infinite-loading>
     </div>
 </template>
@@ -38,12 +43,14 @@
 <script>
 import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
+import EmptyComponent from '../item/EmptyComponent.vue';
 import movieAxios from '@/axios/movieAxios';
 
 export default {
     components: {
         TitleComponent,
         InfiniteLoading,
+        EmptyComponent,
     },
 
     data() {
@@ -127,7 +134,7 @@ export default {
 
 .movie-title {
     flex-grow: 1;
-    font-weight: 500;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

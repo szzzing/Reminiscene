@@ -26,6 +26,11 @@
                 </div>
             </router-link>
         </transition-group>
+        <empty-component v-if="this.list.length==0">
+            <template v-slot:text>
+                보고있는 영화가 없어요.
+            </template>
+        </empty-component>
         <infinite-loading @infinite="getList"></infinite-loading>
     </div>
 </template>
@@ -33,12 +38,14 @@
 <script>
 import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
+import EmptyComponent from '../item/EmptyComponent.vue';
 import movieAxios from '@/axios/movieAxios';
 
 export default {
     components: {
         TitleComponent,
         InfiniteLoading,
+        EmptyComponent,
     },
 
     data() {

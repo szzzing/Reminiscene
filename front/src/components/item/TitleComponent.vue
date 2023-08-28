@@ -18,7 +18,6 @@ export default {
 
 <style scoped>
     #title {
-        max-width: 200px;
         margin: 0 0 72px;
     }
     .emoji {
