@@ -13,7 +13,8 @@ import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
 import MyPage from '@/components/mypage/MyPage'
 import ModifyPage from '@/components/mypage/ModifyPage'
-import WishPage from '@/components/mypage/WishPage'
+import MyWishPage from '@/components/mypage/WishPage'
+import MyCommentPage from '@/components/mypage/CommentPage'
 
 const routes = [
     {
@@ -62,7 +63,11 @@ const routes = [
     },
     {
         path: '/mypage/wish',
-        component: WishPage,
+        component: MyWishPage,
+    },
+    {
+        path: '/mypage/comment',
+        component: MyCommentPage,
     },
     {
         path: '/:pathMatch(.*)*',

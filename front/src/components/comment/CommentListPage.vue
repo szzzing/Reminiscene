@@ -87,11 +87,6 @@ export default {
     font-size: 24px;
     font-weight: 700;
 }
-.sub-title {
-    font-weight: 400;
-    color: var(--FOCUS);
-    margin-left: 4px;
-}
 
 .inner {
     display: flex;
@@ -99,10 +94,6 @@ export default {
     gap: 24px;
 }
 
-.small-button {
-    width: 80px;
-    margin: 60px auto 0;
-}
 .item {
     border-radius: 16px;
     padding: 20px 16px;
