@@ -53,7 +53,7 @@
     </delete>
 
 
-    <select id="selectOneMovie" resultMap="movieResultMap">
+    <select id="selectOneStatistics" resultMap="statisticsResultMap">
         select
             #{id} as movie_id,
             round((select avg(rate_star) from pandora3_ojt.rate where rate_movie_id=#{id}), 2) as movie_avg_rate,
@@ -89,6 +89,33 @@
         limit #{limit} offset #{offset}
     </select>
 
+    <insert id="insertOneMovie">
+        insert into movie
+        values(default, #{title}, #{originalTitle}, #{tagline}, #{overview}, #{releaseDate}, #{backdropPath}, #{posterPath}, #{genre})
+    </insert>
+
+    <select id="selectMovieList" resultMap="movieResultMap">
+        select * from movie
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="selectOneMovie" resultMap="movieResultMap">
+        select * from movie
+        where id=#{movieId}
+    </select>
+
+
+    <resultMap id="movieResultMap" type="com.szzzing.api.dto.movie.MovieDto">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="original_title" property="originalTitle"/>
+        <result column="tagline" property="tagline"/>
+        <result column="overview" property="overview"/>
+        <result column="release_date" property="releaseDate"/>
+        <result column="backdrop_path" property="backdropPath"/>
+        <result column="poster_path" property="posterPath"/>
+        <result column="genre" property="genre"/>
+    </resultMap>
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
         <result column="status_rate" property="rate"/>
@@ -97,7 +124,7 @@
         <result column="status_is_wish" property="isWish"/>
     </resultMap>
 
-    <resultMap id="movieResultMap" type="com.szzzing.api.dto.movie.MovieDto">
+    <resultMap id="statisticsResultMap" type="com.szzzing.api.dto.movie.StasticsDto">
         <result column="movie_id" property="id"/>
         <result column="movie_avg_rate" property="avgRate"/>
         <result column="movie_rate_count" property="rateCount"/>

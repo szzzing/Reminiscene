@@ -2,18 +2,28 @@ package com.szzzing.api.service;
 
 import com.szzzing.api.dto.comment.CommentDto;
 import com.szzzing.api.dto.common.CommonSelectDto;
+import com.szzzing.api.dto.common.FileDto;
 import com.szzzing.api.dto.movie.*;
+import com.szzzing.api.repository.FileRepository;
 import com.szzzing.api.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class MovieService {
 
     private final MovieRepository movieRepository;
+    private final FileRepository fileRepository;
 
     public boolean addRate(RateDto rateDto) {
         return movieRepository.insertOneRate(rateDto) > 0;
@@ -59,8 +69,8 @@ public class MovieService {
         return movieRepository.updateOneComment(commentDto) > 0;
     }
 
-    public MovieDto getMovie(String id) {
-        return movieRepository.selectOneMovie(id);
+    public StasticsDto getStatistics(String id) {
+        return movieRepository.selectOneStatistics(id);
     }
 
     public WishListDto getWishList(CommonSelectDto commonSelectDto) {
@@ -83,5 +93,79 @@ public class MovieService {
         watchingListDto.setPage(commonSelectDto.getPage());
 
         return watchingListDto;
+    }
+
+    @Transactional
+    public int addMovie(MovieDto movieDto) {
+        ArrayList<FileDto> fileDtoList = new ArrayList<>();
+
+        try {
+            URL imgURL = new URL(movieDto.getBackdropPath());
+            String extension = movieDto.getBackdropPath().substring(movieDto.getBackdropPath().lastIndexOf(".")+1); // 확장자
+            String fileName = UUID.randomUUID().toString(); // 이미지 이름
+            movieDto.setBackdropPath(fileName+"."+extension);
+
+            BufferedImage image = ImageIO.read(imgURL);
+            File file = new File("../../Reminiscene/upload/backdrop/" + fileName + "." + extension);
+            if(!file.exists()) { // 해당 경로의 폴더가 존재하지 않을 경우
+                file.mkdirs(); // 해당 경로의 폴더 생성
+            }
+
+            ImageIO.write(image, extension, file); // image를 file로 업로드
+            System.out.println("이미지 업로드 완료!");
+
+            FileDto fileDto = new FileDto();
+            fileDto.setOriginalName(movieDto.getTitle().replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "_")+"_backdrop."+extension);
+            fileDto.setRenameName(movieDto.getBackdropPath());
+            fileDto.setDirectory("/upload/backdrop/");
+            fileDtoList.add(fileDto);
+            fileRepository.insertOne(fileDto);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            URL imgURL = new URL(movieDto.getPosterPath());
+            String extension = movieDto.getPosterPath().substring(movieDto.getPosterPath().lastIndexOf(".")+1); // 확장자
+            String fileName = UUID.randomUUID().toString(); // 이미지 이름
+            movieDto.setPosterPath(fileName+"."+extension);
+
+            BufferedImage image = ImageIO.read(imgURL);
+            File file = new File("../../Reminiscene/upload/poster/" + fileName + "." + extension);
+            if(!file.exists()) { // 해당 경로의 폴더가 존재하지 않을 경우
+                file.mkdirs(); // 해당 경로의 폴더 생성
+            }
+
+            ImageIO.write(image, extension, file); // image를 file로 업로드
+            System.out.println("이미지 업로드 완료!");
+
+            FileDto fileDto = new FileDto();
+            fileDto.setOriginalName(movieDto.getTitle().replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "_")+"_poster."+extension);
+            fileDto.setRenameName(movieDto.getPosterPath());
+            fileDto.setDirectory("/upload/poster/");
+            fileDtoList.add(fileDto);
+            fileRepository.insertOne(fileDto);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return movieRepository.insertOneMovie(movieDto);
+    }
+
+    public MovieListDto getMovieList(MovieSelectDto movieSelectDto) {
+        if(movieSelectDto.getPage()==null) movieSelectDto.setPage(1);
+        movieSelectDto.setOffset();
+
+        MovieListDto movieListDto = new MovieListDto();
+        movieListDto.setList(movieRepository.selectMovieList(movieSelectDto));
+        movieListDto.setPage(movieSelectDto.getPage());
+
+        return movieListDto;
+    }
+
+    public MovieDto getMovie(String id) {
+        return movieRepository.selectOneMovie(id);
     }
 }

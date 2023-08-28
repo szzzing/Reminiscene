@@ -21,7 +21,7 @@
 <script>
 export default {
     created() {
-        this.axios.get("/movie/"+this.$route.params.id)
+        this.axios.get("/statistics/"+this.$route.params.id)
         .then((response)=>{
             this.avgRate = response.data.avgRate;
             this.rateCount = response.data.rateCount;

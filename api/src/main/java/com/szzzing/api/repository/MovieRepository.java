@@ -63,8 +63,8 @@ public class MovieRepository {
         return sqlSessionTemplate.update(NAME_SPACE+"updateOneComment", commentDto);
     }
 
-    public MovieDto selectOneMovie(String id) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneMovie", id);
+    public StasticsDto selectOneStatistics(String id) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneStatistics", id);
     }
 
     public ArrayList<WishDto> selectWishList(CommonSelectDto commonSelectDto) {
@@ -73,5 +73,17 @@ public class MovieRepository {
 
     public ArrayList<WatchingDto> selectWatchingList(CommonSelectDto commonSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWatchingList", commonSelectDto);
+    }
+
+    public int insertOneMovie(MovieDto movieDto) {
+        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneMovie", movieDto);
+    }
+
+    public ArrayList<MovieDto> selectMovieList(MovieSelectDto movieSelectDto) {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectMovieList", movieSelectDto);
+    }
+
+    public MovieDto selectOneMovie(String id) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneMovie", id);
     }
 }

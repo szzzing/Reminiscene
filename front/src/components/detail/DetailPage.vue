@@ -1,8 +1,9 @@
 <template>
     <backdrop-component v-bind:movie="movie"></backdrop-component>
     <div class="container">
+        <div @click="this.addMovie()">영화 삽입</div>
         <detail-component v-bind:movie="movie"></detail-component>
-        <stastics-component></stastics-component>
+        <statistics-component></statistics-component>
         <comment-component v-bind:movie="movie"></comment-component>
     </div>
 </template>
@@ -11,7 +12,7 @@
 import DetailComponent from './DetailComponent.vue'
 import CommentComponent from './CommentComponent.vue'
 import BackdropComponent from './BackdropComponent.vue';
-import StasticsComponent from './StasticsComponent.vue';
+import StatisticsComponent from './StatisticsComponent.vue';
 import movieAxios from '@/axios/movieAxios';
 
 export default {
@@ -19,7 +20,7 @@ export default {
         DetailComponent,
         CommentComponent,
         BackdropComponent,
-        StasticsComponent,
+        StatisticsComponent,
     },
     // /list 페이지로 이동시 검색결과 유지
     // 그 외 페이지로 이동시 검색결과 유지 x
@@ -42,6 +43,7 @@ export default {
     data() {
         return {
             movie: null,
+            movieDto: null,
         }
     },
     watch: {
@@ -59,7 +61,26 @@ export default {
                 genre.push(g.name);
             }
             this.movie.genres = genre.join('/');
+
+            this.movieDto = {
+                title: this.movie.title,
+                originalTitle: this.movie.original_title,
+                backdropPath: this.movie.backdrop_path,
+                posterPath: this.movie.poster_path,
+                tagline: this.movie.tagline,
+                overview: this.movie.overview,
+                releaseDate: this.movie.release_date = this.movie.release_date.split('.').join('-'),
+                genre: this.movie.genres,
+            }
         },
+    },
+    methods: {
+        addMovie() {
+            this.axios.post("/movie", this.movieDto)
+            .then((response)=>{
+                console.log(response.data);
+            })
+        }
     },
 }
 </script>

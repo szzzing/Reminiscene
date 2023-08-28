@@ -9,6 +9,12 @@
  
 <script>
 export default {
+    created() {
+        this.axios.get("/movies")
+        .then((response)=>{
+            console.log(response.data);
+        })
+    }
 }
 </script>
 

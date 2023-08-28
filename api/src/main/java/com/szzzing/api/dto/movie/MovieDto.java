@@ -2,11 +2,17 @@ package com.szzzing.api.dto.movie;
 
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
-public class StasticsDto {
-    private String id;
-    private float avgRate;
-    private int rateCount;
-    private int wishCount;
-    private int watchingCount;
+public class MovieDto {
+    private int id;
+    private String title;
+    private String originalTitle;
+    private String tagline;
+    private String overview;
+    private Date releaseDate;
+    private String backdropPath;
+    private String posterPath;
+    private String genre;
 }
