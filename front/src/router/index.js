@@ -16,6 +16,7 @@ import ModifyPage from '@/components/mypage/ModifyPage'
 import MyWishPage from '@/components/mypage/WishPage'
 import MyCommentPage from '@/components/mypage/CommentPage'
 import MyLikePage from '@/components/mypage/LikePage'
+import MyWatchingPage from '@/components/mypage/WatchingPage'
 
 const routes = [
     {
@@ -73,6 +74,10 @@ const routes = [
     {
         path: '/mypage/like',
         component: MyLikePage,
+    },
+    {
+        path: '/mypage/watching',
+        component: MyWatchingPage,
     },
     {
         path: '/:pathMatch(.*)*',

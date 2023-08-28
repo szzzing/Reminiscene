@@ -19,8 +19,8 @@
                 </div>
                 <div class="text">{{ comment.content }}</div>
                 <div class="interest">
-                    <div class="like">👍 {{ comment.likeCount }}</div>
-                    <div class="reply">💭 {{ comment.replyCount }}</div>
+                    <div class="like" :class="{ 'liked' : comment.userLike }"><span>👍</span> {{ comment.likeCount }}</div>
+                    <div class="reply">💬 {{ comment.replyCount }}</div>
                 </div>
             </router-link>
         </transition-group>
@@ -184,5 +184,13 @@ export default {
 .interest * {
     color: var(--G500);
     font-size: 14px;
+}
+.like span {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+.liked span {
+    opacity: 1;
+    filter: none;
 }
 </style>

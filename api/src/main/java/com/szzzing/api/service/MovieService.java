@@ -73,4 +73,15 @@ public class MovieService {
 
         return wishListDto;
     }
+
+    public WatchingListDto getWatchingList(CommonSelectDto commonSelectDto) {
+        if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
+        commonSelectDto.setOffset();
+
+        WatchingListDto watchingListDto = new WatchingListDto();
+        watchingListDto.setList(movieRepository.selectWatchingList(commonSelectDto));
+        watchingListDto.setPage(commonSelectDto.getPage());
+
+        return watchingListDto;
+    }
 }

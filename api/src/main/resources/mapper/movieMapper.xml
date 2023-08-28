@@ -76,6 +76,19 @@
         limit #{limit} offset #{offset}
     </select>
 
+    <select id="selectWatchingList" resultMap="watchingResultMap">
+        select * from watching
+        <choose>
+            <when test="userId!=null">
+                where watching_user_id=#{userId}
+            </when>
+            <when test="movieId!=null">
+                where watching_movie_id=#{movieId}
+            </when>
+        </choose>
+        limit #{limit} offset #{offset}
+    </select>
+
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
         <result column="status_rate" property="rate"/>
@@ -95,5 +108,10 @@
     <resultMap id="wishResultMap" type="com.szzzing.api.dto.movie.WishDto">
         <result column="wish_movie_id" property="movieId"/>
         <result column="wish_user_id" property="userId"/>
+    </resultMap>
+
+    <resultMap id="watchingResultMap" type="com.szzzing.api.dto.movie.WatchingDto">
+        <result column="watching_movie_id" property="movieId"/>
+        <result column="watching_user_id" property="userId"/>
     </resultMap>
 </mapper>

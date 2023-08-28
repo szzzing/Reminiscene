@@ -28,13 +28,14 @@ export default {
             query: this.$store.state.movie.query,
             list: this.$store.state.movie.list,
             page: this.$store.state.movie.page,
-            state: null,
+            state: this.$store.state.movie.state,
         }
     },
 
     methods: {
         // 리스트 불러오기
         getList($state) {
+            console.log($state);
             this.state = $state;
             const page = this.page;
             const query = this.query;

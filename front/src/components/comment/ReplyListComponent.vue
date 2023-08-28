@@ -33,7 +33,7 @@
                 <div class="text">좋아요</div>
             </div>
             <div class="reply-button" @click="this.clickReply()">
-                <div class="emoji">💭</div>
+                <div class="emoji">💬</div>
                 <div class="text">댓글</div>
             </div>
         </div>
@@ -149,7 +149,7 @@ export default {
             this.deleteModal = true;
         },
         removeReply(replyId) {
-            const index = this.list.find(e => e.id===replyId);
+            const index = this.list.findIndex(e => e.id===replyId);
             this.list.splice(index, 1);
         },
 

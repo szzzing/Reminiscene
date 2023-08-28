@@ -86,6 +86,11 @@ public class MovieController {
         boolean result = movieService.deleteWatching(watchingDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @GetMapping("/watching")
+    public ResponseEntity<WatchingListDto> getWatchingList(@ModelAttribute CommonSelectDto commonSelectDto) {
+        WatchingListDto result = movieService.getWatchingList(commonSelectDto);
+        return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     // 영화 정보
     @GetMapping("/movie/{id}")

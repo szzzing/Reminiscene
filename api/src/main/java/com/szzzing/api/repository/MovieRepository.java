@@ -70,4 +70,8 @@ public class MovieRepository {
     public ArrayList<WishDto> selectWishList(CommonSelectDto commonSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWishList", commonSelectDto);
     }
+
+    public ArrayList<WatchingDto> selectWatchingList(CommonSelectDto commonSelectDto) {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWatchingList", commonSelectDto);
+    }
 }

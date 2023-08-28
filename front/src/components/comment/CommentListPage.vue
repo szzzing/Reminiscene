@@ -1,9 +1,13 @@
 <template>
     <div id="comment-list" class="container" v-if="this.movie && this.list">
 
-        <div class="inner">
-            <div class="title">{{ this.movie.title+"의 코멘트" }}</div>
-        </div>
+        <title-component>
+            <template v-slot:emoji>📃</template>
+            <template v-slot:title>
+                {{ this.movie.title }}의
+                <br>코멘트
+            </template>
+        </title-component>
 
         <transition-group name="list" tag="div" class="inner">
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
@@ -17,8 +21,8 @@
                 </div>
                 <div class="text">{{ comment.content }}</div>
                 <div class="interest">
-                    <div class="like">👍 {{ comment.likeCount }}</div>
-                    <div class="reply">💭 {{ comment.replyCount }}</div>
+                    <div class="like" :class="{ 'liked' : comment.userLike }"><span>👍</span> {{ comment.likeCount }}</div>
+                    <div class="reply">💬 {{ comment.replyCount }}</div>
                 </div>
             </router-link>
         </transition-group>
@@ -30,10 +34,12 @@
 <script>
 import movieAxios from '@/axios/movieAxios';
 import { InfiniteLoading } from 'infinite-loading-vue3-ts';
+import TitleComponent from '../item/TitleComponent.vue';
 
 export default {
     components: {
         InfiniteLoading,
+        TitleComponent,
     },
     created() {
         this.getMovie();
@@ -81,7 +87,6 @@ export default {
     max-width: 960px;
     display: flex;
     flex-direction: column;
-    gap: 60px;
 }
 .title {
     font-size: 24px;
@@ -160,5 +165,13 @@ export default {
 .interest * {
     color: var(--G500);
     font-size: 14px;
+}
+.like span {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+.liked span {
+    opacity: 1;
+    filter: none;
 }
 </style>

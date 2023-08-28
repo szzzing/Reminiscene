@@ -11,18 +11,23 @@
         <transition-group name="list" tag="div" class="inner">
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`" @click="console.log(comment.movie)">
                 <div class="movie" v-if="comment.movie">
-                    <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
-                    <div class="no-image" v-if="!comment.profileImage">👤</div>
+                    <div class="movie-info">
+                        <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
+                        <div class="no-image" v-if="!comment.profileImage">👤</div>
 
-                    <div class="movie-title">{{ comment.movie.title }} {{ comment.movie.release_date!='' ? "("+comment.movie.release_date.split('-')[0]+")" : '' }}</div>
-                    <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
-                        {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
+                        <div class="movie-title">{{ comment.movie.title }} {{ comment.movie.release_date!='' ? "("+comment.movie.release_date.split('-')[0]+")" : '' }}</div>
+                        <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
+                            {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
+                        </div>
                     </div>
                 </div>
-                <div class="text">{{ comment.content }}</div>
+                <div class="text">
+                    <img class="poster" v-if="comment.movie.poster_path" :src="`https://image.tmdb.org/t/p/original/${comment.movie.poster_path}`" @click="$router.push({ path: '/detail/'+this.movie.id })">
+                    {{ comment.content }}
+                </div>
                 <div class="interest">
                     <div class="like">👍 {{ comment.likeCount }}</div>
-                    <div class="reply">💭 {{ comment.replyCount }}</div>
+                    <div class="reply">💬 {{ comment.replyCount }}</div>
                 </div>
             </router-link>
         </transition-group>
@@ -50,30 +55,30 @@ export default {
     },
 
     methods: {
-        getList($state) {
+        async getList($state) {
             const params = {
                 userId: this.$store.state.auth.user.id,
                 page: this.page,
             }
-            this.axios.get("/comments", {params})
-            .then((response)=>{
-                if(response.data.list.length!=0) {
-                    const list = response.data.list;
+            try {
+                const response = await this.axios.get("/comments", {params});
+                const list = response.data.list;
+                if(list.length!=0) {
                     this.page = response.data.page + 1;
                     for(const l of list) {
-                        movieAxios.get('api.themoviedb.org/3/movie/'+l.movieId+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR')
-                        .then((response)=>{
-                            l.movie = response.data;
-                            this.list.push(l);
-                        });
+                        const movie = await movieAxios.get('api.themoviedb.org/3/movie/'+l.movieId+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
+                        l.movie = movie.data;
+                        this.list.push(l);
                     }
                     $state.loaded();
                 } else {
                     $state.complete();
                 }
-            })
+            } catch(error) {
+                console.log(error);
+            }
         }
-    }
+    },
 }
 </script>
 
@@ -98,7 +103,7 @@ export default {
     cursor: pointer;
     background: var(--G50);
 }
-.movie {
+.movie-info {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -111,6 +116,9 @@ export default {
     padding: 20px 0;
     border-top: 1px solid var(--G100);
     border-bottom: 1px solid var(--G100);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 .interest {
     display: flex;
@@ -154,5 +162,18 @@ export default {
 .interest * {
     color: var(--G500);
     font-size: 14px;
+}
+
+.thum, .no-image {
+    position: relative;
+    width: 100px;
+    padding-top: 125px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+}
+.poster {
+    width: 80px;
 }
 </style>
