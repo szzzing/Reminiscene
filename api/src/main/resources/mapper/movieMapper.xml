@@ -63,6 +63,19 @@
         from dual;
     </select>
 
+    <select id="selectWishList" resultMap="wishResultMap">
+        select * from wish
+        <choose>
+            <when test="userId!=null">
+                where wish_user_id=#{userId}
+            </when>
+            <when test="movieId!=null">
+                where wish_movie_id=#{movieId}
+            </when>
+        </choose>
+        limit #{limit} offset #{offset}
+    </select>
+
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">
         <result column="status_rate" property="rate"/>
@@ -77,5 +90,10 @@
         <result column="movie_rate_count" property="rateCount"/>
         <result column="movie_wish_count" property="wishCount"/>
         <result column="movie_watching_count" property="watchingCount"/>
+    </resultMap>
+
+    <resultMap id="wishResultMap" type="com.szzzing.api.dto.movie.WishDto">
+        <result column="wish_movie_id" property="movieId"/>
+        <result column="wish_user_id" property="userId"/>
     </resultMap>
 </mapper>

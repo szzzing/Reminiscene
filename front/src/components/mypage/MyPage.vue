@@ -6,16 +6,13 @@
             <div class="no-image" v-if="!this.user.profileImage">👤</div>
             <div class="info">
                 <div class="basic-info">
-                    <div class="nickname">
-                        {{ this.user.nickname }}
-                    </div>
-                    <div class="id">
-                        {{ "@" + this.user.id }}
-                    </div>
+                    <div class="nickname">{{ this.user.nickname }}</div>
+                    <div class="id">{{ "@" + this.user.id }}</div>
                 </div>
                 <div class="more-info">
                     <div class="birthday">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.') : "비공개" }}</div>
                     <div class="gender">⚧️ {{ this.user.gender ? (this.user.gender=='F' ? "여성" : "남성") : "비공개" }}</div>
+                    <div class="email">📧 {{ this.user.email }}</div>
                 </div>
             </div>
             <router-link class="modify" to="/mypage/modify">⚙️</router-link>
@@ -120,7 +117,7 @@ export default {
     flex-direction: column;
     align-items: normal;
 }
-.birthday, .gender {
+.birthday, .gender, .email {
     color: var(--G400);
 }
 

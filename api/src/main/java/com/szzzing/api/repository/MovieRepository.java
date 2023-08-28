@@ -1,12 +1,14 @@
 package com.szzzing.api.repository;
 
 import com.szzzing.api.dto.comment.CommentDto;
+import com.szzzing.api.dto.common.CommonSelectDto;
 import com.szzzing.api.dto.movie.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Repository
@@ -63,5 +65,9 @@ public class MovieRepository {
 
     public MovieDto selectOneMovie(String id) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneMovie", id);
+    }
+
+    public ArrayList<WishDto> selectWishList(CommonSelectDto commonSelectDto) {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWishList", commonSelectDto);
     }
 }

@@ -6,6 +6,7 @@
             <div class="profile-info">
                 <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
                 <div class="id">{{ "@" + user.id }}</div>
+                <div class="activity">{{ user.commentCount+"개의 코멘트" }}</div>
             </div>
         </div>
         <div class="inner">
@@ -51,11 +52,9 @@ export default {
 .inner {
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 .inner:first-child {
     gap: 16px;
-    align-items: center;
     padding: 20px 20px 0;
 }
 .inner:last-child {
@@ -87,10 +86,22 @@ export default {
     font-size: 48px;
 }
 
+.profile-info {
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+}
 .nickname {
     font-weight: 600;
+    line-height: 1.2;
 }
 .id {
+    font-size: 14px;
+    color: var(--G400);
+    line-height: 1.2;
+    flex-grow: 1;
+}
+.activity {
     font-size: 14px;
     color: var(--G500);
 }

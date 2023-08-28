@@ -27,7 +27,7 @@
             </div>
 
             <div class="inner" ref="email">
-                <div class="title">📫 이메일</div>
+                <div class="title">📧 이메일</div>
                 <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': checkedEmail, 'unchecked': !checkedEmail }">

@@ -1,8 +1,6 @@
 package com.szzzing.api.controller;
 
-import com.szzzing.api.dto.comment.CommentDto;
-import com.szzzing.api.dto.comment.CommentListDto;
-import com.szzzing.api.dto.comment.CommentSelectDto;
+import com.szzzing.api.dto.common.CommonSelectDto;
 import com.szzzing.api.dto.movie.*;
 import com.szzzing.api.service.MovieService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -66,6 +64,11 @@ public class MovieController {
         wishDto.setMovieId(movieId);
         boolean result = movieService.deleteWish(wishDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @GetMapping("/wish")
+    public ResponseEntity<WishListDto> getWishList(@ModelAttribute CommonSelectDto commonSelectDto) {
+        WishListDto result = movieService.getWishList(commonSelectDto);
+        return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // 보는 중

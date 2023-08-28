@@ -1,6 +1,7 @@
 package com.szzzing.api.service;
 
 import com.szzzing.api.dto.comment.CommentDto;
+import com.szzzing.api.dto.common.CommonSelectDto;
 import com.szzzing.api.dto.movie.*;
 import com.szzzing.api.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,16 @@ public class MovieService {
 
     public MovieDto getMovie(String id) {
         return movieRepository.selectOneMovie(id);
+    }
+
+    public WishListDto getWishList(CommonSelectDto commonSelectDto) {
+        if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
+        commonSelectDto.setOffset();
+
+        WishListDto wishListDto = new WishListDto();
+        wishListDto.setList(movieRepository.selectWishList(commonSelectDto));
+        wishListDto.setPage(commonSelectDto.getPage());
+
+        return wishListDto;
     }
 }

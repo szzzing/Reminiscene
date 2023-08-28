@@ -31,5 +31,6 @@ export default {
         color: var(--G700);
         font-size: 28px;
         font-weight: 600;
+        line-height: 1.4;
     }
 </style>
