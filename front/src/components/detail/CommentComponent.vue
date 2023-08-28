@@ -47,8 +47,9 @@ export default {
             const params = {
                 page: 1,
                 sort: "famous",
+                movieId: this.$route.params.id,
             }
-            this.axios.get("/movie/"+this.$route.params.id+"/comment", {params})
+            this.axios.get("/comments", {params})
             .then((response)=>{
                 this.listCount = response.data.listCount;
                 for(var c of response.data.list) {

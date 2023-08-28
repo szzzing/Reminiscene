@@ -1,28 +1,26 @@
 <template>
-    <div id="movie-list">
-        <transition-group tag="div" class="list">
-            <router-link class="item item-shadow" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
-                <div class="thum" v-if="movie.poster_path"
-                :style="{'background-image': 'url(https://image.tmdb.org/t/p/original/'+movie.poster_path+')' }">
-                    <div class="vote-average">
-                        ⭐️
-                        {{ movie.vote_average.toFixed(1) }}
-                    </div>
+    <transition-group id="movie-list" tag="div" class="list">
+        <router-link class="item item-shadow" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+            <div class="thum" v-if="movie.poster_path"
+            :style="{'background-image': 'url(https://image.tmdb.org/t/p/original/'+movie.poster_path+')' }">
+                <div class="vote-average">
+                    ⭐️
+                    {{ movie.vote_average.toFixed(1) }}
                 </div>
-                <div class="no-image" v-if="!movie.poster_path">
-                    <div class="icon">🌙</div>
+            </div>
+            <div class="no-image" v-if="!movie.poster_path">
+                <div class="icon">🌙</div>
+            </div>
+            <div class="info">
+                <div class="title">
+                    {{ movie.title }}
                 </div>
-                <div class="info">
-                    <div class="title">
-                        {{ movie.title }}
-                    </div>
-                    <div class="date">
-                        {{ movie.release_date.split('-')[0] }}
-                    </div>
+                <div class="date">
+                    {{ movie.release_date.split('-')[0] }}
                 </div>
-            </router-link>
-        </transition-group>
-    </div>
+            </div>
+        </router-link>
+    </transition-group>
 </template>
 
 <script>

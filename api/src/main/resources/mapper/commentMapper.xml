@@ -61,7 +61,15 @@
             </if>
         from comment c
             join user u on comment_user_id = user_id
-        where comment_movie_id=#{movieId}
+        where
+        <choose>
+            <when test="movieId!=null">
+                comment_movie_id=#{movieId}
+            </when>
+            <when test="userId!=null">
+                comment_user_id=#{userId}
+            </when>
+        </choose>
         <choose>
             <when test='sort==null || sort.equals("recent")'>
                 order by comment_id desc

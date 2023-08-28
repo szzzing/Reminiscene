@@ -106,7 +106,7 @@ export default {
                 refId: this.refId,
                 page: this.page,
             }
-            this.axios.get("/comment/"+this.refId+"/reply", {params})
+            this.axios.get("/reply", {params})
             .then((response)=>{
                 if(!response.data.list.length==0) {
                     this.list.push(...response.data.list);

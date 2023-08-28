@@ -38,16 +38,13 @@ public class ReplyController {
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/comment/{refId}/reply")
-    public ResponseEntity<ReplyListDto> getReplyList(@RequestParam(value="page", required = false) Integer page, @PathVariable String refId) {
-        if(page==null) page = 1;
-
-        ReplySelectDto replySelectDto = new ReplySelectDto();
-        replySelectDto.setRefId(refId);
-        replySelectDto.setOffset(page);
+    @GetMapping("/reply")
+    public ResponseEntity<ReplyListDto> getReplyList(@ModelAttribute ReplySelectDto replySelectDto) {
+        if(replySelectDto.getPage()==null) replySelectDto.setPage(1);
+        replySelectDto.setOffset();
 
         ReplyListDto result = replyService.getReplyList(replySelectDto);
-        result.setPage(page);
+        result.setPage(replySelectDto.getPage());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

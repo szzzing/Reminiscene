@@ -27,7 +27,7 @@ public class ReplyService {
 
     public ReplyListDto getReplyList(ReplySelectDto replySelectDto) {
         ReplyListDto replyListDto = new ReplyListDto();
-        replyListDto.setList(replyRepository.selectReviewList(replySelectDto));
+        replyListDto.setList(replyRepository.selectReplyList(replySelectDto));
         return replyListDto;
     }
 

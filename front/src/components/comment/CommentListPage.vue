@@ -58,9 +58,11 @@ export default {
             const params = {
                 page: this.page,
                 sort: this.sort,
+                movieId: this.$route.params.id,
             }
-            this.axios.get("/movie/"+this.$route.params.id+"/comment", {params})
+            this.axios.get("/comments", {params})
             .then((response)=>{
+                console.log(response.data);
                 if(response.data.list.length!=0) {
                     this.list.push(...response.data.list);
                     this.page = response.data.page + 1;

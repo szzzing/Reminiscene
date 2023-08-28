@@ -30,7 +30,7 @@ public class ReplyRepository {
         return sqlSessionTemplate.update(NAME_SPACE+"deleteOneReply", id);
     }
 
-    public ArrayList<ReplyDto> selectReviewList(ReplySelectDto replySelectDto) {
+    public ArrayList<ReplyDto> selectReplyList(ReplySelectDto replySelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectReplyList", replySelectDto);
     }
 

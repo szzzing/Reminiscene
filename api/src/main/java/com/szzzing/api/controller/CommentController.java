@@ -41,19 +41,18 @@ public class CommentController {
         return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/movie/{movieId}/comment")
-    public ResponseEntity<CommentListDto> getMovieComment(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="sort", required = false) String sort, @PathVariable String movieId, HttpServletRequest request) {
+    @GetMapping("/comments")
+    public ResponseEntity<CommentListDto> getCommentList(@ModelAttribute CommentSelectDto commentSelectDto, HttpServletRequest request) {
         String loginUser  = request.getUserPrincipal()==null ? null : request.getUserPrincipal().getName();
-        if(page==null) page = 1;
-
-        CommentSelectDto commentSelectDto = new CommentSelectDto();
-        commentSelectDto.setMovieId(movieId);
-        commentSelectDto.setOffset(page);
-        commentSelectDto.setSort(sort);
         commentSelectDto.setLoginUser(loginUser);
 
-        CommentListDto result = commentService.getMovieComment(commentSelectDto);
-        result.setPage(page);
+        if(commentSelectDto.getPage()==null) commentSelectDto.setPage(1);
+        commentSelectDto.setOffset();
+
+        CommentListDto result = commentService.getCommentList(commentSelectDto);
+        result.setPage(commentSelectDto.getPage());
+
+        log.info(commentSelectDto.toString());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

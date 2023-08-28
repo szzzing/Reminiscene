@@ -32,7 +32,7 @@ public class CommentService {
         return commentRepository.updateOneComment(commentDto) > 0;
     }
 
-    public CommentListDto getMovieComment(CommentSelectDto commentSelectDto) {
+    public CommentListDto getCommentList(CommentSelectDto commentSelectDto) {
         CommentListDto result = new CommentListDto();
         result.setListCount(commentRepository.selectCommentListCount(commentSelectDto));
         result.setList(commentRepository.selectCommentList(commentSelectDto));
