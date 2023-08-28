@@ -1,10 +1,10 @@
 <template>
     <div id="wish" class="container">
         <title-component>
-            <template v-slot:emoji>🙏</template>
+            <template v-slot:emoji>💛</template>
             <template v-slot:title>
                 {{ user.nickname=='' ? user.id : user.nickname }}
-                님이<br>작성한 코멘트
+                님이<br>좋아하는 코멘트
             </template>
         </title-component>
 
@@ -13,7 +13,7 @@
                 <div class="movie" v-if="comment.movie">
                     <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
                     <div class="no-image" v-if="!comment.profileImage">👤</div>
-
+                    <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
                     <div class="movie-title">{{ comment.movie.title }} {{ comment.movie.release_date!='' ? "("+comment.movie.release_date.split('-')[0]+")" : '' }}</div>
                     <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
                         {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
@@ -55,8 +55,9 @@ export default {
                 userId: this.$store.state.auth.user.id,
                 page: this.page,
             }
-            this.axios.get("/comments", {params})
+            this.axios.get("/like", {params})
             .then((response)=>{
+                console.log(response.data);
                 if(response.data.list.length!=0) {
                     const list = response.data.list;
                     this.page = response.data.page + 1;
@@ -117,9 +118,15 @@ export default {
     gap: 16px;
 }
 
+.nickname {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .movie-title {
     flex-grow: 1;
-    font-weight: 500;
+    color: var(--G500);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -141,6 +148,7 @@ export default {
     height: 30px;
     background-size: cover;
     background-position: center;
+    flex-shrink: 0;
     border-radius: 50%;
     background-color: var(--G200);
     display: flex;

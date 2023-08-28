@@ -50,4 +50,8 @@ public class CommentRepository {
     public int deleteOneLike(LikeDto likeDto) {
         return sqlSessionTemplate.delete(NAME_SPACE+"deleteOneLike", likeDto);
     }
+
+    public ArrayList<CommentDto> selectLikeList(CommentSelectDto commentSelectDto) {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectLikeList", commentSelectDto);
+    }
 }

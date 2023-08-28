@@ -46,14 +46,7 @@ public class CommentController {
         String loginUser  = request.getUserPrincipal()==null ? null : request.getUserPrincipal().getName();
         commentSelectDto.setLoginUser(loginUser);
 
-        if(commentSelectDto.getPage()==null) commentSelectDto.setPage(1);
-        commentSelectDto.setOffset();
-
         CommentListDto result = commentService.getCommentList(commentSelectDto);
-        result.setPage(commentSelectDto.getPage());
-
-        log.info(commentSelectDto.toString());
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -73,5 +66,10 @@ public class CommentController {
 
         boolean result = commentService.deleteLike(likeDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @GetMapping("/like")
+    public ResponseEntity getLikeCommentList(@ModelAttribute CommentSelectDto commentSelectDto) {
+        CommentListDto commentListDto = commentService.getLikeCommentList(commentSelectDto);
+        return new ResponseEntity(commentListDto, HttpStatus.OK);
     }
 }

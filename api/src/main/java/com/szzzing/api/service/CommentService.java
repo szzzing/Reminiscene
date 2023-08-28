@@ -33,9 +33,13 @@ public class CommentService {
     }
 
     public CommentListDto getCommentList(CommentSelectDto commentSelectDto) {
+        if(commentSelectDto.getPage()==null) commentSelectDto.setPage(1);
+        commentSelectDto.setOffset();
+
         CommentListDto result = new CommentListDto();
         result.setListCount(commentRepository.selectCommentListCount(commentSelectDto));
         result.setList(commentRepository.selectCommentList(commentSelectDto));
+        result.setPage(commentSelectDto.getPage());
         return result;
     }
 
@@ -45,5 +49,15 @@ public class CommentService {
 
     public boolean deleteLike(LikeDto likeDto) {
         return commentRepository.deleteOneLike(likeDto) > 0;
+    }
+
+    public CommentListDto getLikeCommentList(CommentSelectDto commentSelectDto) {
+        if(commentSelectDto.getPage()==null) commentSelectDto.setPage(1);
+        commentSelectDto.setOffset();
+
+        CommentListDto result = new CommentListDto();
+        result.setList(commentRepository.selectLikeList(commentSelectDto));
+        result.setPage(commentSelectDto.getPage());
+        return result;
     }
 }

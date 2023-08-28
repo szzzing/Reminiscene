@@ -1,7 +1,7 @@
 <template>
     <div id="wish" class="container">
         <title-component>
-            <template v-slot:emoji>🙏</template>
+            <template v-slot:emoji>🧞‍♂️</template>
             <template v-slot:title>
                 {{ user.nickname=='' ? user.id : user.nickname }}
                 님이<br>보고싶은 영화
