@@ -16,12 +16,13 @@ export default {
 
 <style scoped>
     #title {
-        margin: 0 0 72px;
+        margin: 0 0 36px;
     }
     .emoji {
-        font-size: 40px;
+        font-size: 72px;
         font-weight: 900;
         color: var(--G0);
+        line-height: 1.2;
     }
     .title {
         color: var(--G1000);

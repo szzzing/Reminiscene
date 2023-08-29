@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="inner">
-            <div class="movie" v-if="this.movie">
+            <div class="movie">
                 <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`" @click="$router.push({ path: '/detail/'+comment.movieId })">
                 <div class="info">
                     <div class="title">{{ comment.movieTitle }}</div>
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import movieAxios from '@/axios/movieAxios';
 import ReplyListComponent from './ReplyListComponent.vue';
 
 export default {
@@ -51,9 +50,6 @@ export default {
             // 코멘트 정보
             const comment = await this.axios.get('/comment', {params});
             this.comment = comment.data;
-            // 영화 정보
-            const movie = await movieAxios.get('api.themoviedb.org/3/movie/'+this.comment.movieId+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
-            this.movie = movie.data;
         } catch(error) {
             this.$router.push('/error');
         }
@@ -62,29 +58,10 @@ export default {
         return {
             id: this.$route.params.id,
             comment: null,
-            movie: null,
         }
-    },
-    watch: {
-        // 영화 상세정보 가공
-        movie() {
-            this.movie.release_date = this.movie.release_date.split('-').join('.');
-            if(this.movie.backdrop_path) {
-                this.movie.backdrop_path = 'https://image.tmdb.org/t/p/original/'+this.movie.backdrop_path;
-            }
-            if(this.movie.poster_path) {
-                this.movie.poster_path = 'https://image.tmdb.org/t/p/original/'+this.movie.poster_path;
-            }
-            var genre = [];
-            for(var g of this.movie.genres) {
-                genre.push(g.name);
-            }
-            this.movie.genres = genre.join('/');
-        },
     },
     methods: {
         updateUserLike(param) {
-            console.log(param);
             this.comment.userLike = param;
         }
     }

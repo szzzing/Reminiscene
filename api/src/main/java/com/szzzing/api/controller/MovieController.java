@@ -92,13 +92,6 @@ public class MovieController {
         return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 영화 정보
-    @GetMapping("/statistics/{id}")
-    public ResponseEntity<StasticsDto> getStatistics(@PathVariable String id) {
-        StasticsDto result = movieService.getStatistics(id);
-        return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     // 영화 삽입
     @PostMapping("/movie")
     public ResponseEntity<MovieDto> addMovie(@RequestBody MovieDto movieDto) {
@@ -116,6 +109,12 @@ public class MovieController {
     @GetMapping("/movies")
     public ResponseEntity<MovieListDto> getMovieList(@ModelAttribute MovieSelectDto movieSelectDto) {
         MovieListDto result = movieService.getMovieList(movieSelectDto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/movies/rank")
+    public ResponseEntity<MovieRankListDto> getMovieRankList() {
+        MovieRankListDto result = movieService.getMovieRenkList();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

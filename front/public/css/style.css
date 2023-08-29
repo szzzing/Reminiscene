@@ -27,6 +27,12 @@ body {
     width: calc(100% - 80px);
     margin: 0 auto;
 }
+@media screen and (max-width:860px) {
+    .container {
+        width: calc(100% - 40px);
+        margin: 0 auto;
+    }
+}
 
 .wrap>.container:first-child {
     padding: 100px 0 0;
@@ -178,6 +184,5 @@ input:autofill:active {
     align-items: center;
     justify-content: center;
     border: 1px solid var(--G200);
-}
-.no-image {
+    flex-shrink: 0;
 }

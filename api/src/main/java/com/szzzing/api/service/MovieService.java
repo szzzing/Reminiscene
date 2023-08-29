@@ -69,10 +69,6 @@ public class MovieService {
         return movieRepository.updateOneComment(commentDto) > 0;
     }
 
-    public StasticsDto getStatistics(String id) {
-        return movieRepository.selectOneStatistics(id);
-    }
-
     public MovieListDto getWishList(CommonSelectDto commonSelectDto) {
         if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
         commonSelectDto.setOffset();
@@ -167,5 +163,12 @@ public class MovieService {
 
     public MovieDto getMovie(String id) {
         return movieRepository.selectOneMovie(id);
+    }
+
+    public MovieRankListDto getMovieRenkList() {
+        MovieRankListDto movieRankListDto = new MovieRankListDto();
+        movieRankListDto.setMonthBestList(movieRepository.selectMonthBestMovieList());
+        movieRankListDto.setBestRateList(movieRepository.selectBestRateMovieList());
+        return movieRankListDto;
     }
 }

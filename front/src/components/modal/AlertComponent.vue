@@ -1,6 +1,6 @@
 <template>
     <transition name="smooth">
-        <div id="alert" class="item-fill" v-if="this.$store.state.modal.alert">
+        <div id="alert" class="item-border" v-if="this.$store.state.modal.alert">
             <div class="emoji">
                 {{ this.$store.state.modal.alertEmoji }}
             </div>
@@ -28,7 +28,7 @@ export default {
     gap: 8px;
     justify-content: center;
     align-items: center;
-    padding: 20px 24px;
+    padding: 16px 24px;
     border-radius: 8px;;
 }
 .emoji {

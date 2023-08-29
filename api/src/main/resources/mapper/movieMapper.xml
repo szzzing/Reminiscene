@@ -13,7 +13,6 @@
         from dual
     </select>
 
-
     <insert id="insertOneRate">
         insert into rate
         values(#{movieId}, #{userId}, #{star}, default)
@@ -51,17 +50,6 @@
         delete from watching
         where watching_movie_id = #{movieId} and watching_user_id = #{userId}
     </delete>
-
-
-    <select id="selectOneStatistics" resultMap="statisticsResultMap">
-        select
-            #{id} as movie_id,
-            round((select avg(rate_star) from pandora3_ojt.rate where rate_movie_id=#{id}), 2) as movie_avg_rate,
-            (select count(rate_star) from pandora3_ojt.rate where rate_movie_id=#{id}) as movie_rate_count,
-            (select count(*) from pandora3_ojt.wish where wish_movie_id = #{id}) as movie_wish_count,
-            (select count(*) from pandora3_ojt.watching where watching_movie_id = #{id}) as movie_watching_count
-        from dual;
-    </select>
 
     <select id="selectWishList" resultMap="movieResultMap">
         select w.*, m.*
@@ -113,6 +101,27 @@
         limit #{limit} offset #{offset}
     </select>
 
+    <select id="selectMonthBestMovieList" resultMap="movieResultMap">
+        select m.*,
+            (select avg(rate_star) from rate where rate_movie_id = movie_id) avg_rate,
+            (select count(*) from comment where comment_movie_id = movie_id and comment_cre_date >= date_add(now(), interval -1 month)) comment_count,
+            (select count(*) from wish where wish_movie_id = movie_id and wish_cre_date >= date_add(now(), interval -1 month)) wish_count,
+            (select count(*) from watching where watching_movie_id = movie_id and watching_cre_date >= date_add(now(), interval -1 month)) watching_count,
+            (select count(*) from rate where rate_movie_id = movie_id and rate_cre_date >= date_add(now(), interval -1 month)) rate_count
+        from movie m
+        order by (comment_count+wish_count+watching_count+rate_count) desc, movie_id desc
+        limit 5 offset 0
+    </select>
+
+    <select id="selectBestRateMovieList" resultMap="movieResultMap">
+        select m.*,
+            (select avg(rate_star) from rate where rate_movie_id = movie_id) avg_rate,
+            (select count(*) from rate where rate_movie_id = movie_id) rate_count
+        from movie m
+        order by rate_count desc, avg_rate desc, movie_id desc
+            limit 5 offset 0
+    </select>
+
     <select id="selectOneMovie" resultMap="movieResultMap">
         select m.*,
            round((select avg(rate_star) from pandora3_ojt.rate where rate_movie_id = movie_id), 2) as avg_rate,
@@ -146,14 +155,6 @@
         <result column="status_is_comment" property="isComment"/>
         <result column="status_is_watching" property="isWatching"/>
         <result column="status_is_wish" property="isWish"/>
-    </resultMap>
-
-    <resultMap id="statisticsResultMap" type="com.szzzing.api.dto.movie.StasticsDto">
-        <result column="movie_id" property="id"/>
-        <result column="movie_avg_rate" property="avgRate"/>
-        <result column="movie_rate_count" property="rateCount"/>
-        <result column="movie_wish_count" property="wishCount"/>
-        <result column="movie_watching_count" property="watchingCount"/>
     </resultMap>
 
     <resultMap id="wishResultMap" type="com.szzzing.api.dto.movie.WishDto">

@@ -1,28 +1,46 @@
 <template>
     <div class="container">
 
-        <title-component>
-            <template v-slot:emoji>💝</template>
-            <template v-slot:title>이번달<br>가장 사랑받은 영화</template>
-        </title-component>
-        <movie-list-component v-bind:list="list"></movie-list-component>
+        <div class="inner" v-if="this.monthBestList">
+            <title-component>
+                <template v-slot:emoji>🧙‍♀️</template>
+                <template v-slot:title>이번 달<br>가장 관심받은 작품</template>
+            </title-component>
+            <movie-rank-list-component v-bind:list="monthBestList"></movie-rank-list-component>
+        </div>
+
+        <div class="inner" v-if="this.monthBestList">
+            <title-component>
+                <template v-slot:emoji>🌟</template>
+                <template v-slot:title>많은 별점을 받은 작품</template>
+            </title-component>
+            <movie-rank-list-component v-bind:list="bestRateList"></movie-rank-list-component>
+        </div>
 
     </div>
 </template>
  
 <script>
-import MovieListComponent from '../item/MovieListComponent.vue';
+import MovieRankListComponent from '../item/MovieRankListComponent.vue';
 import TitleComponent from '../item/TitleComponent.vue';
 
 export default {
     components: {
         TitleComponent,
-        MovieListComponent,
+        MovieRankListComponent,
     },
     data() {
         return {
-            list: [],
+            monthBestList: [],
+            bestRateList: [],
         }
+    },
+    beforeCreate() {
+        this.axios.get("/movies/rank")
+        .then((response)=>{
+            this.monthBestList = response.data.monthBestList;
+            this.bestRateList = response.data.bestRateList;
+        })
     }
 }
 </script>
@@ -30,5 +48,8 @@ export default {
 <style scoped>
 .container {
     max-width: 1280px;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
 }
 </style>

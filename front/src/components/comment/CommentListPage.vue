@@ -2,7 +2,7 @@
     <div id="comment-list" class="container" v-if="this.movie">
 
         <title-component>
-            <template v-slot:emoji>📃</template>
+            <template v-slot:emoji>✨</template>
             <template v-slot:title>
                 {{ this.movie.title }}의
                 <br>코멘트

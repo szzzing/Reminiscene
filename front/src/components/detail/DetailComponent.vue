@@ -1,5 +1,5 @@
 <template>
-    <div id="detail" class="container" v-if="this.movie">
+    <div id="detail" v-if="this.movie">
         
         <div class="movie-area">
             <div class="poster" v-if="movie.posterPath">
@@ -49,6 +49,11 @@ export default {
 </script>
 
 <style scoped>
+#detail {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+}
 .movie-area {
     display: flex;
     flex-wrap: wrap-reverse;
@@ -82,6 +87,8 @@ export default {
     max-width: 300px;
     object-fit: cover;
     margin: auto;
+    border: 1px solid var(--G100);
+    border-radius: 4px;
 }
 .tagline {
     font-weight: 600;

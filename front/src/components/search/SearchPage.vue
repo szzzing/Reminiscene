@@ -3,7 +3,7 @@
         <title-component>
             <template v-slot:emoji>🔎</template>
             <template v-slot:title>
-                {{ this.query }}의<br>검색결과
+                {{ this.query }}의<br>검색 결과
             </template>
         </title-component>
         <div class="category">
@@ -48,7 +48,7 @@ export default {
 .category > * {
     border-bottom: 1px solid var(--G200);
     color: var(--G400);
-    padding: 8px 16px;
+    padding: 8px 20px;
 }
 .category a.route-active {
     border-bottom: 2px solid var(--FOCUS);
