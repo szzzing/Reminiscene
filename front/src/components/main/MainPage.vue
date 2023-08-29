@@ -1,9 +1,5 @@
 <template>
     <div class="container">
-        <div class="category">
-            <router-link class="category-item" to="/list">영화 검색</router-link>
-        </div>
-        <router-view></router-view>
     </div>
 </template>
  

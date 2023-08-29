@@ -60,7 +60,7 @@ export default {
 .modal-container {
     max-width: 300px;
     margin: 0 auto;
-    border-radius: 16px;
+    border-radius: 8px;;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

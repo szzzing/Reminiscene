@@ -55,7 +55,7 @@ export default {
     }
     .input-box {
         line-height: 48px;
-        border-radius: 16px;
+        border-radius: 8px;;
         padding: 12px 24px;
         height: unset;
     }

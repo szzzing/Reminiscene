@@ -103,7 +103,7 @@ export default {
 }
 
 .item {
-    border-radius: 16px;
+    border-radius: 8px;;
     padding: 20px 16px;
     display: flex;
     flex-direction: column;
@@ -170,18 +170,5 @@ export default {
 .interest * {
     color: var(--G500);
     font-size: 14px;
-}
-
-.thum, .no-image {
-    position: relative;
-    width: 100px;
-    padding-top: 125px;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-}
-.poster {
-    width: 80px;
 }
 </style>

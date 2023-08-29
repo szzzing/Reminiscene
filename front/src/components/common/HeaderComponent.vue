@@ -25,17 +25,12 @@
 export default {
     data() {
         return {
-            query: null,
+            query: '',
         }
     },
     computed: {
         user() {
             return this.$store.state.auth.user;
-        }
-    },
-    watch: {
-        query() {
-            this.$store.commit("local/setQuery", this.query);
         }
     },
     methods: {
@@ -44,7 +39,10 @@ export default {
             this.$store.commit("modal/setProfile", payload);
         },
         clickSearch() {
-            this.$router.push("/search/"+this.query);
+            if(this.query!='') {
+                this.$router.push("/search/"+this.query);
+                this.query = '';
+            }
         }
     }
 }

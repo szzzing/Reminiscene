@@ -99,7 +99,7 @@ export default {
     color: var(--G400);
 }
 .item {
-    border-radius: 16px;
+    border-radius: 8px;;
     flex-basis: calc((100% - 60px)/4);
     padding: 20px 16px;
     display: flex;

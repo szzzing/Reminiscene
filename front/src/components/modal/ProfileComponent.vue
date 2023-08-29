@@ -38,7 +38,7 @@ export default {
 <style scoped>
 #profile-modal {
     z-index: 9999;
-    border-radius: 16px;
+    border-radius: 8px;;
     position: fixed;
     right: 40px;
     top: 80px;

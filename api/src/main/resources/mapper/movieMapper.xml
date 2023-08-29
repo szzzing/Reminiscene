@@ -99,12 +99,19 @@
     </insert>
 
     <select id="selectMovieList" resultMap="movieResultMap">
-        select * from movie
+        select m.*,
+           (select avg(rate_star) from rate where rate_movie_id = movie_id) avg_rate
+        from movie m
+        <if test="query!=null">
+            where (movie_title like concat('%',#{query},'%')
+            or movie_original_title like concat('%',#{query},'%'))
+        </if>
         limit #{limit} offset #{offset}
     </select>
 
     <select id="selectOneMovie" resultMap="movieResultMap">
-        select * from movie
+        select m.*
+        from movie m
         where movie_id=#{id}
     </select>
 
@@ -120,6 +127,7 @@
         <result column="movie_poster_path" property="posterPath"/>
         <result column="movie_genre" property="genre"/>
         <result column="movie_runtime" property="runtime"/>
+        <result column="avg_rate" property="avgRate"/>
     </resultMap>
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">

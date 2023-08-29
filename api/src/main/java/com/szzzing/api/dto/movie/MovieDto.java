@@ -16,4 +16,5 @@ public class MovieDto {
     private String posterPath;
     private String genre;
     private int runtime;
+    private float avgRate;
 }

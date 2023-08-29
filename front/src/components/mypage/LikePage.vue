@@ -91,7 +91,7 @@ export default {
 }
 
 .item {
-    border-radius: 16px;
+    border-radius: 8px;;
     padding: 20px 16px;
     display: flex;
     flex-direction: column;

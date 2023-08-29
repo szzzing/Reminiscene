@@ -132,7 +132,7 @@ export default {
     gap: 48px 24px;
 }
 .item {
-    border-radius: 16px;
+    border-radius: 8px;;
     padding: 36px 20px 20px;
     flex-grow: 1;
     width: calc((100% - 72px)/4);

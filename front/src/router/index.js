@@ -7,7 +7,6 @@ import ErrorPage from '@/components/error/ErrorPage'
 import LoginPage from '@/components/auth/LoginPage'
 import RegisterPage from '@/components/auth/RegisterPage'
 import FindPage from '@/components/auth/FindPage'
-import ListPage from '@/components/list/ListPage'
 import DetailPage from '@/components/detail/DetailPage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
@@ -18,6 +17,8 @@ import MyCommentPage from '@/components/mypage/CommentPage'
 import MyLikePage from '@/components/mypage/LikePage'
 import MyWatchingPage from '@/components/mypage/WatchingPage'
 import SearchPage from '@/components/search/SearchPage'
+import SearchUserComponent from '@/components/search/SearchUserComponent'
+import SearchMovieComponent from '@/components/search/SearchMovieComponent'
 import UserPage from '@/components/user/UserPage'
 import UserWishPage from '@/components/user/WishPage'
 import UserCommentPage from '@/components/user/CommentPage'
@@ -44,10 +45,6 @@ const routes = [
     {
         path: '/login',
         component: LoginPage
-    },
-    {
-        path: '/list',
-        component: ListPage
     },
     {
         path: '/detail/:id',
@@ -88,6 +85,16 @@ const routes = [
     {
         path: '/search/:query',
         component: SearchPage,
+        children: [
+            {
+                path: '/search/user/:query',
+                component: SearchUserComponent,
+            },
+            {
+                path: '/search/:query',
+                component: SearchMovieComponent,
+            },
+        ]
     },
     {
         path: '/user/:id',
@@ -117,6 +124,9 @@ const routes = [
 
 const router = createRouter({
     history: createWebHashHistory(),
+    // 라우터 선택 효과
+    linkActiveClass: "route-active",
+    linkExactActiveClass: "route-active",
     // 페이지 이동 시 스크롤 탑 적용
     scrollBehavior() {
         return { top: 0 }

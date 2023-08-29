@@ -29,7 +29,7 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 20px 24px;
-    border-radius: 16px;
+    border-radius: 8px;;
 }
 .emoji {
     font-size: 20px;

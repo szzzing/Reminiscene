@@ -38,7 +38,7 @@
             </router-link>
             <router-link :to="`/user/${user.id}/comment`" class="item">
                 <div class="emoji shadow">✍️</div>
-                <div class="title">내가 쓴<br>코멘트</div>
+                <div class="title">작성한<br>코멘트</div>
                 <div class="count">
                     <div class="number">{{ this.user.commentCount }}</div>
                     <div class="extension">개</div>
@@ -138,7 +138,7 @@ export default {
     gap: 48px 24px;
 }
 .item {
-    border-radius: 16px;
+    border-radius: 8px;;
     padding: 36px 20px 20px;
     flex-grow: 1;
     width: calc((100% - 72px)/4);

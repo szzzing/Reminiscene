@@ -9,23 +9,20 @@
         </title-component>
 
         <transition-group id="movie-list" tag="div" class="list">
-            <router-link class="item item-border" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
-                <div class="thum" v-if="movie.posterPath"
-                :style="{'background-image': 'url(/upload/poster/'+movie.posterPath+')' }">
-                </div>
-                <div class="no-image" v-if="!movie.posterPath">
-                    <div class="icon">🌙</div>
+            <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+                <div class="poster" :style="{'background-image': `url(/upload/poster/${movie.posterPath}` }">
                 </div>
                 <div class="info">
-                    <div class="title">
-                        {{ movie.title }}
-                    </div>
-                    <div class="date">
-                        {{ movie.releaseDate.split('-')[0] }}
+                    <div class="title">{{ movie.title }}</div>
+                    <div class="genre">{{ movie.genre }}</div>
+                    <div class="footer">
+                        <div class="releaseDate">{{ movie.releaseDate.split("-")[0] }}</div>
+                        <div class="avg-rate" v-if="movie.avgRate>0">⭐️ {{ movie.avgRate.toFixed(1) }}</div>
                     </div>
                 </div>
             </router-link>
         </transition-group>
+
         <empty-component v-if="this.list.length==0">
             <template v-slot:text>
                 보고싶은 영화가 없어요.
@@ -82,82 +79,70 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.list {
+#movie-list {
     display: flex;
-    gap: 20px;
     flex-wrap: wrap;
-    align-items: flex-start;
+    gap: 20px;
 }
 .item {
     width: calc((100% - 80px)/5);
-    word-break: keep-all !important;
-    cursor: pointer;
-    border-radius: 16px;
-    overflow: hidden;
+    padding-bottom: 20px;
     flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 @media screen and (max-width:1179px) {
     .item {
         width: calc((100% - 60px)/4);
     }
 }
-@media screen and (max-width:768px) {
+@media screen and (max-width:860px) {
     .item {
         width: calc((100% - 40px)/3);
     }
 }
 @media screen and (max-width:600px) {
     .item {
-        width: calc((100% - 20px)/2);
+        width: calc((100% - 40px)/2);
     }
 }
-.info {
-    text-align: center;
-    padding: 12px 20px;
+@media screen and (max-width:414px) {
+    .item {
+        width: 100%;
+    }
 }
-.thum, .no-image {
-    position: relative;
+.poster {
     width: 100%;
     padding-top: 150%;
     background-size: cover;
     background-position: center;
     display: flex;
     justify-content: center;
+    border: 1px solid var(--G200);
+    border-radius: 4px;
 }
-.no-image {
-    background-color: var(--G1000);
-}
-.no-image .icon {
-    font-size: 36px;
-    position: absolute;
-    top: calc((100% - 50px)/2);
-}
-.info .title {
-    font-weight: 600;
-    text-align: center;
-    word-break: keep-all !important;
-}
-.info .date {
-    color: var(--G400);
-    font-size: 14px;
-    margin-bottom: 4px;
-}
-.vote-average {
+.avg-rate {
     font-weight: 700;
     font-size: 14px;
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    height: 32px;
-    line-height: 32px;
-    padding: 0px 12px 0px 10px;
-    border-radius: 16px;
-    background: #f9fafb50;
-    box-shadow: 0px 0px 10px var(--O100);
-    backdrop-filter: blur(16px);
 }
-.dark .vote-average {
-    background: #18181820;
+.info {
+    display: flex;
+    flex-direction: column;
 }
-
+.title {
+    font-weight: 600;
+    line-height: 1.4;
+}
+.genre, .releaseDate {
+    color: var(--G400);
+    font-size: 14px;
+}
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
 </style>

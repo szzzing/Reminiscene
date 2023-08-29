@@ -43,7 +43,7 @@ export default {
     width: calc((100% - 80px)/5);
     word-break: keep-all !important;
     cursor: pointer;
-    border-radius: 16px;
+    border-radius: 8px;;
     overflow: hidden;
     flex-grow: 0;
 }
@@ -102,7 +102,7 @@ export default {
     height: 32px;
     line-height: 32px;
     padding: 0px 12px 0px 10px;
-    border-radius: 16px;
+    border-radius: 8px;;
     background: #f9fafb50;
     box-shadow: 0px 0px 10px var(--O100);
     backdrop-filter: blur(16px);
