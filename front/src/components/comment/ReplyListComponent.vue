@@ -42,8 +42,8 @@
     <div class="inner">
         <transition-group name="list" tag="div" id="reply-list">
             <div class="reply" v-for="(reply) in this.list" :key="reply">
-                <div v-if="reply.profileImage" class="profile-image" :style="{'background-image': 'url(' + reply.profileImage + ')' }"></div>
-                <div v-if="!reply.profileImage" class="no-image">👤</div>
+                <router-link v-if="reply.profileImage" class="profile-image" :style="{'background-image': `url(${reply.profileImage})` }" :to="`/user/${reply.userId}`"></router-link>
+                <router-link class="no-image" v-if="!reply.profileImage" :to="`/user/${reply.userId}`">👤</router-link>
                 <div class="text-area">
                     <div class="info">
                         <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}{{ reply.userId==this.comment.userId ? " (작성자)" : "" }}</div>

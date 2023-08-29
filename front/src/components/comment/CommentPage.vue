@@ -3,8 +3,8 @@
     <div id="comment" class="container" v-if="this.comment">
         <div class="inner">
             <div class="profile">
-                <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
-                <div class="no-image" v-if="!comment.profileImage">👤</div>
+                <router-link v-if="comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }" :to="`/user/${comment.userId}`"></router-link>
+                <router-link class="no-image" v-if="!comment.profileImage" :to="`/user/${comment.userId}`">👤</router-link>
                 <div>
                     <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
                     <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
@@ -121,7 +121,7 @@ export default {
     cursor: pointer;
 }
 .no-image {
-    font-size: 16px;
+    font-size: 20px;
 }
 .nickname {
     /* font-size: 18px; */

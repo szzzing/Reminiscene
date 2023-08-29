@@ -2,7 +2,6 @@
     <backdrop-component v-bind:movie="movie"></backdrop-component>
     <div class="container">
         <detail-component v-bind:movie="movie"></detail-component>
-        <statistics-component></statistics-component>
         <comment-component v-bind:movie="movie"></comment-component>
     </div>
 </template>
@@ -11,14 +10,12 @@
 import DetailComponent from './DetailComponent.vue'
 import CommentComponent from './CommentComponent.vue'
 import BackdropComponent from './BackdropComponent.vue';
-import StatisticsComponent from './StatisticsComponent.vue';
 
 export default {
     components: { 
         DetailComponent,
         CommentComponent,
         BackdropComponent,
-        StatisticsComponent,
     },
     // /list 페이지로 이동시 검색결과 유지
     // 그 외 페이지로 이동시 검색결과 유지 x

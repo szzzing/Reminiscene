@@ -55,6 +55,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable String id) {
         UserDto result = userService.getUser(id);
+        log.info(result.getBirthday().toString());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

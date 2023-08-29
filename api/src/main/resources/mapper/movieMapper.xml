@@ -16,12 +16,12 @@
 
     <insert id="insertOneRate">
         insert into rate
-        values(#{movieId}, #{userId}, #{star})
+        values(#{movieId}, #{userId}, #{star}, default)
     </insert>
 
     <update id="updateOneRate">
         update rate
-        set rate_star = #{star}
+        set rate_star = #{star}, rate_cre_date = current_timestamp
         where rate_movie_id = #{movieId} and rate_user_id = #{userId}
     </update>
 
@@ -33,7 +33,7 @@
 
     <insert id="insertOneWish">
         insert into wish
-        values(#{movieId}, #{userId})
+        values(#{movieId}, #{userId}, default)
     </insert>
 
     <delete id="deleteOneWish">
@@ -44,7 +44,7 @@
 
     <insert id="insertOneWatching">
         insert into watching
-        values(#{movieId}, #{userId})
+        values(#{movieId}, #{userId}, default)
     </insert>
 
     <delete id="deleteOneWatching">
@@ -75,6 +75,7 @@
                 where wish_movie_id=#{movieId}
             </when>
         </choose>
+        order by wish_cre_date desc
         limit #{limit} offset #{offset}
     </select>
 
@@ -90,6 +91,7 @@
                 where watching_movie_id=#{movieId}
             </when>
         </choose>
+        order by watching_cre_date desc
         limit #{limit} offset #{offset}
     </select>
 
@@ -105,12 +107,18 @@
         <if test="query!=null">
             where (movie_title like concat('%',#{query},'%')
             or movie_original_title like concat('%',#{query},'%'))
+            or pandora3_ojt.fn_initial_search_trim(movie_title) like concat('%', #{query},'%')
+            or pandora3_ojt.fn_initial_search_trim(movie_original_title) like concat('%', #{query},'%')
         </if>
         limit #{limit} offset #{offset}
     </select>
 
     <select id="selectOneMovie" resultMap="movieResultMap">
-        select m.*
+        select m.*,
+           round((select avg(rate_star) from pandora3_ojt.rate where rate_movie_id = movie_id), 2) as avg_rate,
+           (select count(rate_star) from pandora3_ojt.rate where rate_movie_id = movie_id) as rate_count,
+           (select count(*) from pandora3_ojt.wish where wish_movie_id = movie_id) as wish_count,
+           (select count(*) from pandora3_ojt.watching where watching_movie_id = movie_id) as watching_count
         from movie m
         where movie_id=#{id}
     </select>
@@ -128,6 +136,9 @@
         <result column="movie_genre" property="genre"/>
         <result column="movie_runtime" property="runtime"/>
         <result column="avg_rate" property="avgRate"/>
+        <result column="rate_count" property="rateCount"/>
+        <result column="wish_count" property="wishCount"/>
+        <result column="watching_count" property="watchingCount"/>
     </resultMap>
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">

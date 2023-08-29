@@ -57,12 +57,15 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
 
     beforeCreate() {
         this.axios.get("/user/"+this.$route.params.id)
         .then((response)=>{
             this.user = response.data;
+            this.user.birthday = moment(this.user.birthday).format();
         });
     },
     data() {

@@ -17,4 +17,7 @@ public class MovieDto {
     private String genre;
     private int runtime;
     private float avgRate;
+    private int rateCount;
+    private int wishCount;
+    private int watchingCount;
 }

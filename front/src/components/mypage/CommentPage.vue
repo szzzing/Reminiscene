@@ -12,7 +12,7 @@
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`" @click="console.log(comment.movie)">
                 <div class="movie">
                     <div class="movie-info">
-                        <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
+                        <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }"></div>
                         <div class="no-image" v-if="!comment.profileImage">👤</div>
 
                         <div class="movie-title">{{ comment.movieTitle }} {{ comment.movieReleaseDate!='' ? "("+comment.movieReleaseDate.split('-')[0]+")" : '' }}</div>

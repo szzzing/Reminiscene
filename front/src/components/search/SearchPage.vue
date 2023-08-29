@@ -1,8 +1,11 @@
 <template>
     <div class="container">
-        <div class="query">
-            <b>{{ this.query }}</b>의 검색결과
-        </div>
+        <title-component>
+            <template v-slot:emoji>🔎</template>
+            <template v-slot:title>
+                {{ this.query }}의<br>검색결과
+            </template>
+        </title-component>
         <div class="category">
             <router-link :to="`/search/${this.query}`">영화</router-link>
             <router-link :to="`/search/user/${this.query}`">유저</router-link>
@@ -13,7 +16,11 @@
 </template>
 
 <script>
+import TitleComponent from '../item/TitleComponent.vue';
 export default {
+    components: {
+        TitleComponent
+    },
     updated() {
         this.query = this.$route.params.query;
     },
@@ -30,13 +37,13 @@ export default {
     max-width: 1280px;
     display: flex;
     flex-direction: column;
-    gap: 48px;
 }
 .query {
     font-size: 18px;
 }
 .category {
     display: flex;
+    margin-bottom: 36px;
 }
 .category > * {
     border-bottom: 1px solid var(--G200);

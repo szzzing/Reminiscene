@@ -1,15 +1,35 @@
 <template>
-    <div id="detail" class="flex-container" v-if="this.movie">
+    <div id="detail" class="container" v-if="this.movie">
         
-        <div class="inner" v-if="movie.posterPath">
-            <img class="poster" :src="movie.posterPath">
+        <div class="movie-area">
+            <div class="poster" v-if="movie.posterPath">
+                <img :src="movie.posterPath">
+            </div>
+            
+            <div class="info">
+                <rate-component v-bind:movie="movie"></rate-component>
+                <div class="info-area max-size" v-if="movie.overview!=''">
+                    <div class="tagline" v-if="movie.tagline!=''">{{ movie.tagline }}</div>
+                    <div class="overview">{{ movie.overview }}</div>
+                </div>
+            </div>
         </div>
 
-        <div class="inner">
-            <rate-component v-bind:movie="movie"></rate-component>
-            <div class="info-area max-size" v-if="movie.overview!=''">
-                <div class="tagline" v-if="movie.tagline!=''">{{ movie.tagline }}</div>
-                <div class="overview">{{ movie.overview }}</div>
+        <div class="statistics-area">
+            <div class="avg-rate">
+                <div class="emoji">⭐️</div>
+                <div class="value">{{ movie.avgRate }}</div>
+                <div class="discription">{{ movie.rateCount+"명의 평가" }}</div>
+            </div>
+            <div class="wish-count">
+                <div class="emoji">🙏</div>
+                <div class="value">{{  movie.wishCount+"명" }}</div>
+                <div class="discription">보고싶어요</div>
+            </div>
+            <div class="watcing-count">
+                <div class="emoji">😎</div>
+                <div class="value">{{ movie.watchingCount+"명" }}</div>
+                <div class="discription">보는중</div>
             </div>
         </div>
     </div>
@@ -29,21 +49,21 @@ export default {
 </script>
 
 <style scoped>
-.flex-container {
+.movie-area {
     display: flex;
     flex-wrap: wrap-reverse;
     gap: 20px;
 }
-.inner {
+.poster, .info {
     display: flex;
     flex-direction: column;
     gap: 48px;
     justify-content: space-between;
 }
-.flex-container > .inner:first-child {
+.poster {
     flex-basis: 300px;
 }
-.flex-container > .inner:last-child {
+.info {
     flex-basis: 600px;
     flex-grow: 1;
     flex-shrink: 1;
@@ -58,7 +78,7 @@ export default {
 .genre-release, .runtime {
     font-weight: 500;
 }
-.poster {
+.poster img {
     max-width: 300px;
     object-fit: cover;
     margin: auto;
@@ -67,5 +87,31 @@ export default {
     font-weight: 600;
     font-size: 18px;
     margin-bottom: 12px;
+}
+
+.statistics-area {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+.statistics-area > * {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-shrink: 0;
+}
+.discription {
+    color: var(--G500);
+    line-height: 1.4;
+}
+.emoji {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+.value {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 700;
 }
 </style>

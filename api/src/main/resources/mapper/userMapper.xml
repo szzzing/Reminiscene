@@ -64,7 +64,9 @@
             <if test="query!=null">
                 and
                 (user_id like concat('%',#{query},'%')
-                or user_nickname like concat('%',#{query},'%'))
+                or user_nickname like concat('%',#{query},'%')
+                or pandora3_ojt.fn_initial_search_trim(user_id) like concat('%', #{query},'%')
+                or pandora3_ojt.fn_initial_search_trim(user_nickname) like concat('%', #{query},'%'))
             </if>
         limit #{limit} offset #{offset}
     </select>
