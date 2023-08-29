@@ -8,12 +8,15 @@
             <router-link :to="`/search/user/${this.query}`">유저</router-link>
             <div class="line"></div>
         </div>
-        <router-view v-bind:query="query"></router-view>
+        <router-view v-bind:query="query" :key="$route.params.query"></router-view>
     </div>
 </template>
 
 <script>
 export default {
+    updated() {
+        this.query = this.$route.params.query;
+    },
     data() {
         return {
             query: this.$route.params.query,
