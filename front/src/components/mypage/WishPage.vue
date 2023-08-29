@@ -8,20 +8,7 @@
             </template>
         </title-component>
 
-        <transition-group id="movie-list" tag="div" class="list">
-            <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
-                <div class="poster" :style="{'background-image': `url(/upload/poster/${movie.posterPath}` }">
-                </div>
-                <div class="info">
-                    <div class="title">{{ movie.title }}</div>
-                    <div class="genre">{{ movie.genre }}</div>
-                    <div class="footer">
-                        <div class="releaseDate">{{ movie.releaseDate.split("-")[0] }}</div>
-                        <div class="avg-rate" v-if="movie.avgRate>0">⭐️ {{ movie.avgRate.toFixed(1) }}</div>
-                    </div>
-                </div>
-            </router-link>
-        </transition-group>
+        <movie-list-component v-bind:list="list"></movie-list-component>
 
         <empty-component v-if="this.list.length==0">
             <template v-slot:text>
@@ -36,12 +23,14 @@
 import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
+import MovieListComponent from '../item/MovieListComponent.vue';
 
 export default {
     components: {
         TitleComponent,
         InfiniteLoading,
         EmptyComponent,
+        MovieListComponent,
     },
 
     data() {

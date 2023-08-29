@@ -27,7 +27,7 @@ export default {
         color: var(--G0);
     }
     .title {
-        color: var(--G700);
+        color: var(--G1000);
         font-size: 28px;
         font-weight: 600;
         line-height: 1.4;
