@@ -10,11 +10,11 @@
 
         <transition-group name="list" tag="div" class="inner">
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`" @click="console.log(comment.movie)">
-                <div class="movie" v-if="comment.movie">
+                <div class="movie">
                     <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
                     <div class="no-image" v-if="!comment.profileImage">👤</div>
                     <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
-                    <div class="movie-title">{{ comment.movie.title }} {{ comment.movie.release_date!='' ? "("+comment.movie.release_date.split('-')[0]+")" : '' }}</div>
+                    <div class="movie-title">{{ comment.movieTitle }} {{ comment.movieReleaseDate!='' ? "("+comment.movieReleaseDate.split('-')[0]+")" : '' }}</div>
                     <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
                         {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
                     </div>
@@ -39,7 +39,6 @@
 <script>
 import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
-import movieAxios from '@/axios/movieAxios';
 import EmptyComponent from '../item/EmptyComponent.vue';
 
 export default {
@@ -67,15 +66,8 @@ export default {
             .then((response)=>{
                 console.log(response.data);
                 if(response.data.list.length!=0) {
-                    const list = response.data.list;
                     this.page = response.data.page + 1;
-                    for(const l of list) {
-                        movieAxios.get('api.themoviedb.org/3/movie/'+l.movieId+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR')
-                        .then((response)=>{
-                            l.movie = response.data;
-                            this.list.push(l);
-                        });
-                    }
+                    this.list.push(...response.data.list);
                     $state.loaded();
                 } else {
                     $state.complete();

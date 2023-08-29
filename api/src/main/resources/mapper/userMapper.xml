@@ -56,6 +56,19 @@
         where user_id = #{id}
     </update>
 
+    <select id="selectUserList" resultMap="userResultMap">
+        select user_id, user_email, user_nickname, user_gender, user_birthday, user_profile_image,
+               (select count(*) from comment where comment_user_id = user_id) as user_comment_count
+        from user
+        where user_enable = true
+            <if test="query!=null">
+                and
+                (user_id like concat('%',#{query},'%')
+                or user_nickname like concat('%',#{query},'%'))
+            </if>
+        limit #{limit} offset #{offset}
+    </select>
+
     <resultMap id="userResultMap" type="com.szzzing.api.dto.user.UserDto">
         <id column="user_id" property="id"/>
         <result column="user_pw" property="pw"/>

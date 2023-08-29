@@ -2,6 +2,10 @@
    <div class="container">
         <div class="inner">
             <router-link to="/" class="logo shadow">🌙</router-link>
+            <div class="search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" v-on:keyup.enter="clickSearch" v-model="this.query" placeholder="영화, 유저를 검색해보세요.">
+            </div>
             <div class="themeBtn shadow"
             @click="this.$store.commit('local/setTheme')">
                 {{ this.$store.state.local.theme ? "🌞" : "🌝" }}
@@ -19,15 +23,28 @@
 
 <script>
 export default {
+    data() {
+        return {
+            query: null,
+        }
+    },
     computed: {
         user() {
             return this.$store.state.auth.user;
+        }
+    },
+    watch: {
+        query() {
+            this.$store.commit("local/setQuery", this.query);
         }
     },
     methods: {
         clickProfile() {
             const payload = !this.$store.state.modal.profile;
             this.$store.commit("modal/setProfile", payload);
+        },
+        clickSearch() {
+            this.$router.push("/search/"+this.query);
         }
     }
 }
@@ -35,9 +52,8 @@ export default {
 
 <style scoped>
 .container {
-    height: 60px;
     position: fixed;
-    padding: 20px 0;
+    padding: 4px 0;
     top: 0;
     left: 0;
     right: 0;
@@ -72,5 +88,20 @@ export default {
 }
 .no-image {
     font-size: 20px;
+}
+.search {
+    border: 1px solid var(--G200);
+    background: var(--G50);
+    padding: 4px 8px;
+    flex-basis: 200px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.search i {
+    color: var(--G300);
+    font-size: 12px;
 }
 </style>

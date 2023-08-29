@@ -65,6 +65,7 @@ input {
 
 ::placeholder {
     color: var(--G300);
+    line-height: 1;
 }
 
 input:-webkit-autofill,
@@ -147,14 +148,37 @@ input:autofill:active {
     cursor: default;
 }
 
-.item-shadow {
+.item-border {
     background: var(--G0);
-    filter: drop-shadow(0px 0px 6px var(--O100));
+    /* filter: drop-shadow(0px 0px 6px var(--O100)); */
+    border: 1px solid var(--G100);
 }
-.dark .item-shadow {
+.dark .item-border {
     background: var(--G50);
+    border: 1px solid var(--G50);
     filter: none;
+}
+
+.item-fill {
+    background: var(--G0);
+}
+.dark .item-fill {
+    background: var(--G50);
 }
 .infinite-status-prompt {
     display: none;
+}
+
+.profile-image, .no-image {
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    background-color: var(--G50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--G200);
+}
+.no-image {
+    font-size: 96px;
 }

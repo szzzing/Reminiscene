@@ -120,7 +120,7 @@ export default {
         //  아이디 중복 여부 체크
         checkId() {
             const params = {id : this.id};
-            this.axios.get("/user", {params})
+            this.axios.get("/user/check", {params})
                 .then((response) => {
                     this.checkedId = response.data;
                 })
@@ -128,7 +128,7 @@ export default {
         //  이메일 중복 여부 체크
         checkEmail() {
             const params = {email : this.email};
-            this.axios.get("/user", {params})
+            this.axios.get("/user/check", {params})
                 .then((response) => {
                     this.checkedEmail = response.data;
                 })
@@ -152,7 +152,7 @@ export default {
                 const id = this.id;
                 const pw = this.pw;
                 const email = this.email;
-                this.axios.post("/user", { id, pw, email })
+                this.axios.post("/user/check", { id, pw, email })
                     .then((response) => {
                         if(response.status==201) {
                             this.$store.commit("modal/setAlert", { alertEmoji:"🎉", alertText:"회원가입에 성공했어요." });

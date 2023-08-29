@@ -2,7 +2,7 @@
     <transition name="smooth">
         <div id="modify-modal" class="modal-mask" @click="$emit('closeModifyModal')">
             <div class="modal-wrapper">
-                <div class="modal-container item-shadow" @click.stop="">
+                <div class="modal-container item-fill" @click.stop="">
                     <div class="inner">
                         <div class="title">수정</div>
                         <i class="close fa-solid fa-circle-xmark" @click="$emit('closeModifyModal')"></i>
@@ -78,7 +78,7 @@ export default {
 <style scoped>
 .modal-mask {
     position: fixed;
-    z-index: 9998;
+    z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;

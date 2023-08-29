@@ -24,11 +24,21 @@
                 </div>
             </router-link>
         </transition-group>
+        <empty-component v-if="this.list.length==0">
+            <template v-slot:text>
+                {{ this.movie.title }}에 첫번째 코멘트를 달아주세요.
+            </template>
+        </empty-component>
     </div>
 </template>
 
 <script>
+import EmptyComponent from '../item/EmptyComponent.vue';
+
 export default {
+    components: {
+        EmptyComponent,
+    },
     created() {
         this.getFamousComment();
     },
@@ -52,9 +62,7 @@ export default {
             this.axios.get("/comments", {params})
             .then((response)=>{
                 this.listCount = response.data.listCount;
-                for(var c of response.data.list) {
-                    this.list.push(c);
-                }
+                this.list.push(...response.data.list);
             })
         },
     },

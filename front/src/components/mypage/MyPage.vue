@@ -21,32 +21,36 @@
         </div>
 
         <div class="activity-area">
-            <router-link to="/mypage/wish" class="item item-shadow">
+            <router-link to="/mypage/wish" class="item">
                 <div class="emoji shadow">🧞‍♂️</div>
                 <div class="title">보고싶은<br>영화</div>
                 <div class="count">
                     <div class="number">{{ this.user.wishCount }}</div>
+                    <div class="extension">편</div>
                 </div>
             </router-link>
-            <router-link to="/mypage/watching" class="item item-shadow">
+            <router-link to="/mypage/watching" class="item">
                 <div class="emoji shadow">🍿</div>
                 <div class="title">보고있는<br>영화</div>
                 <div class="count">
                     <div class="number">{{ this.user.watchingCount }}</div>
+                    <div class="extension">편</div>
                 </div>
             </router-link>
-            <router-link to="/mypage/comment" class="item item-shadow">
+            <router-link to="/mypage/comment" class="item">
                 <div class="emoji shadow">✍️</div>
                 <div class="title">내가 쓴<br>코멘트</div>
                 <div class="count">
                     <div class="number">{{ this.user.commentCount }}</div>
+                    <div class="extension">개</div>
                 </div>
             </router-link>
-            <router-link to="/mypage/like" class="item item-shadow">
+            <router-link to="/mypage/like" class="item">
                 <div class="emoji shadow">💛</div>
                 <div class="title">좋아하는<br>코멘트</div>
                 <div class="count">
                     <div class="number">{{ this.user.likeCount }}</div>
+                    <div class="extension">개</div>
                 </div>
             </router-link>
         </div>
@@ -136,6 +140,8 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 36px;
+    background: var(--G50);
+    border: 1px solid var(--G200);
 }
 @media screen and (max-width:676px) {
     .item {

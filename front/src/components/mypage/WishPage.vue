@@ -9,11 +9,11 @@
         </title-component>
 
         <transition-group id="movie-list" tag="div" class="list">
-            <router-link class="item item-shadow" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
-                <div class="thum" v-if="movie.poster_path"
-                :style="{'background-image': 'url(https://image.tmdb.org/t/p/original/'+movie.poster_path+')' }">
+            <router-link class="item item-border" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+                <div class="thum" v-if="movie.posterPath"
+                :style="{'background-image': 'url(/upload/poster/'+movie.posterPath+')' }">
                 </div>
-                <div class="no-image" v-if="!movie.poster_path">
+                <div class="no-image" v-if="!movie.posterPath">
                     <div class="icon">🌙</div>
                 </div>
                 <div class="info">
@@ -21,7 +21,7 @@
                         {{ movie.title }}
                     </div>
                     <div class="date">
-                        {{ movie.release_date.split('-')[0] }}
+                        {{ movie.releaseDate.split('-')[0] }}
                     </div>
                 </div>
             </router-link>
@@ -39,7 +39,6 @@
 import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
-import movieAxios from '@/axios/movieAxios';
 
 export default {
     components: {
@@ -64,26 +63,15 @@ export default {
             }
             this.axios.get("/wish", {params})
             .then((response)=>{
-                console.log(response.data);
                 if(response.data.list.length>0) {
                     this.page = response.data.page + 1;
-                    this.getMovie(response.data.list);
+                    this.list.push(...response.data.list);
                     $state.loaded();
                 } else {
                     $state.complete();
                 }
             })
         },
-        async getMovie(list) {
-            try {
-                for(const l of list) {
-                    const response = await movieAxios.get('api.themoviedb.org/3/movie/'+l.movieId+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
-                    this.list.push(response.data);
-                }
-            } catch(error) {
-                console.log(error);
-            }
-        }
     }
 }
 </script>

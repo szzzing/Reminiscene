@@ -9,6 +9,7 @@ public class MovieSelectDto {
     private int offset;
     private String sort;
     private String loginUser;    // 로그인시 코멘트 좋아요 여부 체크
+    private String query;
 
     public void setOffset() {
         offset = limit * (page-1);

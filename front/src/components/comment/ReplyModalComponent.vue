@@ -2,7 +2,7 @@
     <transition name="smooth">
         <div id="reply-modal" class="modal-mask" @click="$emit('closeReplyModal')">
             <div class="modal-wrapper">
-                <div class="modal-container item-shadow" @click.stop="">
+                <div class="modal-container item-fill" @click.stop="">
                     <div class="inner">
                         <div class="title">댓글</div>
                         <i class="close fa-solid fa-circle-xmark" @click="$emit('closeReplyModal')"></i>
@@ -84,7 +84,7 @@ export default {
 <style scoped>
 .modal-mask {
     position: fixed;
-    z-index: 9998;
+    z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;

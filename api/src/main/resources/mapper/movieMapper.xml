@@ -63,8 +63,10 @@
         from dual;
     </select>
 
-    <select id="selectWishList" resultMap="wishResultMap">
-        select * from wish
+    <select id="selectWishList" resultMap="movieResultMap">
+        select w.*, m.*
+        from wish w
+            join movie m on wish_movie_id = movie_id
         <choose>
             <when test="userId!=null">
                 where wish_user_id=#{userId}
@@ -76,8 +78,10 @@
         limit #{limit} offset #{offset}
     </select>
 
-    <select id="selectWatchingList" resultMap="watchingResultMap">
-        select * from watching
+    <select id="selectWatchingList" resultMap="movieResultMap">
+        select w.*, m.*
+        from watching w
+            join movie m on watching_movie_id = movie_id
         <choose>
             <when test="userId!=null">
                 where watching_user_id=#{userId}
@@ -101,20 +105,21 @@
 
     <select id="selectOneMovie" resultMap="movieResultMap">
         select * from movie
-        where id=#{movieId}
+        where movie_id=#{id}
     </select>
 
 
     <resultMap id="movieResultMap" type="com.szzzing.api.dto.movie.MovieDto">
-        <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="original_title" property="originalTitle"/>
-        <result column="tagline" property="tagline"/>
-        <result column="overview" property="overview"/>
-        <result column="release_date" property="releaseDate"/>
-        <result column="backdrop_path" property="backdropPath"/>
-        <result column="poster_path" property="posterPath"/>
-        <result column="genre" property="genre"/>
+        <id column="movie_id" property="id"/>
+        <result column="movie_title" property="title"/>
+        <result column="movie_original_title" property="originalTitle"/>
+        <result column="movie_tagline" property="tagline"/>
+        <result column="movie_overview" property="overview"/>
+        <result column="movie_release_date" property="releaseDate"/>
+        <result column="movie_backdrop_path" property="backdropPath"/>
+        <result column="movie_poster_path" property="posterPath"/>
+        <result column="movie_genre" property="genre"/>
+        <result column="movie_runtime" property="runtime"/>
     </resultMap>
 
     <resultMap id="statusResultMap" type="com.szzzing.api.dto.movie.StatusDto">

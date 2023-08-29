@@ -1,6 +1,6 @@
 <template>
     <div id="empty-list">
-        <div class="emoji shadow">🚧</div>
+        <div class="emoji shadow">🤐</div>
         <div class="text">
             <slot name="text"></slot>
         </div>

@@ -19,11 +19,11 @@
         </div>
         <div class="inner">
             <div class="movie" v-if="this.movie">
-                <img class="poster" :src="movie.poster_path" @click="$router.push({ path: '/detail/'+this.movie.id })">
+                <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`" @click="$router.push({ path: '/detail/'+comment.movieId })">
                 <div class="info">
-                    <div class="title">{{ movie.title }}</div>
-                    <div class="genre">{{ movie.genres }}</div>
-                    <router-link :to="`/detail/${this.movie.id}/comment`" class="more-comment">👉 {{ movie.title }}의 다른 코멘트 보러가기</router-link>
+                    <div class="title">{{ comment.movieTitle }}</div>
+                    <div class="genre">{{ comment.movieGenre }}</div>
+                    <router-link :to="`/detail/${comment.movieId}/comment`" class="more-comment">👉 {{ comment.movieTitle }}의 다른 코멘트 보러가기</router-link>
                 </div>
             </div>
         </div>

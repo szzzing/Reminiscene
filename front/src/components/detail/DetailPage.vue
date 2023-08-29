@@ -1,7 +1,6 @@
 <template>
     <backdrop-component v-bind:movie="movie"></backdrop-component>
     <div class="container">
-        <div @click="this.addMovie()">영화 삽입</div>
         <detail-component v-bind:movie="movie"></detail-component>
         <statistics-component></statistics-component>
         <comment-component v-bind:movie="movie"></comment-component>
@@ -13,7 +12,6 @@ import DetailComponent from './DetailComponent.vue'
 import CommentComponent from './CommentComponent.vue'
 import BackdropComponent from './BackdropComponent.vue';
 import StatisticsComponent from './StatisticsComponent.vue';
-import movieAxios from '@/axios/movieAxios';
 
 export default {
     components: { 
@@ -33,8 +31,7 @@ export default {
     },
     async beforeCreate() {
         try {
-            const response = await movieAxios
-            .get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR');
+            const response = await this.axios.get('/movie/'+this.$route.params.id);
             this.movie = response.data;
         } catch(error) {
             this.$router.push('/error');
@@ -43,44 +40,19 @@ export default {
     data() {
         return {
             movie: null,
-            movieDto: null,
         }
     },
     watch: {
         // 영화 상세정보 가공
         movie() {
-            this.movie.release_date = this.movie.release_date.split('-').join('.');
-            if(this.movie.backdrop_path) {
-                this.movie.backdrop_path = 'https://image.tmdb.org/t/p/original/'+this.movie.backdrop_path;
+            this.movie.releaseDate = this.movie.releaseDate.split('-').join('.');
+            if(this.movie.backdropPath) {
+                this.movie.backdropPath = '/upload/backdrop/'+this.movie.backdropPath;
             }
-            if(this.movie.poster_path) {
-                this.movie.poster_path = 'https://image.tmdb.org/t/p/original/'+this.movie.poster_path;
-            }
-            var genre = [];
-            for(var g of this.movie.genres) {
-                genre.push(g.name);
-            }
-            this.movie.genres = genre.join('/');
-
-            this.movieDto = {
-                title: this.movie.title,
-                originalTitle: this.movie.original_title,
-                backdropPath: this.movie.backdrop_path,
-                posterPath: this.movie.poster_path,
-                tagline: this.movie.tagline,
-                overview: this.movie.overview,
-                releaseDate: this.movie.release_date = this.movie.release_date.split('.').join('-'),
-                genre: this.movie.genres,
+            if(this.movie.posterPath) {
+                this.movie.posterPath = '/upload/poster/'+this.movie.posterPath;
             }
         },
-    },
-    methods: {
-        addMovie() {
-            this.axios.post("/movie", this.movieDto)
-            .then((response)=>{
-                console.log(response.data);
-            })
-        }
     },
 }
 </script>

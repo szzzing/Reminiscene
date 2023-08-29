@@ -137,7 +137,7 @@ export default {
         //  아이디 중복 여부 체크
         checkNickname() {
             const params = {nickname : this.nickname};
-            this.axios.get("/user", {params})
+            this.axios.get("/user/check", {params})
                 .then((response) => {
                     console.log(response.data);
                     this.checkedNickname = response.data;
@@ -146,7 +146,7 @@ export default {
         //  이메일 중복 여부 체크
         checkEmail() {
             const params = {email : this.email};
-            this.axios.get("/user", {params})
+            this.axios.get("/user/check", {params})
                 .then((response) => {
                     this.checkedEmail = response.data;
                 })
@@ -238,6 +238,7 @@ export default {
     cursor: pointer;
 }
 .preview-image, .no-image {
+    border: 1px solid var(--G200);
     margin: 20px 0 0;
     display: flex;
     align-items: center;

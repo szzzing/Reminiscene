@@ -2,10 +2,12 @@ package com.szzzing.api.repository;
 
 import com.szzzing.api.dto.user.UserDto;
 import com.szzzing.api.dto.user.UserModifyDto;
+import com.szzzing.api.dto.user.UserSelectDto;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Repository
@@ -37,5 +39,9 @@ public class UserRepository {
 
     public int updateOne(UserModifyDto userModifyDto) {
         return sqlSessionTemplate.update(NAME_SPACE+"updateOne", userModifyDto);
+    }
+
+    public ArrayList<UserDto> selectUserList(UserSelectDto userSelectDto) {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectUserList", userSelectDto);
     }
 }

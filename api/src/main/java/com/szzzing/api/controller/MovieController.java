@@ -66,8 +66,8 @@ public class MovieController {
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @GetMapping("/wish")
-    public ResponseEntity<WishListDto> getWishList(@ModelAttribute CommonSelectDto commonSelectDto) {
-        WishListDto result = movieService.getWishList(commonSelectDto);
+    public ResponseEntity<MovieListDto> getWishList(@ModelAttribute CommonSelectDto commonSelectDto) {
+        MovieListDto result = movieService.getWishList(commonSelectDto);
         return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -87,8 +87,8 @@ public class MovieController {
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @GetMapping("/watching")
-    public ResponseEntity<WatchingListDto> getWatchingList(@ModelAttribute CommonSelectDto commonSelectDto) {
-        WatchingListDto result = movieService.getWatchingList(commonSelectDto);
+    public ResponseEntity<MovieListDto> getWatchingList(@ModelAttribute CommonSelectDto commonSelectDto) {
+        MovieListDto result = movieService.getWatchingList(commonSelectDto);
         return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -109,6 +109,7 @@ public class MovieController {
     @GetMapping("/movie/{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable String id) {
         MovieDto result = movieService.getMovie(id);
+        log.info(result.toString());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

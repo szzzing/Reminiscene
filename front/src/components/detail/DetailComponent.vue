@@ -1,8 +1,8 @@
 <template>
     <div id="detail" class="flex-container" v-if="this.movie">
         
-        <div class="inner" v-if="movie.poster_path">
-            <img class="poster" :src="movie.poster_path">
+        <div class="inner" v-if="movie.posterPath">
+            <img class="poster" :src="movie.posterPath">
         </div>
 
         <div class="inner">

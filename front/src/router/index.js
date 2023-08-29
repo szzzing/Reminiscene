@@ -17,6 +17,12 @@ import MyWishPage from '@/components/mypage/WishPage'
 import MyCommentPage from '@/components/mypage/CommentPage'
 import MyLikePage from '@/components/mypage/LikePage'
 import MyWatchingPage from '@/components/mypage/WatchingPage'
+import SearchPage from '@/components/search/SearchPage'
+import UserPage from '@/components/user/UserPage'
+import UserWishPage from '@/components/user/WishPage'
+import UserCommentPage from '@/components/user/CommentPage'
+import UserLikePage from '@/components/user/LikePage'
+import UserWatchingPage from '@/components/user/WatchingPage'
 
 const routes = [
     {
@@ -80,9 +86,33 @@ const routes = [
         component: MyWatchingPage,
     },
     {
+        path: '/search/:query',
+        component: SearchPage,
+    },
+    {
+        path: '/user/:id',
+        component: UserPage,
+    },
+    {
+        path: '/user/:id/wish',
+        component: UserWishPage,
+    },
+    {
+        path: '/user/:id/comment',
+        component: UserCommentPage,
+    },
+    {
+        path: '/user/:id/like',
+        component: UserLikePage,
+    },
+    {
+        path: '/user/:id/watching',
+        component: UserWatchingPage,
+    },
+    {
         path: '/:pathMatch(.*)*',
         redirect: '/error',
-    }
+    },
 ]
 
 const router = createRouter({

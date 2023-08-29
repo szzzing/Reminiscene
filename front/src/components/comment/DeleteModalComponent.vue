@@ -2,7 +2,7 @@
     <transition name="smooth">
         <div id="delete-modal" class="modal-mask" @click="$emit('closeDeleteModal')">
             <div class="modal-wrapper">
-                <div class="modal-container item-shadow" @click.stop="">
+                <div class="modal-container item-fill" @click.stop="">
                     <div class="inner">
                         <div class="emoji shadow">🥺</div>
                         <div class="text">댓글을 삭제할까요?</div>
@@ -44,7 +44,7 @@ export default {
 <style scoped>
 .modal-mask {
     position: fixed;
-    z-index: 9998;
+    z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;

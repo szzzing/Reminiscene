@@ -67,11 +67,11 @@ public class MovieRepository {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneStatistics", id);
     }
 
-    public ArrayList<WishDto> selectWishList(CommonSelectDto commonSelectDto) {
+    public ArrayList<MovieDto> selectWishList(CommonSelectDto commonSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWishList", commonSelectDto);
     }
 
-    public ArrayList<WatchingDto> selectWatchingList(CommonSelectDto commonSelectDto) {
+    public ArrayList<MovieDto> selectWatchingList(CommonSelectDto commonSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWatchingList", commonSelectDto);
     }
 

@@ -58,6 +58,11 @@
                 </div>
             </div>
         </transition-group>
+        <empty-component v-if="this.list.length==0">
+            <template v-slot:text>
+                {{ this.comment.nickname ? this.comment.nickname : this.comment.userId }}님의 리뷰에 첫번째 댓글을 달아주세요.
+            </template>
+        </empty-component>
         <infinite-loading @infinite="getReply"></infinite-loading>
     </div>
 </template>
@@ -68,6 +73,7 @@ import DeleteModalComponent from './DeleteModalComponent.vue';
 import ModifyModalComponent from './ModifyModalComponent.vue';
 import ReplyModalComponent from './ReplyModalComponent.vue';
 import ReportModalComponent from './ReportModalComponent.vue';
+import EmptyComponent from '../item/EmptyComponent.vue';
 
 export default {
     components: {
@@ -75,6 +81,7 @@ export default {
         ModifyModalComponent,
         DeleteModalComponent,
         ReportModalComponent,
+        EmptyComponent,
         InfiniteLoading,
     },
     data() {

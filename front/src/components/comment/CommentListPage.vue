@@ -1,5 +1,5 @@
 <template>
-    <div id="comment-list" class="container" v-if="this.movie && this.list">
+    <div id="comment-list" class="container" v-if="this.movie">
 
         <title-component>
             <template v-slot:emoji>📃</template>
@@ -26,20 +26,29 @@
                 </div>
             </router-link>
         </transition-group>
+
+        <empty-component v-if="this.list.length==0">
+            <template v-slot:text>
+                {{ this.movie.title }}에 등록된 코멘트가 없어요.
+            </template>
+        </empty-component>
+        
+        <infinite-loading @infinite="getComment"></infinite-loading>
     </div>
 
-    <infinite-loading @infinite="getComment"></infinite-loading>
+
 </template>
 
 <script>
-import movieAxios from '@/axios/movieAxios';
-import { InfiniteLoading } from 'infinite-loading-vue3-ts';
+import InfiniteLoading from 'infinite-loading-vue3-ts';
+import EmptyComponent from '../item/EmptyComponent.vue';
 import TitleComponent from '../item/TitleComponent.vue';
 
 export default {
     components: {
         InfiniteLoading,
         TitleComponent,
+        EmptyComponent,
     },
     created() {
         this.getMovie();
@@ -54,11 +63,14 @@ export default {
         }
     },
     methods: {
-        getMovie() {
-            movieAxios.get('api.themoviedb.org/3/movie/'+this.$route.params.id+'?api_key=7bf40bf859def4eaf9886f19bb497169&language=ko-KR')
-            .then((response)=>{
+        async getMovie() {
+            try {
+                const response = await this.axios.get('/movie/'+this.$route.params.id);
+                console.log(response.data)
                 this.movie = response.data;
-            });
+            } catch(error) {
+                this.$router.push('/error');
+            }
         },
         getComment($state) {
             const params = {

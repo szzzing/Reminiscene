@@ -3,7 +3,8 @@ const local = {
     state: {
         theme: true,
         location: null,
-        title: "Reminiscene"
+        title: "Reminiscene",
+        query: null,
     },
     mutations: {
         setLocation(state, payload) {
@@ -13,6 +14,9 @@ const local = {
             document.documentElement.classList.toggle('dark');
             state.theme = !state.theme;
         },
+        setQuery(state, payload) {
+            state.query = payload;
+        }
     },
 };
 

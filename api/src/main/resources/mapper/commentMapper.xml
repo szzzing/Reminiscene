@@ -15,7 +15,7 @@
     </select>
 
     <select id="selectOneComment" resultMap="commentResultMap">
-        select c.*, u.*,
+        select c.*, u.*, m.*,
             ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate,
             (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
             (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
@@ -29,6 +29,7 @@
             </if>
         from comment c
             join user u on comment_user_id = user_id
+            join movie m on comment_movie_id = movie_id
         where
         <if test="id!=0">
             comment_id=#{id}
@@ -47,7 +48,7 @@
     </update>
 
     <select id="selectCommentList" resultMap="commentResultMap">
-        select c.*, u.*,
+        select c.*, u.*, m.*,
             ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate,
             (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
             (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
@@ -61,6 +62,7 @@
             </if>
         from comment c
             join user u on comment_user_id = user_id
+            join movie m on comment_movie_id = movie_id
         where
         <choose>
             <when test="movieId!=null">
@@ -96,7 +98,7 @@
     </delete>
 
     <select id="selectLikeList" resultMap="commentResultMap">
-        select c.*, u.*,
+        select c.*, u.*, m.*,
             (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
             (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
             (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
@@ -104,6 +106,7 @@
         from pandora3_ojt.comment c
             join pandora3_ojt.like on comment_id = like_comment_id
             join user u on comment_user_id = user_id
+            join movie m on comment_movie_id = movie_id
         where like_user_id=#{userId}
         limit #{limit} offset #{offset}
     </select>
@@ -112,6 +115,10 @@
     <resultMap id="commentResultMap" type="com.szzzing.api.dto.comment.CommentDto">
         <result column="comment_id" property="id"/>
         <result column="comment_movie_id" property="movieId"/>
+        <result column="movie_title" property="movieTitle"/>
+        <result column="movie_release_date" property="movieReleaseDate"/>
+        <result column="movie_poster_path" property="moviePosterPath"/>
+        <result column="movie_genre" property="movieGenre"/>
         <result column="comment_user_id" property="userId"/>
         <result column="user_nickname" property="nickname"/>
         <result column="user_profile_image" property="profileImage"/>

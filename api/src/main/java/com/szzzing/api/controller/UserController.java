@@ -1,7 +1,9 @@
 package com.szzzing.api.controller;
 
 import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.dto.user.UserListDto;
 import com.szzzing.api.dto.user.UserModifyDto;
+import com.szzzing.api.dto.user.UserSelectDto;
 import com.szzzing.api.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,7 @@ public class UserController {
     }
 
     // 아이디/이메일 중복 체크
-    @GetMapping("")
+    @GetMapping("/check")
     public ResponseEntity check(@RequestParam(value="id", required=false) String id, @RequestParam(value="email", required=false) String email, @RequestParam(value="nickname", required=false) String nickname, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         boolean result = userService.check(principal, id, email, nickname);
@@ -41,5 +43,18 @@ public class UserController {
         userModifyDto.setId(request.getUserPrincipal().getName());
         boolean result = userService.mypageModify(userModifyDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    // 유저 검색
+    @GetMapping("")
+    public ResponseEntity<UserListDto> getUserList(UserSelectDto userSelectDto) {
+        UserListDto result = userService.getUserList(userSelectDto);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUser(@PathVariable String id) {
+        UserDto result = userService.getUser(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

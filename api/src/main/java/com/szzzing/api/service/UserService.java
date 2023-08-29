@@ -2,7 +2,9 @@ package com.szzzing.api.service;
 
 import com.szzzing.api.dto.common.FileDto;
 import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.dto.user.UserListDto;
 import com.szzzing.api.dto.user.UserModifyDto;
+import com.szzzing.api.dto.user.UserSelectDto;
 import com.szzzing.api.repository.FileRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.util.FileUtil;
@@ -92,11 +94,24 @@ public class UserService {
         map.put("id", id);
         map.put("email", email);
         map.put("nickname", nickname);
-        log.info(map.toString());
 
         if(id!=null) return userRepository.selectOneUser(id) == null;
         else if(nickname!=null) return userRepository.selectCountByNickname(map) == 0;
         else return userRepository.selectCountByEmail(map) == 0;
     }
 
+    public UserListDto getUserList(UserSelectDto userSelectDto) {
+        userSelectDto.setOffset();
+        UserListDto userListDto = new UserListDto();
+        userListDto.setList(userRepository.selectUserList(userSelectDto));
+        userListDto.setPage(userSelectDto.getPage());
+
+        return userListDto;
+    }
+
+    public UserDto getUser(String id) {
+        UserDto userDto = userRepository.selectOneUser(id);
+        userDto.setPw(null);
+        return userDto;
+    }
 }

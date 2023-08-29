@@ -73,26 +73,26 @@ public class MovieService {
         return movieRepository.selectOneStatistics(id);
     }
 
-    public WishListDto getWishList(CommonSelectDto commonSelectDto) {
+    public MovieListDto getWishList(CommonSelectDto commonSelectDto) {
         if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
         commonSelectDto.setOffset();
 
-        WishListDto wishListDto = new WishListDto();
-        wishListDto.setList(movieRepository.selectWishList(commonSelectDto));
-        wishListDto.setPage(commonSelectDto.getPage());
+        MovieListDto movieListDto = new MovieListDto();
+        movieListDto.setList(movieRepository.selectWishList(commonSelectDto));
+        movieListDto.setPage(commonSelectDto.getPage());
 
-        return wishListDto;
+        return movieListDto;
     }
 
-    public WatchingListDto getWatchingList(CommonSelectDto commonSelectDto) {
+    public MovieListDto getWatchingList(CommonSelectDto commonSelectDto) {
         if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
         commonSelectDto.setOffset();
 
-        WatchingListDto watchingListDto = new WatchingListDto();
-        watchingListDto.setList(movieRepository.selectWatchingList(commonSelectDto));
-        watchingListDto.setPage(commonSelectDto.getPage());
+        MovieListDto movieListDto = new MovieListDto();
+        movieListDto.setList(movieRepository.selectWatchingList(commonSelectDto));
+        movieListDto.setPage(commonSelectDto.getPage());
 
-        return watchingListDto;
+        return movieListDto;
     }
 
     @Transactional

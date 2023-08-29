@@ -1,15 +1,15 @@
 <template>
     <div id="backdrop" v-if="this.movie!=null">
-        <div class="backdrop" :style="{'background-image': 'url('+movie.backdrop_path+')' }">
+        <div class="backdrop" :style="{'background-image': 'url('+movie.backdropPath+')' }">
             <div class="container">
                 <div class="title shadow">
                     {{ movie.title }}
                 </div>
-                <div class="original-title shadow" v-if="movie.title !=movie.original_title">
-                    {{ movie.original_title }}
+                <div class="original-title shadow" v-if="movie.title !=movie.originalTitle">
+                    {{ movie.originalTitle }}
                 </div>
-                <div class="genre-release shadow" v-if="movie.genres+movie.release_date!=''">
-                    {{ movie.genres!='' && movie.release_date!='' ? [movie.genres, movie.release_date].join(" ・ ") : movie.genres+movie.release_date }}
+                <div class="genre-release shadow" v-if="movie.genre+movie.release_date!=''">
+                    {{ movie.genre!='' && movie.releaseDate!='' ? [movie.genre, movie.releaseDate].join(" ・ ") : movie.genre + movie.releaseDate }}
                 </div>
                 <div class="runtime shadow" v-if="movie.runtime!=0">
                     {{ movie.runtime+'분' }}
