@@ -43,7 +43,7 @@ public class UserService {
 
         if(userModifyDto.getOriginalImage()!=null) userModifyDto.setOriginalImage(userModifyDto.getOriginalImage().replace(profieDir, ""));
         if(userModifyDto.getNewImage()!=null) userModifyDto.setNewImage(userModifyDto.getNewImage().replace(profieDir, ""));
-        FileDto fileDto = FileUtil.getFileDto(userModifyDto.getUploadFile());
+        FileDto fileDto = FileUtil.getFileDto(userModifyDto.getUploadFile(), "profile");
 
         /*
          * 1. 프로필 사진 완전 삭제 new=null, original!=null, upload=null v
@@ -55,25 +55,25 @@ public class UserService {
         // 1. 프로필 사진 완전 삭제
         if (userModifyDto.getNewImage()==null) {
             // 삭제
-            FileUtil.deleteFile(userModifyDto.getOriginalImage());
-            fileRepository.deleteOne(userModifyDto.getOriginalImage());
+            FileUtil.deleteFile(userModifyDto.getOriginalImage(), "profile");
+            fileRepository.deleteFile(userModifyDto.getOriginalImage());
 
         // 2. 프로필 사진 업로드 - 기본프사였음
         } else if(userModifyDto.getOriginalImage()==null) {
             // 업로드
-            FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto);
-            fileRepository.insertOne(fileDto);
+            FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto, "profile");
+            fileRepository.insertFile(fileDto);
             // 사용자 정보 수정
             userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
 
         // 3. 프로필 사진 업로드 - 기존사진삭제
         } else if(userModifyDto.getOriginalImage()!=null && fileDto!=null) {
             // 업로드
-            FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto);
-            fileRepository.insertOne(fileDto);
+            FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto, "profile");
+            fileRepository.insertFile(fileDto);
             // 삭제
-            FileUtil.deleteFile(userModifyDto.getOriginalImage());
-            fileRepository.deleteOne(userModifyDto.getOriginalImage());
+            FileUtil.deleteFile(userModifyDto.getOriginalImage(), "profile");
+            fileRepository.deleteFile(userModifyDto.getOriginalImage());
             // 사용자 정보
             userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
         }

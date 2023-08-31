@@ -71,8 +71,8 @@ public class MovieRepository {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWatchingList", commonSelectDto);
     }
 
-    public int insertOneMovie(MovieDto movieDto) {
-        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneMovie", movieDto);
+    public int insertOneMovie(MovieInsertDto movieInsertDto) {
+        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneMovie", movieInsertDto);
     }
 
     public ArrayList<MovieDto> selectMovieList(MovieSelectDto movieSelectDto) {

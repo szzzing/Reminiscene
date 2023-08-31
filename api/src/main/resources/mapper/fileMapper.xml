@@ -4,12 +4,19 @@
 
 <mapper namespace="fileMapper">
 
-    <insert id="insertOne">
+    <insert id="insertOneFile">
         insert into file
         values(#{originalName}, #{renameName}, #{directory}, default, #{size})
     </insert>
 
-    <delete id="deleteOne">
+    <insert id="insertFileList">
+        insert into file values
+        <foreach collection="list" item="file" separator=",">
+            (#{file.originalName}, #{file.renameName}, #{file.directory}, default, #{file.size})
+        </foreach>
+    </insert>
+
+    <delete id="deleteOneFile">
         delete from file
         where file_rename_name=#{renameName}
     </delete>

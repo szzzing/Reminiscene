@@ -6,7 +6,9 @@ import com.szzzing.api.dto.common.FileDto;
 import com.szzzing.api.dto.movie.*;
 import com.szzzing.api.repository.FileRepository;
 import com.szzzing.api.repository.MovieRepository;
+import com.szzzing.api.util.FileUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MovieService {
 
     private final MovieRepository movieRepository;
@@ -92,62 +95,24 @@ public class MovieService {
     }
 
     @Transactional
-    public int addMovie(MovieDto movieDto) {
+    public int addMovie(MovieInsertDto movieInsertDto) {
+        FileDto posterDto = FileUtil.getFileDto(movieInsertDto.getPosterFile(), "poster");
+        FileDto backdropDto = FileUtil.getFileDto(movieInsertDto.getBackdropFile(), "backdrop");
         ArrayList<FileDto> fileDtoList = new ArrayList<>();
-
-        try {
-            URL imgURL = new URL(movieDto.getBackdropPath());
-            String extension = movieDto.getBackdropPath().substring(movieDto.getBackdropPath().lastIndexOf(".")+1); // 확장자
-            String fileName = UUID.randomUUID().toString(); // 이미지 이름
-            movieDto.setBackdropPath(fileName+"."+extension);
-
-            BufferedImage image = ImageIO.read(imgURL);
-            File file = new File("../../Reminiscene/upload/backdrop/" + fileName + "." + extension);
-            if(!file.exists()) { // 해당 경로의 폴더가 존재하지 않을 경우
-                file.mkdirs(); // 해당 경로의 폴더 생성
-            }
-
-            ImageIO.write(image, extension, file); // image를 file로 업로드
-            System.out.println("이미지 업로드 완료!");
-
-            FileDto fileDto = new FileDto();
-            fileDto.setOriginalName(movieDto.getTitle().replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "_")+"_backdrop."+extension);
-            fileDto.setRenameName(movieDto.getBackdropPath());
-            fileDto.setDirectory("/upload/backdrop/");
-            fileDtoList.add(fileDto);
-            fileRepository.insertOne(fileDto);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            URL imgURL = new URL(movieDto.getPosterPath());
-            String extension = movieDto.getPosterPath().substring(movieDto.getPosterPath().lastIndexOf(".")+1); // 확장자
-            String fileName = UUID.randomUUID().toString(); // 이미지 이름
-            movieDto.setPosterPath(fileName+"."+extension);
-
-            BufferedImage image = ImageIO.read(imgURL);
-            File file = new File("../../Reminiscene/upload/poster/" + fileName + "." + extension);
-            if(!file.exists()) { // 해당 경로의 폴더가 존재하지 않을 경우
-                file.mkdirs(); // 해당 경로의 폴더 생성
-            }
-
-            ImageIO.write(image, extension, file); // image를 file로 업로드
-            System.out.println("이미지 업로드 완료!");
-
-            FileDto fileDto = new FileDto();
-            fileDto.setOriginalName(movieDto.getTitle().replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "_")+"_poster."+extension);
-            fileDto.setRenameName(movieDto.getPosterPath());
-            fileDto.setDirectory("/upload/poster/");
-            fileDtoList.add(fileDto);
-            fileRepository.insertOne(fileDto);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return movieRepository.insertOneMovie(movieDto);
+        fileDtoList.add(posterDto);
+        fileDtoList.add(backdropDto);
+        
+        // 파일 업로드
+        FileUtil.uploadFile(movieInsertDto.getPosterFile(), posterDto, "poster");
+        FileUtil.uploadFile(movieInsertDto.getBackdropFile(), backdropDto, "backdrop");
+        
+        // 파일 DB에 저장
+        movieInsertDto.setPosterPath(posterDto.getRenameName());
+        movieInsertDto.setBackdropPath(backdropDto.getRenameName());
+        fileRepository.insertFile(fileDtoList);
+        
+        // 영화 DB에 저장
+        return movieRepository.insertOneMovie(movieInsertDto);
     }
 
     public MovieListDto getMovieList(MovieSelectDto movieSelectDto) {

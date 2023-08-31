@@ -85,7 +85,7 @@
 
     <insert id="insertOneMovie">
         insert into movie
-        values(default, #{title}, #{originalTitle}, #{tagline}, #{overview}, #{releaseDate}, #{backdropPath}, #{posterPath}, #{genre})
+        values(default, #{title}, #{originalTitle}, #{tagline}, #{overview}, #{releaseDate}, #{backdropPath}, #{posterPath}, #{genre}, #{runtime})
     </insert>
 
     <select id="selectMovieList" resultMap="movieResultMap">

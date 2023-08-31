@@ -152,7 +152,7 @@ export default {
                 const id = this.id;
                 const pw = this.pw;
                 const email = this.email;
-                this.axios.post("/user/check", { id, pw, email })
+                this.axios.post("/user", { id, pw, email })
                     .then((response) => {
                         if(response.status==201) {
                             this.$store.commit("modal/setAlert", { alertEmoji:"🎉", alertText:"회원가입에 성공했어요." });

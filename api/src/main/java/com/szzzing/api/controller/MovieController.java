@@ -94,9 +94,10 @@ public class MovieController {
 
     // 영화 삽입
     @PostMapping("/movie")
-    public ResponseEntity<MovieDto> addMovie(@RequestBody MovieDto movieDto) {
-        int result = movieService.addMovie(movieDto);
-        return new ResponseEntity<>(movieDto, HttpStatus.CREATED);
+    public ResponseEntity addMovie(MovieInsertDto movieInsertDto) {
+        log.info(movieInsertDto.toString());
+        int result = movieService.addMovie(movieInsertDto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @GetMapping("/movie/{id}")

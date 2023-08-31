@@ -1,5 +1,6 @@
 package com.szzzing.api.security;
 
+import com.szzzing.api.config.CorsConfig;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.security.filter.UserAuthenticationFilter;
 import com.szzzing.api.security.filter.UserAuthorizationFilter;

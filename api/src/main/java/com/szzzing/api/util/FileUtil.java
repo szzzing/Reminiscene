@@ -15,26 +15,26 @@ import java.util.UUID;
 
 @Slf4j
 public class FileUtil {
-    private final static String dir = "../../Reminiscene/upload/profile/";
-    private final static String url = "/upload/profile/";
+    private final static String dir = "../../Reminiscene/upload/";
+    private final static String url = "/upload/";
 
     // 파일 객체 생성
-    public static FileDto getFileDto(MultipartFile multipartFile) {
+    public static FileDto getFileDto(MultipartFile multipartFile, String type) {
         if(multipartFile==null) return null;
 
         FileDto fileDto = new FileDto();
         fileDto.setOriginalName(multipartFile.getOriginalFilename());
         fileDto.setRenameName(renameFile(multipartFile));
-        fileDto.setDirectory(url);
+        fileDto.setDirectory(url+type+"/");
         fileDto.setSize(multipartFile.getSize());
 
         return fileDto;
     }
 
     // 파일 업로드
-    public static void uploadFile(MultipartFile multipartFile, FileDto fileDto) {
-        // File.seperator 는 OS종속적
-        Path location = Paths.get(dir + File.separator + fileDto.getRenameName());
+    public static void uploadFile(MultipartFile multipartFile, FileDto fileDto, String type) {
+        // File.seperator 는 OS 종속적
+        Path location = Paths.get(dir+type+"/" + File.separator + fileDto.getRenameName());
         try {
             // inputstream을 가져와 파일 저장
             // 파일명이 기존에 존재하면 덮어씀
@@ -45,8 +45,8 @@ public class FileUtil {
     }
 
     // 파일 삭제
-    public static void deleteFile(String filename) {
-        File file = new File(dir + filename);
+    public static void deleteFile(String filename, String type) {
+        File file = new File(dir+type+"/" + filename);
         if(file.exists()) {
             file.delete();
         }

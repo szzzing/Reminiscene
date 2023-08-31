@@ -1,4 +1,4 @@
-package com.szzzing.api.security;
+package com.szzzing.api.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin(url);    // 허용할 출처
+        configuration.addAllowedOrigin("http://localhost:8088");    // 허용할 출처
         configuration.addAllowedHeader("*");    // 허용할 헤더
         configuration.addAllowedMethod("*");    // 허용할 메서드
         configuration.setAllowCredentials(true);
