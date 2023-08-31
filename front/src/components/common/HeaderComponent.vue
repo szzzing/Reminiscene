@@ -2,7 +2,7 @@
    <div class="container">
         <div class="inner">
             <router-link to="/" class="logo shadow">🌙</router-link>
-            <div class="search">
+            <div class="search" v-if="this.$route.path!='/'">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" v-on:keyup.enter="clickSearch" v-model="this.query" placeholder="영화, 유저를 검색해보세요.">
             </div>
@@ -65,7 +65,7 @@ export default {
     justify-content: space-between;
 }
 .logo {
-    font-size: 36px;
+    font-size: 32px;
     margin-right: auto;
 }
 .themeBtn {

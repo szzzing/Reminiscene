@@ -1,12 +1,13 @@
 <template>
-    <transition-group id="movie-list" tag="div" class="list">
-        <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+    <transition-group v-if="this.list.length!=0" v-bind:class="{'hide' : this.hide}" id="movie-list" tag="div" class="list">
+        <router-link class="item" v-for="(movie, index) in this.list" :key="movie" :to="`/detail/${movie.id}`">
             <div class="poster" :style="{'background-image': `url(/upload/poster/${movie.posterPath}` }">
+                <div v-if="this.rank" class="rank">{{ index==0 ? "🥇" : (index==1 ? "🥈" : (index==2 ? "🥉" : "")) }}</div>
             </div>
             <div class="info">
                 <div class="title">{{ movie.title }}</div>
                 <div class="genre">{{ movie.genre }}</div>
-                <div class="footer">
+                <div v-if="!this.rank" class="footer">
                     <div class="releaseDate">{{ movie.releaseDate.split("-")[0] }}</div>
                     <div class="avg-rate" v-if="movie.avgRate>0">⭐️ {{ movie.avgRate.toFixed(1) }}</div>
                 </div>
@@ -19,6 +20,8 @@
 export default {
     props: [
         'list',
+        'hide',
+        'rank',
     ],
 }
 </script>
@@ -30,31 +33,51 @@ export default {
     gap: 20px;
 }
 .item {
-    width: calc((100% - 80px)/5);
+    width: calc((100% - 100px)/6);
     padding-bottom: 20px;
     flex-grow: 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-@media screen and (max-width:1179px) {
+@media screen and (max-width:1079px) {
+    .item {
+        width: calc((100% - 80px)/5);
+    }
+    .hide .item:nth-child(5) ~ .item {
+        display: none;
+    }
+}
+@media screen and (max-width:960px) {
     .item {
         width: calc((100% - 60px)/4);
     }
+    .hide .item:nth-child(4) ~ .item {
+        display: none;
+    }
 }
-@media screen and (max-width:860px) {
+@media screen and (max-width:676px) {
     .item {
         width: calc((100% - 40px)/3);
     }
-}
-@media screen and (max-width:600px) {
-    .item {
-        width: calc((100% - 40px)/2);
+    .hide .item:nth-child(3) ~ .item {
+        display: none;
     }
 }
-@media screen and (max-width:414px) {
+@media screen and (max-width:476px) {
+    .item {
+        width: calc((100% - 20px)/2);
+    }
+    .hide .item:nth-child(2) ~ .item {
+        display: none;
+    }
+}
+@media screen and (max-width: 320px) {
     .item {
         width: 100%;
+    }
+    .hide .item:nth-child(1) ~ .item {
+        display: none;
     }
 }
 .poster {
@@ -66,6 +89,14 @@ export default {
     justify-content: center;
     border: 1px solid var(--G100);
     border-radius: 4px;
+    position: relative;
+}
+.rank {
+    position: absolute;
+    font-size: 48px;
+    top: 0px;
+    left: 0px;
+    line-height: 1;
 }
 .avg-rate {
     font-weight: 700;

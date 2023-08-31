@@ -17,6 +17,7 @@ import MyCommentPage from '@/components/mypage/CommentPage'
 import MyLikePage from '@/components/mypage/LikePage'
 import MyWatchingPage from '@/components/mypage/WatchingPage'
 import SearchPage from '@/components/search/SearchPage'
+import SearchComponent from '@/components/search/SearchComponent'
 import SearchUserComponent from '@/components/search/SearchUserComponent'
 import SearchMovieComponent from '@/components/search/SearchMovieComponent'
 import UserPage from '@/components/user/UserPage'
@@ -91,8 +92,12 @@ const routes = [
                 component: SearchUserComponent,
             },
             {
-                path: '/search/:query',
+                path: '/search/movie/:query',
                 component: SearchMovieComponent,
+            },
+            {
+                path: '/search/:query',
+                component: SearchComponent,
             },
         ]
     },
