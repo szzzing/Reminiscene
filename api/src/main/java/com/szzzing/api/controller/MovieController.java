@@ -99,6 +99,14 @@ public class MovieController {
         int result = movieService.addMovie(movieInsertDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+    // 영화 수정
+    @PutMapping("/movie")
+    public ResponseEntity modifyMovie(MovieInsertDto movieInsertDto) {
+        log.info(movieInsertDto.toString());
+//        int result = movieService.addMovie(movieInsertDto);
+//        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        return null;
+    }
 
     @GetMapping("/movie/{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable String id) {
