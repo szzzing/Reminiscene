@@ -7,6 +7,7 @@
             </div>
             <router-link class="view-more" :to="`/detail/${this.movie.id}/comment`">더보기</router-link>
         </div>
+
         <transition-group name="list" tag="div" class="best-comment">
             <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
                 <div class="profile">
@@ -24,6 +25,7 @@
                 </div>
             </router-link>
         </transition-group>
+        
         <empty-component v-if="this.list.length==0">
             <template v-slot:text>
                 {{ this.movie.title }}에 첫번째 코멘트를 달아주세요.

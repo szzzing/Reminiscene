@@ -1,4 +1,5 @@
 import store from '@/store/index'
+import router from '@/router';
 
 const auth = {
     namespaced: true,
@@ -10,8 +11,8 @@ const auth = {
 
     },
     mutations: {
-        setUser(state, payload) {
 
+        setUser(state, payload) {
             // 닉네임 변환
             if(payload != null && payload.nickname != null) {
                 payload.nickname = decodeURIComponent(payload.nickname);
@@ -34,14 +35,22 @@ const auth = {
             
             state.user = payload;
         },
+
         setToken(state, payload) {
             state.token = payload;
         },
+
         logout(state) {
             state.user = null;
             state.token = null;
             store.commit("modal/setProfile", false);
             store.commit("modal/setAlert", { alertEmoji:"🖐️", alertText:"로그아웃 되었어요." });
+
+            // 라우팅
+            const path = router.currentRoute._value.path;
+            if(path.startsWith('/mypage')) {
+                router.push("/");
+            }
         },
     },
     actions: {

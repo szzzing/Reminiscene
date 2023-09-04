@@ -4,6 +4,7 @@
     v-on:addComment="this.isComment = true"
     v-bind:isComment="isComment">
     </comment-modal-component>
+
     <div class="user-area">
         <div class="option">
             <div class="item">
@@ -19,15 +20,15 @@
         </div>
         <div class="option">
             <div class="item" ref="comment" @click="this.clickComment()">
-                <div class="emoji" :class="{'selected' : isComment}">📝</div>
+                <div class="emoji" :class="{'selected' : isComment && this.$store.state.auth.user}">📝</div>
                 <div class="text">코멘트</div>
             </div>
             <div class="item" ref="wish" @click="this.clickWish()">
-                <div class="emoji" :class="{'selected' : isWish}">🙏</div>
+                <div class="emoji" :class="{'selected' : isWish && this.$store.state.auth.user}">🙏</div>
                 <div class="text">보고싶어요</div>
             </div>
             <div class="item" ref="watching" @click="this.clickWatching()">
-                <div class="emoji" :class="{'selected' : isWatching}">😎</div>
+                <div class="emoji" :class="{'selected' : isWatching && this.$store.state.auth.user}">😎</div>
                 <div class="text">보는 중</div>
             </div>
         </div>
@@ -69,7 +70,16 @@ export default {
     props: [
        'movie',
     ],
+    computed: {
+        checkUser() {
+            return this.$store.state.auth.user;
+        },
+    },
     watch: {
+        // 로그아웃 감지
+        checkUser() {
+            this.rate = 0;
+        },
         rate() {
             const nodes = document.querySelectorAll(".star > .emoji");
             for(let i=4 ; i>=0 ; i--) {
