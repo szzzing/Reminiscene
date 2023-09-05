@@ -46,7 +46,7 @@ export default {
         EmptyComponent,
     },
     created() {
-        this.getFamousComment();
+        this.fetchData();
     },
     data() {
         return {
@@ -59,7 +59,7 @@ export default {
         'movie',
     ],
     methods: {
-        getFamousComment() {
+        fetchData() {
             const params = {
                 page: 1,
                 sort: "famous",
@@ -68,13 +68,16 @@ export default {
             this.axios.get("/comments", {params})
             .then((response)=>{
                 this.listCount = response.data.listCount;
-                this.list.push(...response.data.list);
+                this.list = response.data.list;
             })
         },
         viewSpoiler(comment) {
             comment.spoiler = false;
         },
     },
+    watch: {
+        '$route.params.id': 'fetchData',
+    }
 }
 </script>
 

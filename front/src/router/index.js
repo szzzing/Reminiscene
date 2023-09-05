@@ -116,24 +116,24 @@ const routes = [
             {
                 path: '/user/:id',
                 component: UserInfoComponent,
-            }
+            },
+            {
+                path: '/user/:id/wish',
+                component: UserWishPage,
+            },
+            {
+                path: '/user/:id/comment',
+                component: UserCommentPage,
+            },
+            {
+                path: '/user/:id/like',
+                component: UserLikePage,
+            },
+            {
+                path: '/user/:id/watching',
+                component: UserWatchingPage,
+            },
         ]
-    },
-    {
-        path: '/user/:id/wish',
-        component: UserWishPage,
-    },
-    {
-        path: '/user/:id/comment',
-        component: UserCommentPage,
-    },
-    {
-        path: '/user/:id/like',
-        component: UserLikePage,
-    },
-    {
-        path: '/user/:id/watching',
-        component: UserWatchingPage,
     },
     {
         path: '/:pathMatch(.*)*',

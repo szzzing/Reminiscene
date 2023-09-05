@@ -1,5 +1,5 @@
 <template>
-    <div id="wish" class="container" v-if="this.user">
+    <div id="wish" v-if="this.user">
         <title-component>
             <template v-slot:emoji>💛</template>
             <template v-slot:title>
@@ -79,11 +79,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    max-width: 960px;
-    display: flex;
-    flex-direction: column;
-}
 .inner {
     display: flex;
     flex-direction: column;

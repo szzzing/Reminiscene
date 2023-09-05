@@ -27,7 +27,7 @@ export default {
         next();
     },
     created() {
-        this.fecthMovie();
+        this.fetchMovie();
     },
     data() {
         return {
@@ -35,7 +35,7 @@ export default {
         }
     },
     methods: {
-        fecthMovie() {
+        fetchMovie() {
             this.axios.get('/movie/'+this.$route.params.id)
             .then((response)=>{
                 this.movie = response.data;
@@ -56,6 +56,7 @@ export default {
                 this.movie.posterPath = '/upload/poster/'+this.movie.posterPath;
             }
         },
+        '$route.params.id': 'fetchMovie',
     },
 }
 </script>

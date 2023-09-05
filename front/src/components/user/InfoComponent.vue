@@ -130,7 +130,7 @@ export default {
     flex-direction: column;
     gap: 36px;
     background: var(--G50);
-    border: 1px solid var(--G200);
+    border: 1px solid var(--G100);
 }
 @media screen and (max-width:676px) {
     .item {

@@ -44,18 +44,7 @@ export default {
     },
     // 유저 상태 정보 받아오기
     async created() {
-        if(this.$store.state.auth.user) {
-
-            try {
-                const response = await this.axios.get("/status/"+this.movie.id);
-                this.rate = response.data.rate;
-                this.isComment = response.data.comment;
-                this.isWatching = response.data.watching;
-                this.isWish = response.data.wish;
-            } catch(error) {
-                this.$router.push('/error');
-            }
-        }
+        this.fetchData();
     },
     data() {
         return {
@@ -76,6 +65,9 @@ export default {
         },
     },
     watch: {
+        // 파라미터 변경
+        '$route.params.id': 'fetchData',
+
         // 로그아웃 감지
         checkUser() {
             if(!this.$store.state.auth.user) {
@@ -114,14 +106,26 @@ export default {
             emoji.classList.toggle("selected");
         },
     },
-    // 클릭 이벤트
     methods: {
+        async fetchData() {
+            if(this.$store.state.auth.user) {
+                try {
+                    const response = await this.axios.get("/status/"+this.$route.params.id);
+                    this.rate = response.data.rate;
+                    this.isComment = response.data.comment;
+                    this.isWatching = response.data.watching;
+                    this.isWish = response.data.wish;
+                } catch(error) {
+                    this.$router.push('/error');
+                }
+            }
+        },
         // 별점 클릭
         clickRate(star) {
             // 별점 삽입
             if(this.$store.state.auth.user) {
                 const params = {
-                    movieId: this.movie.id,
+                    movieId: this.$route.params.id,
                     star: star,
                 }
                 if(!this.rate) {
@@ -141,7 +145,7 @@ export default {
                 }
                 // 별점 삭제
                 else {
-                    this.axios.delete("/rate/"+this.movie.id)
+                    this.axios.delete("/rate/"+this.$route.params.id)
                     .then(()=>{
                         this.rate = 0;
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"의 별점을 삭제했어요." });
@@ -157,14 +161,14 @@ export default {
             if(this.$store.state.auth.user) {
                 // 삭제
                 if(this.isWish) {
-                    this.axios.delete("/wish/"+this.movie.id)
+                    this.axios.delete("/wish/"+this.$route.params.id)
                     .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶지 않아요." });
                     });
                 }
                 // 삽입
                 else {
-                    this.axios.post("/wish", {movieId: this.movie.id})
+                    this.axios.post("/wish", {movieId: this.$route.params.id})
                     .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶어요." });
                     });
@@ -181,14 +185,14 @@ export default {
             if(this.$store.state.auth.user) {
                 // 삭제
                 if(this.isWatching) {
-                    this.axios.delete("/watching/"+this.movie.id)
+                    this.axios.delete("/watching/"+this.$route.params.id)
                     .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 그만볼래요." });
                     });
                 }
                 // 삽입
                 else {
-                    this.axios.post("/watching", {movieId: this.movie.id})
+                    this.axios.post("/watching", {movieId: this.$route.params.id})
                     .then((response)=>{
                         console.log(response);
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고있어요." });
