@@ -193,8 +193,7 @@ export default {
                 // 삽입
                 else {
                     this.axios.post("/watching", {movieId: this.$route.params.id})
-                    .then((response)=>{
-                        console.log(response);
+                    .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고있어요." });
                     });
                 }

@@ -87,7 +87,6 @@ export default {
     data() {
         return {
             state: null,
-            refId: this.$route.params.id,
             page: 1,
             list: [],
             reply: null,
@@ -110,7 +109,7 @@ export default {
         getReply($state) {
             this.state = $state;
             const params = {
-                refId: this.refId,
+                refId: this.$route.params.id,
                 page: this.page,
             }
             this.axios.get("/reply", {params})
@@ -119,17 +118,12 @@ export default {
                     this.list.push(...response.data.list);
                     this.page = response.data.page + 1;
                     $state.loaded();
-
-                } else {
-                    $state.complete();
                 }
             });
         },
 
         reloadReply() {
-            this.page = 1;
-            this.list = [];
-            this.state.reset();
+            this.fetchData();
         },
 
         //작성
@@ -193,12 +187,30 @@ export default {
                 this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "이 코멘트의 좋아요를 취소했어요." });
             });
         },
-
         // 신고
         clickReport(reply) {
             this.reply = reply;
             this.reportModal = true;
-        }
+        },
+
+        // 데이터 리로드
+        fetchData() {
+            const params = {
+                refId: this.$route.params.id,
+                page: 1,
+            }
+            this.axios.get("/reply", {params})
+            .then((response)=>{
+                if(!response.data.list.length==0) {
+                    this.list = response.data.list;
+                    this.page = response.data.page + 1;
+                    this.state.loaded();
+                }
+            });
+        },
+    },
+    watch: {
+        '$route.params.id': 'fetchData',
     },
 }
 </script>

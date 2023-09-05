@@ -27,7 +27,6 @@ export default {
             .catch(()=>{
                 this.$router.push('/error');
             });
-            console.log("fetch")
         }
     },
     watch: {

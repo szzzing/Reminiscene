@@ -141,7 +141,6 @@ export default {
             const params = {nickname : this.nickname};
             this.axios.get("/user/check", {params})
                 .then((response) => {
-                    console.log(response.data);
                     this.checkedNickname = response.data;
                 })
         },

@@ -28,7 +28,6 @@ export default {
             this.$store.commit('auth/logout');
         },
         closeProfile() {
-            console.log("누름");
             this.$store.commit("modal/setProfile", false);
         }
     },

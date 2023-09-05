@@ -11,8 +11,6 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     (config) => {
-        console.log("전역 인터셉터 동작");
-
         // 1. 인증이 필요하진 않지만, 토큰 만료로 로그아웃된 경우
         if(store.state.auth.token!=null && config.headers.token==null) {
             store.commit("auth/logout");
@@ -26,8 +24,6 @@ axios.interceptors.response.use(
         return config;
     },
     (error) => {
-        console.log("전역 인터셉터 에러", error);
-
         // 1. 미인증으로 인한 에러
         if(error.response.status==401) {
 

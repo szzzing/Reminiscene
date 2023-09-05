@@ -30,8 +30,7 @@ export default {
     methods: {
         deleteReply() {
             this.axios.delete("/reply/"+this.reply.id)
-            .then((response)=>{
-                console.log(response);
+            .then(()=>{
                 this.$emit('removeReply', this.reply.id);
                 this.$emit('closeDeleteModal');
                 this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "댓글을 삭제했어요." });

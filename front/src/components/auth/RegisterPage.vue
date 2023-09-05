@@ -158,8 +158,6 @@ export default {
                             this.$store.commit("modal/setAlert", { alertEmoji:"🎉", alertText:"회원가입에 성공했어요." });
                             this.$router.push({ path: '/login' });
                         }
-                    }).catch((error)=>{
-                        console.log(error);
                     })
             }
         },

@@ -50,7 +50,6 @@ export default {
             }
             this.axios.get("/user", {params})
             .then((response)=>{
-                console.log(response.data, this.page);
                 if(response.data.list.length>0) {
                     this.userList.push(...response.data.list);
                     this.page = response.data.page+1;

@@ -43,27 +43,32 @@ export default {
         ReplyListComponent,
     },
     async created() {
-        const params = {
-            id: this.id,
-        }
-        try {
-            // 코멘트 정보
-            const comment = await this.axios.get('/comment', {params});
-            this.comment = comment.data;
-        } catch(error) {
-            this.$router.push('/error');
-        }
+        this.fetchData();
     },
     data() {
         return {
-            id: this.$route.params.id,
             comment: null,
         }
     },
     methods: {
+        async fetchData() {
+            const params = {
+                id: this.$route.params.id,
+            }
+            try {
+                // 코멘트 정보
+                const comment = await this.axios.get('/comment', {params});
+                this.comment = comment.data;
+            } catch(error) {
+                this.$router.push('/error');
+            }
+        },
         updateUserLike(param) {
             this.comment.userLike = param;
-        }
+        },
+    },
+    watch: {
+        '$route.params.id': 'fetchData',
     }
 }
 </script>

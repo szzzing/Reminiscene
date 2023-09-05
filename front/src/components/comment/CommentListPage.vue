@@ -46,19 +46,21 @@ export default {
             sort: null,
             list: [],
             movie: null,
+            state: null,
         }
     },
     methods: {
         async getMovie() {
             try {
                 const response = await this.axios.get('/movie/'+this.$route.params.id);
-                console.log(response.data)
                 this.movie = response.data;
             } catch(error) {
                 this.$router.push('/error');
             }
         },
         getComment($state) {
+            this.state = $state;
+
             const params = {
                 page: this.page,
                 sort: this.sort,
@@ -66,16 +68,31 @@ export default {
             }
             this.axios.get("/comments", {params})
             .then((response)=>{
-                console.log(response.data);
                 if(response.data.list.length!=0) {
                     this.list.push(...response.data.list);
                     this.page = response.data.page + 1;
                     $state.loaded();
-                } else {
-                    $state.complete();
                 }
             })
         },
+        fetchData() {
+            this.getMovie();
+
+            const params = {
+                page: 1,
+                sort: this.sort,
+                movieId: this.$route.params.id,
+            }
+            this.axios.get("/comments", {params})
+            .then((response)=>{
+                this.list = response.data.list;
+                this.page = response.data.page + 1;
+                this.state.loaded();
+            })
+        }
+    },
+    watch: {
+        '$route.params.id': 'fetchData',
     },
 }
 </script>

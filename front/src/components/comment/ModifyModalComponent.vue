@@ -64,8 +64,7 @@ export default {
                 content: this.text,
             };
             this.axios.put("/reply", params)
-            .then((response)=>{
-                console.log(response);
+            .then(()=>{
                 this.$emit('updateReply', params);
                 this.$emit('closeModifyModal');
                 this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "댓글을 수정했어요." });

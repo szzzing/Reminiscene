@@ -64,8 +64,7 @@ export default {
                 content: this.text,
             };
             this.axios.post("/report", params)
-            .then((response)=>{
-                console.log(response);
+            .then(()=>{
                 this.$emit('closeReportModal');
                 this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "신고를 접수했어요." });
             });
