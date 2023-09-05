@@ -24,6 +24,7 @@ import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
 import CommentListComponent from '../item/CommentListComponent.vue';
+import moment from "moment";
 
 export default {
     components: {
@@ -32,11 +33,8 @@ export default {
         EmptyComponent,
         CommentListComponent,
     },
-    beforeCreate() {
-        this.axios.get("/user/"+this.$route.params.id)
-        .then((response)=>{
-            this.user = response.data;
-        });
+    created() {
+        this.fetchUser();
     },
     data() {
         return {
@@ -45,8 +43,17 @@ export default {
             user: null,
         }
     },
-
     methods: {
+        fetchUser() {
+            this.axios.get("/user/"+this.$route.params.id)
+            .then((response)=>{
+                this.user = response.data;
+                this.user.birthday = moment(this.user.birthday).format();
+            })
+            .catch(()=>{
+                this.$router.push('/error');
+            });
+        },
         getList($state) {
             const params = {
                 userId: this.user.id,
@@ -63,8 +70,11 @@ export default {
                     $state.complete();
                 }
             })
-        }
-    }
+        },
+    },
+    watch: {
+        '$route.params.id': 'fetchUser',
+    },
 }
 </script>
 
