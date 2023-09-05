@@ -9,8 +9,8 @@
             <div class="info">
                 <rate-component v-bind:movie="movie"></rate-component>
                 <div class="info-area max-size" v-if="movie.overview!=''">
-                    <div class="tagline" v-if="movie.tagline!=''">{{ movie.tagline }}</div>
-                    <div class="overview">{{ movie.overview }}</div>
+                    <div class="tagline" v-if="movie.tagline!=''" v-html="movie.tagline"></div>
+                    <div class="overview" v-html="movie.overview"></div>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="statistics-area">
             <div class="avg-rate">
                 <div class="emoji">⭐️</div>
-                <div class="value">{{ movie.avgRate }}</div>
+                <div class="value">{{ movie.avgRate.toFixed(1) }}</div>
                 <div class="discription">{{ movie.rateCount+"명의 평가" }}</div>
             </div>
             <div class="wish-count">

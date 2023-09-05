@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <router-view v-bind:user="user"></router-view>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -16,9 +16,6 @@ export default {
 
 <style scoped>
 .container {
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    gap: 72px;
+    max-width: 960px;
 }
 </style>

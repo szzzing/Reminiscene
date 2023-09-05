@@ -34,11 +34,9 @@ export default {
         return {
             page: 1,
             list: [],
+            user: this.$store.state.auth.user,
         }
     },
-    props: [
-        'user',
-    ],
     methods: {
         getList($state) {
             const params = {

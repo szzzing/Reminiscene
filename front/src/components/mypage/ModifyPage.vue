@@ -1,73 +1,75 @@
 <template>
-    <title-component>
-        <template v-slot:emoji>😃</template>
-        <template v-slot:title>내 정보 수정</template>
-    </title-component>
+    <div id="modify">
+        <title-component>
+            <template v-slot:emoji>😃</template>
+            <template v-slot:title>내 정보 수정</template>
+        </title-component>
 
-    <div class="flex-container">
-        <div class="inner">
-            <div class="title" ref="profile-image">🤳🏻 프로필 이미지</div>
-            <div class="sub-title">이미지로 나를 표현해 보세요.</div>
-            <div class="preview-image" v-if="previewImage" :style="{'background-image': 'url(' + this.previewImage + ')' }"></div>
-            <div class="no-image" v-if="!previewImage">👤</div>
-            <input type="file" accept="image/*" class="profile-image" ref="uploadImage" @change="setPreviewImage">
-        </div>
-
-        <div class="inner">
-            <div class="title" ref="nickname">💛 닉네임</div>
-            <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
-            <div class="input-box"
-                v-bind:class="{ 'checked': checkedNickname, 'unchecked': !checkedNickname }">
-                <input type="text" v-model="nickname">
-                <i class="fa-solid fa-circle-check" v-if="checkedNickname"></i>
-                <i class="fa-solid fa-circle-xmark" v-if="!checkedNickname"></i>
+        <div class="flex-container">
+            <div class="inner">
+                <div class="title" ref="profile-image">🤳🏻 프로필 이미지</div>
+                <div class="sub-title">이미지로 나를 표현해 보세요.</div>
+                <div class="preview-image" v-if="previewImage" :style="{'background-image': 'url(' + this.previewImage + ')' }"></div>
+                <div class="no-image" v-if="!previewImage">👤</div>
+                <input type="file" accept="image/*" class="profile-image" ref="uploadImage" @change="setPreviewImage">
             </div>
-        </div>
 
-        <div class="inner" ref="email">
-            <div class="title">📧 이메일</div>
-            <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
-            <div class="input-box"
-                v-bind:class="{ 'checked': checkedEmail, 'unchecked': !checkedEmail }">
-                <input type="text" v-model="email">
-                <i class="fa-solid fa-circle-check" v-if="checkedEmail"></i>
-                <i class="fa-solid fa-circle-xmark" v-if="!checkedEmail"></i>
-            </div>
-        </div>
-
-        <div class="inner" ref="gender">
-            <div class="title">⚧️ 성별</div>
-            <div class="sub-title">성별을 선택해주세요.</div>
-            <div class="select-box">
-                <div class="select-item" v-bind:class="{ 'selected' : this.gender=='M' }"
-                @click="this.selectGender('M')">
-                    <div class="emoji">👨🏻</div>
-                    <div class="label">남성</div>
-                </div>
-                <div class="select-item" v-bind:class="{ 'selected' : this.gender=='F' }"
-                @click="this.selectGender('F')">
-                    <div class="emoji">👩🏻</div>
-                    <div class="label">여성</div>
-                </div>
-                <div class="select-item" v-bind:class="{ 'selected' : this.gender==null }"
-                @click="this.selectGender(null)">
-                    <div class="emoji">🧑🏻‍🦲</div>
-                    <div class="label">비공개</div>
+            <div class="inner">
+                <div class="title" ref="nickname">💛 닉네임</div>
+                <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
+                <div class="input-box"
+                    v-bind:class="{ 'checked': checkedNickname, 'unchecked': !checkedNickname }">
+                    <input type="text" v-model="nickname">
+                    <i class="fa-solid fa-circle-check" v-if="checkedNickname"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="!checkedNickname"></i>
                 </div>
             </div>
-        </div>
 
-        <div class="inner" ref="birthday">
-            <div class="title">🎂 생일</div>
-            <div class="sub-title">태어난 날을 입력해주세요.</div>
-            <div class="input-box">
-                <input type="date" min="1900-01-01" max="2023-08-30" v-model="this.birthday">
+            <div class="inner" ref="email">
+                <div class="title">📧 이메일</div>
+                <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
+                <div class="input-box"
+                    v-bind:class="{ 'checked': checkedEmail, 'unchecked': !checkedEmail }">
+                    <input type="text" v-model="email">
+                    <i class="fa-solid fa-circle-check" v-if="checkedEmail"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="!checkedEmail"></i>
+                </div>
             </div>
-        </div>
 
-        <div class="inner">
-            <div class="big-button" @click="modify()">
-                수정하기
+            <div class="inner" ref="gender">
+                <div class="title">⚧️ 성별</div>
+                <div class="sub-title">성별을 선택해주세요.</div>
+                <div class="select-box">
+                    <div class="select-item" v-bind:class="{ 'selected' : this.gender=='M' }"
+                    @click="this.selectGender('M')">
+                        <div class="emoji">👨🏻</div>
+                        <div class="label">남성</div>
+                    </div>
+                    <div class="select-item" v-bind:class="{ 'selected' : this.gender=='F' }"
+                    @click="this.selectGender('F')">
+                        <div class="emoji">👩🏻</div>
+                        <div class="label">여성</div>
+                    </div>
+                    <div class="select-item" v-bind:class="{ 'selected' : this.gender==null }"
+                    @click="this.selectGender(null)">
+                        <div class="emoji">🧑🏻‍🦲</div>
+                        <div class="label">비공개</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inner" ref="birthday">
+                <div class="title">🎂 생일</div>
+                <div class="sub-title">태어난 날을 입력해주세요.</div>
+                <div class="input-box">
+                    <input type="date" min="1900-01-01" max="2023-08-30" v-model="this.birthday">
+                </div>
+            </div>
+
+            <div class="inner">
+                <div class="big-button" @click="modify()">
+                    수정하기
+                </div>
             </div>
         </div>
     </div>
@@ -214,6 +216,9 @@ export default {
 </script>
 
 <style scoped>
+#modify {
+    max-width: 600px;
+}
 .flex-container {
     display: flex;
     flex-direction: column;

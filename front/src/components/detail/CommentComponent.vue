@@ -18,7 +18,11 @@
                         {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
                     </div>
                 </div>
-                <div class="text">{{ comment.content }}</div>
+                <div class="text" v-if="!comment.spoiler">{{ comment.content }}</div>
+                <div class="spoiler" v-if="comment.spoiler" @click.prevent="">
+                    스포일러가 있어요!
+                    <div class="view-spoiler" @click.prevent="viewSpoiler(comment)">보기</div>
+                </div>
                 <div class="interest">
                     <div class="like" :class="{ 'liked' : comment.userLike }"><span>👍</span> {{ comment.likeCount }}</div>
                     <div class="reply">💬 {{ comment.replyCount }}</div>
@@ -66,6 +70,9 @@ export default {
                 this.listCount = response.data.listCount;
                 this.list.push(...response.data.list);
             })
+        },
+        viewSpoiler(comment) {
+            comment.spoiler = false;
         },
     },
 }
@@ -148,6 +155,14 @@ export default {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 7;
+}
+.spoiler {
+    flex-grow: 1;
+    display: flex;
+    gap: 4px;
+}
+.view-spoiler {
+    color: var(--FOCUS);
 }
 .interest {
     display: flex;

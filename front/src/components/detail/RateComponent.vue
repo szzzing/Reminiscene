@@ -78,7 +78,9 @@ export default {
     watch: {
         // 로그아웃 감지
         checkUser() {
-            this.rate = 0;
+            if(!this.$store.state.auth.user) {
+                this.rate = 0;
+            }
         },
         rate() {
             const nodes = document.querySelectorAll(".star > .emoji");
