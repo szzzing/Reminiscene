@@ -217,6 +217,7 @@ export default {
 <style scoped>
 #modify {
     max-width: 600px;
+    margin: auto;
 }
 .flex-container {
     display: flex;
