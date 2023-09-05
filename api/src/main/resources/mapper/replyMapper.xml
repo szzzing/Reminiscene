@@ -32,7 +32,7 @@
 
     <insert id="insertOneReport">
         insert into report
-        values(default, #{userId}, #{replyId}, #{content}, default, default)
+        values(default, #{userId}, #{replyId}, #{content}, default, default, default)
     </insert>
 
     <resultMap id="replyResultMap" type="com.szzzing.api.dto.reply.ReplyDto">
