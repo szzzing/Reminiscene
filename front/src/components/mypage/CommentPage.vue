@@ -1,21 +1,19 @@
 <template>
-    <div id="wish" class="container">
-        <title-component>
-            <template v-slot:emoji>✍️</template>
-            <template v-slot:title>
-                {{ user.nickname=='' ? user.id : user.nickname }}
-                님이<br>작성한 코멘트
-            </template>
-        </title-component>
+    <title-component>
+        <template v-slot:emoji>✍️</template>
+        <template v-slot:title>
+            {{ user.nickname=='' ? user.id : user.nickname }}
+            님이<br>작성한 코멘트
+        </template>
+    </title-component>
 
-        <comment-list-component v-bind:list="list"></comment-list-component>
-        <empty-component v-if="this.list.length==0">
-            <template v-slot:text>
-                작성한 코멘트가 없어요.
-            </template>
-        </empty-component>
-        <infinite-loading @infinite="getList"></infinite-loading>
-    </div>
+    <comment-list-component v-bind:list="list"></comment-list-component>
+    <empty-component v-if="this.list.length==0">
+        <template v-slot:text>
+            작성한 코멘트가 없어요.
+        </template>
+    </empty-component>
+    <infinite-loading @infinite="getList"></infinite-loading>
 </template>
 
 <script>

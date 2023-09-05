@@ -26,18 +26,24 @@ export default {
         }
         next();
     },
-    async beforeCreate() {
-        try {
-            const response = await this.axios.get('/movie/'+this.$route.params.id);
-            this.movie = response.data;
-        } catch(error) {
-            this.$router.push('/error');
-        }
+    created() {
+        this.fecthMovie();
     },
     data() {
         return {
             movie: null,
         }
+    },
+    methods: {
+        fecthMovie() {
+            this.axios.get('/movie/'+this.$route.params.id)
+            .then((response)=>{
+                this.movie = response.data;
+            })
+            .catch(()=>{
+                this.$router.push('/error');
+            });
+        },
     },
     watch: {
         // 영화 상세정보 가공

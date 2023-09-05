@@ -11,7 +11,7 @@ import DetailPage from '@/components/detail/DetailPage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
 import MyPage from '@/components/mypage/MyPage'
-import InfoComponent from '@/components/mypage/InfoComponent'
+import MyInfoComponent from '@/components/mypage/InfoComponent'
 import ModifyPage from '@/components/mypage/ModifyPage'
 import MyWishPage from '@/components/mypage/WishPage'
 import MyCommentPage from '@/components/mypage/CommentPage'
@@ -22,6 +22,7 @@ import SearchComponent from '@/components/search/SearchComponent'
 import SearchUserComponent from '@/components/search/SearchUserComponent'
 import SearchMovieComponent from '@/components/search/SearchMovieComponent'
 import UserPage from '@/components/user/UserPage'
+import UserInfoComponent from '@/components/user/InfoComponent'
 import UserWishPage from '@/components/user/WishPage'
 import UserCommentPage from '@/components/user/CommentPage'
 import UserLikePage from '@/components/user/LikePage'
@@ -66,7 +67,7 @@ const routes = [
         children: [
             {
                 path: '/mypage',
-                component: InfoComponent,
+                component: MyInfoComponent,
             },
             {
                 path: '/mypage/modify',
@@ -111,6 +112,12 @@ const routes = [
     {
         path: '/user/:id',
         component: UserPage,
+        children: [
+            {
+                path: '/user/:id',
+                component: UserInfoComponent,
+            }
+        ]
     },
     {
         path: '/user/:id/wish',
