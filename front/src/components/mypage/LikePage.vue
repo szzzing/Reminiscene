@@ -1,22 +1,20 @@
 <template>
-    <div id="wish" class="container">
-        <title-component>
-            <template v-slot:emoji>💛</template>
-            <template v-slot:title>
-                {{ user.nickname=='' ? user.id : user.nickname }}
-                님이<br>좋아하는 코멘트
-            </template>
-        </title-component>
+    <title-component>
+        <template v-slot:emoji>💛</template>
+        <template v-slot:title>
+            {{ user.nickname=='' ? user.id : user.nickname }}
+            님이<br>좋아하는 코멘트
+        </template>
+    </title-component>
 
-        <comment-list-component v-bind:list="list"></comment-list-component>
-        <empty-component v-if="this.list.length==0">
-            <template v-slot:text>
-                좋아하는 코멘트가 없어요.
-            </template>
-        </empty-component>
-        
-        <infinite-loading @infinite="getList"></infinite-loading>
-    </div>
+    <comment-list-component v-bind:list="list"></comment-list-component>
+    <empty-component v-if="this.list.length==0">
+        <template v-slot:text>
+            좋아하는 코멘트가 없어요.
+        </template>
+    </empty-component>
+    
+    <infinite-loading @infinite="getList"></infinite-loading>
 </template>
 
 <script>
@@ -32,15 +30,15 @@ export default {
         EmptyComponent,
         CommentListComponent,
     },
-
     data() {
         return {
             page: 1,
             list: [],
-            user: this.$store.state.auth.user,
         }
     },
-    
+    props: [
+        'user',
+    ],
     methods: {
         getList($state) {
             const params = {
@@ -50,7 +48,6 @@ export default {
             }
             this.axios.get("/like", {params})
             .then((response)=>{
-                console.log(response.data);
                 if(response.data.list.length!=0) {
                     this.page = response.data.page + 1;
                     this.list.push(...response.data.list);
@@ -65,11 +62,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    max-width: 960px;
-    display: flex;
-    flex-direction: column;
-}
 .inner {
     display: flex;
     flex-direction: column;

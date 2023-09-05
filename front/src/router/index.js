@@ -11,6 +11,7 @@ import DetailPage from '@/components/detail/DetailPage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
 import MyPage from '@/components/mypage/MyPage'
+import InfoComponent from '@/components/mypage/InfoComponent'
 import ModifyPage from '@/components/mypage/ModifyPage'
 import MyWishPage from '@/components/mypage/WishPage'
 import MyCommentPage from '@/components/mypage/CommentPage'
@@ -62,26 +63,32 @@ const routes = [
     {
         path: '/mypage',
         component: MyPage,
-    },
-    {
-        path: '/mypage/modify',
-        component: ModifyPage,
-    },
-    {
-        path: '/mypage/wish',
-        component: MyWishPage,
-    },
-    {
-        path: '/mypage/comment',
-        component: MyCommentPage,
-    },
-    {
-        path: '/mypage/like',
-        component: MyLikePage,
-    },
-    {
-        path: '/mypage/watching',
-        component: MyWatchingPage,
+        children: [
+            {
+                path: '/mypage',
+                component: InfoComponent,
+            },
+            {
+                path: '/mypage/modify',
+                component: ModifyPage,
+            },
+            {
+                path: '/mypage/wish',
+                component: MyWishPage,
+            },
+            {
+                path: '/mypage/comment',
+                component: MyCommentPage,
+            },
+            {
+                path: '/mypage/like',
+                component: MyLikePage,
+            },
+            {
+                path: '/mypage/watching',
+                component: MyWatchingPage,
+            },
+        ]
     },
     {
         path: '/search/:query',
