@@ -97,6 +97,12 @@ input:autofill:active {
     transition: background-color 5000s ease-in-out 0s;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 ::-webkit-scrollbar-track {
     display: none;
 }
@@ -192,4 +198,10 @@ input:autofill:active {
 }
 .no-image i {
     color: var(--G300);
+}
+.modal-mask {
+    background: var(--O300);
+}
+.dark .modal-mask {
+    background: var(--O700);
 }

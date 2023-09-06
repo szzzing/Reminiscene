@@ -82,8 +82,6 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    /* backdrop-filter: blur(10px); */
-    background: var(--O300);
     display: table;
 }
 .modal-wrapper {

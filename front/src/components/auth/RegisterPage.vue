@@ -1,6 +1,12 @@
 <template>
     <div class="container">
 
+        <email-modal-component v-if="this.emailModal"
+        v-bind:email="email"
+        @closeEmailModal="this.emailModal=false"
+        @succeedEmail="this.emailSuccess=true">
+        </email-modal-component>
+
         <title-component>
             <template v-slot:emoji>🪪</template>
             <template v-slot:title>회원가입</template>
@@ -41,11 +47,13 @@
             </div>
 
             <div class="inner email" ref="email">
-                <div class="title">📫 이메일</div>
-                <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
+                <div class="title">📧 이메일</div>
+                <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.
+                    <span class="email-button" v-if="this.checkedEmail && !this.emailSuccess" @click="this.clickEmailButton()">인증받기</span>
+                </div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.email != '' && checkedEmail, 'unchecked': this.email != '' && !checkedEmail }">
-                    <input type="text" v-model="email" maxlength="40">
+                    <input type="text" v-model="email" maxlength="40" :readonly="this.emailSuccess">
                     <i class="fa-solid fa-circle-check" v-if="this.email != '' && checkedEmail"></i>
                     <i class="fa-solid fa-circle-xmark" v-if="this.email != '' && !checkedEmail"></i>
                 </div>
@@ -62,10 +70,12 @@
 
 <script>
 import TitleComponent from '../item/TitleComponent.vue'
+import EmailModalComponent from './EmailModalComponent.vue';
 
 export default {
     components: {
         TitleComponent,
+        EmailModalComponent,
     },
     data() {
         return {
@@ -81,6 +91,9 @@ export default {
             //  경고 메세지
             message: '',
             undo: false,
+            //  이메일 인증 모달
+            emailModal: false,
+            emailSuccess: false,
         }
     },
     watch: {
@@ -148,6 +161,9 @@ export default {
             } else if (!this.checkedEmail) {
                 this.$refs.email.scrollIntoView({ behavior: "smooth" });
                 this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"이메일을 확인해주세요." });
+            } else if (!this.emailSuccess) {
+                this.$refs.email.scrollIntoView({ behavior: "smooth" });
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"이메일 인증을 완료해주세요." });
             } else {
                 const id = this.id;
                 const pw = this.pw;
@@ -166,6 +182,10 @@ export default {
             this.message = message;
             setTimeout(() => this.undo = false, 3000);
         },
+        // 인증하기 버튼 클릭
+        clickEmailButton() {
+            this.emailModal = true;
+        }
     }
 }
 </script>
@@ -226,5 +246,9 @@ input {
 .big-button {
     width: 120px;
     margin: 0 0 0 auto;
+}
+.email-button {
+    cursor: pointer;
+    color: var(--FOCUS);
 }
 </style>
