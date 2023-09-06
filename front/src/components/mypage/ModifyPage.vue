@@ -243,6 +243,9 @@ export default {
     align-items: center;
     justify-content: center;
 }
+.preview-image {
+    border: 1px solid var(--O300);
+}
 .profile-image {
     opacity: 0;
     position: absolute;
