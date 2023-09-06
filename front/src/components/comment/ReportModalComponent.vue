@@ -59,15 +59,21 @@ export default {
             }
         },
         addReport() {
+            const content = this.xssFilter(this.text);
             const params = {
                 replyId: this.reply.id,
-                content: this.text,
+                content: content,
             };
             this.axios.post("/report", params)
             .then(()=>{
                 this.$emit('closeReportModal');
                 this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "신고를 접수했어요." });
             });
+        },
+        xssFilter(text) {
+            text = text.replace(/</g, "&lt;");
+            text = text.replace(/>/g, "&gt;");
+            return text;
         },
     }
 }
