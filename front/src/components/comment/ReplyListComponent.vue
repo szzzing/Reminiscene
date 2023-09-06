@@ -219,7 +219,7 @@ export default {
 .reply {
     display: flex;
     gap: 16px;
-    padding: 16px;
+    padding: 16px 0;
     border-bottom: 1px solid var(--G100);
 }
 .reply:last-child {
@@ -253,13 +253,14 @@ export default {
     gap: 8px;
 }
 .profile-image, .no-image {
+    margin-top: 4px;
     width: 36px;
     height: 36px;
     font-size: 16px;
 }
 .create-date {
     color: var(--G400);
-    font-size: 20px;
+    font-size: 14px;
 }
 .like-reply {
     display: flex;
