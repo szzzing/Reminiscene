@@ -3,7 +3,7 @@
         <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
             <div class="profile">
                 <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
-                <div class="no-image" v-if="!comment.profileImage">👤</div>
+                <div class="no-image" v-if="!comment.profileImage"><i class="fa-solid fa-user"></i></div>
                 <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
                 <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
                     {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
@@ -89,16 +89,8 @@ export default {
 }
 
 .profile-image, .no-image {
-    width: 30px;
-    height: 30px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    background-color: var(--G200);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    width: 36px;
+    height: 36px;
 }
 .no-image {
     font-size: 16px;

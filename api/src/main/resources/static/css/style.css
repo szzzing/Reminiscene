@@ -179,10 +179,14 @@ input:autofill:active {
     background-size: cover;
     background-position: center;
     border-radius: 50%;
-    background-color: var(--G50);
+    background-color: var(--G100);
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid var(--G200);
     flex-shrink: 0;
+    cursor: pointer;
+}
+.no-image i {
+    color: var(--G300);
 }

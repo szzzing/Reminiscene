@@ -32,7 +32,7 @@
     <select id="selectCountByNickname" resultType="_int">
         select count(*) from user
         where user_nickname=#{nickname}
-        <if test="userId!=null">
+        <if test="loginUser!=null">
             and user_id!=#{loginUser}
         </if>
     </select>
@@ -40,7 +40,7 @@
     <select id="selectCountByEmail" resultType="_int">
         select count(*) from user
         where user_email=#{email}
-        <if test="userId!=null">
+        <if test="loginUser!=null">
             and user_id!=#{loginUser}
         </if>
     </select>

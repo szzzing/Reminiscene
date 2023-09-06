@@ -3,7 +3,7 @@
         <div class="image">
             <div class="profile-image" v-if="this.user.profileImage" :style="{'background-image': 'url(' + this.user.profileImage + ')' }">
             </div>
-            <div class="no-image" v-if="!this.user.profileImage">👤</div>
+            <div class="no-image" v-if="!this.user.profileImage"><i class="fa-solid fa-user"></i></div>
         </div>
         <div class="info">
             <div class="basic-info">
@@ -71,13 +71,6 @@ export default {
 .profile-image, .no-image {
     width: 180px;
     height: 180px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    background-color: var(--G50);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .no-image {
     font-size: 96px;

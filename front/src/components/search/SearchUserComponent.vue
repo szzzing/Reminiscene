@@ -4,7 +4,7 @@
             <div class="image">
                 <div class="profile-image" v-if="user.profileImage" :style="{'background-image': `url(${user.profileImage}` }">
                 </div>
-                <div class="no-image" v-if="!user.profileImage">👤</div>
+                <div class="no-image" v-if="!user.profileImage"><i class="fa-solid fa-user"></i></div>
             </div>
             <div class="info">
                 <div class="nickname">{{ user.nickname!=null ? user.nickname : user.id }}</div>

@@ -1,7 +1,7 @@
 <template>
    <div class="container">
         <div class="inner">
-            <router-link to="/" class="logo shadow">🌙</router-link>
+            <router-link to="/" class="logo shadow">🧙‍♀️</router-link>
             <div class="search" v-if="this.$route.path!='/'">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" v-on:keyup.enter="clickSearch" v-model="this.query" placeholder="영화, 유저를 검색해보세요.">
@@ -16,7 +16,7 @@
             </router-link>
             <div v-if="user && user.profileImage" @click="clickProfile"
             class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
-            <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile">👤</div>
+            <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile"><i class="fa-solid fa-user"></i></div>
         </div>
     </div>
 </template>
@@ -75,17 +75,9 @@ export default {
 .profile-image, .no-image {
     width: 36px;
     height: 36px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    background-color: var(--G50);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
 }
 .no-image {
-    font-size: 20px;
+    font-size: 16px;
 }
 .search {
     border: 1px solid var(--G200);

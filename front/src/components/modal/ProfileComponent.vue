@@ -2,7 +2,7 @@
     <div id="profile-modal" class="item-border" v-if="this.$store.state.modal.profile" @click.stop="">
         <div class="inner">
             <div class="profile-image" v-if="user.profileImage" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
-            <div class="no-image" v-if="!user.profileImage">👤</div>
+            <div class="no-image" v-if="!user.profileImage"><i class="fa-solid fa-user"></i></div>
             <div class="profile-info">
                 <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
                 <div class="id">{{ "@" + user.id }}</div>
@@ -70,16 +70,9 @@ export default {
 .profile-image, .no-image {
     width: 80px;
     height: 80px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    background-color: var(--G50);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .no-image {
-    font-size: 48px;
+    font-size: 40px;
 }
 
 .profile-info {

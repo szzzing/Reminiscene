@@ -12,7 +12,7 @@
                 <div class="sub-title">영문, 숫자, 특수문자 -, _를 포함해 6-12자 사이의 아이디를 만들어주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.id != '' && checkedId, 'unchecked': this.id != '' && !checkedId }">
-                    <input type="text" v-model="id">
+                    <input type="text" v-model="id" maxlength="12">
                     <i class="fa-solid fa-circle-check" v-if="this.id != '' && checkedId"></i>
                     <i class="fa-solid fa-circle-xmark" v-if="this.id != '' && !checkedId"></i>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="sub-title">영문, 숫자, 특수문자를 포함해 8-20자 사이의 비밀번호를 만들어주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.pw != '' && checkedPw, 'unchecked': this.pw != '' && !checkedPw }">
-                    <input type="password" v-model="pw">
+                    <input type="password" v-model="pw" maxlength="20">
                     <i class="fa-solid fa-circle-check" v-if="this.pw != '' && checkedPw"></i>
                     <i class="fa-solid fa-circle-xmark" v-if="this.pw != '' && !checkedPw"></i>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="sub-title">비밀번호를 다시 입력해주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.pw2 != '' && checkedPw2, 'unchecked': this.pw2 != '' && !checkedPw2 }">
-                    <input type="password" v-model="pw2">
+                    <input type="password" v-model="pw2" maxlength="20">
                     <i class="fa-solid fa-circle-check" v-if="this.pw2 != '' && checkedPw2"></i>
                     <i class="fa-solid fa-circle-xmark" v-if="this.pw2 != '' && !checkedPw2"></i>
                 </div>
@@ -45,7 +45,7 @@
                 <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.email != '' && checkedEmail, 'unchecked': this.email != '' && !checkedEmail }">
-                    <input type="text" v-model="email">
+                    <input type="text" v-model="email" maxlength="40">
                     <i class="fa-solid fa-circle-check" v-if="this.email != '' && checkedEmail"></i>
                     <i class="fa-solid fa-circle-xmark" v-if="this.email != '' && !checkedEmail"></i>
                 </div>

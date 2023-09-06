@@ -10,7 +10,7 @@
                 <div class="title" ref="profile-image">🤳🏻 프로필 이미지</div>
                 <div class="sub-title">이미지로 나를 표현해 보세요.</div>
                 <div class="preview-image" v-if="previewImage" :style="{'background-image': 'url(' + this.previewImage + ')' }"></div>
-                <div class="no-image" v-if="!previewImage">👤</div>
+                <div class="no-image" v-if="!previewImage"><i class="fa-solid fa-user"></i></div>
                 <input type="file" accept="image/*" class="profile-image" ref="uploadImage" @change="setPreviewImage">
             </div>
 
@@ -19,7 +19,7 @@
                 <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': checkedNickname, 'unchecked': !checkedNickname }">
-                    <input type="text" v-model="nickname">
+                    <input type="text" v-model="nickname" maxlength="8">
                     <i class="fa-solid fa-circle-check" v-if="checkedNickname"></i>
                     <i class="fa-solid fa-circle-xmark" v-if="!checkedNickname"></i>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': checkedEmail, 'unchecked': !checkedEmail }">
-                    <input type="text" v-model="email">
+                    <input type="text" v-model="email" maxlength="40">
                     <i class="fa-solid fa-circle-check" v-if="checkedEmail"></i>
                     <i class="fa-solid fa-circle-xmark" v-if="!checkedEmail"></i>
                 </div>
@@ -234,12 +234,10 @@ export default {
     background-size: cover;
     background-position: center;
     border-radius: 50%;
-    background-color: var(--G50);
     position: relative;
     cursor: pointer;
 }
 .preview-image, .no-image {
-    border: 1px solid var(--G200);
     margin: 20px 0 0;
     display: flex;
     align-items: center;
@@ -253,7 +251,7 @@ export default {
     width: 180px;
     height: 180px;
 }
-.no-image {
+.fa-solid.fa-user {
     font-size: 96px;
 }
 

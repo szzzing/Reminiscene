@@ -4,7 +4,7 @@
         <div class="inner">
             <div class="profile">
                 <router-link v-if="comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }" :to="`/user/${comment.userId}`"></router-link>
-                <router-link class="no-image" v-if="!comment.profileImage" :to="`/user/${comment.userId}`">👤</router-link>
+                <router-link class="no-image" v-if="!comment.profileImage" :to="`/user/${comment.userId}`"><i class="fa-solid fa-user"></i></router-link>
                 <div>
                     <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
                     <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
@@ -96,14 +96,13 @@ export default {
     background-size: cover;
     background-position: center;
     border-radius: 50%;
-    background-color: var(--G100);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 }
 .no-image {
-    font-size: 20px;
+    font-size: 16px;
 }
 .nickname {
     /* font-size: 18px; */

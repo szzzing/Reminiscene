@@ -43,7 +43,7 @@
         <transition-group name="list" tag="div" id="reply-list">
             <div class="reply" v-for="(reply) in this.list" :key="reply">
                 <router-link v-if="reply.profileImage" class="profile-image" :style="{'background-image': `url(${reply.profileImage})` }" :to="`/user/${reply.userId}`"></router-link>
-                <router-link class="no-image" v-if="!reply.profileImage" :to="`/user/${reply.userId}`">👤</router-link>
+                <router-link class="no-image" v-if="!reply.profileImage" :to="`/user/${reply.userId}`"><i class="fa-solid fa-user"></i></router-link>
                 <div class="text-area">
                     <div class="info">
                         <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}{{ reply.userId==this.comment.userId ? " (작성자)" : "" }}</div>
@@ -253,20 +253,13 @@ export default {
     gap: 8px;
 }
 .profile-image, .no-image {
-    width: 30px;
-    height: 30px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    background-color: var(--G100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
 }
 .create-date {
     color: var(--G400);
-    font-size: 14px;
+    font-size: 20px;
 }
 .like-reply {
     display: flex;
