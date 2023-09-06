@@ -40,7 +40,7 @@ export default {
     border-radius: 8px;;
     position: fixed;
     right: 40px;
-    top: 80px;
+    top: 60px;
     display: flex;
     flex-direction: column;
     gap: 16px;

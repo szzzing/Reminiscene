@@ -32,6 +32,9 @@ body {
         width: calc(100% - 40px);
         margin: 0 auto;
     }
+    #profile-modal {
+        right: 20px !important;
+    }
 }
 
 .wrap>.container:first-child {
@@ -183,7 +186,7 @@ input:autofill:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--G200);
+    border: 1px solid var(--O300);
     flex-shrink: 0;
     cursor: pointer;
 }
