@@ -17,21 +17,13 @@ export default {
         CommentComponent,
         BackdropComponent,
     },
-    // /list 페이지로 이동시 검색결과 유지
-    // 그 외 페이지로 이동시 검색결과 유지 x
-    beforeRouteLeave(to, from, next) {
-        if(!to.path.startsWith('/list') && !to.path.startsWith('/login')) {
-            this.$store.commit('movie/setQuery', '');
-            this.$store.commit('movie/setList', []);
-        }
-        next();
-    },
     created() {
         this.fetchMovie();
     },
     data() {
         return {
             movie: null,
+            commentFlag: false, // 코멘트 입력 감지
         }
     },
     methods: {

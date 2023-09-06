@@ -91,6 +91,7 @@ export default {
                     this.$emit("addComment");
                     this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: "코멘트를 작성했어요." });
                     this.$emit('closeCommentModal');
+                    this.$store.commit("movie/setCommentFlag", true);
                 });
             }
         },
@@ -107,6 +108,7 @@ export default {
                 .then(()=>{
                     this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: "코멘트를 수정했어요." });
                     this.$emit('closeCommentModal');
+                    this.$store.commit("movie/setCommentFlag", true);
                 });
             }
         },

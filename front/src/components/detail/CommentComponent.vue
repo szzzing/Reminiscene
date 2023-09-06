@@ -75,9 +75,18 @@ export default {
             comment.spoiler = false;
         },
     },
+    computed: {
+        commentFlag() {
+            return this.$store.state.movie.commentFlag;
+        }
+    },
     watch: {
         '$route.params.id': 'fetchData',
-    }
+        commentFlag() {
+            this.fetchData();
+            this.$store.commit("movie/setCommentFlag", false);
+        }
+    },
 }
 </script>
 

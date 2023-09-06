@@ -2,25 +2,11 @@
 const movie = {
     namespaced: true,
     state: {
-        query: '',
-        list: [],
-        page: 1,
-        state: null,
+        commentFlag: false, // 코멘트 입력 감지
     },
     mutations: {
-        setQuery(state, payload) {
-            state.query = payload;
-        },
-
-        setList(state, payload) {
-            state.list = payload;
-        },
-
-        setPage(state, payload) {
-            state.page = payload;
-        },
-        setState(state, payload) {
-            state.state = payload;
+        setCommentFlag(state, payload) {
+            state.commentFlag = payload;
         }
     },
 };

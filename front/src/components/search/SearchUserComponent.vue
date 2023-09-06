@@ -58,23 +58,6 @@ export default {
             })
         },
     },
-
-    // /detail 페이지로 이동시 검색결과 유지
-    // 그 외 페이지로 이동시 검색결과 유지 x
-    beforeRouteLeave(to, from, next) {
-        if(!to.path.startsWith('/detail')) {
-            this.$store.commit('movie/setQuery', '');
-            this.$store.commit('movie/setList', []);
-            this.$store.commit('movie/setPage', 1);
-            this.$store.commit('movie/setState', null);
-        } else {
-            this.$store.commit('movie/setQuery', this.query);
-            this.$store.commit('movie/setList', this.list);
-            this.$store.commit('movie/setPage', this.page);
-            this.$store.commit('movie/setState', this.state);
-        }
-        next();
-    },
 }
 </script>
 
