@@ -5,17 +5,19 @@
                 <div class="modal-container item-fill" @click.stop="">
                     <div class="inner">
                         <div class="emoji shadow">🧙</div>
-                        <div class="sub-title">{{ this.email+"로 인증코드를 보냈어요.\n6자리 인증코드를 입력해주세요." }}</div>
+                        <div class="sub-title" ref="status" v-if="this.status==null">{{ this.email+"로 보낸 인증번호를 입력해주세요." }}</div>
+                        <div class="sub-title status-success" v-if="this.status==true" ref="status">이메일 인증에 성공했어요.</div>
+                        <div class="sub-title status-fail" v-if="this.status==false" ref="status">인증번호를 다시 확인해주세요.</div>
                     </div>
                     <div class="inner">
-                        <div class="input-box">
+                        <div class="input-box" ref="code">
                             <input class="code" type="text" size="6" v-model="input" @input="this.checkInput()" maxlength="6">
                         </div>
                     </div>
-                    <div class="inner">
+                    <!-- <div class="inner">
                         <div class="text">메일이 안왔나요?</div>
                         <span class="send-button" @click="this.sendEmail()">다시 보내기</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -29,6 +31,7 @@ export default {
         return {
             input: null,
             code: null,
+            status: null,
         }
     },
     props: [
@@ -53,10 +56,21 @@ export default {
     },
     watch: {
         input() {
-            if(this.input == this.code) {
-                this.$emit('closeEmailModal');
-                this.$emit('succeedEmail');
-                this.$store.commit("modal/setAlert", { alertEmoji:"📧", alertText:"이메일 인증에 성공했어요." });
+            if(this.input.length==6) {
+                if(this.input == this.code) {
+                    this.status = true;
+                    setTimeout(() => {
+                        this.$emit('closeEmailModal');
+                        this.$emit('succeedEmail');
+                    }, 1000);
+                } else {
+                    this.$refs.code.classList.add("vibration");
+                    this.status = false;
+                    setTimeout(() => {
+                        this.$refs.code.classList.remove("vibration");
+                        this.status = null;
+                    }, 1000);
+                }
             }
         }
     }
@@ -143,5 +157,11 @@ export default {
     color: var(--FOCUS);
     font-weight: 500;
     cursor: pointer;
+}
+.status-success {
+    color: var(--GREEN);
+}
+.status-fail {
+    color: var(--RED);
 }
 </style>

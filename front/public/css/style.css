@@ -192,9 +192,12 @@ input[type="number"]::-webkit-inner-spin-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--O300);
+    /* border: 1px solid var(--O300); */
     flex-shrink: 0;
     cursor: pointer;
+}
+.preview-image {
+    /* border: 1px solid var(--O300); */
 }
 .no-image i {
     color: var(--G300);

@@ -17,10 +17,10 @@
                 <div class="title id" ref="id">💗 아이디</div>
                 <div class="sub-title">영문, 숫자, 특수문자 -, _를 포함해 6-12자 사이의 아이디를 만들어주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.id != '' && checkedId, 'unchecked': this.id != '' && !checkedId }">
+                    v-bind:class="{ 'checked': this.id && checkedId, 'unchecked': this.id && !checkedId }">
                     <input type="text" v-model="id" maxlength="12">
-                    <i class="fa-solid fa-circle-check" v-if="this.id != '' && checkedId"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.id != '' && !checkedId"></i>
+                    <i class="fa-solid fa-circle-check" v-if="this.id && checkedId"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="this.id && !checkedId"></i>
                 </div>
             </div>
 
@@ -28,10 +28,10 @@
                 <div class="title">🔑 비밀번호</div>
                 <div class="sub-title">영문, 숫자, 특수문자를 포함해 8-20자 사이의 비밀번호를 만들어주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.pw != '' && checkedPw, 'unchecked': this.pw != '' && !checkedPw }">
+                    v-bind:class="{ 'checked': this.pw && checkedPw, 'unchecked': this.pw && !checkedPw }">
                     <input type="password" v-model="pw" maxlength="20">
-                    <i class="fa-solid fa-circle-check" v-if="this.pw != '' && checkedPw"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.pw != '' && !checkedPw"></i>
+                    <i class="fa-solid fa-circle-check" v-if="this.pw && checkedPw"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="this.pw && !checkedPw"></i>
                 </div>
             </div>
 
@@ -39,10 +39,10 @@
                 <div class="title">🔐 비밀번호 확인</div>
                 <div class="sub-title">비밀번호를 다시 입력해주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.pw2 != '' && checkedPw2, 'unchecked': this.pw2 != '' && !checkedPw2 }">
+                    v-bind:class="{ 'checked': this.pw2 && checkedPw2, 'unchecked': this.pw2 && !checkedPw2 }">
                     <input type="password" v-model="pw2" maxlength="20">
-                    <i class="fa-solid fa-circle-check" v-if="this.pw2 != '' && checkedPw2"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.pw2 != '' && !checkedPw2"></i>
+                    <i class="fa-solid fa-circle-check" v-if="this.pw2 && checkedPw2"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="this.pw2 && !checkedPw2"></i>
                 </div>
             </div>
 
@@ -52,15 +52,15 @@
                     <span class="email-button" v-if="this.checkedEmail && !this.emailSuccess" @click="this.clickEmailButton()">인증받기</span>
                 </div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': this.email != '' && checkedEmail, 'unchecked': this.email != '' && !checkedEmail }">
+                    v-bind:class="{ 'checked': this.email && checkedEmail, 'unchecked': this.email && !checkedEmail }">
                     <input type="text" v-model="email" maxlength="40" :readonly="this.emailSuccess">
-                    <i class="fa-solid fa-circle-check" v-if="this.email != '' && checkedEmail"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="this.email != '' && !checkedEmail"></i>
+                    <i class="fa-solid fa-circle-check" v-if="this.email && checkedEmail"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="this.email && !checkedEmail"></i>
                 </div>
             </div>
 
             <div class="inner">
-                <div class="big-button" @click="register()">
+                <div class="medium-button" @click="register()">
                     계정 만들기
                 </div>
             </div>
@@ -70,7 +70,7 @@
 
 <script>
 import TitleComponent from '../item/TitleComponent.vue'
-import EmailModalComponent from './EmailModalComponent.vue';
+import EmailModalComponent from '../modal/EmailModalComponent.vue';
 
 export default {
     components: {
@@ -177,11 +177,6 @@ export default {
                     })
             }
         },
-        alert(message) {
-            this.undo = true;
-            this.message = message;
-            setTimeout(() => this.undo = false, 3000);
-        },
         // 인증하기 버튼 클릭
         clickEmailButton() {
             this.emailModal = true;
@@ -203,13 +198,12 @@ export default {
 
 .title {
     max-width: 600px;
-    font-size: 24px;
-    margin-bottom: 4px;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .sub-title {
     color: var(--G400);
-    font-size: 18px;
 }
 
 .input-box {
@@ -243,8 +237,8 @@ input {
     border: 2px solid rgba(237, 106, 94, 0.5);
 }
 
-.big-button {
-    width: 120px;
+.medium-button {
+    width: 100px;
     margin: 0 0 0 auto;
 }
 .email-button {

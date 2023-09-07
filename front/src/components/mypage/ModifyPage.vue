@@ -1,5 +1,11 @@
 <template>
     <div id="modify">
+        <email-modal-component v-if="this.emailModal"
+        v-bind:email="email"
+        @closeEmailModal="this.emailModal=false"
+        @succeedEmail="this.emailSuccess=true">
+        </email-modal-component>
+
         <title-component>
             <template v-slot:emoji>😃</template>
             <template v-slot:title>내 정보 수정</template>
@@ -18,21 +24,23 @@
                 <div class="title" ref="nickname">💛 닉네임</div>
                 <div class="sub-title">영문, 한글을 사용해 2-8자 사이의 닉네임을 만들어주세요.</div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': checkedNickname, 'unchecked': !checkedNickname }">
-                    <input type="text" v-model="nickname" maxlength="8">
-                    <i class="fa-solid fa-circle-check" v-if="checkedNickname"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="!checkedNickname"></i>
+                    v-bind:class="{ 'checked': checkedNickname && this.nickname, 'unchecked': !checkedNickname && this.nickname }">
+                    <input type="text" v-model="nickname" maxlength="8" @input="this.inputNickname($event)">
+                    <i class="fa-solid fa-circle-check" v-if="checkedNickname && this.nickname"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="!checkedNickname && this.nickname"></i>
                 </div>
             </div>
 
             <div class="inner" ref="email">
                 <div class="title">📧 이메일</div>
-                <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.</div>
+                <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.
+                    <span class="email-button" v-if="this.checkedEmail && !this.emailSuccess && this.email!=this.originalEmail" @click="this.clickEmailButton()">인증받기</span>
+                </div>
                 <div class="input-box"
-                    v-bind:class="{ 'checked': checkedEmail, 'unchecked': !checkedEmail }">
-                    <input type="text" v-model="email" maxlength="40">
-                    <i class="fa-solid fa-circle-check" v-if="checkedEmail"></i>
-                    <i class="fa-solid fa-circle-xmark" v-if="!checkedEmail"></i>
+                    v-bind:class="{ 'checked': checkedEmail && this.email, 'unchecked': !checkedEmail && this.email }">
+                    <input type="text" v-model="email" maxlength="40" :readonly="this.emailSuccess">
+                    <i class="fa-solid fa-circle-check" v-if="checkedEmail && this.email"></i>
+                    <i class="fa-solid fa-circle-xmark" v-if="!checkedEmail && this.email"></i>
                 </div>
             </div>
 
@@ -67,7 +75,7 @@
             </div>
 
             <div class="inner">
-                <div class="big-button" @click="modify()">
+                <div class="medium-button" @click="modify()">
                     수정하기
                 </div>
             </div>
@@ -77,15 +85,18 @@
 
 <script>
 import TitleComponent from '../item/TitleComponent.vue'
+import EmailModalComponent from '../modal/EmailModalComponent.vue';
 
 export default {
     components: {
         TitleComponent,
+        EmailModalComponent,
     },
     data() {
         return {
             previewImage: this.$store.state.auth.user.profileImage,
             originalImage: this.$store.state.auth.user.profileImage,
+            originalEmail: this.$store.state.auth.user.email,
             nickname: this.$store.state.auth.user.nickname,
             email: this.$store.state.auth.user.email,
             gender: this.$store.state.auth.user.gender,
@@ -97,11 +108,11 @@ export default {
             //  경고 메세지
             message: '',
             undo: false,
+            //  이메일 인증 모달
+            emailModal: false,
+            emailSuccess: false,
         }
     },
-    props: [
-        'user',
-    ],
     watch: {
         //  닉네임 사용 가능 여부, 사용 가능할 시 중복 여부 확인
         nickname() {
@@ -125,6 +136,11 @@ export default {
         }
     },
     methods: {
+        //  닉네임 입력 감지
+        inputNickname(event) {
+            this.nickname = event.target.value;
+        },
+
         //  프사 업로드
         setPreviewImage() {
             // 사진이 있을 시 사진 주소, 없을 시 null
@@ -167,7 +183,9 @@ export default {
             } else if (!this.checkedEmail) {
                 this.$refs.email.scrollIntoView({ behavior: "smooth" });
                 this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"이메일을 확인해주세요." });
-            
+            } else if (this.email!=this.$store.state.auth.user.email && !this.emailSuccess) {
+                this.$refs.email.scrollIntoView({ behavior: "smooth" });
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"이메일 인증을 완료해주세요." });
             // 입력시 데이터 전송
             } else {
                 const formData = new FormData();
@@ -203,13 +221,10 @@ export default {
                     });
             }
         },
-
-        // 입력 관련 메세지
-        alert(message) {
-            this.undo = true;
-            this.message = message;
-            setTimeout(() => this.undo = false, 3000);
-        },
+        // 인증하기 버튼 클릭
+        clickEmailButton() {
+            this.emailModal = true;
+        }
     }
 }
 </script>
@@ -243,9 +258,6 @@ export default {
     align-items: center;
     justify-content: center;
 }
-.preview-image {
-    border: 1px solid var(--O300);
-}
 .profile-image {
     opacity: 0;
     position: absolute;
@@ -260,13 +272,12 @@ export default {
 
 .title {
     max-width: 600px;
-    font-size: 24px;
-    margin-bottom: 4px;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .sub-title {
     color: var(--G400);
-    font-size: 18px;
 }
 
 .input-box, .select-box {
@@ -300,9 +311,6 @@ input {
     font-size: 48px;
     line-height: 1.2;
 }
-.select-item .label {
-    font-size: 18px;
-}
 
 .fa-solid {
     font-size: 24px;
@@ -324,8 +332,12 @@ input {
     border: 2px solid rgba(237, 106, 94, 0.5);
 }
 
-.big-button {
-    width: 120px;
+.medium-button {
+    width: 90px;
     margin: 0 0 0 auto;
+}
+.email-button {
+    cursor: pointer;
+    color: var(--FOCUS);
 }
 </style>

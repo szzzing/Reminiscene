@@ -1,10 +1,10 @@
 /* vibrate */
 @keyframes vibrate {
     0% {
-        transform: translateX(-1px);
+        transform: translateX(-2px);
     }
     100% {
-        transform: translateX(1px);
+        transform: translateX(2px);
     }
 }
 .vibration {
