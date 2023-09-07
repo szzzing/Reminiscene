@@ -1,6 +1,7 @@
 @import url('https://static.toss.im/tps/main.css');
 @import url('https://static.toss.im/tps/others.css');
 
+
 * {
     padding: 0;
     margin: 0;
@@ -21,6 +22,8 @@ body {
 .wrap {
     flex-grow: 1;
     white-space: pre-wrap;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -39,6 +42,7 @@ body {
 
 .wrap>.container:first-child {
     padding: 100px 0 0;
+    flex-grow: 1;
 }
 
 .input-box {
@@ -74,7 +78,6 @@ input {
 
 ::placeholder {
     color: var(--G300);
-    line-height: 1;
 }
 
 input:-webkit-autofill,

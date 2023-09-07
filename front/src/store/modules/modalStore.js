@@ -14,6 +14,7 @@ const modal = {
             setTimeout(() => {
                 state.alert = false;
             }, 3000);
+            clearTimeout();
         },
         setProfile(state, payload) {
             state.profile = payload;

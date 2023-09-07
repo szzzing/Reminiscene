@@ -29,9 +29,12 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 16px 24px;
-    border-radius: 8px;;
+    border-radius: 8px;
 }
 .emoji {
     font-size: 20px;
+}
+.text {
+    flex-shrink: 0;
 }
 </style>

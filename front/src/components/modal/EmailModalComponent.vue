@@ -43,9 +43,9 @@ export default {
     methods: {
         // 이메일 전송
         sendEmail() {
-            const email = this.email.trim();
+            const params = { to: this.email.trim() };
 
-            this.axios.post("/email", email)
+            this.axios.post("/email/auth/code", params)
             .then((response)=>{
                 this.code = response.data;
             })
@@ -71,6 +71,7 @@ export default {
                         this.status = null;
                     }, 1000);
                 }
+                clearTimeout();
             }
         }
     }

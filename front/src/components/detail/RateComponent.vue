@@ -276,6 +276,9 @@ export default {
     .option:first-child {
         justify-content: center;
     }
+    .option:last-child {
+        justify-content: space-around;
+    }
 }
 .selected {
     filter: grayscale(0%);

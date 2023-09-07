@@ -10,10 +10,7 @@
             @click="this.$store.commit('local/setTheme')">
                 {{ this.$store.state.local.theme ? "🌞" : "🌝" }}
             </div>
-            <router-link v-if="this.$store.state.auth.user==null"
-            to="/login" class="small-button">
-                로그인
-            </router-link>
+            <router-link v-if="this.$store.state.auth.user==null" to="/login" class="small-button">로그인</router-link>
             <div v-if="user && user.profileImage" @click="clickProfile"
             class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
             <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile"><i class="fa-solid fa-user"></i></div>
@@ -51,7 +48,6 @@ export default {
 <style scoped>
 .container {
     position: fixed;
-    padding: 4px 0;
     top: 0;
     left: 0;
     right: 0;
@@ -82,7 +78,7 @@ export default {
 .search {
     border: 1px solid var(--G200);
     background: var(--G50);
-    padding: 4px 8px;
+    padding: 4px 12px;
     flex-basis: 200px;
     height: 36px;
     border-radius: 8px;
@@ -93,5 +89,8 @@ export default {
 .search i {
     color: var(--G300);
     font-size: 12px;
+}
+.small-button {
+    flex-shrink: 0;
 }
 </style>

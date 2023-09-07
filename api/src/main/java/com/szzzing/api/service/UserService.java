@@ -95,7 +95,7 @@ public class UserService {
         map.put("email", email);
         map.put("nickname", nickname);
 
-        if(id!=null) return userRepository.selectOneUser(id) == null;
+        if(id!=null) return userRepository.selectCountById(map) == 0;
         else if(nickname!=null) return userRepository.selectCountByNickname(map) == 0;
         else return userRepository.selectCountByEmail(map) == 0;
     }

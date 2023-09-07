@@ -1,5 +1,6 @@
 package com.szzzing.api.controller;
 
+import com.szzzing.api.dto.common.EmailDto;
 import com.szzzing.api.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +17,15 @@ public class MailController {
 
     private final MailService mailService;
 
-    @RequestMapping("/email")
-    public ResponseEntity SendMail(@RequestBody String email) {
-        int result = mailService.sendMail(email.replaceAll("%40", "@").replaceAll("=", ""));
+    @RequestMapping("/email/auth/code")
+    public ResponseEntity sendAuthCode(@RequestBody EmailDto emailDto) {
+        int result = mailService.sendAuthCode(emailDto);
 
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+    @RequestMapping("/email/find/id")
+    public ResponseEntity sendFindId(@RequestBody EmailDto emailDto) {
+        boolean result = mailService.sendFindId(emailDto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 }

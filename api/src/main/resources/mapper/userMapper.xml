@@ -11,7 +11,7 @@
 
     <select id="selectAll" resultMap="userResultMap">
         select * from user
-        where user_role='U'
+        where user_role='U' and user_enable = true
     </select>
 
     <select id="selectOneById" resultMap="userResultMap">
@@ -22,6 +22,11 @@
                (select count(*) from pandora3_ojt.comment where comment_user_id=#{id}) as user_comment_count
         from user u
         where user_id=#{id}
+    </select>
+
+    <select id="selectOneByEmail" resultMap="userResultMap">
+        select * from user
+        where user_email=#{email}
     </select>
 
     <select id="selectCountById" resultType="_int">

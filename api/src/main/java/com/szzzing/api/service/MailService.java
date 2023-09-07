@@ -1,9 +1,13 @@
 package com.szzzing.api.service;
 
+import com.szzzing.api.dto.common.EmailDto;
+import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -12,35 +16,52 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MailService {
     private final JavaMailSender javaMailSender;
-    private static final String SENDER = "r87329584@gmail.com";
+    private final UserRepository userRepository;
 
-    public static int createCode() {
+    // 난수 코드 생성
+    public int createCode() {
         int code = (int)(Math.random() * (90000)) + 100000;
         log.info(code+"");
         return code;
     }
-
-    public MimeMessage createMail(String email, int code) {
+    // 이메일 전송
+    public void sendMail(EmailDto emailDto) {
         MimeMessage message = javaMailSender.createMimeMessage();
-
         try {
-            message.setFrom(SENDER);
-            message.setRecipients(MimeMessage.RecipientType.TO, email);
-            message.setSubject("Reminiscene의 이메일 인증코드를 보내드립니다.");
-            String body = "<h1>️🧙 " + code + "</h1>";
-            message.setText(body,"UTF-8", "html");
+            message.setRecipients(MimeMessage.RecipientType.TO, emailDto.getTo());
+            message.setSubject(emailDto.getSubject());
+            message.setText(emailDto.getBody(),"UTF-8", "html");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
-        return message;
+        javaMailSender.send(message);
     }
 
-    public int sendMail(String email) {
+    public int sendAuthCode(EmailDto emailDto) {
         int code = createCode();
-        MimeMessage message = createMail(email, code);
-        javaMailSender.send(message);
+        String body = "<h3>️🧙 " + code + "</h3>";
+        emailDto.setBody(body);
+        emailDto.setSubject("Reminiscene 회원가입 인증코드를 보내드립니다.");
+        sendMail(emailDto);
 
         return code;
+    }
+
+    public boolean sendFindId(EmailDto emailDto) {
+        UserDto userDto = userRepository.selectOneByEmail(emailDto.getTo());
+        if(userDto==null) return false;
+        String id = userDto.getId();
+        id = id.substring(0, 4);
+        id += "****";
+
+        String body = "<h3>️🧙 아이디 검색 결과</h3>";
+        body += "이 이메일로 가입하신 아이디는<br>";
+        body += "<b>"+id+"</b>입니다.";
+
+        emailDto.setBody(body);
+        emailDto.setSubject("Reminiscene 아이디 찾기 결과 보내드립니다.");
+        sendMail(emailDto);
+
+        return true;
     }
 }

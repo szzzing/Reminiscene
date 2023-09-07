@@ -7,6 +7,9 @@ import ErrorPage from '@/components/error/ErrorPage'
 import LoginPage from '@/components/auth/LoginPage'
 import RegisterPage from '@/components/auth/RegisterPage'
 import FindPage from '@/components/auth/FindPage'
+import FindComponent from '@/components/auth/FindComponent'
+import FindIdComponent from '@/components/auth/FindIdComponent'
+import FindPwComponent from '@/components/auth/FindPwComponent'
 import DetailPage from '@/components/detail/DetailPage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
@@ -43,7 +46,21 @@ const routes = [
     },
     {
         path: '/auth/find',
-        component: FindPage
+        component: FindPage,
+        children: [
+            {
+                path: '/auth/find',
+                component: FindComponent,
+            },
+            {
+                path: '/auth/find/id',
+                component: FindIdComponent,
+            },
+            {
+                path: '/auth/find/pw',
+                component: FindPwComponent,
+            }
+        ]
     },
     {
         path: '/login',

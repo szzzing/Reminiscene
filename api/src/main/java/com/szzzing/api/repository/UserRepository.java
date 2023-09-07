@@ -25,6 +25,10 @@ public class UserRepository {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneById", id);
     }
 
+    public UserDto selectOneByEmail(String email) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByEmail", email);
+    }
+
     public int selectCountById(HashMap map) {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountById", map);
     }

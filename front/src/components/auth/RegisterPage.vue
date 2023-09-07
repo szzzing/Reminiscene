@@ -193,7 +193,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 48px;
-    margin: auto;
 }
 
 .title {

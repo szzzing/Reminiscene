@@ -2,7 +2,7 @@
     <div class="container">
 
         <title-component>
-            <template v-slot:emoji>🔑</template>
+            <template v-slot:emoji>💛</template>
             <template v-slot:title>로그인</template>
         </title-component>
         
@@ -18,12 +18,11 @@
                 로그인
             </div>
         </div>
-        <div class="option">
-            처음 방문하셨다면
+        <div class="option">처음 방문하셨다면
             <router-link class="option-item" to="/auth/register">회원가입</router-link>
         </div>
         <div class="option">
-            <router-link to="/auth/find">비밀번호를 잊으셨나요?</router-link>
+            <router-link to="/auth/find">아이디, 비밀번호를 잊으셨나요?</router-link>
         </div>
     </div>
 </template>
@@ -75,7 +74,7 @@ export default {
     max-width: 400px;
 }
 .input-area {
-    margin: 48px auto 24px;
+    margin-bottom: 24px;
 }
 .input-box {
     line-height: 48px;
