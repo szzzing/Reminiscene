@@ -22,7 +22,9 @@ export default {
             this.axios.get("/user/"+this.$route.params.id)
             .then((response)=>{
                 this.user = response.data;
-                this.user.birthday = moment(this.user.birthday).format();
+                if(this.user.birthday) {
+                    this.user.birthday = moment(this.user.birthday).format();
+                }
             })
             .catch(()=>{
                 this.$router.push('/error');

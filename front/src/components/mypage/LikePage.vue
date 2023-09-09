@@ -2,7 +2,7 @@
     <title-component>
         <template v-slot:emoji>💛</template>
         <template v-slot:title>
-            {{ user.nickname=='' ? user.id : user.nickname }}
+            {{ this.user.nickname ? this.user.nickname : this.user.id }}
             님이<br>좋아하는 코멘트
         </template>
     </title-component>

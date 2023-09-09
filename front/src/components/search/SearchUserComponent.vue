@@ -7,7 +7,7 @@
                 <div class="no-image" v-if="!user.profileImage"><i class="fa-solid fa-user"></i></div>
             </div>
             <div class="info">
-                <div class="nickname">{{ user.nickname!=null ? user.nickname : user.id }}</div>
+                <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
                 <div class="id">{{ "@"+user.id }}</div>
                 <div class="commentCount">{{ user.commentCount+"개의 평가" }}</div>
             </div>

@@ -4,7 +4,7 @@
             <div class="profile-image" v-if="user.profileImage" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
             <div class="no-image" v-if="!user.profileImage"><i class="fa-solid fa-user"></i></div>
             <div class="profile-info">
-                <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
+                <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
                 <div class="id">{{ "@" + user.id }}</div>
                 <div class="activity">{{ user.commentCount+"개의 코멘트" }}</div>
             </div>

@@ -3,7 +3,7 @@
         <title-component>
             <template v-slot:emoji>✍️</template>
             <template v-slot:title>
-                {{ user.nickname=='' ? user.id : user.nickname }}
+                {{ this.user.nickname ? this.user.nickname : this.user.id }}
                 님이<br>작성한 코멘트
             </template>
         </title-component>
@@ -49,6 +49,7 @@ export default {
         fetchUser() {
             this.axios.get("/user/"+this.$route.params.id)
             .then((response)=>{
+                console.log(response.data);
                 this.user = response.data;
                 this.user.birthday = moment(this.user.birthday).format();
             })

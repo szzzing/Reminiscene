@@ -7,7 +7,7 @@
         </div>
         <div class="info">
             <div class="basic-info">
-                <div class="nickname">{{ this.user.nickname }}</div>
+                <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
                 <div class="id">{{ "@" + this.user.id }}</div>
             </div>
             <div class="more-info">
