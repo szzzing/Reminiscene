@@ -4,7 +4,7 @@
         <div class="inner">
             <div class="menu">
                 <div class="title">작품 검색결과</div>
-                <router-link :to="`/search/movie/${this.query}`">더보기</router-link>
+                <router-link :to="`/search/movie/${this.query}`" v-if="this.movieList.length!=0">더보기</router-link>
             </div>
             <movie-list-component v-bind:list="movieList" v-bind:hide="true"></movie-list-component>
             <empty-component v-if="this.movieList.length==0">
@@ -17,7 +17,7 @@
         <div class="inner">
             <div class="menu">
                 <div class="title">유저 검색결과</div>
-                <router-link :to="`/search/user/${this.query}`">더보기</router-link>
+                <router-link :to="`/search/user/${this.query}`" v-if="this.userList.length!=0">더보기</router-link>
             </div>
             <user-list-component v-bind:list="userList" v-bind:hide="true"></user-list-component>
             <empty-component v-if="this.userList.length==0">
