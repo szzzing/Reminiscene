@@ -56,4 +56,8 @@ public class UserRepository {
     public int updateOnePw(UserModifyDto userModifyDto) {
         return sqlSessionTemplate.update(NAME_SPACE+"updateOnePw", userModifyDto);
     }
+
+    public int updateOneEnable(String id) {
+        return sqlSessionTemplate.update(NAME_SPACE+"updateOneEnable", id);
+    }
 }

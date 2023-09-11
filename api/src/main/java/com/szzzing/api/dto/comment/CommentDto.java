@@ -26,4 +26,5 @@ public class CommentDto {
     private Timestamp creDate;
     private Timestamp modDate;
     private boolean userLike;
+    private boolean userEnable;
 }

@@ -21,7 +21,7 @@
                (select count(*) from pandora3_ojt.like where like_user_id=#{id}) as user_like_count,
                (select count(*) from pandora3_ojt.comment where comment_user_id=#{id}) as user_comment_count
         from user u
-        where user_id=#{id}
+        where user_id=#{id} and user_enable=true
     </select>
 
     <select id="selectOneByEmail" resultMap="userResultMap">
@@ -70,6 +70,12 @@
         update user
         set user_pw = #{pw},
             user_mod_date = current_timestamp
+        where user_id = #{id}
+    </update>
+
+    <update id="updateOneEnable">
+        update user
+        set user_enable = false
         where user_id = #{id}
     </update>
 

@@ -3,9 +3,7 @@
         <div class="shadow emoji">⛔️</div>
         <div class="title">페이지가<br>존재하지 않아요
         </div>
-        <div class="sub-title">
-            <router-link to="/">메인 페이지로 이동할게요</router-link>
-        </div>
+        <div class="route" @click="this.$router.go(-2)">이전페이지로 이동할래요</div>
     </div>
 </template>
 
@@ -29,8 +27,9 @@ export default {
     margin-bottom: 16px;
     line-height: 1.4;
 }
-.sub-title {
+.route {
     color: var(--G400);
     font-size: 18px;
+    cursor: pointer;
 }
 </style>
