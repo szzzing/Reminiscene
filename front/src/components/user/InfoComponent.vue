@@ -13,7 +13,6 @@
             <div class="more-info">
                 <div class="birthday">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.').substring(0, 10) : "비공개" }}</div>
                 <div class="gender">⚧️ {{ this.user.gender ? (this.user.gender=='F' ? "여성" : "남성") : "비공개" }}</div>
-                <div class="email">📧 {{ this.user.email }}</div>
             </div>
         </div>
     </div>

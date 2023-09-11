@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 @Data
 public class UserModifyDto {
     private String id;
+    private String pw;
     private String email;
     private String nickname;
     private String gender;

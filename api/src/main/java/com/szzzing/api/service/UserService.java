@@ -95,7 +95,8 @@ public class UserService {
         map.put("email", email);
         map.put("nickname", nickname);
 
-        if(id!=null) return userRepository.selectCountById(map) == 0;
+        if(id!=null && email!=null) return userRepository.selectOneByIdEmail(map) != null;
+        else if(id!=null) return userRepository.selectCountById(map) == 0;
         else if(nickname!=null) return userRepository.selectCountByNickname(map) == 0;
         else return userRepository.selectCountByEmail(map) == 0;
     }
@@ -113,5 +114,11 @@ public class UserService {
         UserDto userDto = userRepository.selectOneUser(id);
         userDto.setPw(null);
         return userDto;
+    }
+
+    public boolean modifyPw(UserModifyDto userModifyDto) {
+        String pw = passwordEncoder.encode(userModifyDto.getPw());
+        userModifyDto.setPw(pw);
+        return userRepository.updateOnePw(userModifyDto) > 0;
     }
 }

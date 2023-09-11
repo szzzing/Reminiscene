@@ -1,14 +1,14 @@
 <template>
     <transition name="smooth">
-        <div id="send-email-modal" class="modal-mask" @click="$emit('closeEmailModal')">
+        <div id="send-email-modal" class="modal-mask">
             <div class="modal-wrapper">
-                <div class="modal-container item-fill" @click.stop="">
+                <div class="modal-container item-fill">
                     <div class="inner">
-                        <div class="emoji shadow">😀</div>
-                        <div class="text"><b>{{ this.email }}</b>로<br>이메일을 전송했어요.</div>
+                        <div class="emoji shadow"><slot name="emoji"></slot></div>
+                        <div class="text"><slot name="text"></slot></div>
                     </div>
                     <div class="inner">
-                        <router-link class="medium-button" to="/login">로그인하러 가기</router-link>
+                        <router-link class="medium-button" :to="`${this.route}`"><slot name="route"></slot></router-link>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
 <script>
 export default {
     props: [
-        'email',
+        'route',
     ],
 }
 </script>

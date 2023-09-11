@@ -5,7 +5,7 @@
                 <div class="modal-container item-fill" @click.stop="">
                     <div class="inner">
                         <div class="emoji shadow">🧙</div>
-                        <div class="sub-title" ref="status" v-if="this.status==null">{{ this.email+"로 보낸 인증번호를 입력해주세요." }}</div>
+                        <div class="sub-title" ref="status" v-if="this.status==null">{{ "인증번호를 입력해주세요." }}</div>
                         <div class="sub-title status-success" v-if="this.status==true" ref="status">이메일 인증에 성공했어요.</div>
                         <div class="sub-title status-fail" v-if="this.status==false" ref="status">인증번호를 다시 확인해주세요.</div>
                     </div>
@@ -36,6 +36,8 @@ export default {
     },
     props: [
         'email',
+        'url',
+        'params',
     ],
     created() {
         this.sendEmail();
@@ -43,9 +45,7 @@ export default {
     methods: {
         // 이메일 전송
         sendEmail() {
-            const params = { to: this.email.trim() };
-
-            this.axios.post("/email/auth/code", params)
+            this.axios.post(this.url, this.params)
             .then((response)=>{
                 this.code = response.data;
             })
@@ -130,6 +130,7 @@ export default {
 .sub-title {
     text-align: center;
     color: var(--G500);
+    word-break: keep-all;
 }
 .close {
     cursor: pointer;

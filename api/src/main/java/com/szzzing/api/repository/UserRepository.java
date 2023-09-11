@@ -48,4 +48,12 @@ public class UserRepository {
     public ArrayList<UserDto> selectUserList(UserSelectDto userSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectUserList", userSelectDto);
     }
+
+    public UserDto selectOneByIdEmail(HashMap<String, String> map) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByIdEmail", map);
+    }
+
+    public int updateOnePw(UserModifyDto userModifyDto) {
+        return sqlSessionTemplate.update(NAME_SPACE+"updateOnePw", userModifyDto);
+    }
 }

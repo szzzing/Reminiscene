@@ -28,4 +28,9 @@ public class MailController {
         boolean result = mailService.sendFindId(emailDto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
+    @RequestMapping("/email/find/pw")
+    public ResponseEntity sendFindPw(@RequestBody EmailDto emailDto) {
+        int result = mailService.sendFindPw(emailDto);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 }

@@ -1,5 +1,10 @@
 <template>
-    <send-email-modal v-bind:email="email" v-if="this.emailModal" @closeEmailModal="this.emailModal=false"></send-email-modal>
+
+    <route-modal-component v-bind:route="`/login`" v-if="this.emailModal" @closeEmailModal="this.emailModal=false">
+        <template v-slot:emoji>😀</template>
+        <template v-slot:text><b>{{ this.email }}</b>로<br>이메일을 전송했어요.</template>
+        <template v-slot:route>로그인하러 가기</template>
+    </route-modal-component>
 
     <title-component>
         <template v-slot:emoji>🔎</template>
@@ -22,12 +27,12 @@
 
 <script>
 import TitleComponent from '../item/TitleComponent.vue'
-import SendEmailModal from './SendEmailModal.vue';
+import RouteModalComponent from '../modal/RouteModalComponent.vue'
 
 export default {
     components: {
         TitleComponent,
-        SendEmailModal,
+        RouteModalComponent,
     },
     data() {
         return {

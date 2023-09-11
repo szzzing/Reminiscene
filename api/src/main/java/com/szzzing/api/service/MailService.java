@@ -39,9 +39,11 @@ public class MailService {
 
     public int sendAuthCode(EmailDto emailDto) {
         int code = createCode();
-        String body = "<h3>️🧙 " + code + "</h3>";
+        String body = "<h3>️🧙 회원가입 인증번호</h3>";
+        body += "<b>"+code+"</b>";
+        
         emailDto.setBody(body);
-        emailDto.setSubject("Reminiscene 회원가입 인증코드를 보내드립니다.");
+        emailDto.setSubject("Reminiscene 회원가입 인증번호를 보내드립니다.");
         sendMail(emailDto);
 
         return code;
@@ -63,5 +65,18 @@ public class MailService {
         sendMail(emailDto);
 
         return true;
+    }
+
+    public int sendFindPw(EmailDto emailDto) {
+        int code = createCode();
+
+        String body = "<h3>️🧙 비밀번호 재설정 인증번호</h3>";
+        body += "<b>"+code+"</b>";
+
+        emailDto.setBody(body);
+        emailDto.setSubject("Reminiscene 비밀번호 찾기 인증번호를 보내드립니다.");
+        sendMail(emailDto);
+
+        return code;
     }
 }

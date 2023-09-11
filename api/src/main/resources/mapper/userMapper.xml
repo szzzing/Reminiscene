@@ -29,6 +29,11 @@
         where user_email=#{email}
     </select>
 
+    <select id="selectOneByIdEmail" resultMap="userResultMap">
+        select * from user
+        where user_email=#{email} and user_id=#{id}
+    </select>
+
     <select id="selectCountById" resultType="_int">
         select count(*) from user
         where user_id=#{id}
@@ -58,6 +63,13 @@
             user_birthday = #{birthday},
             user_mod_date = current_timestamp,
             user_profile_image = #{newImage}
+        where user_id = #{id}
+    </update>
+
+    <update id="updateOnePw">
+        update user
+        set user_pw = #{pw},
+            user_mod_date = current_timestamp
         where user_id = #{id}
     </update>
 

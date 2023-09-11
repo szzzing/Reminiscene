@@ -8,8 +8,8 @@ import LoginPage from '@/components/auth/LoginPage'
 import RegisterPage from '@/components/auth/RegisterPage'
 import FindPage from '@/components/auth/FindPage'
 import FindComponent from '@/components/auth/FindComponent'
-import FindIdComponent from '@/components/auth/FindIdComponent'
-import FindPwComponent from '@/components/auth/FindPwComponent'
+import FindIdPage from '@/components/auth/FindIdPage'
+import FindPwPage from '@/components/auth/FindPwPage'
 import DetailPage from '@/components/detail/DetailPage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
@@ -54,11 +54,11 @@ const routes = [
             },
             {
                 path: '/auth/find/id',
-                component: FindIdComponent,
+                component: FindIdPage,
             },
             {
                 path: '/auth/find/pw',
-                component: FindPwComponent,
+                component: FindPwPage,
             }
         ]
     },

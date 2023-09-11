@@ -2,6 +2,8 @@
     <div id="modify">
         <email-modal-component v-if="this.emailModal"
         v-bind:email="email"
+        v-bind:url="url"
+        v-bind:params="params"
         @closeEmailModal="this.emailModal=false"
         @succeedEmail="this.emailSuccess=true">
         </email-modal-component>
@@ -111,6 +113,8 @@ export default {
             //  이메일 인증 모달
             emailModal: false,
             emailSuccess: false,
+            url: "/email/auth/code",
+            params: null,
         }
     },
     watch: {
@@ -177,7 +181,7 @@ export default {
         //  내 정보 수정
         modify() {
             // 입력 여부 확인
-            if (!this.checkedNickname) {
+            if (!(this.checkedNickname || this.nickname.length==0)) {
                 this.$refs.nickname.scrollIntoView({ behavior: "smooth" });
                 this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"닉네임을 확인해주세요." });
             } else if (!this.checkedEmail) {
@@ -190,7 +194,7 @@ export default {
             } else {
                 const formData = new FormData();
                 formData.append("email", this.email);
-                if(this.nickname) {
+                if(this.nickname.length!=0) {
                     formData.append("nickname", this.nickname);
                 }
                 if(this.gender) {
@@ -223,6 +227,9 @@ export default {
         },
         // 인증하기 버튼 클릭
         clickEmailButton() {
+            this.params = {
+                to: this.email.trim(),
+            }
             this.emailModal = true;
         }
     }
@@ -278,6 +285,7 @@ export default {
 
 .sub-title {
     color: var(--G400);
+    word-break: keep-all;
 }
 
 .input-box, .select-box {

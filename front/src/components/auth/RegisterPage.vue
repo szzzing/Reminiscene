@@ -3,6 +3,8 @@
 
         <email-modal-component v-if="this.emailModal"
         v-bind:email="email"
+        v-bind:url="url"
+        v-bind:params="params"
         @closeEmailModal="this.emailModal=false"
         @succeedEmail="this.emailSuccess=true">
         </email-modal-component>
@@ -15,7 +17,7 @@
         <div class="flex-container">
             <div class="inner">
                 <div class="title id" ref="id">💗 아이디</div>
-                <div class="sub-title">영문, 숫자, 특수문자 -, _를 포함해 6-12자 사이의 아이디를 만들어주세요.</div>
+                <div class="sub-title">영문, 숫자, 특수문자 -, _를 포함해 6-12자의 아이디를 만들어주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.id && checkedId, 'unchecked': this.id && !checkedId }">
                     <input type="text" v-model="id" maxlength="12">
@@ -26,7 +28,7 @@
 
             <div class="inner pw" ref="pw">
                 <div class="title">🔑 비밀번호</div>
-                <div class="sub-title">영문, 숫자, 특수문자를 포함해 8-20자 사이의 비밀번호를 만들어주세요.</div>
+                <div class="sub-title">영문, 숫자, 특수문자를 포함해 8-20자의 비밀번호를 만들어주세요.</div>
                 <div class="input-box"
                     v-bind:class="{ 'checked': this.pw && checkedPw, 'unchecked': this.pw && !checkedPw }">
                     <input type="password" v-model="pw" maxlength="20">
@@ -94,6 +96,8 @@ export default {
             //  이메일 인증 모달
             emailModal: false,
             emailSuccess: false,
+            url: "/email/auth/code",
+            params: null,
         }
     },
     watch: {
@@ -179,6 +183,9 @@ export default {
         },
         // 인증하기 버튼 클릭
         clickEmailButton() {
+            this.params = {
+                to: this.email.trim(),
+            }
             this.emailModal = true;
         }
     }
@@ -203,6 +210,7 @@ export default {
 
 .sub-title {
     color: var(--G400);
+    word-break: keep-all;
 }
 
 .input-box {

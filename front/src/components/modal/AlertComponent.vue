@@ -35,6 +35,6 @@ export default {
     font-size: 20px;
 }
 .text {
-    flex-shrink: 0;
+    word-break: keep-all;
 }
 </style>

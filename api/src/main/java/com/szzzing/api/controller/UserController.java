@@ -37,6 +37,14 @@ public class UserController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    // 비밀번호 변경
+    @PutMapping("/pw")
+    public ResponseEntity modifyPw(@RequestBody UserModifyDto userModifyDto) {
+        log.info(userModifyDto.toString());
+        boolean result = userService.modifyPw(userModifyDto);
+        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     // 마이페이지 - 내 정보 수정
     @PutMapping("/{id}")
     public ResponseEntity mypageModify(@ModelAttribute UserModifyDto userModifyDto, HttpServletRequest request) {
