@@ -60,18 +60,6 @@ public class MovieService {
         return movieRepository.deleteOneWatching(watchingDto) > 0;
     }
 
-    public boolean addComment(CommentDto commentDto) {
-        return movieRepository.insertOneComment(commentDto) > 0;
-    }
-
-    public CommentDto getComment(CommentDto commentDto) {
-        return movieRepository.selectOneComment(commentDto);
-    }
-
-    public boolean modifyComment(CommentDto commentDto) {
-        return movieRepository.updateOneComment(commentDto) > 0;
-    }
-
     public MovieListDto getWishList(CommonSelectDto commonSelectDto) {
         if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
         commonSelectDto.setOffset();
@@ -92,27 +80,6 @@ public class MovieService {
         movieListDto.setPage(commonSelectDto.getPage());
 
         return movieListDto;
-    }
-
-    @Transactional
-    public int addMovie(MovieInsertDto movieInsertDto) {
-        FileDto posterDto = FileUtil.getFileDto(movieInsertDto.getPosterFile(), "poster");
-        FileDto backdropDto = FileUtil.getFileDto(movieInsertDto.getBackdropFile(), "backdrop");
-        ArrayList<FileDto> fileDtoList = new ArrayList<>();
-        fileDtoList.add(posterDto);
-        fileDtoList.add(backdropDto);
-        
-        // 파일 업로드
-        FileUtil.uploadFile(movieInsertDto.getPosterFile(), posterDto, "poster");
-        FileUtil.uploadFile(movieInsertDto.getBackdropFile(), backdropDto, "backdrop");
-        
-        // 파일 DB에 저장
-        movieInsertDto.setPosterPath(posterDto.getRenameName());
-        movieInsertDto.setBackdropPath(backdropDto.getRenameName());
-        fileRepository.insertFile(fileDtoList);
-        
-        // 영화 DB에 저장
-        return movieRepository.insertOneMovie(movieInsertDto);
     }
 
     public MovieListDto getMovieList(MovieSelectDto movieSelectDto) {

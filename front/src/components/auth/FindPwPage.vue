@@ -49,7 +49,7 @@ input {
     margin: 20px 0 0 auto;
 }
 .accent {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--FOCUS);
 }
 </style>

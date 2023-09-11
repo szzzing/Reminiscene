@@ -51,28 +51,12 @@ public class MovieRepository {
         return sqlSessionTemplate.delete(NAME_SPACE+"deleteOneWatching", watchingDto);
     }
 
-    public int insertOneComment(CommentDto commentDto) {
-        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneComment", commentDto);
-    }
-
-    public CommentDto selectOneComment(CommentDto commentDto) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneComment", commentDto);
-    }
-
-    public int updateOneComment(CommentDto commentDto) {
-        return sqlSessionTemplate.update(NAME_SPACE+"updateOneComment", commentDto);
-    }
-
     public ArrayList<MovieDto> selectWishList(CommonSelectDto commonSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWishList", commonSelectDto);
     }
 
     public ArrayList<MovieDto> selectWatchingList(CommonSelectDto commonSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectWatchingList", commonSelectDto);
-    }
-
-    public int insertOneMovie(MovieInsertDto movieInsertDto) {
-        return sqlSessionTemplate.insert(NAME_SPACE+"insertOneMovie", movieInsertDto);
     }
 
     public ArrayList<MovieDto> selectMovieList(MovieSelectDto movieSelectDto) {

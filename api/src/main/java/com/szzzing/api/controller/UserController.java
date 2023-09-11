@@ -8,6 +8,7 @@ import com.szzzing.api.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +38,6 @@ public class UserController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    // 비밀번호 변경
-    @PutMapping("/pw")
-    public ResponseEntity modifyPw(@RequestBody UserModifyDto userModifyDto) {
-        log.info(userModifyDto.toString());
-        boolean result = userService.modifyPw(userModifyDto);
-        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     // 마이페이지 - 내 정보 수정
     @PutMapping("/{id}")
     public ResponseEntity mypageModify(@ModelAttribute UserModifyDto userModifyDto, HttpServletRequest request) {
@@ -64,5 +57,32 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable String id) {
         UserDto result = userService.getUser(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 비밀번호 변경
+    @PutMapping("/pw")
+    public ResponseEntity modifyPw(@RequestBody UserModifyDto userModifyDto) {
+        boolean result = userService.modifyPw(userModifyDto);
+        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    // 비밀번호 체크
+    @GetMapping("/match/pw")
+    public ResponseEntity checkUserPw(@RequestParam(value="pw") String pw, HttpServletRequest request) {
+        String id = request.getUserPrincipal().getName();
+        boolean result = userService.checkUserPw(id, pw);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    // 회원탈퇴
+    @DeleteMapping("/{id}")
+    public ResponseEntity withdraw(@PathVariable String id, HttpServletRequest request) {
+        String loginUser = request.getUserPrincipal().getName();
+        if(loginUser.equals(id)) {
+            boolean result = userService.withdraw(id);
+            return new ResponseEntity(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

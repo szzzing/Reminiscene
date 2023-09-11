@@ -92,26 +92,9 @@ public class MovieController {
         return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 영화 삽입
-    @PostMapping("/movie")
-    public ResponseEntity addMovie(MovieInsertDto movieInsertDto) {
-        log.info(movieInsertDto.toString());
-        int result = movieService.addMovie(movieInsertDto);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-    }
-    // 영화 수정
-    @PutMapping("/movie")
-    public ResponseEntity modifyMovie(MovieInsertDto movieInsertDto) {
-        log.info(movieInsertDto.toString());
-//        int result = movieService.addMovie(movieInsertDto);
-//        return new ResponseEntity<>(result, HttpStatus.CREATED);
-        return null;
-    }
-
     @GetMapping("/movie/{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable String id) {
         MovieDto result = movieService.getMovie(id);
-        log.info(result.toString());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

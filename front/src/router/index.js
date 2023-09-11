@@ -15,6 +15,7 @@ import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
 import MyPage from '@/components/mypage/MyPage'
 import MyInfoComponent from '@/components/mypage/InfoComponent'
+import WithdrawComponent from '@/components/mypage/WithdrawComponent'
 import ModifyPage from '@/components/mypage/ModifyPage'
 import MyWishPage from '@/components/mypage/WishPage'
 import MyCommentPage from '@/components/mypage/CommentPage'
@@ -89,6 +90,10 @@ const routes = [
             {
                 path: '/mypage/modify',
                 component: ModifyPage,
+            },
+            {
+                path: '/mypage/withdraw',
+                component: WithdrawComponent,
             },
             {
                 path: '/mypage/wish',

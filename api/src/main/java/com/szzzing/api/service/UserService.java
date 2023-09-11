@@ -121,4 +121,13 @@ public class UserService {
         userModifyDto.setPw(pw);
         return userRepository.updateOnePw(userModifyDto) > 0;
     }
+
+    public boolean checkUserPw(String id, String pw) {
+        UserDto user = userRepository.selectOneUser(id);
+        return passwordEncoder.matches(pw, user.getPw());
+    }
+
+    public boolean withdraw(String id) {
+        return userRepository.updateOneEnable(id) > 0;
+    }
 }

@@ -54,6 +54,8 @@
                 </div>
             </router-link>
         </div>
+
+        <router-link to="/mypage/withdraw" class="withdraw">회원탈퇴</router-link>
     </div>
 </template>
 
@@ -62,6 +64,7 @@ export default {
     data() {
         return {
             user: this.$store.state.auth.user,
+            withdrawModal: false,
         }
     },
 }
@@ -162,5 +165,9 @@ export default {
     font-size: 30px;
     font-weight: 700;
     line-height: 1.1;
+}
+.withdraw {
+    color: var(--G400);
+    margin-left: auto;
 }
 </style>

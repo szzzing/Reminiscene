@@ -6,7 +6,7 @@
             <div class="profile-info">
                 <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
                 <div class="id">{{ "@" + user.id }}</div>
-                <div class="activity">{{ user.commentCount+"개의 코멘트" }}</div>
+                <div class="activity">{{ user.commentCount+user.watchingCount+user.wishCount+"개의 활동" }}</div>
             </div>
         </div>
         <div class="inner">
@@ -29,7 +29,7 @@ export default {
         },
         closeProfile() {
             this.$store.commit("modal/setProfile", false);
-        }
+        },
     },
 }
 </script>

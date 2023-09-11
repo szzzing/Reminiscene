@@ -12,8 +12,7 @@
         <template v-slot:title>비밀번호 찾기</template>
     </title-component>
     <div class="sub-text">
-        찾고싶은 <span class="accent">아이디</span>와 <span class="accent">이메일</span>을 입력해주세요.<br>
-        인증이 완료되면 비밀번호를 재설정할 수 있어요.
+        <span class="accent">아이디</span>와 <span class="accent">이메일</span>을 입력해주세요.<br>이메일 인증 후 비밀번호를 다시 설정할 수 있어요.
     </div>
 
     <div class="input-area">
@@ -124,7 +123,7 @@ input {
     margin: 20px 0 0 auto;
 }
 .accent {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--FOCUS);
 }
 </style>
