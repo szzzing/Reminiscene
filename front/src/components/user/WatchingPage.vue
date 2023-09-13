@@ -24,7 +24,6 @@ import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
 import MovieListComponent from '../item/MovieListComponent.vue';
-import moment from "moment";
 
 export default {
     components: {
@@ -33,33 +32,34 @@ export default {
         EmptyComponent,
         MovieListComponent,
     },
-
-    created() {
-        this.fetchUser();
-    },
-
     data() {
         return {
             list: [],
             page: 1,
-            user: null,
+            state: null,
         }
     },
-
+    props: [
+        'user',
+    ],
     methods: {
-        fetchUser() {
-            this.axios.get("/user/"+this.$route.params.id)
+        fetchData() {
+            const params = {
+                userId: this.$route.params.id,
+                page: 1,
+            }
+            this.axios.get("/watching", {params})
             .then((response)=>{
-                this.user = response.data;
-                this.user.birthday = moment(this.user.birthday).format();
+                this.page = response.data.page + 1;
+                this.list = response.data.list;
+                this.state.reset();
             })
-            .catch(()=>{
-                this.$router.push('/error');
-            });
         },
         getList($state) {
+            this.state = $state;
+            
             const params = {
-                userId: this.user.id,
+                userId: this.$route.params.id,
                 page: this.page,
             }
             this.axios.get("/watching", {params})
@@ -68,15 +68,12 @@ export default {
                     this.page = response.data.page + 1;
                     this.list.push(...response.data.list);
                     $state.loaded();
-                } else {
-                    $state.complete();
                 }
             })
         },
     },
-
     watch: {
-        '$route.params.id': 'fetchUser',
+        '$route.params.id': 'fetchData',
     },
 }
 </script>

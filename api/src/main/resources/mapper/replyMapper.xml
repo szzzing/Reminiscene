@@ -40,6 +40,7 @@
         <result column="reply_user_id" property="userId"/>
         <result column="user_profile_image" property="profileImage"/>
         <result column="user_nickname" property="nickname"/>
+        <result column="user_enable" property="userEnable"/>
         <result column="reply_ref_id" property="refId"/>
         <result column="reply_content" property="content"/>
         <result column="reply_cre_date" property="creDate"/>

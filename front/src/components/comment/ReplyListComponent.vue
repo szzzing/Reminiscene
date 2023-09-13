@@ -42,8 +42,14 @@
     <div class="inner">
         <transition-group name="list" tag="div" id="reply-list">
             <div class="reply" v-for="(reply) in this.list" :key="reply">
-                <router-link v-if="reply.profileImage" class="profile-image" :style="{'background-image': `url(${reply.profileImage})` }" :to="`/user/${reply.userId}`"></router-link>
-                <router-link class="no-image" v-if="!reply.profileImage" :to="`/user/${reply.userId}`"><i class="fa-solid fa-user"></i></router-link>
+                <div class="profile" v-if="reply.userEnable">
+                    <router-link v-if="reply.profileImage" class="profile-image" :style="{'background-image': `url(${reply.profileImage})` }" :to="`/user/${reply.userId}`"></router-link>
+                    <router-link class="no-image" v-if="!reply.profileImage" :to="`/user/${reply.userId}`"><i class="fa-solid fa-user"></i></router-link>
+                </div>
+                <div class="profile" v-else>
+                    <div v-if="reply.profileImage" class="profile-image" @click="withdrawUser" :style="{'background-image': `url(${reply.profileImage})`}"></div>
+                    <div class="no-image" v-if="!reply.profileImage" @click="withdrawUser"><i class="fa-solid fa-user"></i></div>
+                </div>
                 <div class="text-area">
                     <div class="info">
                         <div class="nickname">{{ reply.nickname ? reply.nickname : reply.userId }}{{ reply.userId==this.comment.userId ? " (작성자)" : "" }}</div>
@@ -208,6 +214,9 @@ export default {
                 }
             });
         },
+        withdrawUser() {
+            this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });
+        },
     },
     watch: {
         '$route.params.id': 'fetchData',
@@ -247,11 +256,11 @@ export default {
 .nickname {
     font-weight: 500;
 }
-.profile {
+/* .profile {
     display: flex;
     align-items: center;
     gap: 8px;
-}
+} */
 .profile-image, .no-image {
     margin-top: 4px;
     width: 36px;

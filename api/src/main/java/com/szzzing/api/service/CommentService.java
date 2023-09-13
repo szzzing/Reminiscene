@@ -15,49 +15,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
-@Service
-@RequiredArgsConstructor
-public class CommentService {
-    private final CommentRepository commentRepository;
+public interface CommentService {
 
-    public boolean addComment(CommentDto commentDto) {
-        return commentRepository.insertOneComment(commentDto) > 0;
-    }
+    public boolean addComment(CommentDto commentDto);
 
-    public CommentDto getComment(CommentSelectDto commentSelectDto) {
-        return commentRepository.selectOneComment(commentSelectDto);
-    }
+    public CommentDto getComment(CommentSelectDto commentSelectDto);
 
-    public boolean modifyComment(CommentDto commentDto) {
-        return commentRepository.updateOneComment(commentDto) > 0;
-    }
+    public boolean modifyComment(CommentDto commentDto);
 
-    public CommentListDto getCommentList(CommentSelectDto commentSelectDto) {
-        if(commentSelectDto.getPage()==null) commentSelectDto.setPage(1);
-        commentSelectDto.setOffset();
+    public CommentListDto getCommentList(CommentSelectDto commentSelectDto);
 
-        CommentListDto result = new CommentListDto();
-        result.setListCount(commentRepository.selectCommentListCount(commentSelectDto));
-        result.setList(commentRepository.selectCommentList(commentSelectDto));
-        result.setPage(commentSelectDto.getPage());
-        return result;
-    }
+    public boolean addLike(LikeDto likeDto);
 
-    public boolean addLike(LikeDto likeDto) {
-        return commentRepository.insertOneLike(likeDto) > 0;
-    }
+    public boolean deleteLike(LikeDto likeDto);
 
-    public boolean deleteLike(LikeDto likeDto) {
-        return commentRepository.deleteOneLike(likeDto) > 0;
-    }
-
-    public CommentListDto getLikeCommentList(CommentSelectDto commentSelectDto) {
-        if(commentSelectDto.getPage()==null) commentSelectDto.setPage(1);
-        commentSelectDto.setOffset();
-
-        CommentListDto result = new CommentListDto();
-        result.setList(commentRepository.selectLikeList(commentSelectDto));
-        result.setPage(commentSelectDto.getPage());
-        return result;
-    }
+    public CommentListDto getLikeCommentList(CommentSelectDto commentSelectDto);
 }

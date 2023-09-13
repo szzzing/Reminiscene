@@ -50,13 +50,11 @@ export default {
         }
     },
     methods: {
-        async getMovie() {
-            try {
-                const response = await this.axios.get('/movie/'+this.$route.params.id);
+        getMovie() {
+            this.axios.get('/movie/'+this.$route.params.id)
+            .then((response)=>{
                 this.movie = response.data;
-            } catch(error) {
-                this.$router.push('/error');
-            }
+            })
         },
         getComment($state) {
             this.state = $state;

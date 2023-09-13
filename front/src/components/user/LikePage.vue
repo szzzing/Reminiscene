@@ -24,7 +24,6 @@ import InfiniteLoading from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
 import CommentListComponent from '../item/CommentListComponent.vue';
-import moment from "moment";
 
 export default {
     components: {
@@ -33,32 +32,37 @@ export default {
         EmptyComponent,
         CommentListComponent,
     },
-    created() {
-        this.fetchUser();
-    },
     data() {
         return {
             page: 1,
             list: [],
-            user: null,
+            state: null,
         }
     },
+    props: [
+        'user',
+    ],
     methods: {
-        fetchUser() {
-            this.axios.get("/user/"+this.$route.params.id)
+        fetchData() {
+            const params = {
+                userId: this.$route.params.id,
+                page: 1,
+                loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
+            }
+            this.axios.get("/like", {params})
             .then((response)=>{
-                this.user = response.data;
-                this.user.birthday = moment(this.user.birthday).format();
-            })
-            .catch(()=>{
-                this.$router.push('/error');
+                this.list = response.data.list;
+                this.page = response.data.page + 1;
+                this.state.reset();
             });
         },
         getList($state) {
+            this.state = $state;
+
             const params = {
-                userId: this.user.id,
-                loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
+                userId: this.$route.params.id,
                 page: this.page,
+                loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
             }
             this.axios.get("/like", {params})
             .then((response)=>{
@@ -66,14 +70,12 @@ export default {
                     this.page = response.data.page + 1;
                     this.list.push(...response.data.list);
                     $state.loaded();
-                } else {
-                    $state.complete();
                 }
             })
         },
     },
     watch: {
-        '$route.params.id': 'fetchUser',
+        '$route.params.id': 'fetchData',
     },
 }
 </script>

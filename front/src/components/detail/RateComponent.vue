@@ -107,17 +107,15 @@ export default {
         },
     },
     methods: {
-        async fetchData() {
+        fetchData() {
             if(this.$store.state.auth.user) {
-                try {
-                    const response = await this.axios.get("/status/"+this.$route.params.id);
+                this.axios.get("/status/"+this.$route.params.id)
+                .then((response)=>{
                     this.rate = response.data.rate;
                     this.isComment = response.data.comment;
                     this.isWatching = response.data.watching;
                     this.isWish = response.data.wish;
-                } catch(error) {
-                    this.$router.push('/error');
-                }
+                });
             }
         },
         // 별점 클릭

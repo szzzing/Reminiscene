@@ -20,87 +20,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-@Slf4j
-public class MovieService {
+public interface MovieService {
 
-    private final MovieRepository movieRepository;
-    private final FileRepository fileRepository;
+    public boolean addRate(RateDto rateDto);
 
-    public boolean addRate(RateDto rateDto) {
-        return movieRepository.insertOneRate(rateDto) > 0;
-    }
+    public boolean updateRate(RateDto rateDto);
 
-    public boolean updateRate(RateDto rateDto) {
-        return movieRepository.updateOneRate(rateDto) > 0;
-    }
+    public boolean deleteRate(RateDto rateDto);
 
-    public boolean deleteRate(RateDto rateDto) {
-        return movieRepository.deleteOneRate(rateDto) > 0;
-    }
+    public StatusDto getStatus(HashMap<String, String> map);
 
-    public StatusDto getStatus(HashMap<String, String> map) {
-        return movieRepository.selectOneStatus(map);
-    }
+    public boolean addWish(WishDto wishDto);
 
-    public boolean addWish(WishDto wishDto) {
-        return movieRepository.insertOneWish(wishDto) > 0;
-    }
+    public boolean deleteWish(WishDto wishDto);
 
-    public boolean deleteWish(WishDto wishDto) {
-        return movieRepository.deleteOneWish(wishDto) > 0;
-    }
+    public boolean addWatching(WatchingDto watchingDto);
+    public boolean deleteWatching(WatchingDto watchingDto);
 
-    public boolean addWatching(WatchingDto watchingDto) {
-        return movieRepository.insertOneWatching(watchingDto) > 0;
-    }
+    public MovieListDto getWishList(CommonSelectDto commonSelectDto);
 
-    public boolean deleteWatching(WatchingDto watchingDto) {
-        return movieRepository.deleteOneWatching(watchingDto) > 0;
-    }
+    public MovieListDto getWatchingList(CommonSelectDto commonSelectDto);
 
-    public MovieListDto getWishList(CommonSelectDto commonSelectDto) {
-        if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
-        commonSelectDto.setOffset();
+    public MovieListDto getMovieList(MovieSelectDto movieSelectDto);
 
-        MovieListDto movieListDto = new MovieListDto();
-        movieListDto.setList(movieRepository.selectWishList(commonSelectDto));
-        movieListDto.setPage(commonSelectDto.getPage());
+    public MovieDto getMovie(String id);
 
-        return movieListDto;
-    }
-
-    public MovieListDto getWatchingList(CommonSelectDto commonSelectDto) {
-        if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
-        commonSelectDto.setOffset();
-
-        MovieListDto movieListDto = new MovieListDto();
-        movieListDto.setList(movieRepository.selectWatchingList(commonSelectDto));
-        movieListDto.setPage(commonSelectDto.getPage());
-
-        return movieListDto;
-    }
-
-    public MovieListDto getMovieList(MovieSelectDto movieSelectDto) {
-        if(movieSelectDto.getPage()==null) movieSelectDto.setPage(1);
-        movieSelectDto.setOffset();
-
-        MovieListDto movieListDto = new MovieListDto();
-        movieListDto.setList(movieRepository.selectMovieList(movieSelectDto));
-        movieListDto.setPage(movieSelectDto.getPage());
-
-        return movieListDto;
-    }
-
-    public MovieDto getMovie(String id) {
-        return movieRepository.selectOneMovie(id);
-    }
-
-    public MovieRankListDto getMovieRenkList() {
-        MovieRankListDto movieRankListDto = new MovieRankListDto();
-        movieRankListDto.setMonthBestList(movieRepository.selectMonthBestMovieList());
-        movieRankListDto.setBestRateList(movieRepository.selectBestRateMovieList());
-        return movieRankListDto;
-    }
+    public MovieRankListDto getMovieRankList();
 }

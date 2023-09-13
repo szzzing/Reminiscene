@@ -10,6 +10,7 @@ public class ReplyDto {
     private String userId;
     private String nickname;
     private String profileImage;
+    private boolean userEnable;
     private int refId;
     private String content;
     private Date creDate;

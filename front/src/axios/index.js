@@ -50,7 +50,13 @@ axios.interceptors.response.use(
             }
         }
 
-        // 3. 서버 에러
+        // 2. PAGE NOT FOUND 에러
+        if(error.response.status==404) {
+
+            router.push({ path: '/error' });
+        }
+
+        // 4. 서버 에러
         if(error.response.status==500) {
             store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"다시 시도해주세요." });
         }

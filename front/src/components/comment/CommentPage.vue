@@ -2,7 +2,7 @@
 
     <div id="comment" class="container" v-if="this.comment">
         <div class="inner">
-            <div class="profile">
+            <div class="profile" v-if="comment.userEnable">
                 <router-link v-if="comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }" :to="`/user/${comment.userId}`"></router-link>
                 <router-link class="no-image" v-if="!comment.profileImage" :to="`/user/${comment.userId}`"><i class="fa-solid fa-user"></i></router-link>
                 <div>
@@ -10,6 +10,15 @@
                     <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
                 </div>
             </div>
+            <div class="profile" v-if="!comment.userEnable">
+                <div v-if="comment.profileImage" @click="withdrawUser" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }"></div>
+                <div class="no-image" @click="withdrawUser" v-if="!comment.profileImage"><i class="fa-solid fa-user"></i></div>
+                <div>
+                    <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
+                    <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
+                </div>
+            </div>
+
             <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
                 {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
             </div>
@@ -51,21 +60,22 @@ export default {
         }
     },
     methods: {
-        async fetchData() {
+        fetchData() {
             const params = {
                 id: this.$route.params.id,
             }
-            try {
-                // 코멘트 정보
-                const comment = await this.axios.get('/comment', {params});
-                this.comment = comment.data;
-            } catch(error) {
-                this.$router.push('/error');
-            }
+            // 코멘트 정보
+            this.axios.get('/comment', {params})
+            .then((response)=>{
+                this.comment = response.data;
+            });
         },
         updateUserLike(param) {
             this.comment.userLike = param;
         },
+        withdrawUser() {
+            this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });
+        }
     },
     watch: {
         '$route.params.id': 'fetchData',

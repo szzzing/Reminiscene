@@ -39,14 +39,14 @@ export default {
     },
 
     methods: {
-        async getList($state) {
+        getList($state) {
             const params = {
                 userId: this.$store.state.auth.user.id,
                 page: this.page,
                 loginUser: this.$store.state.auth.user.id,
             }
-            try {
-                const response = await this.axios.get("/comments", {params});
+            this.axios.get("/comments", {params})
+            .then((response)=>{
                 const list = response.data.list;
                 if(list.length!=0) {
                     this.page = response.data.page + 1;
@@ -55,10 +55,8 @@ export default {
                 } else {
                     $state.complete();
                 }
-            } catch(error) {
-                console.log(error);
-            }
-        }
+            });
+        },
     },
 }
 </script>

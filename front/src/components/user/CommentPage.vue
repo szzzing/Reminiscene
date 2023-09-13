@@ -19,11 +19,10 @@
 </template>
 
 <script>
-import InfiniteLoading from 'infinite-loading-vue3-ts';
+import { InfiniteLoading } from 'infinite-loading-vue3-ts';
 import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
 import CommentListComponent from '../item/CommentListComponent.vue';
-import moment from "moment";
 
 export default {
     components: {
@@ -34,52 +33,54 @@ export default {
     },
 
     created() {
-        this.fetchUser();
+        // this.getUser();
     },
 
     data() {
         return {
             page: 1,
             list: [],
-            user: null,
+            state: null,
         }
     },
-
+    props: [
+        'user',
+    ],
     methods: {
-        fetchUser() {
-            this.axios.get("/user/"+this.$route.params.id)
+        fetchData() {
+            const params = {
+                userId: this.$route.params.id,
+                page: 1,
+                loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
+            }
+            this.axios.get("/comments", {params})
             .then((response)=>{
-                console.log(response.data);
-                this.user = response.data;
-                this.user.birthday = moment(this.user.birthday).format();
-            })
-            .catch(()=>{
-                this.$router.push('/error');
+                this.list = response.data.list;
+                this.page = response.data.page + 1;
+                this.state.reset();
             });
         },
-        async getList($state) {
+        getList($state) {
+            this.state = $state;
+
             const params = {
-                userId: this.user.id,
+                userId: this.$route.params.id,
                 page: this.page,
                 loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
             }
-            try {
-                const response = await this.axios.get("/comments", {params});
+            this.axios.get("/comments", {params})
+            .then((response)=>{
                 const list = response.data.list;
                 if(list.length!=0) {
-                    this.page = response.data.page + 1;
                     this.list.push(...response.data.list);
+                    this.page = response.data.page + 1;
                     $state.loaded();
-                } else {
-                    $state.complete();
                 }
-            } catch(error) {
-                console.log(error);
-            }
+            });
         },
     },
     watch: {
-        '$route.params.id': 'fetchUser',
+        '$route.params.id': 'fetchData',
     },
 }
 </script>

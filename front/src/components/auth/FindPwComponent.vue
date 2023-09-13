@@ -86,7 +86,6 @@ export default {
             };
             this.axios.get("/user/check", {params})
             .then((response) => {
-                console.log(response.data);
                 if(response.data==true) {
                     this.params = {
                         to: this.email.trim(),

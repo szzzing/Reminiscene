@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
+/**
+ * The type Movie controller.
+ */
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -19,6 +22,13 @@ public class MovieController {
 
     private final MovieService movieService;
 
+    /**
+     * Gets status.
+     *
+     * @param request the request
+     * @param movieId the movie id
+     * @return the status
+     */
     @GetMapping("/status/{movieId}")
     public ResponseEntity<StatusDto> getStatus(HttpServletRequest request, @PathVariable String movieId) {
         HashMap<String, String> map = new HashMap();
@@ -28,19 +38,42 @@ public class MovieController {
         return new ResponseEntity<StatusDto>(statusDto, statusDto!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 별점
+    /**
+     * Add rate response entity.
+     *
+     * @param rateDto the rate dto
+     * @param request the request
+     * @return the response entity
+     */
+// 별점
     @PostMapping ("/rate")
     public ResponseEntity addRate(@RequestBody RateDto rateDto, HttpServletRequest request) {
         rateDto.setUserId(request.getUserPrincipal().getName());
         boolean result = movieService.addRate(rateDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * Update rate response entity.
+     *
+     * @param rateDto the rate dto
+     * @param request the request
+     * @return the response entity
+     */
     @PutMapping("/rate")
     public ResponseEntity updateRate(@RequestBody RateDto rateDto, HttpServletRequest request) {
         rateDto.setUserId(request.getUserPrincipal().getName());
         boolean result = movieService.updateRate(rateDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * Delete rate response entity.
+     *
+     * @param request the request
+     * @param movieId the movie id
+     * @return the response entity
+     */
     @DeleteMapping("/rate/{movieId}")
     public ResponseEntity deleteRate(HttpServletRequest request, @PathVariable String movieId) {
         RateDto rateDto = new RateDto();
@@ -50,13 +83,28 @@ public class MovieController {
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 보고싶어요
+    /**
+     * Add wish response entity.
+     *
+     * @param request the request
+     * @param wishDto the wish dto
+     * @return the response entity
+     */
+// 보고싶어요
     @PostMapping("/wish")
     public ResponseEntity addWish(HttpServletRequest request, @RequestBody WishDto wishDto) {
         wishDto.setUserId(request.getUserPrincipal().getName());
         boolean result = movieService.addWish(wishDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * Delete wish response entity.
+     *
+     * @param request the request
+     * @param movieId the movie id
+     * @return the response entity
+     */
     @DeleteMapping ("/wish/{movieId}")
     public ResponseEntity deleteWish(HttpServletRequest request, @PathVariable String movieId) {
         WishDto wishDto = new WishDto();
@@ -65,19 +113,41 @@ public class MovieController {
         boolean result = movieService.deleteWish(wishDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * Gets wish list.
+     *
+     * @param commonSelectDto the common select dto
+     * @return the wish list
+     */
     @GetMapping("/wish")
     public ResponseEntity<MovieListDto> getWishList(@ModelAttribute CommonSelectDto commonSelectDto) {
         MovieListDto result = movieService.getWishList(commonSelectDto);
         return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 보는 중
+    /**
+     * Add watching response entity.
+     *
+     * @param request     the request
+     * @param watchingDto the watching dto
+     * @return the response entity
+     */
+// 보는 중
     @PostMapping("/watching")
     public ResponseEntity addWatching(HttpServletRequest request, @RequestBody WatchingDto watchingDto) {
         watchingDto.setUserId(request.getUserPrincipal().getName());
         boolean result = movieService.addWatching(watchingDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * Delete watching response entity.
+     *
+     * @param request the request
+     * @param movieId the movie id
+     * @return the response entity
+     */
     @DeleteMapping ("/watching/{movieId}")
     public ResponseEntity deleteWatching(HttpServletRequest request, @PathVariable String movieId) {
         WatchingDto watchingDto = new WatchingDto();
@@ -86,27 +156,51 @@ public class MovieController {
         boolean result = movieService.deleteWatching(watchingDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * Gets watching list.
+     *
+     * @param commonSelectDto the common select dto
+     * @return the watching list
+     */
     @GetMapping("/watching")
     public ResponseEntity<MovieListDto> getWatchingList(@ModelAttribute CommonSelectDto commonSelectDto) {
         MovieListDto result = movieService.getWatchingList(commonSelectDto);
         return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Gets movie.
+     *
+     * @param id the id
+     * @return the movie
+     */
     @GetMapping("/movie/{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable String id) {
         MovieDto result = movieService.getMovie(id);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Gets movie list.
+     *
+     * @param movieSelectDto the movie select dto
+     * @return the movie list
+     */
     @GetMapping("/movies")
     public ResponseEntity<MovieListDto> getMovieList(@ModelAttribute MovieSelectDto movieSelectDto) {
         MovieListDto result = movieService.getMovieList(movieSelectDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * Gets movie rank list.
+     *
+     * @return the movie rank list
+     */
     @GetMapping("/movies/rank")
     public ResponseEntity<MovieRankListDto> getMovieRankList() {
-        MovieRankListDto result = movieService.getMovieRenkList();
+        MovieRankListDto result = movieService.getMovieRankList();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
