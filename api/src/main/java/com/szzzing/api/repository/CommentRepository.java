@@ -54,4 +54,8 @@ public class CommentRepository {
     public ArrayList<CommentDto> selectLikeList(CommentSelectDto commentSelectDto) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectLikeList", commentSelectDto);
     }
+
+    public int selectCommentCount() {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCommentCount");
+    }
 }

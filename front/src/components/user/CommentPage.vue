@@ -86,9 +86,4 @@ export default {
 </script>
 
 <style scoped>
-.inner {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
 </style>

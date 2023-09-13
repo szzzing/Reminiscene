@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("mailService")
 @Slf4j
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {

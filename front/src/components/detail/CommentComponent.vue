@@ -102,11 +102,11 @@ export default {
     align-items: center;
 }
 .title {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
 }
 .sub-title {
-    font-weight: 400;
+    font-weight: 500;
     color: var(--FOCUS);
     margin-left: 4px;
 }

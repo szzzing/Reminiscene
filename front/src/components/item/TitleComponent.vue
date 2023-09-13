@@ -20,12 +20,9 @@ export default {
     }
     .emoji {
         font-size: 40px;
-        font-weight: 900;
-        color: var(--G0);
     }
     .title {
-        color: var(--G1000);
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 600;
         line-height: 1.4;
     }

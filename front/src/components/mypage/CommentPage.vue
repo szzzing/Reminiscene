@@ -67,9 +67,4 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.inner {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
 </style>

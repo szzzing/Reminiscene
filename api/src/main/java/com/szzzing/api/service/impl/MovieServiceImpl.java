@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
-@Service
+@Service("movieService")
 @RequiredArgsConstructor
 @Slf4j
 public class MovieServiceImpl implements MovieService {

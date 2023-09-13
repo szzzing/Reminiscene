@@ -118,6 +118,11 @@
         limit #{limit} offset #{offset}
     </select>
 
+    <select id="selectCommentCount" resultType="_int">
+        select count(*)
+        from pandora3_ojt.comment
+    </select>
+
 
     <resultMap id="commentResultMap" type="com.szzzing.api.dto.comment.CommentDto">
         <result column="comment_id" property="id"/>

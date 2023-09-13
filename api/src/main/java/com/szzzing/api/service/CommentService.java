@@ -30,4 +30,6 @@ public interface CommentService {
     public boolean deleteLike(LikeDto likeDto);
 
     public CommentListDto getLikeCommentList(CommentSelectDto commentSelectDto);
+
+    int getCommentCount();
 }

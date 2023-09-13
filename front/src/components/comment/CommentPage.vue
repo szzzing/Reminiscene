@@ -75,7 +75,7 @@ export default {
         },
         withdrawUser() {
             this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });
-        }
+        },
     },
     watch: {
         '$route.params.id': 'fetchData',

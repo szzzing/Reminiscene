@@ -37,6 +37,8 @@ export default {
 .title {
     font-size: 18px;
     text-align: center;
+    color: var(--G700);
+    font-weight: 500;
 }
 .emoji {
     font-size: 40px;

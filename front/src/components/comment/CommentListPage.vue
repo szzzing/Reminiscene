@@ -101,14 +101,4 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.title {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.inner {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
 </style>

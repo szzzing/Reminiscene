@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="text" v-if="!comment.spoiler">{{ comment.content }}</div>
-            <div class="spoiler" v-if="comment.spoiler" @click.prevent="">
+            <div class="text spoiler" v-if="comment.spoiler" @click.prevent="">
                 스포일러가 있어요!
                 <div class="view-spoiler" @click.prevent="viewSpoiler(comment)">보기</div>
             </div>
@@ -36,6 +36,11 @@ export default {
 </script>
 
 <style scoped>
+.inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
 .item {
     border-radius: 8px;;
     padding: 20px 16px;

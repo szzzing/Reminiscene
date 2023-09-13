@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * The type Reply service.
  */
-@Service
+@Service("replyService")
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
     private final ReplyRepository replyRepository;

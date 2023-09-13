@@ -63,6 +63,7 @@ export default {
 .logo {
     font-size: 32px;
     margin-right: auto;
+    line-height: 1;
 }
 .themeBtn {
     font-size: 28px;

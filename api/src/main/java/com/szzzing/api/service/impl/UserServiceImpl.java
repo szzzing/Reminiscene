@@ -19,7 +19,7 @@ import java.security.Principal;
 import java.util.HashMap;
 
 @Slf4j
-@Service
+@Service("userService")
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
