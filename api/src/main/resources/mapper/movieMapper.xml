@@ -9,7 +9,8 @@
             ifnull((select rate_star from rate where rate_user_id=#{userId} and rate_movie_id=#{movieId}), 0) status_rate,
             (select count(*) from comment where comment_user_id=#{userId} and comment_movie_id=#{movieId})>0 status_is_comment,
             (select count(*) from watching where watching_user_id=#{userId} and watching_movie_id=#{movieId})>0 status_is_watching,
-            (select count(*) from wish where wish_user_id=#{userId} and wish_movie_id=#{movieId})>0 status_is_wish
+            (select count(*) from wish where wish_user_id=#{userId} and wish_movie_id=#{movieId})>0 status_is_wish,
+            (select comment_content from comment where comment_user_id=#{userId} and comment_movie_id=#{movieId}) status_comment_content
         from dual
     </select>
 
@@ -157,6 +158,7 @@
         <result column="status_is_comment" property="isComment"/>
         <result column="status_is_watching" property="isWatching"/>
         <result column="status_is_wish" property="isWish"/>
+        <result column="status_comment_content" property="commentContent"/>
     </resultMap>
 
     <resultMap id="wishResultMap" type="com.szzzing.api.dto.movie.WishDto">

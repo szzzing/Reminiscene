@@ -1,8 +1,9 @@
 <template>
     <comment-modal-component v-bind:movie="movie" v-if="this.commentModal"
     v-on:closeCommentModal="this.commentModal=false"
-    v-on:addComment="this.isComment = true"
-    v-bind:isComment="isComment">
+    v-on:addComment="this.isComment=true"
+    v-bind:isComment="isComment"
+    v-bind:commentContent="commentContent">
     </comment-modal-component>
 
     <div class="user-area">
@@ -53,6 +54,7 @@ export default {
             isComment: false,
             isWatching: false,
             isWish: false,
+            commentContent: null,
             rateText: '평가하기',
         }
     },
@@ -63,10 +65,20 @@ export default {
         checkUser() {
             return this.$store.state.auth.user;
         },
+        commentFlag() {
+            return this.$store.state.movie.commentFlag;
+        },
     },
     watch: {
         // 파라미터 변경
         '$route.params.id': 'fetchData',
+
+        // 코멘트 작성/수정
+        commentFlag() {
+            console.log("패치");
+            this.fetchData();
+            this.$store.commit("movie/setCommentFlag", false);
+        },
 
         // 로그아웃 감지
         checkUser() {
@@ -115,6 +127,7 @@ export default {
                     this.isComment = response.data.comment;
                     this.isWatching = response.data.watching;
                     this.isWish = response.data.wish;
+                    this.commentContent = response.data.commentContent;
                 });
             }
         },

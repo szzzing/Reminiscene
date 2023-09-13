@@ -70,8 +70,8 @@ export default {
                 this.comment = response.data;
             });
         },
-        updateUserLike(param) {
-            this.comment.userLike = param;
+        updateUserLike(value) {
+            this.comment.userLike = value;
         },
         withdrawUser() {
             this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });

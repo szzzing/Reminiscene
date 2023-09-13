@@ -8,4 +8,5 @@ public class StatusDto {
     private boolean isComment;
     private boolean isWish;
     private boolean isWatching;
+    private String commentContent;
 }

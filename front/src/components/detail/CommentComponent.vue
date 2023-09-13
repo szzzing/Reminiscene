@@ -82,6 +82,7 @@ export default {
     },
     watch: {
         '$route.params.id': 'fetchData',
+        // 코멘트 작성/수정
         commentFlag() {
             this.fetchData();
             this.$store.commit("movie/setCommentFlag", false);

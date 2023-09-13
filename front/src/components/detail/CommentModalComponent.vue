@@ -51,6 +51,7 @@ export default {
     props: [
         'movie',
         'isComment',
+        'commentContent',
     ],
     computed: {
         textCount() {
