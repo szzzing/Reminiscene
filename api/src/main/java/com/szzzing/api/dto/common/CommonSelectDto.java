@@ -8,7 +8,7 @@ public class CommonSelectDto {
     private String userId;
     private String movieId;
     private Integer page;
-    private final int limit = 4;
+    private final int limit = 12;
     private int offset;
     private String loginUser;
 
