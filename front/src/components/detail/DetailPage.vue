@@ -32,9 +32,6 @@ export default {
             .then((response)=>{
                 this.movie = response.data;
             })
-            .catch(()=>{
-                this.$router.push('/error');
-            });
         },
     },
     watch: {

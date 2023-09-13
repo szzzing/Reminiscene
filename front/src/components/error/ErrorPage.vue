@@ -3,7 +3,7 @@
         <div class="shadow emoji">⛔️</div>
         <div class="title">페이지가<br>존재하지 않아요
         </div>
-        <div class="route" @click="this.$router.go(-2)">이전페이지로 이동할래요</div>
+        <div class="route" @click="this.$router.replace('/')">메인으로 이동할래요</div>
     </div>
 </template>
 

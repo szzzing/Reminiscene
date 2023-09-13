@@ -33,7 +33,8 @@ axios.interceptors.response.use(
                 store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"다시 로그인해주세요." });
             }
             // 2) 로그인 페이지로 이동
-            router.push({ path: '/login' });
+            router.replace({ path: '/login' });
+            store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"로그인이 필요한 페이지예요." });
         }
 
         // 2. 권한 부족으로 인한 에러
@@ -46,14 +47,13 @@ axios.interceptors.response.use(
 
             // 2) 로그인이 되어있으면 에러페이지로
             } else if(store.state.auth.token!=null) {
-                router.push({ path: '/error' });
+                router.replace({ path: '/error' });
             }
         }
 
         // 2. PAGE NOT FOUND 에러
         if(error.response.status==404) {
-
-            router.push({ path: '/error' });
+            router.replace({ path: '/error' });
         }
 
         // 4. 서버 에러

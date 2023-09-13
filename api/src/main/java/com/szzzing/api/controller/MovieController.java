@@ -23,11 +23,11 @@ public class MovieController {
     private final MovieService movieService;
 
     /**
-     * Gets status.
+     * 유저 활동정보 불러오기
      *
      * @param request the request
-     * @param movieId the movie id
-     * @return the status
+     * @param movieId 영화코드
+     * @return 활동정보
      */
     @GetMapping("/status/{movieId}")
     public ResponseEntity<StatusDto> getStatus(HttpServletRequest request, @PathVariable String movieId) {
@@ -39,7 +39,7 @@ public class MovieController {
     }
 
     /**
-     * Add rate response entity.
+     * 영화 평가 추가
      *
      * @param rateDto the rate dto
      * @param request the request
@@ -54,7 +54,7 @@ public class MovieController {
     }
 
     /**
-     * Update rate response entity.
+     * 영화 평가 변경
      *
      * @param rateDto the rate dto
      * @param request the request
@@ -68,7 +68,7 @@ public class MovieController {
     }
 
     /**
-     * Delete rate response entity.
+     * 영화 평가 삭제
      *
      * @param request the request
      * @param movieId the movie id
@@ -84,13 +84,12 @@ public class MovieController {
     }
 
     /**
-     * Add wish response entity.
+     * 위시리스트 추가
      *
      * @param request the request
      * @param wishDto the wish dto
      * @return the response entity
      */
-// 보고싶어요
     @PostMapping("/wish")
     public ResponseEntity addWish(HttpServletRequest request, @RequestBody WishDto wishDto) {
         wishDto.setUserId(request.getUserPrincipal().getName());
@@ -99,7 +98,7 @@ public class MovieController {
     }
 
     /**
-     * Delete wish response entity.
+     * 위시리스트 삭제
      *
      * @param request the request
      * @param movieId the movie id
@@ -115,7 +114,7 @@ public class MovieController {
     }
 
     /**
-     * Gets wish list.
+     * 유저 위시리스트 조회
      *
      * @param commonSelectDto the common select dto
      * @return the wish list
@@ -127,13 +126,12 @@ public class MovieController {
     }
 
     /**
-     * Add watching response entity.
+     * 시청중인 영화 추가
      *
      * @param request     the request
      * @param watchingDto the watching dto
      * @return the response entity
      */
-// 보는 중
     @PostMapping("/watching")
     public ResponseEntity addWatching(HttpServletRequest request, @RequestBody WatchingDto watchingDto) {
         watchingDto.setUserId(request.getUserPrincipal().getName());
@@ -142,7 +140,7 @@ public class MovieController {
     }
 
     /**
-     * Delete watching response entity.
+     * 시청중인 영화 삭제
      *
      * @param request the request
      * @param movieId the movie id
@@ -158,7 +156,7 @@ public class MovieController {
     }
 
     /**
-     * Gets watching list.
+     * 유저 시청중인 영화 조회
      *
      * @param commonSelectDto the common select dto
      * @return the watching list
