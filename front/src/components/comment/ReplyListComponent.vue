@@ -127,11 +127,6 @@ export default {
                 }
             });
         },
-
-        reloadReply() {
-            this.fetchData();
-        },
-
         //작성
         clickReply() {
             if(this.$store.state.auth.user) {
@@ -140,7 +135,6 @@ export default {
                 this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
         },
-
         // 수정
         clickModify(reply) {
             this.reply = reply;
@@ -193,7 +187,8 @@ export default {
                 this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "이 코멘트의 좋아요를 취소했어요." });
             });
         },
-        // 신고
+
+        // 신고 클릭
         clickReport(reply) {
             this.reply = reply;
             this.reportModal = true;
@@ -207,13 +202,13 @@ export default {
             }
             this.axios.get("/reply", {params})
             .then((response)=>{
-                if(!response.data.list.length==0) {
-                    this.list = response.data.list;
-                    this.page = response.data.page + 1;
-                    this.state.loaded();
-                }
+                this.list = response.data.list;
+                this.page = response.data.page + 1;
+                this.state.loaded();
             });
         },
+
+        // 탈퇴 사용자 프로필 클릭
         withdrawUser() {
             this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });
         },

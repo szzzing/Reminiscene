@@ -70,6 +70,7 @@ export default {
         updateUserLike(value) {
             this.comment.userLike = value;
         },
+        // 탈퇴 사용자 프로필 클릭
         withdrawUser() {
             this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });
         },
