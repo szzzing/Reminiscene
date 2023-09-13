@@ -61,11 +61,8 @@ export default {
     },
     methods: {
         fetchData() {
-            const params = {
-                id: this.$route.params.id,
-            }
             // 코멘트 정보
-            this.axios.get('/comment', {params})
+            this.axios.get(`/comment/${this.$route.params.id}`)
             .then((response)=>{
                 this.comment = response.data;
             });

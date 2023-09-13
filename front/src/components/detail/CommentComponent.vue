@@ -65,7 +65,7 @@ export default {
                 sort: "famous",
                 movieId: this.$route.params.id,
             }
-            this.axios.get("/comments", {params})
+            this.axios.get("/comment", {params})
             .then((response)=>{
                 this.listCount = response.data.listCount;
                 this.list = response.data.list;
@@ -84,7 +84,9 @@ export default {
         '$route.params.id': 'fetchData',
         // 코멘트 작성/수정
         commentFlag() {
-            this.fetchData();
+            if(this.commentFlag) {
+                this.fetchData();
+            }
             this.$store.commit("movie/setCommentFlag", false);
         }
     },

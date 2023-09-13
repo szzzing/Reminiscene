@@ -29,29 +29,30 @@
 const LINE_FEED = 10;
 
 export default {
-    beforeCreate() {
-        const params = {
-            movieId: this.movie.id,
-            userId: this.$store.state.auth.user.id,
-        }
-        if(this.isComment) {
-            this.axios.get("/comment", {params})
-            .then((response)=>{
-                this.text = response.data.content;
-                this.isSpoiler = response.data.spoiler;
-            });
-        }
-    },
+    // beforeCreate() {
+    //     const params = {
+    //         movieId: this.movie.id,
+    //         userId: this.$store.state.auth.user.id,
+    //     }
+    //     if(this.isComment) {
+    //         this.axios.get("/comment", {params})
+    //         .then((response)=>{
+    //             this.text = response.data.content;
+    //             this.isSpoiler = response.data.spoiler;
+    //         });
+    //     }
+    // },
     data() {
         return {
-            text: '',
-            isSpoiler: false,
+            text: this.commentContent,
+            isSpoiler: this.commentIsSpoiler,
         }
     },
     props: [
         'movie',
         'isComment',
         'commentContent',
+        'commentIsSpoiler',
     ],
     computed: {
         textCount() {
@@ -89,7 +90,7 @@ export default {
                 }
                 this.axios.post("/comment", params)
                 .then(()=>{
-                    this.$emit("addComment");
+                    this.$emit("changeCommentStatus", this.text, this.isSpoiler);
                     this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: "코멘트를 작성했어요." });
                     this.$emit('closeCommentModal');
                     this.$store.commit("movie/setCommentFlag", true);
@@ -107,6 +108,7 @@ export default {
                 }
                 this.axios.put("/comment", params)
                 .then(()=>{
+                    this.$emit("changeCommentStatus", this.text, this.isSpoiler);
                     this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: "코멘트를 수정했어요." });
                     this.$emit('closeCommentModal');
                     this.$store.commit("movie/setCommentFlag", true);

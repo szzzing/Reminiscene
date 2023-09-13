@@ -9,4 +9,5 @@ public class StatusDto {
     private boolean isWish;
     private boolean isWatching;
     private String commentContent;
+    private boolean commentIsSpoiler;
 }

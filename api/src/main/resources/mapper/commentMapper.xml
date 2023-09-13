@@ -30,13 +30,7 @@
         from comment c
             join user u on comment_user_id = user_id
             join movie m on comment_movie_id = movie_id
-        where
-        <if test="id!=0">
-            comment_id=#{id}
-        </if>
-        <if test="id==0 and userId!=null and movieId!=null">
-            comment_user_id=#{userId} and comment_movie_id=#{movieId}
-        </if>
+        where comment_id=#{id}
     </select>
 
     <update id="updateOneComment">

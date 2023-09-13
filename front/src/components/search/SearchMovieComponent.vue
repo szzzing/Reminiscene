@@ -37,7 +37,7 @@ export default {
                 query: this.query,
                 page: this.page,
             }
-            this.axios.get("/movies", {params})
+            this.axios.get("/movie", {params})
             .then((response)=>{
                 if(response.data.list.length>0) {
                     this.movieList.push(...response.data.list);

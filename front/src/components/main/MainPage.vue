@@ -47,7 +47,7 @@ export default {
         }
     },
     beforeCreate() {
-        this.axios.get("/movies/rank")
+        this.axios.get("/movie/rank")
         .then((response)=>{
             this.monthBestList = response.data.monthBestList;
             this.bestRateList = response.data.bestRateList;

@@ -1,9 +1,10 @@
 <template>
     <comment-modal-component v-bind:movie="movie" v-if="this.commentModal"
-    v-on:closeCommentModal="this.commentModal=false"
-    v-on:addComment="this.isComment=true"
+    @closeCommentModal="this.commentModal=false"
+    @changeCommentStatus="this.changeCommentStatus"
     v-bind:isComment="isComment"
-    v-bind:commentContent="commentContent">
+    v-bind:commentContent="commentContent"
+    v-bind:commentIsSpoiler="commentIsSpoiler">
     </comment-modal-component>
 
     <div class="user-area">
@@ -55,6 +56,7 @@ export default {
             isWatching: false,
             isWish: false,
             commentContent: null,
+            commentIsSpoiler: false,
             rateText: '평가하기',
         }
     },
@@ -128,8 +130,15 @@ export default {
                     this.isWatching = response.data.watching;
                     this.isWish = response.data.wish;
                     this.commentContent = response.data.commentContent;
+                    this.commentIsSpoiler = response.data.commentIsSpoiler;
                 });
             }
+        },
+        // 코멘트 작성/수정
+        changeCommentStatus(content, spoiler) {
+            this.isComment=true;
+            this.commentContent = content;
+            this.commentIsSpoiler = spoiler;
         },
         // 별점 클릭
         clickRate(star) {

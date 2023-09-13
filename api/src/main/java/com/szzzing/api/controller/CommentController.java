@@ -48,16 +48,18 @@ public class CommentController {
     }
 
     /**
-     * 코멘트 1개 조회
+     * 코멘트 조회
      *
-     * @param commentSelectDto the comment select dto
-     * @param request          the request
+     * @param id        코멘트 코드
+     * @param request   로그인 사용자 정보
      * @return the comment
      */
-    @GetMapping("/comment")
-    public ResponseEntity<CommentDto> getComment(@ModelAttribute CommentSelectDto commentSelectDto, HttpServletRequest request) {
+    @GetMapping("/comment/{id}")
+    public ResponseEntity<CommentDto> getComment(@PathVariable int id, HttpServletRequest request) {
+        CommentSelectDto commentSelectDto = new CommentSelectDto();
         String loginUser  = request.getUserPrincipal()==null ? null : request.getUserPrincipal().getName();
         commentSelectDto.setLoginUser(loginUser);
+        commentSelectDto.setId(id);
 
         CommentDto result = commentService.getComment(commentSelectDto);
         return new ResponseEntity<>(result, result!=null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
@@ -70,7 +72,7 @@ public class CommentController {
      * @param request          the request
      * @return the comment list
      */
-    @GetMapping("/comments")
+    @GetMapping("/comment")
     public ResponseEntity<CommentListDto> getCommentList(@ModelAttribute CommentSelectDto commentSelectDto, HttpServletRequest request) {
         String loginUser  = request.getUserPrincipal()==null ? null : request.getUserPrincipal().getName();
         commentSelectDto.setLoginUser(loginUser);

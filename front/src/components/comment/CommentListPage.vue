@@ -64,7 +64,7 @@ export default {
                 sort: this.sort,
                 movieId: this.$route.params.id,
             }
-            this.axios.get("/comments", {params})
+            this.axios.get("/comment", {params})
             .then((response)=>{
                 if(response.data.list.length!=0) {
                     this.list.push(...response.data.list);
@@ -81,7 +81,7 @@ export default {
                 sort: this.sort,
                 movieId: this.$route.params.id,
             }
-            this.axios.get("/comments", {params})
+            this.axios.get("/comment", {params})
             .then((response)=>{
                 this.list = response.data.list;
                 this.page = response.data.page + 1;

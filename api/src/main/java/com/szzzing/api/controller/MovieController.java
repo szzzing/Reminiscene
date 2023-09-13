@@ -25,7 +25,7 @@ public class MovieController {
     /**
      * 유저 활동정보 불러오기
      *
-     * @param request the request
+     * @param request 사용자 정보
      * @param movieId 영화코드
      * @return 활동정보
      */
@@ -168,10 +168,10 @@ public class MovieController {
     }
 
     /**
-     * Gets movie.
+     * 영화 조회
      *
-     * @param id the id
-     * @return the movie
+     * @param id 영화 코드
+     * @return 영화
      */
     @GetMapping("/movie/{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable String id) {
@@ -180,23 +180,23 @@ public class MovieController {
     }
 
     /**
-     * Gets movie list.
+     * 영화 리스트 조회
      *
      * @param movieSelectDto the movie select dto
-     * @return the movie list
+     * @return 영화 리스트
      */
-    @GetMapping("/movies")
+    @GetMapping("/movie")
     public ResponseEntity<MovieListDto> getMovieList(@ModelAttribute MovieSelectDto movieSelectDto) {
         MovieListDto result = movieService.getMovieList(movieSelectDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
-     * Gets movie rank list.
+     * 영화 순위 리스트 조회
      *
-     * @return the movie rank list
+     * @return 순위 리스트
      */
-    @GetMapping("/movies/rank")
+    @GetMapping("/movie/rank")
     public ResponseEntity<MovieRankListDto> getMovieRankList() {
         MovieRankListDto result = movieService.getMovieRankList();
         return new ResponseEntity<>(result, HttpStatus.OK);

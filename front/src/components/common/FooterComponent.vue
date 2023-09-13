@@ -1,9 +1,30 @@
 <template>
 <div id="footer">
-    <div class="container">
-        <div class="inner">
-            <div class="count">지금까지 <span class="accent">{{ count }}개의 코멘트</span>가 쌓였어요.</div>
-            <div class="copyright">copyright ⓒ szzzing🌙 All Rights Reserved</div>
+    <div class="count">
+        <div class="container">
+            <div class="summary">지금까지 ⭐️<span class="accent">{{ count }}개의 코멘트</span>가 쌓였어요.</div>
+        </div>
+    </div>
+    <div class="information">
+        <div class="container">
+            <div class="item">
+                <div class="subject">고객센터</div>
+                <div class="section">|</div>
+                <div>mrge.tistory.com</div>
+            </div>
+            <div class="item">
+                <div class="subject">광고문의</div>
+                <div class="section">|</div>
+                <div>github.com/szzzing ・ 02-1234-1234</div>
+            </div>
+            <div class="item">
+                <div class="subject">제휴 및 대외 협력</div>
+                <div class="section">|</div>
+                <div>xxszzzing@gmail.com</div>
+            </div>
+        </div>
+        <div class="container copyright">
+            🌙 Reminiscene ⓒ 2023 by szzzing, All rights reserved
         </div>
     </div>
 </div>
@@ -34,36 +55,41 @@ export default {
 </script>
 
 <style scoped>
-#footer {
-    padding: 24px 0 72px;
-    background: var(--G1000);
-}
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
 * {
-    color: var(--G300);
-    font-size: 14px;
-}
-.inner {
-    text-align: center;
-}
-.count {
-    font-size: 18px;
-    font-weight: 600;
-}
-.copyright {
     color: var(--G400);
 }
+.count {
+    background: var(--G900);
+    padding: 14px 0;
+    text-align: center;
+}
+.dark .count {
+    background: var(--G1000);
+}
+.information {
+    background: var(--G800);
+    padding: 20px 0 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.summary {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--G200);
+    letter-spacing: 0.2px;
+}
 .accent {
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 20px;
     color: var(--FOCUS);
+}
+.copyright {
+    color: var(--G500);
 }
 .item {
     display: flex;
     gap: 8px;
+    font-size: 14px;
 }
 </style>

@@ -53,7 +53,7 @@ export default {
                 page: 1,
                 loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
             }
-            this.axios.get("/comments", {params})
+            this.axios.get("/comment", {params})
             .then((response)=>{
                 this.list = response.data.list;
                 this.page = response.data.page + 1;
@@ -68,7 +68,7 @@ export default {
                 page: this.page,
                 loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
             }
-            this.axios.get("/comments", {params})
+            this.axios.get("/comment", {params})
             .then((response)=>{
                 const list = response.data.list;
                 if(list.length!=0) {
