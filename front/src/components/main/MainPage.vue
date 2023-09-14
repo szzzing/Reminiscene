@@ -55,8 +55,8 @@ export default {
     },
     methods: {
         clickSearch() {
-            if(this.query!='') {
-                this.$router.push("/search/"+this.query);
+            if(this.query.trim()!='') {
+                this.$router.push("/search/"+this.query.trim());
                 this.query = '';
             }
         }

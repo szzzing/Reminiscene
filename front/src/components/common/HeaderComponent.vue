@@ -36,8 +36,8 @@ export default {
             this.$store.commit("modal/setProfile", payload);
         },
         clickSearch() {
-            if(this.query!='') {
-                this.$router.push("/search/"+this.query);
+            if(this.query.trim()!='') {
+                this.$router.push("/search/"+this.query.trim());
                 this.query = '';
             }
         }

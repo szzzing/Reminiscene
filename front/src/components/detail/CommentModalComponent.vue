@@ -8,7 +8,7 @@
                         <i class="close fa-solid fa-circle-xmark" @click="$emit('closeCommentModal')"></i>
                     </div>
                     <div class="inner">
-                        <textarea class="text" v-model="this.text" placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요."></textarea>
+                        <textarea class="text" v-model="this.text" placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요." maxlength="4000"></textarea>
                     </div>
                     <div class="inner">
                         <div class="is-spoiler" :class="{'checked' : this.isSpoiler}">

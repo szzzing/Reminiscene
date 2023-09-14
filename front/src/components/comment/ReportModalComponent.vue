@@ -12,7 +12,7 @@
                     </div>
                     <div class="inner">
                         <div class="count-text">{{ this.textCount }}/1000</div>
-                        <div class="medium-button" @click="this.addReport()" :class="{'disabled': this.textCount==0 || this.textCount>4000 }">저장</div>
+                        <div class="medium-button" @click="this.addReport()" :class="{'disabled': this.textCount==0 || this.textCount>1000 }">저장</div>
                     </div>
                 </div>
             </div>

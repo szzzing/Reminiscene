@@ -10,6 +10,9 @@
     color: var(--G1000);
     box-sizing: border-box;
     line-height: 1.6;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 body {

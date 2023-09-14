@@ -8,11 +8,11 @@
                         <i class="close fa-solid fa-circle-xmark" @click="$emit('closeModifyModal')"></i>
                     </div>
                     <div class="inner">
-                        <textarea class="text" v-model="this.text" placeholder="이 코멘트에 대한 생각을 자유롭게 표현해주세요."></textarea>
+                        <textarea class="text" v-model="this.text" placeholder="이 코멘트에 대한 생각을 자유롭게 표현해주세요." maxlength="1000"></textarea>
                     </div>
                     <div class="inner">
                         <div class="count-text">{{ this.textCount }}/1000</div>
-                        <div class="medium-button" @click="this.modifyReply()" :class="{'disabled': this.textCount==0 || this.textCount>4000 }">저장</div>
+                        <div class="medium-button" @click="this.modifyReply()" :class="{'disabled': this.textCount==0 || this.textCount>1000 }">저장</div>
                     </div>
                 </div>
             </div>
