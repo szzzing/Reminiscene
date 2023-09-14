@@ -3,7 +3,7 @@
     <reply-modal-component v-bind:comment="comment"
     v-if="this.comment && this.replyModal"
     v-on:closeReplyModal="this.replyModal=false"
-    v-on:reloadReply="this.reloadReply">
+    v-on:reloadReply="this.fetchData">
     </reply-modal-component>
 
     <!-- 댓글 수정 모달 -->
