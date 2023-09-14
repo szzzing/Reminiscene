@@ -89,19 +89,18 @@ export default {
 .info {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
 }
 .basic-info,
 .more-info {
     display: flex;
-    align-items: center;
+    flex-direction: column;
 }
 .basic-info {
     gap: 8px;
 }
-.more-info {
-    flex-direction: column;
-    align-items: normal;
+.basic-info * {
+    line-height: 1;
 }
 .birthday, .gender, .email {
     color: var(--G400);

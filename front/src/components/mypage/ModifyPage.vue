@@ -149,6 +149,14 @@ export default {
         setPreviewImage() {
             // 사진이 있을 시 사진 주소, 없을 시 null
             if(this.$refs.uploadImage.value!='') {
+                // 파일용량 체크
+                var size = this.$refs.uploadImage.files[0].size;
+                if (size > 2000000) {
+                    this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"7MB를 넘는 이미지는 사용할 수 없어요." });
+                    // 파일 입력 초기화
+                    this.$refs.uploadImage.value = '';
+                    return;
+                }
                 const url = URL.createObjectURL(this.$refs.uploadImage.files[0]);
                 this.previewImage = url;
             } else {

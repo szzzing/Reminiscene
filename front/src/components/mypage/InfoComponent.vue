@@ -9,8 +9,9 @@
             <div class="info">
                 <div class="basic-info">
                     <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
-                    <div class="id">{{ "@" + this.user.id }}</div>
-                    <router-link class="modify" to="/mypage/modify">⚙️</router-link>
+                    <div class="id">{{ "@" + this.user.id }}
+                        <router-link class="modify" to="/mypage/modify">⚙️</router-link>
+                    </div>
                 </div>
                 <div class="more-info">
                     <div class="birthday">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.') : "비공개" }}</div>
@@ -89,7 +90,7 @@ export default {
     font-size: 96px;
 }
 .modify {
-    font-size: 20px;
+    font-size: 18px;
     opacity: 0.7;
 }
 .nickname {
@@ -103,19 +104,18 @@ export default {
 .info {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
 }
 .basic-info,
 .more-info {
     display: flex;
-    align-items: center;
+    flex-direction: column;
 }
 .basic-info {
     gap: 8px;
 }
-.more-info {
-    flex-direction: column;
-    align-items: normal;
+.basic-info * {
+    line-height: 1;
 }
 .birthday, .gender, .email {
     color: var(--G400);

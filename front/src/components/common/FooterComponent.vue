@@ -74,23 +74,23 @@ export default {
     gap: 20px;
 }
 .summary {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     color: var(--G200);
     letter-spacing: 0.2px;
 }
 .accent {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     color: var(--FOCUS);
 }
 .copyright, .copyright b {
     color: var(--G500);
-    font-size: 14px;
+    font-size: 12px;
 }
 .item {
     display: flex;
     gap: 8px;
-    font-size: 14px;
+    font-size: 12px;
 }
 </style>
