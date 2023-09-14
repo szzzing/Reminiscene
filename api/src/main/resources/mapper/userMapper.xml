@@ -21,29 +21,29 @@
                (select count(*) from pandora3_ojt.like where like_user_id=#{id}) as user_like_count,
                (select count(*) from pandora3_ojt.comment where comment_user_id=#{id}) as user_comment_count
         from user u
-        where user_id=#{id} and user_enable=true
+        where binary user_id=#{id} and user_enable=true
     </select>
 
     <select id="selectOneByEmail" resultMap="userResultMap">
         select * from user
-        where user_email=#{email}
+        where binary user_email=#{email}
     </select>
 
     <select id="selectOneByIdEmail" resultMap="userResultMap">
         select * from user
-        where user_email=#{email} and user_id=#{id}
+        where binary user_email=#{email} and user_id=#{id}
     </select>
 
     <select id="selectCountById" resultType="_int">
         select count(*) from user
-        where user_id=#{id}
+        where binary user_id=#{id}
     </select>
 
     <select id="selectCountByNickname" resultType="_int">
         select count(*) from user
         where user_nickname=#{nickname}
         <if test="loginUser!=null">
-            and user_id!=#{loginUser}
+            and binary user_id!=#{loginUser}
         </if>
     </select>
 
@@ -51,7 +51,7 @@
         select count(*) from user
         where user_email=#{email}
         <if test="loginUser!=null">
-            and user_id!=#{loginUser}
+            and binary user_id!=#{loginUser}
         </if>
     </select>
 
@@ -63,20 +63,20 @@
             user_birthday = #{birthday},
             user_mod_date = current_timestamp,
             user_profile_image = #{newImage}
-        where user_id = #{id}
+        where binary user_id = #{id}
     </update>
 
     <update id="updateOnePw">
         update user
         set user_pw = #{pw},
             user_mod_date = current_timestamp
-        where user_id = #{id}
+        where binary user_id = #{id}
     </update>
 
     <update id="updateOneEnable">
         update user
         set user_enable = false
-        where user_id = #{id}
+        where binary user_id = #{id}
     </update>
 
     <select id="selectUserList" resultMap="userResultMap">

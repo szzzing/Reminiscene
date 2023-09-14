@@ -2,20 +2,14 @@
 
     <div id="comment" class="container" v-if="this.comment">
         <div class="inner">
-            <div class="profile" v-if="comment.userEnable">
-                <router-link v-if="comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }" :to="`/user/${comment.userId}`"></router-link>
-                <router-link class="no-image" v-if="!comment.profileImage" :to="`/user/${comment.userId}`"><i class="fa-solid fa-user"></i></router-link>
+            <div class="profile">
+                <router-link v-if="comment.userEnable && comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }" :to="`/user/${comment.userId}`"></router-link>
+                <router-link v-if="comment.userEnable && !comment.profileImage" class="no-image" :to="`/user/${comment.userId}`"><i class="fa-solid fa-user"></i></router-link>
+                <div v-if="!comment.userEnable && comment.profileImage" @click="withdrawUser" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }"></div>
+                <div v-if="!comment.userEnable && !comment.profileImage" class="no-image" @click="withdrawUser"><i class="fa-solid fa-user"></i></div>
                 <div>
                     <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
-                    <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
-                </div>
-            </div>
-            <div class="profile" v-if="!comment.userEnable">
-                <div v-if="comment.profileImage" @click="withdrawUser" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }"></div>
-                <div class="no-image" @click="withdrawUser" v-if="!comment.profileImage"><i class="fa-solid fa-user"></i></div>
-                <div>
-                    <div class="nickname">{{ comment.nickname ? comment.nickname : comment.userId }}</div>
-                    <div class="create-date">{{ comment.creDate.substr(0,10).replace(/-/g, ".") }}</div>
+                    <div class="create-date">{{ this.elapsedTime(comment.creDate) }} {{ comment.creDate==comment.modDate ? "" : "・ 수정됨" }}</div>
                 </div>
             </div>
 
@@ -53,6 +47,7 @@ export default {
     },
     async created() {
         this.fetchData();
+        console.log(this.elapsedTime("2022-08-21T18:18:34.000+00:00"));
     },
     data() {
         return {
@@ -73,6 +68,30 @@ export default {
         // 탈퇴 사용자 프로필 클릭
         withdrawUser() {
             this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });
+        },
+        // 현재 기준 시간
+        elapsedTime(date) {
+            const start = new Date(date);
+            const end = new Date();
+
+            const diff = (end - start) / 1000;
+            
+            const times = [
+                { name: '년', milliSeconds: 60 * 60 * 24 * 365 },
+                { name: '개월', milliSeconds: 60 * 60 * 24 * 30 },
+                { name: '일', milliSeconds: 60 * 60 * 24 },
+                { name: '시간', milliSeconds: 60 * 60 },
+                { name: '분', milliSeconds: 60 },
+            ];
+
+            for (const value of times) {
+                const betweenTime = Math.floor(diff / value.milliSeconds);
+
+                if (betweenTime > 0) {
+                return `${betweenTime}${value.name} 전`;
+                }
+            }
+            return '방금 전';
         },
     },
     watch: {

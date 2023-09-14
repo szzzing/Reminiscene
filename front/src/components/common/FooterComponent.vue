@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="container copyright">
-            🌙 Reminiscene ⓒ 2023 by szzzing, All rights reserved
+            <b>Reminiscene🌙</b> ⓒ 2023 by szzzing, All rights reserved
         </div>
     </div>
 </div>
@@ -60,7 +60,7 @@ export default {
 }
 .count {
     background: var(--G900);
-    padding: 14px 0;
+    padding: 16px 0;
     text-align: center;
 }
 .dark .count {
@@ -84,8 +84,9 @@ export default {
     font-size: 20px;
     color: var(--FOCUS);
 }
-.copyright {
+.copyright, .copyright b {
     color: var(--G500);
+    font-size: 14px;
 }
 .item {
     display: flex;

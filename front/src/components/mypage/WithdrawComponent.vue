@@ -42,6 +42,10 @@ export default {
     },
     methods: {
         clickWithdraw() {
+            if(!this.pw || this.pw.length==0) {
+                this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"비밀번호를 입력해주세요." });
+                return;
+            }
             const params = { pw: this.pw, };
             this.axios.get("/user/match/pw", {params})
             .then((response)=>{

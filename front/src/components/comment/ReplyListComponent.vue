@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="content">{{ reply.content }}</div>
-                    <div class="create-date">{{ reply.creDate.substr(0,10).replace(/-/g, ".") }}</div>
+                    <div class="create-date">{{ this.elapsedTime(reply.creDate) }} {{ reply.creDate==reply.modDate ? "" : "・ 수정됨" }}</div>
                 </div>
             </div>
         </transition-group>
@@ -142,6 +142,7 @@ export default {
         },
         updateReply(params) {
             this.list.find(e => e.id===params.id).content = params.content;
+            this.list.find(e => e.id===params.id).modDate = new Date();
         },
 
         // 삭제
@@ -211,6 +212,31 @@ export default {
         // 탈퇴 사용자 프로필 클릭
         withdrawUser() {
             this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"탈퇴한 사용자예요." });
+        },
+
+        // 현재 기준 시간
+        elapsedTime(date) {
+            const start = new Date(date);
+            const end = new Date();
+
+            const diff = (end - start) / 1000;
+            
+            const times = [
+                { name: '년', milliSeconds: 60 * 60 * 24 * 365 },
+                { name: '개월', milliSeconds: 60 * 60 * 24 * 30 },
+                { name: '일', milliSeconds: 60 * 60 * 24 },
+                { name: '시간', milliSeconds: 60 * 60 },
+                { name: '분', milliSeconds: 60 },
+            ];
+
+            for (const value of times) {
+                const betweenTime = Math.floor(diff / value.milliSeconds);
+
+                if (betweenTime > 0) {
+                return `${betweenTime}${value.name} 전`;
+                }
+            }
+            return '방금 전';
         },
     },
     watch: {
