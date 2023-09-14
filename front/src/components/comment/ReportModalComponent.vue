@@ -8,7 +8,7 @@
                         <i class="close fa-solid fa-circle-xmark" @click="$emit('closeReportModal')"></i>
                     </div>
                     <div class="inner">
-                        <textarea class="text" v-model="this.text" placeholder="신고할 내용을 자세히 작성해주세요."></textarea>
+                        <textarea class="text" v-model="this.text" @input="this.count($event)" maxlength="1000" placeholder="신고할 내용을 자세히 작성해주세요."></textarea>
                     </div>
                     <div class="inner">
                         <div class="count-text">{{ this.textCount }}/1000</div>
@@ -21,45 +21,30 @@
 </template>
 
 <script>
-const LINE_FEED = 10;
-
 export default {
     data() {
         return {
             text: null,
+            textCount: 0,
         }
     },
     props: [
         'reply',
     ],
-    computed: {
-        textCount() {
-            return this.getByte(this.text);
-        }
-    },
     watch: {
         textCount() {
-            if(this.textCount>1000) {
-                this.$store.commit("modal/setAlert", { alertEmoji: "⚠️", alertText: "글자수를 초과했어요." });
+            if(this.textCount>=1000) {
+                this.$store.commit("modal/setAlert", { alertEmoji: "⚠️", alertText: "최대 글자수를 채웠어요." });
             }
         }
     },
     methods: {
-        getByteLength(decimal) {
-            return (decimal >> 7) || (LINE_FEED === decimal) ? 2 : 1
-        },
-        getByte(str) {
-            if(str) {
-                return str
-                .split('')
-                .map((s) => s.charCodeAt(0))
-                .reduce((prev, unicodeDecimalValue) => prev + this.getByteLength(unicodeDecimalValue), 0)
-            } else {
-                return 0;
-            }
+        count(event) {
+            this.textCount = event.target.value.length;
         },
         addReport() {
-            const content = this.xssFilter(this.text);
+            // const content = this.xssFilter(this.text);
+            const content = this.text;
             const params = {
                 replyId: this.reply.id,
                 content: content,
@@ -70,11 +55,11 @@ export default {
                 this.$store.commit("modal/setAlert", { alertEmoji: "😃", alertText: "신고를 접수했어요." });
             });
         },
-        xssFilter(text) {
-            text = text.replace(/</g, "&lt;");
-            text = text.replace(/>/g, "&gt;");
-            return text;
-        },
+        // xssFilter(text) {
+        //     text = text.replace(/</g, "&lt;");
+        //     text = text.replace(/>/g, "&gt;");
+        //     return text;
+        // },
     }
 }
 </script>

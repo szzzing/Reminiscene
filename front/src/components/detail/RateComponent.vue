@@ -77,7 +77,6 @@ export default {
 
         // 코멘트 작성/수정
         commentFlag() {
-            console.log("패치");
             this.fetchData();
             this.$store.commit("movie/setCommentFlag", false);
         },

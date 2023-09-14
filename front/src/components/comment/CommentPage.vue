@@ -47,7 +47,6 @@ export default {
     },
     async created() {
         this.fetchData();
-        console.log(this.elapsedTime("2022-08-21T18:18:34.000+00:00"));
     },
     data() {
         return {

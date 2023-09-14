@@ -8,7 +8,7 @@
                         <i class="close fa-solid fa-circle-xmark" @click="$emit('closeReplyModal')"></i>
                     </div>
                     <div class="inner">
-                        <textarea class="text" v-model="this.text" placeholder="이 코멘트에 대한 생각을 자유롭게 표현해주세요." maxlength="1000"></textarea>
+                        <textarea class="text" v-model="this.text" @input="this.count($event)" placeholder="이 코멘트에 대한 생각을 자유롭게 표현해주세요." maxlength="1000"></textarea>
                     </div>
                     <div class="inner">
                         <div class="count-text">{{ this.textCount }}/1000</div>
@@ -21,8 +21,6 @@
 </template>
 
 <script>
-const LINE_FEED = 10;
-
 export default {
     beforeCreate() {
         
@@ -30,6 +28,7 @@ export default {
     data() {
         return {
             text: '',
+            textCount: 0,
         }
     },
     props: [
@@ -38,31 +37,16 @@ export default {
     emits: [
         'reloadReply', 'closeReplyModal',
     ],
-    computed: {
-        textCount() {
-            return this.getByte(this.text);
-        }
-    },
     watch: {
         textCount() {
-            if(this.textCount>1000) {
-                this.$store.commit("modal/setAlert", { alertEmoji: "⚠️", alertText: "글자수를 초과했어요." });
+            if(this.textCount==1000) {
+                this.$store.commit("modal/setAlert", { alertEmoji: "⚠️", alertText: "최대 글자수를 채웠어요." });
             }
         }
     },
     methods: {
-        getByteLength(decimal) {
-            return (decimal >> 7) || (LINE_FEED === decimal) ? 2 : 1
-        },
-        getByte(str) {
-            if(str) {
-                return str
-                .split('')
-                .map((s) => s.charCodeAt(0))
-                .reduce((prev, unicodeDecimalValue) => prev + this.getByteLength(unicodeDecimalValue), 0)
-            } else {
-                return 0;
-            }
+        count(event) {
+            this.textCount = event.target.value.length;
         },
         addReply() {
             const params = {

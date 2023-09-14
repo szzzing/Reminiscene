@@ -8,16 +8,16 @@
                         <i class="close fa-solid fa-circle-xmark" @click="$emit('closeCommentModal')"></i>
                     </div>
                     <div class="inner">
-                        <textarea class="text" v-model="this.text" placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요." maxlength="4000"></textarea>
+                        <textarea class="text" v-model="this.text" @input="this.count($event)" placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요." maxlength="2000"></textarea>
                     </div>
                     <div class="inner">
                         <div class="is-spoiler" :class="{'checked' : this.isSpoiler}">
                             <i class="fa-solid fa-square-check" @click="this.isSpoiler = !this.isSpoiler"></i>
                             <div>스포일러가 있어요</div>
                         </div>
-                        <div class="count-text">{{ this.textCount }}/4000</div>
-                        <div v-if="!isComment" class="medium-button" @click="this.addComment()" :class="{'disabled': this.textCount==0 || this.textCount>4000 }">저장</div>
-                        <div v-if="isComment" class="medium-button" @click="this.modifyComment()" :class="{'disabled': this.textCount==0 || this.textCount>4000 }">수정</div>
+                        <div class="count-text">{{ this.textCount }}/2000</div>
+                        <div v-if="!isComment" class="medium-button" @click="this.addComment()" :class="{'disabled': this.textCount==0 || this.textCount>2000 }">저장</div>
+                        <div v-if="isComment" class="medium-button" @click="this.modifyComment()" :class="{'disabled': this.textCount==0 || this.textCount>2000 }">수정</div>
                     </div>
                 </div>
             </div>
@@ -26,25 +26,11 @@
 </template>
 
 <script>
-const LINE_FEED = 10;
-
 export default {
-    // beforeCreate() {
-    //     const params = {
-    //         movieId: this.movie.id,
-    //         userId: this.$store.state.auth.user.id,
-    //     }
-    //     if(this.isComment) {
-    //         this.axios.get("/comment", {params})
-    //         .then((response)=>{
-    //             this.text = response.data.content;
-    //             this.isSpoiler = response.data.spoiler;
-    //         });
-    //     }
-    // },
     data() {
         return {
             text: this.commentContent,
+            textCount: this.commentContent ? this.commentContent.length : 0,
             isSpoiler: this.commentIsSpoiler,
         }
     },
@@ -54,31 +40,16 @@ export default {
         'commentContent',
         'commentIsSpoiler',
     ],
-    computed: {
-        textCount() {
-            return this.getByte(this.text);
-        }
-    },
     watch: {
         textCount() {
-            if(this.textCount>4000) {
-                this.$store.commit("modal/setAlert", { alertEmoji: "⚠️", alertText: "글자수를 초과했어요." });
+            if(this.textCount>=2000) {
+                this.$store.commit("modal/setAlert", { alertEmoji: "⚠️", alertText: "최대 글자수를 채웠어요." });
             }
         }
     },
     methods: {
-        getByteLength(decimal) {
-            return (decimal >> 7) || (LINE_FEED === decimal) ? 2 : 1
-        },
-        getByte(str) {
-            if(str) {
-                return str
-                .split('')
-                .map((s) => s.charCodeAt(0))
-                .reduce((prev, unicodeDecimalValue) => prev + this.getByteLength(unicodeDecimalValue), 0)
-            } else {
-                return 0;
-            }
+        count(event) {
+            this.textCount = event.target.value.length;
         },
         addComment() {
             if(this.textCount!=0 && this.textCount<=4000) {
