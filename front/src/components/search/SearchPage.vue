@@ -3,7 +3,7 @@
         <title-component>
             <template v-slot:emoji>🧞‍♂️</template>
             <template v-slot:title>
-                {{ this.query }}의 검색 결과
+                {{ this.query }}의 검색결과
             </template>
         </title-component>
         <router-view v-bind:query="query" :key="$route.params.query"></router-view>

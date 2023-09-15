@@ -3,7 +3,7 @@
 
         <div class="inner">
             <div class="menu">
-                <div class="title">🎞 작품 검색결과</div>
+                <div class="title">🎥 작품 검색결과</div>
                 <router-link :to="`/search/movie/${this.query}`" v-if="this.movieList.length!=0">더보기</router-link>
             </div>
             <movie-list-component v-bind:list="movieList" v-bind:hide="true"></movie-list-component>
