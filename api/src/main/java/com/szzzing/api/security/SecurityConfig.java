@@ -59,7 +59,6 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
             // 라우터 관련
             .requestMatchers("/route/auth/**", "/route/login").anonymous()
-            .requestMatchers("/route/list", "/route/detail").permitAll()
             .requestMatchers("/route/mypage/**").authenticated()
             .anyRequest().permitAll();
 
