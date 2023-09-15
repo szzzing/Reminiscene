@@ -41,11 +41,10 @@ public class MovieController {
     /**
      * 영화 평가 추가
      *
-     * @param rateDto the rate dto
-     * @param request the request
-     * @return the response entity
+     * @param rateDto 평가할 영화, 별점 개수
+     * @param request 사용자 정보
+     * @return 추가 결과
      */
-// 별점
     @PostMapping ("/rate")
     public ResponseEntity addRate(@RequestBody RateDto rateDto, HttpServletRequest request) {
         rateDto.setUserId(request.getUserPrincipal().getName());
@@ -56,9 +55,9 @@ public class MovieController {
     /**
      * 영화 평가 변경
      *
-     * @param rateDto the rate dto
-     * @param request the request
-     * @return the response entity
+     * @param rateDto 변경할 평가 정보
+     * @param request 사용자 정보
+     * @return 변경 결과
      */
     @PutMapping("/rate")
     public ResponseEntity updateRate(@RequestBody RateDto rateDto, HttpServletRequest request) {
@@ -70,9 +69,9 @@ public class MovieController {
     /**
      * 영화 평가 삭제
      *
-     * @param request the request
-     * @param movieId the movie id
-     * @return the response entity
+     * @param request 삭제할 평가 유저 아이디
+     * @param movieId 삭제할 평가 영화 코드
+     * @return 삭제 결과
      */
     @DeleteMapping("/rate/{movieId}")
     public ResponseEntity deleteRate(HttpServletRequest request, @PathVariable String movieId) {
@@ -86,9 +85,9 @@ public class MovieController {
     /**
      * 위시리스트 추가
      *
-     * @param request the request
-     * @param wishDto the wish dto
-     * @return the response entity
+     * @param request 사용자 정보
+     * @param wishDto 추가할 영화 코드
+     * @return 추가 결과
      */
     @PostMapping("/wish")
     public ResponseEntity addWish(HttpServletRequest request, @RequestBody WishDto wishDto) {
@@ -100,9 +99,9 @@ public class MovieController {
     /**
      * 위시리스트 삭제
      *
-     * @param request the request
-     * @param movieId the movie id
-     * @return the response entity
+     * @param request 삭제할 위시리스트 유저 아이디
+     * @param movieId 삭제할 위시리스트 영화 코드
+     * @return 삭제 결과
      */
     @DeleteMapping ("/wish/{movieId}")
     public ResponseEntity deleteWish(HttpServletRequest request, @PathVariable String movieId) {
@@ -158,8 +157,8 @@ public class MovieController {
     /**
      * 유저 시청중인 영화 조회
      *
-     * @param commonSelectDto the common select dto
-     * @return the watching list
+     * @param commonSelectDto 유저 아이디, 가져올 페이지
+     * @return 시청중인 영화 리스트
      */
     @GetMapping("/watching")
     public ResponseEntity<MovieListDto> getWatchingList(@ModelAttribute CommonSelectDto commonSelectDto) {
@@ -182,7 +181,7 @@ public class MovieController {
     /**
      * 영화 리스트 조회
      *
-     * @param movieSelectDto the movie select dto
+     * @param movieSelectDto 검색어, 페이지 정보
      * @return 영화 리스트
      */
     @GetMapping("/movie")
