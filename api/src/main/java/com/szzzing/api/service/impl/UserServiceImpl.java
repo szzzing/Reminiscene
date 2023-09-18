@@ -20,7 +20,6 @@ import java.util.HashMap;
 
 @Slf4j
 @Service("userService")
-@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -40,51 +39,57 @@ public class UserServiceImpl implements UserService {
     }
 
     // 내 정보 수정
+    @Transactional
     public boolean mypageModify(UserModifyDto userModifyDto) throws RuntimeException {
+        log.info(userModifyDto.toString());
+        int result = 0;
 
         if(userModifyDto.getOriginalImage()!=null) userModifyDto.setOriginalImage(userModifyDto.getOriginalImage().replace(profieDir, ""));
         if(userModifyDto.getNewImage()!=null) userModifyDto.setNewImage(userModifyDto.getNewImage().replace(profieDir, ""));
         FileDto fileDto = FileUtil.getFileDto(userModifyDto.getUploadFile(), "profile");
 
         /*
-         * 1. 프로필 사진 완전 삭제 new=null, original!=null, upload=null v
-         * 2. 프로필 사진 업로드 - 기본프사였음 new!=null, original=null, upload!=null v
-         * 3. 프로필 사진 업로드 - 기존사진삭제 new!=null, original!=null, upload!=null v
-         * 4. 프로필 사진 그대로 new!=null, original!=null, upload=null
+         * 1. 프로필 사진 완전 삭제
+         * 2. 프로필 사진 업로드 - 기본프사였음
+         * 3. 프로필 사진 업로드 - 기존사진삭제
+         * 4. 프로필 사진 그대로
          */
 
         // 1. 프로필 사진 완전 삭제
         if (userModifyDto.getNewImage()==null) {
             // 삭제
-            FileUtil.deleteFile(userModifyDto.getOriginalImage(), "profile");
             fileRepository.deleteFile(userModifyDto.getOriginalImage());
+            result = userRepository.updateOne(userModifyDto);
+
+            FileUtil.deleteFile(userModifyDto.getOriginalImage(), "profile");
 
         // 2. 프로필 사진 업로드 - 기본프사였음
         } else if(userModifyDto.getOriginalImage()==null) {
+            fileRepository.insertFile(fileDto);
+            userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
+            result = userRepository.updateOne(userModifyDto);
+
             // 업로드
             FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto, "profile");
-            fileRepository.insertFile(fileDto);
-            // 사용자 정보 수정
-            userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
 
         // 3. 프로필 사진 업로드 - 기존사진삭제
-        } else if(userModifyDto.getOriginalImage()!=null && fileDto!=null) {
-            // 업로드
-            FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto, "profile");
-            fileRepository.insertFile(fileDto);
-            // 삭제
-            FileUtil.deleteFile(userModifyDto.getOriginalImage(), "profile");
-            fileRepository.deleteFile(userModifyDto.getOriginalImage());
-            // 사용자 정보
+        } else if(!userModifyDto.getOriginalImage().equals(userModifyDto.getNewImage())) {
             userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
+            result = userRepository.updateOne(userModifyDto);
+
+            fileRepository.insertFile(fileDto);
+            fileRepository.deleteFile(userModifyDto.getOriginalImage());
+
+            // 업로드/삭제
+            FileUtil.uploadFile(userModifyDto.getUploadFile(), fileDto, "profile");
+            FileUtil.deleteFile(userModifyDto.getOriginalImage(), "profile");
         }
+
         // 4. 프로필 사진 그대로
         else {
-            // 사용자 정보
             userModifyDto.setNewImage(profieDir+userModifyDto.getOriginalImage());
+            result = userRepository.updateOne(userModifyDto);
         }
-        // 사용자 정보 수정
-        int result = userRepository.updateOne(userModifyDto);
 
         return result>0;
     }

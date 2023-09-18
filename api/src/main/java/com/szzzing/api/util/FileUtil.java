@@ -45,10 +45,12 @@ public class FileUtil {
     }
 
     // 파일 삭제
-    public static void deleteFile(String filename, String type) {
-        File file = new File(dir+type+"/" + filename);
+    public static boolean deleteFile(String filename, String type) {
+        File file = new File(dir + type + "/" + filename);
         if(file.exists()) {
-            file.delete();
+            return file.delete();
+        } else {
+            return false;
         }
     }
 
