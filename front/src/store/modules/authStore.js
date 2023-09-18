@@ -7,11 +7,7 @@ const auth = {
         user: null,
         token: null,
     },
-    getters: {
-
-    },
     mutations: {
-
         setUser(state, payload) {
             // 닉네임 변환
             if(payload != null && payload.nickname != null) {
@@ -32,14 +28,11 @@ const auth = {
 
                 payload.birthday = `${year}-${month}-${day}`;
             }
-            
             state.user = payload;
         },
-
         setToken(state, payload) {
             state.token = payload;
         },
-
         logout(state) {
             state.user = null;
             state.token = null;
@@ -49,7 +42,9 @@ const auth = {
             // 라우팅
             const path = router.currentRoute._value.path;
             if(path.startsWith('/mypage')) {
-                router.push("/");
+                router.replace({path: "/"});
+            } else if(path.startsWith('/admin')) {
+                router.push({path: "/login"});
             }
         },
     },

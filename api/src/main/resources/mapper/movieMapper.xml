@@ -94,6 +94,9 @@
         select m.*,
            (select avg(rate_star) from rate where rate_movie_id = movie_id) avg_rate
         from movie m
+        <if test="id!=0">
+            where movie_id=#{id}
+        </if>
         <if test="query!=null">
             where movie_title like concat('%',#{query},'%')
             or movie_original_title like concat('%',#{query},'%')
@@ -135,6 +138,11 @@
         where movie_id=#{id}
     </select>
 
+    <select id="selectGenreList" resultType="com.szzzing.api.dto.movie.GenreDto">
+        select genre_name as name,
+               false as checked
+        from genre
+    </select>
 
     <resultMap id="movieResultMap" type="com.szzzing.api.dto.movie.MovieDto">
         <id column="movie_id" property="id"/>

@@ -55,8 +55,12 @@ export default {
                     this.$store.commit("auth/setToken", response.headers.token);
                     // 사용자 정보 저장
                     this.$store.commit("auth/setUser", JSON.parse(response.headers.user));
-                    // 페이지 이동 - 이전 페이지 정보가 있을 시 이전페이지, 없을 시 메인페이지
-                    this.$router.replace({ path: this.$store.state.local.location==null ? '/' : this.$store.state.local.location });
+                    // 페이지 이동
+                    if(this.$store.state.auth.user.role=='A') {
+                        this.$router.replace({ path: "/admin" });
+                    } else {
+                        this.$router.replace({ path: this.$store.state.local.location==null ? '/' : this.$store.state.local.location });
+                    }
                 })
                 .catch(()=>{
                     this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"로그인에 실패했어요." });

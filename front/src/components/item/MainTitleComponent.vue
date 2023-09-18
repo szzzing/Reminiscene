@@ -14,7 +14,6 @@ export default {
 <style scoped>
 #logo {
     text-align: center;
-    margin-bottom: 24px;
 }
 .emoji {
     font-size: 72px;

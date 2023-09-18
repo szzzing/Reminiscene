@@ -55,6 +55,9 @@ export default {
 </script>
 
 <style scoped>
+#footer {
+    margin-top: 100px;
+}
 * {
     color: var(--G400);
 }

@@ -1,4 +1,4 @@
-package com.szzzing.api.security;
+package com.szzzing.api.config;
 
 import com.szzzing.api.config.CorsConfig;
 import com.szzzing.api.repository.UserRepository;
@@ -60,6 +60,7 @@ public class SecurityConfig {
             // 라우터 관련
             .requestMatchers("/route/auth/**", "/route/login").anonymous()
             .requestMatchers("/route/mypage/**").authenticated()
+            .requestMatchers("/route/admin/**").hasRole("A")
             .anyRequest().permitAll();
 
         // 권한 관련 상태코드 설정

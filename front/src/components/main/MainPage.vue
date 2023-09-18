@@ -78,7 +78,7 @@ export default {
     max-width: 400px;
     height: 60px;
     border-radius: 8px;
-    margin: auto;
+    margin: 24px auto 0;
     display: flex;
     gap: 12px;
     align-items: center;

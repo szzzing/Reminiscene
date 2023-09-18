@@ -2,13 +2,13 @@ package com.szzzing.api.service.impl;
 
 import com.szzzing.api.dto.common.CommonSelectDto;
 import com.szzzing.api.dto.movie.*;
-import com.szzzing.api.repository.FileRepository;
 import com.szzzing.api.repository.MovieRepository;
 import com.szzzing.api.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Service("movieService")
@@ -92,5 +92,10 @@ public class MovieServiceImpl implements MovieService {
         movieRankListDto.setMonthBestList(movieRepository.selectMonthBestMovieList());
         movieRankListDto.setBestRateList(movieRepository.selectBestRateMovieList());
         return movieRankListDto;
+    }
+
+    @Override
+    public ArrayList<GenreDto> getGenreList() {
+        return movieRepository.selectGenreList();
     }
 }

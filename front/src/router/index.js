@@ -31,6 +31,10 @@ import UserWishPage from '@/components/user/WishPage'
 import UserCommentPage from '@/components/user/CommentPage'
 import UserLikePage from '@/components/user/LikePage'
 import UserWatchingPage from '@/components/user/WatchingPage'
+import AdminMainPage from '@/components/admin/MainPage'
+import StatisticsComponent from '@/components/admin/StatisticsComponent'
+import AdminUserPage from '@/components/admin/UserPage'
+import AdminMoviePage from '@/components/admin/MoviePage'
 
 const routes = [
     {
@@ -156,6 +160,24 @@ const routes = [
                 component: UserWatchingPage,
             },
         ]
+    },
+    {
+        path: '/admin',
+        component: AdminMainPage,
+        children: [
+            {
+                path: '/admin',
+                component: StatisticsComponent,
+            },
+            {
+                path: '/admin/user',
+                component: AdminUserPage,
+            },
+            {
+                path: '/admin/movie',
+                component: AdminMoviePage,
+            },
+        ],
     },
     {
         path: '/:pathMatch(.*)*',

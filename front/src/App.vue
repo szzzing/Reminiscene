@@ -1,11 +1,14 @@
 <template>
-    <header-component></header-component>
+    <admin-header-component v-if="this.$store.state.auth.user && this.$store.state.auth.user.role=='A'"></admin-header-component>
+    <header-component v-else></header-component>
+
     <profile-component></profile-component>
     <alert-component></alert-component>
 
     <div class="wrap" @click="this.closeProfile()">
         <router-view></router-view>
     </div>
+
     <footer-component></footer-component>
 </template>
 
@@ -14,6 +17,7 @@ import HeaderComponent from './components/common/HeaderComponent.vue'
 import AlertComponent from './components/modal/AlertComponent.vue';
 import FooterComponent from './components/common/FooterComponent.vue';
 import ProfileComponent from './components/modal/ProfileComponent.vue';
+import AdminHeaderComponent from './components/common/AdminHeaderComponent.vue';
 
 export default {
     components: {
@@ -21,6 +25,7 @@ export default {
         AlertComponent,
         FooterComponent,
         ProfileComponent,
+        AdminHeaderComponent,
     },
     data() {
         return {
@@ -49,7 +54,6 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 100px;
         min-height: 100vh;
     }
 </style>

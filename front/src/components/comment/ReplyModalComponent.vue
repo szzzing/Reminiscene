@@ -119,19 +119,6 @@ export default {
     align-items: center;
     gap: 4px;
 }
-.is-spoiler * {
-    color: var(--G300);
-}
-.is-spoiler i {
-    font-size: 18px;
-    cursor: pointer;
-}
-.is-spoiler.checked i {
-    color: var(--FOCUS);
-}
-.is-spoiler.checked div {
-    color: var(--G600);
-}
 .count-text {
     font-weight: 500;
     font-size: 14px;

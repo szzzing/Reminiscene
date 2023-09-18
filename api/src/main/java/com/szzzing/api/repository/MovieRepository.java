@@ -74,4 +74,8 @@ public class MovieRepository {
     public ArrayList<MovieDto> selectBestRateMovieList() {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectBestRateMovieList");
     }
+
+    public ArrayList<GenreDto> selectGenreList() {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectGenreList");
+    }
 }

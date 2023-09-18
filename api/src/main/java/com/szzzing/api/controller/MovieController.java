@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -186,6 +187,7 @@ public class MovieController {
      */
     @GetMapping("/movie")
     public ResponseEntity<MovieListDto> getMovieList(@ModelAttribute MovieSelectDto movieSelectDto) {
+        log.info(movieSelectDto.toString());
         MovieListDto result = movieService.getMovieList(movieSelectDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -198,6 +200,12 @@ public class MovieController {
     @GetMapping("/movie/rank")
     public ResponseEntity<MovieRankListDto> getMovieRankList() {
         MovieRankListDto result = movieService.getMovieRankList();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/genre")
+    public ResponseEntity<ArrayList<GenreDto>> getGenreList() {
+        ArrayList<GenreDto> result = movieService.getGenreList();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
