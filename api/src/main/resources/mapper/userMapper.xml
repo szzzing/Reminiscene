@@ -6,7 +6,7 @@
 
     <insert id="insertOne">
         insert into user
-        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default, null)
+        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default, null, pandora3_ojt.fn_initial_search_trim(#{nickname}))
     </insert>
 
     <select id="selectAll" resultMap="userResultMap">
@@ -62,7 +62,8 @@
             user_gender = #{gender},
             user_birthday = #{birthday},
             user_mod_date = current_timestamp,
-            user_profile_image = #{newImage}
+            user_profile_image = #{newImage},
+            user_nickname_initial = pandora3_ojt.fn_initial_search_trim(#{nickname})
         where binary user_id = #{id}
     </update>
 

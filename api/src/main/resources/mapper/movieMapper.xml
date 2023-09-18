@@ -95,10 +95,9 @@
            (select avg(rate_star) from rate where rate_movie_id = movie_id) avg_rate
         from movie m
         <if test="query!=null">
-            where (movie_title like concat('%',#{query},'%')
-            or movie_original_title like concat('%',#{query},'%'))
-            or pandora3_ojt.fn_initial_search_trim(movie_title) like concat('%', #{query},'%')
-            or pandora3_ojt.fn_initial_search_trim(movie_original_title) like concat('%', #{query},'%')
+            where movie_title like concat('%',#{query},'%')
+            or movie_original_title like concat('%',#{query},'%')
+            or movie_title_initial like concat('%', #{query},'%')
             order by CHAR_LENGTH(movie_title)
         </if>
         limit #{limit} offset #{offset}
