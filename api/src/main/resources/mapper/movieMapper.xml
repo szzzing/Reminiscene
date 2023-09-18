@@ -103,6 +103,9 @@
             or movie_title_initial like concat('%', #{query},'%')
             order by CHAR_LENGTH(movie_title)
         </if>
+        <if test="query==null">
+            order by movie_id desc
+        </if>
         limit #{limit} offset #{offset}
     </select>
 

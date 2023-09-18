@@ -1,5 +1,10 @@
 <template>
     <div id="user">
+        <title-component>
+            <template v-slot:emoji>🎃</template>
+            <template v-slot:title>전체 영화 목록</template>
+        </title-component>
+
         <div class="inner">
             <div class="search-area">
                 <div class="option">
@@ -23,13 +28,13 @@
             </div>
 
             <div class="list-area">
-                <table class="movie-list">
+                <table class="movie-list" v-if="this.movieList.length!=0">
                     <tr>
-                        <th></th>
+                        <th style="min-width: 44px;"></th>
                         <th>제목</th>
                         <th>장르</th>
-                        <th>러닝타임</th>
-                        <th>개봉일</th>
+                        <th style="min-width: 72px;">러닝타임</th>
+                        <th style="min-width: 84px;">개봉일</th>
                     </tr>
                     <tr v-for="movie in this.movieList" :key="movie">
                         <td>{{ movie.id }}</td>
@@ -39,18 +44,28 @@
                         <td>{{ movie.releaseDate.replaceAll("-", ".") }}</td>
                     </tr>
                 </table>
+                <empty-component v-else>
+                    <template v-slot:text>
+                        검색결과가 없어요.
+                    </template>
+                </empty-component>
             </div>
         </div>
         <infinite-loading @infinite="getList"></infinite-loading>
+        
     </div>
 </template>
 
 <script>
 import InfiniteLoading from 'infinite-loading-vue3-ts';
+import TitleComponent from '../item/TitleComponent.vue';
+import EmptyComponent from '../item/EmptyComponent.vue';
 
 export default {
     components: {
         InfiniteLoading,
+        TitleComponent,
+        EmptyComponent,
     },
     data() {
         return {
@@ -74,7 +89,7 @@ export default {
             this.state = $state;
             const params = {
                 page: this.page,
-                query: this.query,
+                query: this.query ? (this.query.trim()=='' ? null : this.query.trim()) : null,
                 id: this.id,
                 genre: this.genre,
             }
@@ -109,35 +124,22 @@ export default {
 <style scoped>
 .inner {
     display: flex;
-    gap: 36px;
-}
-@media screen and (max-width:860px) {
-    .inner {
-        flex-direction: column;
-        gap: 36px;
-    }
-    .search-area {
-        display: flex;
-        flex-wrap: wrap;
-        padding-top: 0;
-        width: 100%;
-        gap: 24px;
-    }
-    input[type=text], input[type=number] {
-        border-radius: 8px;
-        font-size: 16px;
-    }
+    gap: 72px 36px;
 }
 .search-area {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 36px;
     width: 260px;
     flex-shrink: 0;
     background: var(--G50);
     border-radius: 8px;
     padding: 20px;
     place-self: flex-start;
+}
+.medium-button {
+    width: 90px;
+    margin-left: auto;
 }
 .option {
     display: flex;
@@ -152,7 +154,7 @@ input[type=text], input[type=number] {
     font-size: 16px;
 }
 .name {
-    color: var(--G600);
+    color: var(--G700);
     font-weight: 600;
 }
 .genre-list {
@@ -202,12 +204,39 @@ td {
 }
 th {
     color: var(--G600);
-    padding: 12px 4px;
+    padding: 0px 4px 12px;
 }
 tr {
     border-bottom: 1px solid var(--G200);
+    cursor: pointer;
+}
+tr:last-child {
+    border-bottom: none;
 }
 table {
     border-collapse:collapse;
+}
+@media screen and (max-width:860px) {
+    .inner {
+        flex-direction: column;
+    }
+    .search-area {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 24px;
+    }
+    input[type=text], input[type=number] {
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    .genre {
+        width: 25%;
+    }
+}
+@media screen and (max-width:474px) {
+    .genre {
+        width: calc(100%/2);
+    }
 }
 </style>
