@@ -188,7 +188,8 @@ public class MovieController {
      */
     @GetMapping("/movie")
     public ResponseEntity<MovieListDto> getMovieList(@ModelAttribute MovieSelectDto movieSelectDto) {
-        movieSelectDto.setGenreList(new ArrayList<String>(List.of(movieSelectDto.getGenre().split("/"))));
+        if(movieSelectDto.getGenre()!=null) movieSelectDto.setGenreList(new ArrayList<String>(List.of(movieSelectDto.getGenre().split("/"))));
+        else movieSelectDto.setGenreList(new ArrayList<>());
         MovieListDto result = movieService.getMovieList(movieSelectDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

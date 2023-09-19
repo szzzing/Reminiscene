@@ -1,5 +1,5 @@
 <template>
-    <transition-group v-if="this.list.length!=0" v-bind:class="{'hide' : this.hide}" id="movie-list" tag="div" class="list">
+    <transition-group v-if="this.list && this.list.length!=0" v-bind:class="{'hide' : this.hide}" id="movie-list" tag="div" class="list">
         <router-link class="item" v-for="(movie, index) in this.list" :key="movie" :to="`/detail/${movie.id}`">
             <div class="poster" :style="{'background-image': `url(/upload/poster/${movie.posterPath}` }">
                 <div v-if="this.rank" class="rank">{{ index==0 ? "🥇" : (index==1 ? "🥈" : (index==2 ? "🥉" : "")) }}</div>
@@ -30,11 +30,18 @@ export default {
 #movie-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px 20px;
+}
+.hide#movie-list {
+    width: 100%;
+    overflow: scroll;
+    flex-wrap: nowrap;
+}
+.hide .item {
+    flex-shrink: 0;
 }
 .item {
     width: calc((100% - 100px)/6);
-    padding-bottom: 20px;
     flex-grow: 0;
     display: flex;
     flex-direction: column;
@@ -44,41 +51,41 @@ export default {
     .item {
         width: calc((100% - 80px)/5);
     }
-    .hide .item:nth-child(5) ~ .item {
+    /* .hide .item:nth-child(5) ~ .item {
         display: none;
-    }
+    } */
 }
 @media screen and (max-width:960px) {
     .item {
         width: calc((100% - 60px)/4);
     }
-    .hide .item:nth-child(4) ~ .item {
+    /* .hide .item:nth-child(4) ~ .item {
         display: none;
-    }
+    } */
 }
 @media screen and (max-width:676px) {
     .item {
         width: calc((100% - 40px)/3);
     }
-    .hide .item:nth-child(3) ~ .item {
+    /* .hide .item:nth-child(3) ~ .item {
         display: none;
-    }
+    } */
 }
 @media screen and (max-width:476px) {
     .item {
         width: calc((100% - 20px)/2);
     }
-    .hide .item:nth-child(2) ~ .item {
+    /* .hide .item:nth-child(2) ~ .item {
         display: none;
-    }
+    } */
 }
 @media screen and (max-width: 320px) {
     .item {
         width: 100%;
     }
-    .hide .item:nth-child(1) ~ .item {
+    /* .hide .item:nth-child(1) ~ .item {
         display: none;
-    }
+    } */
 }
 .poster {
     width: 100%;

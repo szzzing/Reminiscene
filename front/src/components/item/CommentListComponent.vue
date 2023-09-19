@@ -1,5 +1,5 @@
 <template>
-    <transition-group name="list" tag="div" class="inner">
+    <transition-group name="list" tag="div" class="inner" v-if="this.list">
         <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
             <div class="profile">
                 <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
@@ -9,10 +9,20 @@
                     {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
                 </div>
             </div>
-            <div class="text" v-if="!comment.spoiler">{{ comment.content }}</div>
-            <div class="text spoiler" v-if="comment.spoiler" @click.prevent="">
-                스포일러가 있어요!
-                <div class="view-spoiler" @click.prevent="viewSpoiler(comment)">보기</div>
+            <div class="content">
+                <div class="text" v-if="!comment.spoiler">{{ comment.content }}</div>
+                <div class="text spoiler" v-if="comment.spoiler" @click.prevent="">
+                    스포일러가 있어요!
+                    <div class="view-spoiler" @click.prevent="viewSpoiler(comment)">보기</div>
+                </div>
+                <div class="movie" v-if="this.movie">
+                    <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`">
+                    <div class="info">
+                        <div class="title">{{ comment.movieTitle }}</div>
+                        <div class="genre">{{ [comment.movieGenre, comment.movieReleaseDate.substring(0,4)].join(" ・ ") }}</div>
+                        <div class="overview">{{ comment.movieOverview }}</div>
+                    </div>
+                </div>
             </div>
             <div class="interest">
                 <div class="like" :class="{ 'liked' : comment.userLike }"><span>👍</span> {{ comment.likeCount }}</div>
@@ -26,6 +36,7 @@
 export default {
     props: [
         'list',
+        'movie',
     ],
     methods: {
         viewSpoiler(comment) {
@@ -41,6 +52,42 @@ export default {
     flex-direction: column;
     gap: 24px;
 }
+
+.movie {
+    display: flex;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--G0);
+    border: 1px solid var(--G100);
+}
+.movie .info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 16px;
+}
+.movie .title {
+    font-weight: 600;
+}
+.movie .genre {
+    color: var(--G400);
+    font-size: 14px;
+    flex-grow: 1;
+}
+.movie .overview {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: var(--G600);
+    font-size: 14px;
+}
+.movie .poster {
+    max-width: 90px;
+    border-right: 1px solid var(--G100);
+}
+
 .item {
     border-radius: 8px;;
     padding: 20px 16px;
@@ -55,11 +102,14 @@ export default {
     align-items: center;
     gap: 8px;
 }
-.text {
+.content {
     flex-grow: 1;
     padding: 20px 0;
     border-top: 1px solid var(--G100);
     border-bottom: 1px solid var(--G100);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 .spoiler {
     display: flex;

@@ -13,6 +13,7 @@ public class CommentDto {
     private Date movieReleaseDate;
     private String movieGenre;
     private String moviePosterPath;
+    private String movieOverview;
     private String userId;
     private String nickname;
     private String profileImage;

@@ -1,15 +1,7 @@
 <template>
     <div id="wish" v-if="this.user">
-        <title-component>
-            <template v-slot:emoji>✍️</template>
-            <template v-slot:title>
-                {{ this.user.nickname ? this.user.nickname : this.user.id }}
-                님이<br>작성한 코멘트
-            </template>
-        </title-component>
-
-        <comment-list-component v-bind:list="list"></comment-list-component>
-        <empty-component v-if="this.list.length==0">
+        <comment-list-component v-bind:list="list" v-bind:movie="showMovie"></comment-list-component>
+        <empty-component v-if="this.list && this.list.length==0">
             <template v-slot:text>
                 작성한 코멘트가 없어요.
             </template>
@@ -20,27 +12,21 @@
 
 <script>
 import { InfiniteLoading } from 'infinite-loading-vue3-ts';
-import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
 import CommentListComponent from '../item/CommentListComponent.vue';
 
 export default {
     components: {
-        TitleComponent,
         InfiniteLoading,
         EmptyComponent,
         CommentListComponent,
     },
-
-    created() {
-        // this.getUser();
-    },
-
     data() {
         return {
             page: 1,
-            list: [],
+            list: null,
             state: null,
+            showMovie: true,
         }
     },
     props: [
@@ -70,9 +56,12 @@ export default {
             }
             this.axios.get("/comment", {params})
             .then((response)=>{
-                const list = response.data.list;
-                if(list.length!=0) {
-                    this.list.push(...response.data.list);
+                if(response.data.list.length!=0) {
+                    if(this.list) {
+                        this.list.push(...response.data.list);
+                    } else {
+                        this.list = response.data.list;
+                    }
                     this.page = response.data.page + 1;
                     $state.loaded();
                 }

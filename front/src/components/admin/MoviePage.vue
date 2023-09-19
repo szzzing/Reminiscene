@@ -1,70 +1,59 @@
 <template>
-    <div id="user">
-        <title-component>
-            <template v-slot:emoji>🎃</template>
-            <template v-slot:title>전체 영화 목록</template>
-        </title-component>
-
-        <div class="inner">
-            <div class="search-area">
-                <div class="option">
-                    <div class="name">아이디</div>
-                    <input type="number" v-model="this.id" placeholder="40">
-                </div>
-                <div class="option">
-                    <div class="name">제목</div>
-                    <input type="text" v-model="this.query" placeholder="프로메테우스" maxlength="40">
-                </div>
-                <div class="option">
-                    <div class="name">장르</div>
-                    <transition-group name="list" tag="div" class="genre-list">
-                        <div class="genre" v-for="(genre) in this.genreList" :key="genre" :class="{'checked' : genre.checked}">
-                            <i class="fa-solid fa-square-check" @click="genre.checked = !genre.checked"></i>
-                            <div>{{ genre.name }}</div>
-                        </div>
-                    </transition-group>
-                </div>
-                <div class="medium-button" @click="search">영화 검색</div>
-            </div>
-
-            <div class="list-area">
-                <table class="movie-list" v-if="this.movieList.length!=0">
-                    <tr>
-                        <th style="min-width: 44px;"></th>
-                        <th>제목</th>
-                        <th>장르</th>
-                        <th style="min-width: 72px;">러닝타임</th>
-                        <th style="min-width: 84px;">개봉일</th>
-                    </tr>
-                    <tr v-for="movie in this.movieList" :key="movie">
-                        <td>{{ movie.id }}</td>
-                        <td>{{ movie.title }}</td>
-                        <td>{{ movie.genre }}</td>
-                        <td>{{ movie.runtime+"분" }}</td>
-                        <td>{{ movie.releaseDate.replaceAll("-", ".") }}</td>
-                    </tr>
-                </table>
-                <empty-component v-else>
-                    <template v-slot:text>
-                        검색결과가 없어요.
-                    </template>
-                </empty-component>
-            </div>
+    <div class="search-area inner">
+        <div class="option">
+            <div class="name">아이디</div>
+            <input type="number" v-model="this.id" placeholder="40">
         </div>
-        <infinite-loading @infinite="getList"></infinite-loading>
-        
+        <div class="option">
+            <div class="name">제목</div>
+            <input type="text" v-model="this.query" placeholder="프로메테우스" maxlength="40">
+        </div>
+        <div class="option">
+            <div class="name">장르</div>
+            <transition-group name="list" tag="div" class="genre-list">
+                <div class="genre" v-for="(genre) in this.genreList" :key="genre" :class="{'checked' : genre.checked}">
+                    <i class="fa-solid fa-square-check" @click="genre.checked = !genre.checked"></i>
+                    <div>{{ genre.name }}</div>
+                </div>
+            </transition-group>
+        </div>
+        <div class="medium-button" @click="search">영화 검색</div>
     </div>
+
+    <div class="list-area inner">
+        <table class="movie-list" v-if="this.movieList.length!=0">
+            <tr>
+                <th style="min-width: 44px;"></th>
+                <th>제목</th>
+                <th>장르</th>
+                <th style="min-width: 72px;">러닝타임</th>
+                <th style="min-width: 84px;">개봉일</th>
+            </tr>
+            <tr v-for="movie in this.movieList" :key="movie">
+                <td>{{ movie.id }}</td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.genre }}</td>
+                <td>{{ movie.runtime+"분" }}</td>
+                <td>{{ movie.releaseDate.replaceAll("-", ".") }}</td>
+            </tr>
+        </table>
+        <empty-component v-else>
+            <template v-slot:text>
+                검색결과가 없어요.
+            </template>
+        </empty-component>
+        <infinite-loading @infinite="getList"></infinite-loading>
+    </div>
+        
 </template>
 
 <script>
 import InfiniteLoading from 'infinite-loading-vue3-ts';
-import TitleComponent from '../item/TitleComponent.vue';
 import EmptyComponent from '../item/EmptyComponent.vue';
 
 export default {
     components: {
         InfiniteLoading,
-        TitleComponent,
         EmptyComponent,
     },
     data() {
@@ -123,8 +112,7 @@ export default {
 
 <style scoped>
 .inner {
-    display: flex;
-    gap: 72px 36px;
+    padding: 40px 20px;
 }
 .search-area {
     display: flex;
@@ -132,10 +120,7 @@ export default {
     gap: 36px;
     width: 260px;
     flex-shrink: 0;
-    background: var(--G50);
-    border-radius: 8px;
-    padding: 20px;
-    place-self: flex-start;
+    border-right: 1px solid var(--G100);
 }
 .medium-button {
     width: 90px;
@@ -217,18 +202,10 @@ table {
     border-collapse:collapse;
 }
 @media screen and (max-width:860px) {
-    .inner {
-        flex-direction: column;
-    }
     .search-area {
-        display: flex;
-        flex-wrap: wrap;
         width: 100%;
-        gap: 24px;
-    }
-    input[type=text], input[type=number] {
-        border-radius: 8px;
-        font-size: 16px;
+        border-right: none;
+        border-bottom: 1px solid var(--G100);
     }
     .genre {
         width: 25%;

@@ -46,6 +46,9 @@ body {
     padding: 100px 0 0;
     flex-grow: 1;
 }
+.wrap>.container:last-child {
+    margin-bottom: 100px;
+}
 
 .input-box {
     background: var(--G50);

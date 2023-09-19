@@ -21,12 +21,12 @@
             </div>
         </div>
         <div class="inner">
-            <div class="movie">
-                <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`" @click="$router.push({ path: '/detail/'+comment.movieId })">
+            <div class="movie item-border" v-if="this.movie">
+                <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`" @click="$router.push({ path: `/detail/${movie.id}` })">
                 <div class="info">
-                    <div class="title">{{ comment.movieTitle }}</div>
-                    <div class="genre">{{ comment.movieGenre }}</div>
-                    <router-link :to="`/detail/${comment.movieId}/comment`" class="more-comment">👉 {{ comment.movieTitle }}의 다른 코멘트 보러가기</router-link>
+                    <div class="title">{{ movie.title }}</div>
+                    <div class="genre">{{ [movie.genre, movie.releaseDate.substring(0,4)].join(" ・ ") }}</div>
+                    <div class="overview">{{ movie.overview }}</div>
                 </div>
             </div>
         </div>
@@ -51,6 +51,7 @@ export default {
     data() {
         return {
             comment: null,
+            movie: null,
         }
     },
     methods: {
@@ -59,6 +60,10 @@ export default {
             this.axios.get(`/comment/${this.$route.params.id}`)
             .then((response)=>{
                 this.comment = response.data;
+                this.axios.get(`/movie/${this.comment.movieId}`)
+                .then((response)=>{
+                    this.movie = response.data;
+                })
             });
         },
         updateUserLike(value) {
@@ -157,10 +162,12 @@ export default {
 }
 .movie {
     display: flex;
-    gap: 16px;
+    border-radius: 8px;
+    background: var(--G50);
+    overflow: hidden;
 }
 .poster {
-    width: 80px;
+    width: 100px;
     object-fit: cover;
     cursor: pointer;
 }
@@ -168,18 +175,24 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    padding: 16px;
 }
 .movie .title {
-    font-weight: 700;
+    font-weight: 600;
 }
 .movie .genre {
     color: var(--G400);
     font-size: 14px;
     flex-grow: 1;
 }
-.movie .more-comment {
-    cursor: pointer;
-    font-weight: 500;
+.movie .overview {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: var(--G600);
+    font-size: 14px;
 }
 .interest {
     display: flex;

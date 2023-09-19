@@ -125,6 +125,7 @@
         <result column="movie_release_date" property="movieReleaseDate"/>
         <result column="movie_poster_path" property="moviePosterPath"/>
         <result column="movie_genre" property="movieGenre"/>
+        <result column="movie_overview" property="movieOverview"/>
         <result column="comment_user_id" property="userId"/>
         <result column="user_nickname" property="nickname"/>
         <result column="user_enable" property="userEnable"/>

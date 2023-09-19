@@ -38,7 +38,7 @@ export default {
         },
         closeProfile() {
             this.$store.commit("modal/setProfile", false);
-        }
+        },
     },
     // 테마 상태 반영
     created() {

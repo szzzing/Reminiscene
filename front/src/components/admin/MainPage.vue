@@ -11,9 +11,14 @@ export default {
 
 <style scoped>
 .container {
-    max-width: 1280px;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 72px;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+@media screen and (max-width:860px) {
+    .container {
+        flex-direction: column;
+    }
 }
 </style>

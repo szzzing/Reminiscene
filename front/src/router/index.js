@@ -26,13 +26,7 @@ import SearchComponent from '@/components/search/SearchComponent'
 import SearchUserComponent from '@/components/search/SearchUserComponent'
 import SearchMovieComponent from '@/components/search/SearchMovieComponent'
 import UserPage from '@/components/user/UserPage'
-import UserInfoComponent from '@/components/user/InfoComponent'
-import UserWishPage from '@/components/user/WishPage'
-import UserCommentPage from '@/components/user/CommentPage'
-import UserLikePage from '@/components/user/LikePage'
-import UserWatchingPage from '@/components/user/WatchingPage'
 import AdminMainPage from '@/components/admin/MainPage'
-import StatisticsComponent from '@/components/admin/StatisticsComponent'
 import AdminUserPage from '@/components/admin/UserPage'
 import AdminMoviePage from '@/components/admin/MoviePage'
 
@@ -138,37 +132,11 @@ const routes = [
     {
         path: '/user/:id',
         component: UserPage,
-        children: [
-            {
-                path: '/user/:id',
-                component: UserInfoComponent,
-            },
-            {
-                path: '/user/:id/wish',
-                component: UserWishPage,
-            },
-            {
-                path: '/user/:id/comment',
-                component: UserCommentPage,
-            },
-            {
-                path: '/user/:id/like',
-                component: UserLikePage,
-            },
-            {
-                path: '/user/:id/watching',
-                component: UserWatchingPage,
-            },
-        ]
     },
     {
         path: '/admin',
         component: AdminMainPage,
         children: [
-            {
-                path: '/admin',
-                component: StatisticsComponent,
-            },
             {
                 path: '/admin/user',
                 component: AdminUserPage,
