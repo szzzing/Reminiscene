@@ -6,7 +6,10 @@
             <div class="profile-info">
                 <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
                 <div class="id">{{ "@" + user.id }}</div>
-                <div class="activity">{{ user.commentCount+user.watchingCount+user.wishCount+"개의 활동" }}</div>
+                <div class="activity-info">
+                    <div class="option"><b>{{ user.commentCount }}</b>코멘트</div>
+                    <div class="option"><b>{{ user.avgRate==0 ? user.avgRate : user.avgRate.toFixed(1) }}</b>평균별점</div>
+                </div>
             </div>
         </div>
         <div class="inner">
@@ -47,7 +50,6 @@ export default {
 }
 .inner {
     display: flex;
-    justify-content: center;
 }
 .inner:first-child {
     gap: 16px;
@@ -76,7 +78,6 @@ export default {
 }
 
 .profile-info {
-    min-width: 80px;
     display: flex;
     flex-direction: column;
 }
@@ -90,8 +91,16 @@ export default {
     line-height: 1.2;
     flex-grow: 1;
 }
-.activity {
+.activity-info {
+    display: flex;
+    gap: 8px;
+}
+.activity-info .option {
+    color: var(--G400);
     font-size: 14px;
+}
+.activity-info .option b {
     color: var(--G500);
+    margin-right: 4px;
 }
 </style>

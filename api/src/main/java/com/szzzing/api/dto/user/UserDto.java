@@ -23,4 +23,5 @@ public class UserDto {
     private int watchingCount;
     private int commentCount;
     private int likeCount;
+    private float avgRate;
 }

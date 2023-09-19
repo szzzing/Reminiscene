@@ -24,7 +24,8 @@
             </div>
         </div>
         <div class="container copyright">
-            <b>Reminiscene🌙</b> ⓒ 2023 by szzzing, All rights reserved
+            <div><b>Reminiscene🌙</b> ⓒ 2023 by szzzing, All rights reserved</div>
+            <router-link v-if="this.$store.state.auth.user" to="/mypage/withdraw" class="withdraw">회원탈퇴</router-link>
         </div>
     </div>
 </div>
@@ -87,7 +88,11 @@ export default {
     font-size: 18px;
     color: var(--FOCUS);
 }
-.copyright, .copyright b {
+.copyright {
+    display: flex;
+    justify-content: space-between;
+}
+.copyright, .copyright div, .copyright b {
     color: var(--G500);
     font-size: 12px;
 }

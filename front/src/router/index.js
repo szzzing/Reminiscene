@@ -14,8 +14,7 @@ import DetailPage from '@/components/detail/DetailPage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
 import MyPage from '@/components/mypage/MyPage'
-import MyInfoComponent from '@/components/mypage/InfoComponent'
-import WithdrawComponent from '@/components/mypage/WithdrawComponent'
+import WithdrawPage from '@/components/mypage/WithdrawPage'
 import ModifyPage from '@/components/mypage/ModifyPage'
 import MyWishPage from '@/components/mypage/WishPage'
 import MyCommentPage from '@/components/mypage/CommentPage'
@@ -82,18 +81,6 @@ const routes = [
         component: MyPage,
         children: [
             {
-                path: '/mypage',
-                component: MyInfoComponent,
-            },
-            {
-                path: '/mypage/modify',
-                component: ModifyPage,
-            },
-            {
-                path: '/mypage/withdraw',
-                component: WithdrawComponent,
-            },
-            {
                 path: '/mypage/wish',
                 component: MyWishPage,
             },
@@ -110,6 +97,14 @@ const routes = [
                 component: MyWatchingPage,
             },
         ]
+    },
+    {
+        path: '/mypage/withdraw',
+        component: WithdrawPage,
+    },
+    {
+        path: '/mypage/modify',
+        component: ModifyPage,
     },
     {
         path: '/search/:query',

@@ -1,19 +1,21 @@
 <template>
-   <div class="container">
-        <div class="inner">
-            <router-link to="/" class="logo shadow">🌙</router-link>
-            <div class="search" v-if="this.$route.path!='/'">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" v-on:keyup.enter="clickSearch" v-model="this.query" placeholder="영화, 유저를 검색해보세요.">
-            </div>
-            <div class="themeBtn shadow"
-            @click="this.$store.commit('local/setTheme')">
+    <div id="header">
+        <div class="container">
+            <div class="inner">
+                <router-link to="/" class="logo shadow">🌙</router-link>
+                <div class="search" v-if="this.$route.path!='/'">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" v-on:keyup.enter="clickSearch" v-model="this.query" placeholder="영화, 유저를 검색해보세요.">
+                </div>
+                <div class="themeBtn shadow"
+                @click="this.$store.commit('local/setTheme')">
                 {{ this.$store.state.local.theme ? "🌞" : "🌝" }}
+                </div>
+                <router-link v-if="this.$store.state.auth.user==null" to="/login" class="small-button">로그인</router-link>
+                <div v-if="user && user.profileImage" @click="clickProfile"
+                class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
+                <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile"><i class="fa-solid fa-user"></i></div>
             </div>
-            <router-link v-if="this.$store.state.auth.user==null" to="/login" class="small-button">로그인</router-link>
-            <div v-if="user && user.profileImage" @click="clickProfile"
-            class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
-            <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile"><i class="fa-solid fa-user"></i></div>
         </div>
     </div>
 </template>
@@ -46,8 +48,10 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    position: fixed;
+#header {
+    background: var(--G0);
+    border-bottom: 1px solid var(--G100);
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
@@ -62,11 +66,11 @@ export default {
 }
 .logo {
     font-size: 32px;
-    margin-right: auto;
 }
 .themeBtn {
     font-size: 28px;
     cursor: pointer;
+    margin-left: auto;
 }
 .profile-image, .no-image {
     width: 36px;
@@ -76,15 +80,18 @@ export default {
     font-size: 16px;
 }
 .search {
-    border: 1px solid var(--G200);
     background: var(--G50);
     padding: 4px 12px;
-    flex-basis: 200px;
+    flex-basis: 280px;
     height: 36px;
     border-radius: 8px;
     display: flex;
     gap: 8px;
+    margin-right: auto;
     align-items: center;
+}
+.search input {
+    font-size: 16px;
 }
 .search i {
     color: var(--G300);

@@ -44,8 +44,8 @@
         </empty-component>
 
         <div class="page-button">
-            <div class="prev">{{ "<" }}</div>
-            <div class="next">{{ ">" }}</div>
+            <div class="prev">{{ "〈" }}</div>
+            <div class="next">{{ "〉" }}</div>
         </div>
     </div>
         
@@ -79,6 +79,7 @@ export default {
             })
             this.getList();
         },
+
         getList() {
             const params = {
                 page: this.page,
@@ -98,6 +99,7 @@ export default {
                 }
             })
         },
+
         search() {
             this.genre = '';
             for(let genre of this.genreList) {
@@ -131,6 +133,7 @@ export default {
     justify-content: center;
     align-items: center;
     line-height: 1;
+    cursor: pointer;
 }
 .inner {
     padding: 40px 20px;

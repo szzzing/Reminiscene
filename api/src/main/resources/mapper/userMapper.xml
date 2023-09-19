@@ -16,10 +16,11 @@
 
     <select id="selectOneById" resultMap="userResultMap">
         select u.*,
-               (select count(*) from wish where wish_user_id=#{id}) as user_wish_count,
-               (select count(*) from watching where watching_user_id=#{id}) as user_watching_count,
-               (select count(*) from pandora3_ojt.like where like_user_id=#{id}) as user_like_count,
-               (select count(*) from pandora3_ojt.comment where comment_user_id=#{id}) as user_comment_count
+            (select count(*) from wish where wish_user_id=#{id}) as user_wish_count,
+            (select count(*) from watching where watching_user_id=#{id}) as user_watching_count,
+            (select count(*) from pandora3_ojt.like where like_user_id=#{id}) as user_like_count,
+            (select count(*) from pandora3_ojt.comment where comment_user_id=#{id}) as user_comment_count,
+            round((select avg(rate_star) from rate where rate_user_id = #{id}), 1) user_avg_rate
         from user u
         where binary user_id=#{id} and user_enable=true
     </select>
@@ -82,7 +83,8 @@
 
     <select id="selectUserList" resultMap="userResultMap">
         select user_id, user_email, user_nickname, user_gender, user_birthday, user_profile_image,
-               (select count(*) from comment where comment_user_id = user_id) as user_comment_count
+                (select count(*) from comment where comment_user_id = user_id) as user_comment_count,
+                round((select avg(rate_star) from rate where rate_user_id = user_id), 1) user_avg_rate
         from user
         where user_enable = true and user_role='U'
             <if test="query!=null">
@@ -113,5 +115,6 @@
         <result column="user_watching_count" property="watchingCount"/>
         <result column="user_like_count" property="likeCount"/>
         <result column="user_comment_count" property="commentCount"/>
+        <result column="user_avg_rate" property="avgRate"/>
     </resultMap>
 </mapper>

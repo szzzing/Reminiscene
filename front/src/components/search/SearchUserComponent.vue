@@ -1,18 +1,5 @@
 <template>
-    <transition-group id="profile-list" tag="div" class="list">
-        <router-link class="item" v-for="(user) in this.userList" :key="user" :to="`/user/${user.id}`">
-            <div class="image">
-                <div class="profile-image" v-if="user.profileImage" :style="{'background-image': `url(${user.profileImage}` }">
-                </div>
-                <div class="no-image" v-if="!user.profileImage"><i class="fa-solid fa-user"></i></div>
-            </div>
-            <div class="info">
-                <div class="nickname">{{ user.nickname ? user.nickname : user.id }}</div>
-                <div class="id">{{ "@"+user.id }}</div>
-                <div class="commentCount">{{ user.commentCount+"개의 평가" }}</div>
-            </div>
-        </router-link>
-    </transition-group>
+    <user-list-component v-bind:list="userList"></user-list-component>
 
     <empty-component v-if="this.userList.length==0">
         <template v-slot:text>
@@ -26,11 +13,13 @@
 <script>
 import EmptyComponent from '../item/EmptyComponent.vue';
 import { InfiniteLoading } from 'infinite-loading-vue3-ts';
+import UserListComponent from '../item/UserListComponent.vue';
 
 export default {
     components: {
         EmptyComponent,
         InfiniteLoading,
+        UserListComponent,
     },
     data() {
         return {

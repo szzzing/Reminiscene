@@ -18,7 +18,7 @@
         <div class="statistics-area">
             <div class="avg-rate">
                 <div class="emoji">⭐️</div>
-                <div class="value">{{ movie.avgRate.toFixed(1) }}</div>
+                <div class="value">{{ movie.avgRate==0 ? movie.avgRate : movie.avgRate.toFixed(1) }}</div>
                 <div class="discription">{{ movie.rateCount+"명의 평가" }}</div>
             </div>
             <div class="wish-count">

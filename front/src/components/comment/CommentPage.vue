@@ -119,11 +119,11 @@ export default {
 .profile {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 .profile-image, .no-image {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
@@ -133,10 +133,9 @@ export default {
     cursor: pointer;
 }
 .no-image {
-    font-size: 16px;
+    font-size: 20px;
 }
 .nickname {
-    /* font-size: 18px; */
     font-weight: 500;
 }
 .create-date {

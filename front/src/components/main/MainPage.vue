@@ -11,7 +11,7 @@
 
         <div class="inner" v-if="this.monthBestList">
             <title-component>
-                <template v-slot:emoji>🏆</template>
+                <template v-slot:emoji>🌟</template>
                 <template v-slot:title>이번 달<br>가장 주목받은 작품</template>
             </title-component>
             <movie-list-component v-bind:list="monthBestList" v-bind:hide="true" v-bind:rank="true"></movie-list-component>

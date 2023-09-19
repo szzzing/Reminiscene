@@ -9,7 +9,10 @@
             <div class="info">
                 <div class="nickname">{{ user.nickname!=null ? user.nickname : user.id }}</div>
                 <div class="id">{{ "@"+user.id }}</div>
-                <div class="commentCount">{{ user.commentCount+"개의 평가" }}</div>
+                <div class="activity-info">
+                    <div class="option"><b>{{ user.commentCount }}</b>코멘트</div>
+                    <div class="option"><b>{{ user.avgRate==0 ? user.avgRate : user.avgRate.toFixed(1) }}</b>평균별점</div>
+                </div>
             </div>
         </router-link>
     </transition-group>
@@ -67,8 +70,17 @@ export default {
     font-weight: 600;
     line-height: 1.4;
 }
-.commentCount {
-    color: var(--G500);
+.activity-info {
+    display: flex;
+    gap: 16px;
+}
+.activity-info .option {
+    color: var(--G400);
     font-size: 14px;
+}
+.activity-info .option b {
+    color: var(--G500);
+    margin-right: 4px;
+    font-weight: 500;
 }
 </style>

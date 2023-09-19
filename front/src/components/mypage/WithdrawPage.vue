@@ -6,7 +6,7 @@
         <template v-slot:text>정말 탈퇴하실건가요?</template>
     </confirm-modal-component>
 
-    <div id="withdraw">
+    <div id="withdraw" class="container">
         <title-component>
             <template v-slot:emoji>🥺</template>
             <template v-slot:title>회원탈퇴</template>
@@ -70,9 +70,8 @@ export default {
 </script>
 
 <style scoped>
-#withdraw {
+.container {
     max-width: 440px;
-    margin: auto;
 }
 .inner {
     display: flex;

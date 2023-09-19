@@ -52,41 +52,6 @@ export default {
     flex-direction: column;
     gap: 24px;
 }
-
-.movie {
-    display: flex;
-    overflow: hidden;
-    border-radius: 8px;
-    background: var(--G0);
-}
-.movie .info {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 12px 16px;
-}
-.movie .title {
-    font-weight: 600;
-}
-.movie .genre {
-    color: var(--G400);
-    font-size: 14px;
-    flex-grow: 1;
-}
-.movie .overview {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    color: var(--G600);
-    font-size: 14px;
-}
-.movie .poster {
-    max-width: 90px;
-    border-right: 1px solid var(--G100);
-}
-
 .item {
     border-radius: 8px;;
     padding: 20px 16px;
@@ -140,6 +105,40 @@ export default {
 .dark .status {
     background: var(--G100);
     /* border: none; */
+}
+.movie {
+    display: flex;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--G100);
+    margin: 0 8px;
+}
+.movie .info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+.movie .title {
+    font-weight: 600;
+}
+.movie .genre {
+    color: var(--G400);
+    font-size: 14px;
+    flex-grow: 1;
+}
+.movie .overview {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: var(--G600);
+    font-size: 14px;
+}
+.movie .poster {
+    max-width: 90px;
+    border-right: 1px solid var(--G100);
 }
 
 .profile-image, .no-image {

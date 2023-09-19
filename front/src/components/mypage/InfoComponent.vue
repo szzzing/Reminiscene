@@ -1,62 +1,34 @@
 <template>
-    <div id="info">
-        <div class="profile-area">
-            <div class="image">
-                <div class="profile-image" v-if="this.user.profileImage" :style="{'background-image': 'url(' + this.user.profileImage + ')' }">
-                </div>
-                <div class="no-image" v-if="!this.user.profileImage"><i class="fa-solid fa-user"></i></div>
+    <div class="profile-area" v-if="this.user">
+        <router-link to="/mypage/modify" class="image">
+            <div class="profile-image" v-if="this.user.profileImage" :style="{'background-image': 'url(' + this.user.profileImage + ')' }">
             </div>
-            <div class="info">
-                <div class="basic-info">
-                    <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
-                    <div class="id">{{ "@" + this.user.id }}
-                        <router-link class="modify" to="/mypage/modify">⚙️</router-link>
-                    </div>
-                </div>
-                <div class="more-info">
-                    <div class="birthday">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.') : "비공개" }}</div>
-                    <div class="gender">⚧️ {{ this.user.gender ? (this.user.gender=='F' ? "여성" : "남성") : "비공개" }}</div>
-                    <div class="email">📧 {{ this.user.email }}</div>
-                </div>
+            <div class="no-image" v-if="!this.user.profileImage"><i class="fa-solid fa-user"></i></div>
+        </router-link>
+        <div class="info">
+            <div class="basic-info">
+                <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
+            </div>
+            <div class="more-info">
+                <div class="option">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.').substring(0, 10) : "비공개" }}</div>
+                <div class="option">⚧️ {{ this.user.gender ? (this.user.gender=='F' ? "여성" : "남성") : "비공개" }}</div>
+                <div class="option">📧 {{ this.user.email }}</div>
+            </div>
+            <div class="activity-info">
+                <div class="option"><b>{{ this.user.commentCount }}</b>코멘트</div>
+                <div class="option"><b>{{ this.user.avgRate==0 ? this.user.avgRate : this.user.avgRate.toFixed(1) }}</b>평균별점</div>
             </div>
         </div>
+    </div>
 
-        <div class="activity-area">
-            <router-link to="/mypage/wish" class="item">
-                <div class="emoji shadow">🧞‍♂️</div>
-                <div class="title">보고싶은<br>영화</div>
-                <div class="count">
-                    <div class="number">{{ this.user.wishCount }}</div>
-                    <div class="extension">편</div>
-                </div>
-            </router-link>
-            <router-link to="/mypage/watching" class="item">
-                <div class="emoji shadow">🍿</div>
-                <div class="title">보고있는<br>영화</div>
-                <div class="count">
-                    <div class="number">{{ this.user.watchingCount }}</div>
-                    <div class="extension">편</div>
-                </div>
-            </router-link>
-            <router-link to="/mypage/comment" class="item">
-                <div class="emoji shadow">✍️</div>
-                <div class="title">내가 쓴<br>코멘트</div>
-                <div class="count">
-                    <div class="number">{{ this.user.commentCount }}</div>
-                    <div class="extension">개</div>
-                </div>
-            </router-link>
-            <router-link to="/mypage/like" class="item">
-                <div class="emoji shadow">💛</div>
-                <div class="title">좋아하는<br>코멘트</div>
-                <div class="count">
-                    <div class="number">{{ this.user.likeCount }}</div>
-                    <div class="extension">개</div>
-                </div>
-            </router-link>
+    <div class="activity-area">
+        <div class="category">
+            <div class="option" @click="this.$emit('clickCategory', 'wish')" :class="{'active': this.category=='wish'}">보고싶어요</div>
+            <div class="option" @click="this.$emit('clickCategory', 'watching')" :class="{'active': this.category=='watching'}">보는 중</div>
+            <div class="option" @click="this.$emit('clickCategory', 'comment')" :class="{'active': this.category=='comment'}">코멘트</div>
+            <div class="option" @click="this.$emit('clickCategory', 'like')" :class="{'active': this.category=='like'}">좋아요</div>
+            <div class="option"></div>
         </div>
-
-        <router-link to="/mypage/withdraw" class="withdraw">회원탈퇴</router-link>
     </div>
 </template>
 
@@ -65,32 +37,32 @@ export default {
     data() {
         return {
             user: this.$store.state.auth.user,
-            withdrawModal: false,
         }
     },
+    props: [
+        'category',
+    ],
+    emits: [
+        'clickCategory',
+    ],
 }
 </script>
 
 <style scoped>
-#info {
-    display: flex;
-    flex-direction: column;
-    gap: 72px;
-}
 .profile-area {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    gap: 24px;
+    align-items: center;
 }
 .profile-image, .no-image {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
 }
 .no-image {
-    font-size: 96px;
+    font-size: 72px;
 }
 .modify {
-    font-size: 18px;
+    font-size: 20px;
     opacity: 0.7;
 }
 .nickname {
@@ -98,13 +70,22 @@ export default {
     font-weight: 700;
 }
 .id {
-    font-size: 20px;
     color: var(--G500);
 }
 .info {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+}
+.activity-info {
+    display: flex;
     gap: 16px;
+}
+.profile-area .option {
+    color: var(--G600);
+}
+.activity-info .option b {
+    margin-right: 4px;
 }
 .basic-info,
 .more-info {
@@ -117,57 +98,25 @@ export default {
 .basic-info * {
     line-height: 1;
 }
-.birthday, .gender, .email {
-    color: var(--G400);
-}
-
-.activity-area {
+.activity-area .category {
     display: flex;
-    flex-wrap: wrap;
-    gap: 48px 24px;
 }
-.item {
-    border-radius: 8px;;
-    padding: 36px 20px 20px;
-    flex-grow: 1;
-    width: calc((100% - 72px)/4);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 36px;
-    background: var(--G50);
-    border: 1px solid var(--G100);
+.activity-area .category .option {
+    padding: 8px 12px;
 }
-@media screen and (max-width:676px) {
-    .item {
-        width: calc((100% - 24px)/2);
-    }
-}
-.title {
-    font-size: 18px;
+.activity-area .category .option {
+    border-bottom: 1px solid var(--G100);
+    color: var(--G500);
     font-weight: 600;
-    line-height: 1.2;
-    margin: 0 4px;
+    cursor: pointer;
 }
-.emoji {
-    font-size: 40px;
-    position: absolute;
-    top: -32px;
+.activity-area .category .option:last-child {
+    flex-grow: 1;
+    cursor: unset;
+    padding: 0;
 }
-.count {
-    display: flex;
-    gap: 4px;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin: 0 4px;
-}
-.number {
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.1;
-}
-.withdraw {
-    color: var(--G400);
-    margin-left: auto;
+.activity-area .category .option.active {
+    border-bottom: 3px solid var(--FOCUS);
+    color: var(--G800);
 }
 </style>

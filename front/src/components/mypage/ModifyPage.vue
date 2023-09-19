@@ -1,5 +1,5 @@
 <template>
-    <div id="modify">
+    <div id="modify" class="container">
         <email-modal-component v-if="this.emailModal"
         v-bind:email="email"
         v-bind:url="url"
@@ -251,9 +251,8 @@ export default {
 </script>
 
 <style scoped>
-#modify {
+.container {
     max-width: 600px;
-    margin: auto;
 }
 .flex-container {
     display: flex;

@@ -10,17 +10,17 @@
                 <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
             </div>
             <div class="more-info">
-                <div class="birthday">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.').substring(0, 10) : "비공개" }}</div>
-                <div class="gender">⚧️ {{ this.user.gender ? (this.user.gender=='F' ? "여성" : "남성") : "비공개" }}</div>
+                <div class="option">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.').substring(0, 10) : "비공개" }}</div>
+                <div class="option">⚧️ {{ this.user.gender ? (this.user.gender=='F' ? "여성" : "남성") : "비공개" }}</div>
             </div>
             <div class="activity-info">
-                <div class="option"><b>{{ this.user.commentCount }}</b>팔로워</div>
-                <div class="option"><b>{{ this.user.commentCount }}</b>팔로잉</div>
+                <div class="option"><b>{{ this.user.commentCount }}</b>코멘트</div>
+                <div class="option"><b>{{ this.user.avgRate==0 ? this.user.avgRate : this.user.avgRate.toFixed(1) }}</b>평균별점</div>
             </div>
         </div>
     </div>
 
-    <div class="active-area">
+    <div class="activity-area">
         <div class="category">
             <div class="option" @click="this.$emit('clickCategory', 'wish')" :class="{'active': this.category=='wish'}">보고싶어요</div>
             <div class="option" @click="this.$emit('clickCategory', 'watching')" :class="{'active': this.category=='watching'}">보는 중</div>
@@ -76,7 +76,7 @@ export default {
     display: flex;
     gap: 16px;
 }
-.activity-info .option {
+.profile-area .option {
     color: var(--G600);
 }
 .activity-info .option b {
@@ -93,27 +93,24 @@ export default {
 .basic-info * {
     line-height: 1;
 }
-.birthday, .gender, .email {
-    color: var(--G400);
-}
-
-.active-area .category {
+.activity-area .category {
     display: flex;
 }
-.active-area .category .option {
+.activity-area .category .option {
     padding: 8px 12px;
 }
-.active-area .category .option {
+.activity-area .category .option {
     border-bottom: 1px solid var(--G100);
     color: var(--G500);
     font-weight: 600;
     cursor: pointer;
 }
-.active-area .category .option:last-child {
+.activity-area .category .option:last-child {
     flex-grow: 1;
-    cursor: none;
+    cursor: unset;
+    padding: 0;
 }
-.active-area .category .option.active {
+.activity-area .category .option.active {
     border-bottom: 3px solid var(--FOCUS);
     color: var(--G800);
 }
