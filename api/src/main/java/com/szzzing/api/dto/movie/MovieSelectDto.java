@@ -14,6 +14,7 @@ public class MovieSelectDto {
     private String query;
     private int id;
     private String genre;
+    private ArrayList<String> genreList;
 
     public void setOffset() {
         offset = limit * (page-1);

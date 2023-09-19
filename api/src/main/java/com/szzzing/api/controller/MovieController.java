@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * The type Movie controller.
@@ -187,7 +188,7 @@ public class MovieController {
      */
     @GetMapping("/movie")
     public ResponseEntity<MovieListDto> getMovieList(@ModelAttribute MovieSelectDto movieSelectDto) {
-        log.info(movieSelectDto.toString());
+        movieSelectDto.setGenreList(new ArrayList<String>(List.of(movieSelectDto.getGenre().split("/"))));
         MovieListDto result = movieService.getMovieList(movieSelectDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
