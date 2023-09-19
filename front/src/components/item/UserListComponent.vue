@@ -10,8 +10,12 @@
                 <div class="nickname">{{ user.nickname!=null ? user.nickname : user.id }}</div>
                 <div class="id">{{ "@"+user.id }}</div>
                 <div class="activity-info">
-                    <div class="option"><b>{{ user.commentCount }}</b>코멘트</div>
-                    <div class="option"><b>{{ user.avgRate==0 ? user.avgRate : user.avgRate.toFixed(1) }}</b>평균별점</div>
+                    <div class="option">코멘트
+                        <b>{{ user.commentCount }}</b>
+                    </div>
+                    <div class="option">⭐️
+                        <b>{{ user.avgRate==0 ? user.avgRate : user.avgRate.toFixed(1) }}</b>
+                    </div>
                 </div>
             </div>
         </router-link>
@@ -72,7 +76,7 @@ export default {
 }
 .activity-info {
     display: flex;
-    gap: 16px;
+    gap: 12px;
 }
 .activity-info .option {
     color: var(--G400);
