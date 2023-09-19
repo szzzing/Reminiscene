@@ -37,6 +37,9 @@ export default {
         'user',
         'category',
     ],
+    emits: [
+        'clickCategory',
+    ],
 }
 </script>
 

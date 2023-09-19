@@ -21,14 +21,14 @@
             </div>
         </div>
         <div class="inner">
-            <div class="movie item-border" v-if="this.movie">
-                <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`" @click="$router.push({ path: `/detail/${movie.id}` })">
+            <router-link class="movie item-border" v-if="this.movie" :to="`/detail/${movie.id}`">
+                <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`">
                 <div class="info">
                     <div class="title">{{ movie.title }}</div>
                     <div class="genre">{{ [movie.genre, movie.releaseDate.substring(0,4)].join(" ・ ") }}</div>
                     <div class="overview">{{ movie.overview }}</div>
                 </div>
-            </div>
+            </router-link>
         </div>
 
         <reply-list-component

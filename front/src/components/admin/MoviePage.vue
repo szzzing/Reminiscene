@@ -42,18 +42,20 @@
                 검색결과가 없어요.
             </template>
         </empty-component>
-        <infinite-loading @infinite="getList"></infinite-loading>
+
+        <div class="page-button">
+            <div class="prev">{{ "<" }}</div>
+            <div class="next">{{ ">" }}</div>
+        </div>
     </div>
         
 </template>
 
 <script>
-import InfiniteLoading from 'infinite-loading-vue3-ts';
 import EmptyComponent from '../item/EmptyComponent.vue';
 
 export default {
     components: {
-        InfiniteLoading,
         EmptyComponent,
     },
     data() {
@@ -63,19 +65,21 @@ export default {
             genreList: null,
             movieList: [],
             page: 1,
-            state: null,
             genre: '',
         }
     },
     created() {
-        this.axios.get("/genre")
-        .then((response)=>{
-            this.genreList = response.data;
-        })
+        this.fetchData();
     },
     methods: {
-        getList($state) {
-            this.state = $state;
+        fetchData() {
+            this.axios.get("/genre")
+            .then((response)=>{
+                this.genreList = response.data;
+            })
+            this.getList();
+        },
+        getList() {
             const params = {
                 page: this.page,
                 query: this.query ? (this.query.trim()=='' ? null : this.query.trim()) : null,
@@ -91,7 +95,6 @@ export default {
                         this.movieList.push(...response.data.list);
                     }
                     this.page = response.data.page+1;
-                    this.state.loaded();
                 }
             })
         },
@@ -111,6 +114,24 @@ export default {
 </script>
 
 <style scoped>
+.page-button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+.prev, .next {
+    color: var(--G300);
+    width: 24px;
+    height: 24px;
+    background: var(--G50);
+    border: 1px solid var(--G100);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+}
 .inner {
     padding: 40px 20px;
 }
@@ -192,7 +213,7 @@ th {
     padding: 0px 4px 12px;
 }
 tr {
-    border-bottom: 1px solid var(--G200);
+    border-bottom: 1px solid var(--G100);
     cursor: pointer;
 }
 tr:last-child {

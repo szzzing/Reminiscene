@@ -64,6 +64,10 @@ export default {
                     }
                     this.page = response.data.page + 1;
                     $state.loaded();
+                } else {
+                    if(response.data.page==1) {
+                        this.list = [];
+                    }
                 }
             });
         },

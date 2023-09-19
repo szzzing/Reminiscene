@@ -1,6 +1,6 @@
 <template>
     <div id="wish" v-if="this.user">
-        <movie-list-component v-bind:list="list" v-bind:movie="true"></movie-list-component>
+        <movie-list-component v-bind:list="list"></movie-list-component>
 
         <empty-component v-if="this.list && this.list.length==0">
             <template v-slot:text>
@@ -62,6 +62,10 @@ export default {
                         this.list.push(...response.data.list);
                     }
                     $state.loaded();
+                } else {
+                    if(response.data.page==1) {
+                        this.list = [];
+                    }
                 }
             })
         },

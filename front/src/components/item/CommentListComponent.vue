@@ -58,7 +58,6 @@ export default {
     overflow: hidden;
     border-radius: 8px;
     background: var(--G0);
-    border: 1px solid var(--G100);
 }
 .movie .info {
     flex-grow: 1;
