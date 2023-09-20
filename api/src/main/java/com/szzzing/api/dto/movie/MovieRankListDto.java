@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public class MovieRankListDto {
     private ArrayList<MovieDto> monthBestList;
     private ArrayList<MovieDto> bestRateList;
+    private ArrayList<MovieDto> newList;
 }

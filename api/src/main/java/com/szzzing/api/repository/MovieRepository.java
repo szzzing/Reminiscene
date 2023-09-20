@@ -82,4 +82,8 @@ public class MovieRepository {
     public ArrayList<MovieDto> selectSearchList(String query) {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectSearchList", query);
     }
+
+    public ArrayList<MovieDto> selectNewMovieList() {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectNewMovieList");
+    }
 }

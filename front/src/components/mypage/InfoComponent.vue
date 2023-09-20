@@ -1,13 +1,15 @@
 <template>
     <div class="profile-area" v-if="this.user">
-        <router-link to="/mypage/modify" class="image">
+        <div class="image">
             <div class="profile-image" v-if="this.user.profileImage" :style="{'background-image': 'url(' + this.user.profileImage + ')' }">
             </div>
             <div class="no-image" v-if="!this.user.profileImage"><i class="fa-solid fa-user"></i></div>
-        </router-link>
+        </div>
         <div class="info">
             <div class="basic-info">
-                <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}</div>
+                <div class="nickname">{{ this.user.nickname ? this.user.nickname : this.user.id }}
+                    <router-link class="modify-button" to="/mypage/modify">⚙</router-link>
+                </div>
             </div>
             <div class="more-info">
                 <div class="option">🎂 {{ this.user.birthday ? this.user.birthday.replace(/-/g, '.').substring(0, 10) : "비공개" }}</div>
@@ -68,6 +70,8 @@ export default {
 .nickname {
     font-size: 24px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
 }
 .id {
     color: var(--G500);
@@ -118,5 +122,9 @@ export default {
 .activity-area .category .option.active {
     border-bottom: 3px solid var(--FOCUS);
     color: var(--G800);
+}
+.modify-button {
+    font-size: 18px;
+    opacity: 0.5;
 }
 </style>

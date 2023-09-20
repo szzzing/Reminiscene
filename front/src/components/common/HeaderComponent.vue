@@ -9,6 +9,7 @@
                     <input type="text" ref="query" maxlength="40"
                     @keyup.enter="clickSearch"
                     @input="this.checkInput($event)"
+                    @click="this.$store.commit('local/setSuggest', true);"
                     placeholder="영화, 유저를 검색해보세요.">
                 </div>
                 
@@ -24,7 +25,7 @@
                 <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile"><i class="fa-solid fa-user"></i></div>
             </div>
         </div>
-        <div id="search-suggest" v-if="this.list.length!=0 && this.query.trim()!=''">
+        <div id="search-suggest" @click.stop="" v-if="this.$store.state.local.suggest && this.list.length!=0 && this.query.trim()!=''">
             <div class="container">
                 <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
                     <div class="title">{{ movie.title }}</div>
@@ -54,7 +55,7 @@ export default {
             this.$store.commit("modal/setProfile", payload);
         },
         clickSearch() {
-            if(this.query.trim()!='') {
+            if(this.query!='') {
                 this.$router.push("/search/"+this.query.trim());
                 this.query = '';
             }
@@ -62,6 +63,7 @@ export default {
         checkInput(event) {
             console.log("check")
             this.query = event.target.value.trim().replaceAll("/", "");
+            this.$store.commit("local/setSuggest", true);
             if(this.query!='') {
                 this.axios.get(`/movie/search/${this.query}`)
                 .then((response)=>{
@@ -146,6 +148,7 @@ export default {
     top: 0;
     right: 0;
     left: 0;
+    border-bottom: 1px solid var(--O200);
 }
 #search-suggest .container {
     padding: 16px 0;

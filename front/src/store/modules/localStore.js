@@ -4,7 +4,7 @@ const local = {
         theme: true,
         location: null,
         title: "Reminiscene",
-        query: null,
+        suggest: false,
     },
     mutations: {
         setLocation(state, payload) {
@@ -14,9 +14,9 @@ const local = {
             document.documentElement.classList.toggle('dark');
             state.theme = !state.theme;
         },
-        setQuery(state, payload) {
-            state.query = payload;
-        }
+        setSuggest(state, payload) {
+            state.suggest = payload;
+        },
     },
 };
 

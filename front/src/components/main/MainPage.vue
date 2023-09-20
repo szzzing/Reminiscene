@@ -10,19 +10,21 @@
         </div>
 
         <div class="inner" v-if="this.monthBestList">
-            <title-component>
-                <template v-slot:emoji>🌟</template>
-                <template v-slot:title>이번 달<br>가장 주목받은 작품</template>
-            </title-component>
+            <div class="title">{{ new Date().getMonth()+1+"월의 영화" }}</div>
+            <div class="sub-title">이번 달 가장 많은 관심을 받은 작품들이예요.</div>
             <movie-list-component v-bind:list="monthBestList" v-bind:hide="true" v-bind:rank="true"></movie-list-component>
         </div>
 
         <div class="inner" v-if="this.monthBestList">
-            <title-component>
-                <template v-slot:emoji>🏅</template>
-                <template v-slot:title>모두가 인정하는 명작</template>
-            </title-component>
+            <div class="title">클래식은 영원하다</div>
+            <div class="sub-title">그동안 가장 높은 별점을 받은 작품들이예요.</div>
             <movie-list-component v-bind:list="bestRateList" v-bind:hide="true" v-bind:rank="true"></movie-list-component>
+        </div>
+
+        <div class="inner" v-if="this.monthBestList">
+            <div class="title">최근 개봉한 영화</div>
+            <div class="sub-title">새로운 작품이 당신을 기다리고 있어요.</div>
+            <movie-list-component v-bind:list="newList" v-bind:hide="true"></movie-list-component>
         </div>
 
     </div>
@@ -31,11 +33,9 @@
 <script>
 import MainTitleComponent from '../item/MainTitleComponent.vue';
 import MovieListComponent from '../item/MovieListComponent.vue';
-import TitleComponent from '../item/TitleComponent.vue';
 
 export default {
     components: {
-        TitleComponent,
         MovieListComponent,
         MainTitleComponent,
     },
@@ -44,6 +44,7 @@ export default {
             query: '',
             monthBestList: [],
             bestRateList: [],
+            newList: [],
         }
     },
     beforeCreate() {
@@ -51,6 +52,7 @@ export default {
         .then((response)=>{
             this.monthBestList = response.data.monthBestList;
             this.bestRateList = response.data.bestRateList;
+            this.newList = response.data.newList;
         })
     },
     methods: {
@@ -89,5 +91,14 @@ export default {
 .search i {
     color: var(--G300);
     font-size: 14px;
+}
+.title {
+    font-size: 24px;
+    font-weight: 700;
+}
+.sub-title {
+    margin-bottom: 16px;
+    font-weight: 500;
+    color: var(--G500);
 }
 </style>

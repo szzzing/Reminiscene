@@ -7,7 +7,7 @@
             <div class="info">
                 <div class="title">{{ movie.title }}</div>
                 <div class="genre">{{ movie.genre }}</div>
-                <div v-if="!this.rank" class="footer">
+                <div class="footer">
                     <div class="releaseDate">{{ movie.releaseDate.split("-")[0] }}</div>
                     <div class="avg-rate" v-if="movie.avgRate>0">⭐️ {{ movie.avgRate.toFixed(1) }}</div>
                 </div>

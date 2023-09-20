@@ -91,6 +91,7 @@ public class MovieServiceImpl implements MovieService {
         MovieRankListDto movieRankListDto = new MovieRankListDto();
         movieRankListDto.setMonthBestList(movieRepository.selectMonthBestMovieList());
         movieRankListDto.setBestRateList(movieRepository.selectBestRateMovieList());
+        movieRankListDto.setNewList(movieRepository.selectNewMovieList());
         return movieRankListDto;
     }
 

@@ -5,7 +5,7 @@
     <profile-component></profile-component>
     <alert-component></alert-component>
 
-    <div class="wrap" @click="this.closeProfile()">
+    <div class="wrap" @click="this.closeProfile(); this.closeSuggest();">
         <router-view></router-view>
     </div>
 
@@ -38,6 +38,9 @@ export default {
         },
         closeProfile() {
             this.$store.commit("modal/setProfile", false);
+        },
+        closeSuggest() {
+            this.$store.commit("local/setSuggest", false);
         },
     },
     // 테마 상태 반영

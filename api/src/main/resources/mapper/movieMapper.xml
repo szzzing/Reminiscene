@@ -140,6 +140,17 @@
             limit 10 offset 0
     </select>
 
+    <select id="selectNewMovieList" resultMap="movieResultMap">
+        select m.*,
+               round((select avg(rate_star) from rate where rate_movie_id = movie_id), 1) avg_rate,
+               (select count(*) from rate where rate_movie_id = movie_id) rate_count,
+               (select count(*) from pandora3_ojt.user where user_enable = true) user_count
+        from movie m
+        where current_date() - movie_release_date > 0
+        order by movie_release_date desc
+        limit 10 offset 0
+    </select>
+
     <select id="selectOneMovie" resultMap="movieResultMap">
         select m.*,
            round((select avg(rate_star) from pandora3_ojt.rate where rate_movie_id = movie_id), 1) as avg_rate,
