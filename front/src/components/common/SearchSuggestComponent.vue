@@ -21,6 +21,7 @@ export default {
     ],
     watch: {
         query() {
+            console.log(this.query);
             this.axios.get(`movie/search/${this.query}`)
             .then((response)=>{
                 this.list = response.data;

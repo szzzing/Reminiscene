@@ -6,7 +6,10 @@
                 
                 <div class="search" v-if="this.$route.path!='/'">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" @click="console.log(this.query)" v-on:keyup.enter="clickSearch" v-model="this.query" @input="this.checkInput($event)" placeholder="영화, 유저를 검색해보세요.">
+                    <input type="text" ref="query" maxlength="40"
+                    @keyup.enter="clickSearch"
+                    @input="this.checkInput($event)"
+                    placeholder="영화, 유저를 검색해보세요.">
                 </div>
                 
                 <div class="themeBtn shadow"
@@ -21,22 +24,23 @@
                 <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile"><i class="fa-solid fa-user"></i></div>
             </div>
         </div>
-        <search-suggest-component v-if="this.$route.path!='/' && this.query.trim()!=''"
-        v-bind:query="query">
-        </search-suggest-component>
+        <div id="search-suggest" v-if="this.list.length!=0 && this.query.trim()!=''">
+            <div class="container">
+                <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+                    <div class="title">{{ movie.title }}</div>
+                    <div class="release-date">{{ movie.releaseDate.substring(0, 4) }}</div>
+                </router-link>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import SearchSuggestComponent from './SearchSuggestComponent.vue';
-
 export default {
-    components: {
-        SearchSuggestComponent,
-    },
     data() {
         return {
             query: '',
+            list: [],
         }
     },
     computed: {
@@ -56,11 +60,22 @@ export default {
             }
         },
         checkInput(event) {
+            console.log("check")
             this.query = event.target.value;
+            if(this.query.trim()!='') {
+                this.axios.get(`/movie/search/${this.query}`)
+                .then((response)=>{
+                    this.list = response.data;
+                })
+            } else {
+                this.list = [];
+            }
         },
         fetchData() {
-            console.log("이동")
             this.query = '';
+            if(this.$refs.query) {
+                this.$refs.query.value = '';
+            }
         },
     },
     watch: {
@@ -122,5 +137,30 @@ export default {
 }
 .small-button {
     flex-shrink: 0;
+}
+#search-suggest {
+    background: var(--BLUR);
+    width: 100%;
+    backdrop-filter: blur(16px);
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+#search-suggest .container {
+    padding: 16px 0;
+}
+#search-suggest .item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+#search-suggest .title {
+    font-weight: 600;
+    color: var(--G700);
+}
+#search-suggest .release-date {
+    color: var(--O600);
+    font-size: 14px;
 }
 </style>

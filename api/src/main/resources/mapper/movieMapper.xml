@@ -119,7 +119,7 @@
             (select count(*) from rate where rate_movie_id = movie_id and rate_cre_date >= date_add(now(), interval -1 month)) rate_count
         from movie m
         order by (comment_count+wish_count+watching_count+rate_count) desc, movie_id desc
-        limit 6 offset 0
+        limit 10 offset 0
     </select>
 
     <select id="selectBestRateMovieList" resultMap="movieResultMap">
@@ -129,7 +129,7 @@
             (select count(*) from pandora3_ojt.user where user_enable = true) user_count
         from movie m
         order by rate_count + avg_rate*user_count desc, movie_id desc
-            limit 6 offset 0
+            limit 10 offset 0
     </select>
 
     <select id="selectOneMovie" resultMap="movieResultMap">

@@ -39,6 +39,7 @@ export default {
 }
 .hide .item {
     flex-shrink: 0;
+    width: 14%;
 }
 .item {
     width: calc((100% - 100px)/6);
@@ -51,41 +52,41 @@ export default {
     .item {
         width: calc((100% - 80px)/5);
     }
-    /* .hide .item:nth-child(5) ~ .item {
-        display: none;
-    } */
+    .hide .item {
+        width: 16%;
+    }
 }
 @media screen and (max-width:960px) {
     .item {
         width: calc((100% - 60px)/4);
     }
-    /* .hide .item:nth-child(4) ~ .item {
-        display: none;
-    } */
+    .hide .item {
+        width: 20%;
+    }
 }
 @media screen and (max-width:676px) {
     .item {
         width: calc((100% - 40px)/3);
     }
-    /* .hide .item:nth-child(3) ~ .item {
-        display: none;
-    } */
+    .hide .item {
+        width: 25%;
+    }
 }
 @media screen and (max-width:476px) {
     .item {
         width: calc((100% - 20px)/2);
     }
-    /* .hide .item:nth-child(2) ~ .item {
-        display: none;
-    } */
+    .hide .item {
+        width: 35%;
+    }
 }
 @media screen and (max-width: 320px) {
     .item {
         width: 100%;
     }
-    /* .hide .item:nth-child(1) ~ .item {
-        display: none;
-    } */
+    .hide .item {
+        width: 40%;
+    }
 }
 .poster {
     width: 100%;

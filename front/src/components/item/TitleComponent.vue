@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
     #title {
-        margin: 0 0 72px;
+        margin: 0 0 36px;
     }
     .emoji {
         font-size: 40px;
