@@ -106,7 +106,15 @@
         <foreach collection="genreList" item="genre" open="and(" close=")" separator="or">
             movie_genre like concat('%', #{genre}, '%')
         </foreach>
-        order by movie_id desc
+        <if test="query==null">
+            order by movie_id desc
+        </if>
+        <if test="query!=null">
+            order by
+                position(#{query} in movie_title) asc,
+                position(#{query} in movie_original_title) asc,
+                position(#{query} in movie_title_initial) asc
+        </if>
         limit #{limit} offset #{offset}
     </select>
 

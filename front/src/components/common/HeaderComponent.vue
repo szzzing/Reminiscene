@@ -61,8 +61,8 @@ export default {
         },
         checkInput(event) {
             console.log("check")
-            this.query = event.target.value;
-            if(this.query.trim()!='') {
+            this.query = event.target.value.trim().replaceAll("/", "");
+            if(this.query!='') {
                 this.axios.get(`/movie/search/${this.query}`)
                 .then((response)=>{
                     this.list = response.data;
