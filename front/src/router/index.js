@@ -16,10 +16,6 @@ import CommentPage from '@/components/comment/CommentPage'
 import MyPage from '@/components/mypage/MyPage'
 import WithdrawPage from '@/components/mypage/WithdrawPage'
 import ModifyPage from '@/components/mypage/ModifyPage'
-import MyWishPage from '@/components/mypage/WishPage'
-import MyCommentPage from '@/components/mypage/CommentPage'
-import MyLikePage from '@/components/mypage/LikePage'
-import MyWatchingPage from '@/components/mypage/WatchingPage'
 import SearchPage from '@/components/search/SearchPage'
 import SearchComponent from '@/components/search/SearchComponent'
 import SearchUserComponent from '@/components/search/SearchUserComponent'
@@ -79,24 +75,6 @@ const routes = [
     {
         path: '/mypage',
         component: MyPage,
-        children: [
-            {
-                path: '/mypage/wish',
-                component: MyWishPage,
-            },
-            {
-                path: '/mypage/comment',
-                component: MyCommentPage,
-            },
-            {
-                path: '/mypage/like',
-                component: MyLikePage,
-            },
-            {
-                path: '/mypage/watching',
-                component: MyWatchingPage,
-            },
-        ]
     },
     {
         path: '/mypage/withdraw',

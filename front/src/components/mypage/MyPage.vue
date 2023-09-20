@@ -4,26 +4,26 @@
         v-bind:category="category"
         @clickCategory="clickCategory"></info-component>
 
-        <wish-page v-if="this.category=='wish'"></wish-page>
-        <watching-page v-if="this.category=='watching'"></watching-page>
-        <comment-page v-if="this.category=='comment'"></comment-page>
-        <like-page v-if="this.category=='like'"></like-page>
+        <wish-component v-if="this.category=='wish'"></wish-component>
+        <watching-component v-if="this.category=='watching'"></watching-component>
+        <comment-component v-if="this.category=='comment'"></comment-component>
+        <like-component v-if="this.category=='like'"></like-component>
     </div>
 </template>
 
 <script>
-import CommentPage from './CommentPage.vue';
 import InfoComponent from './InfoComponent.vue'
-import LikePage from './LikePage.vue';
-import WatchingPage from './WatchingPage.vue';
-import WishPage from './WishPage.vue';
+import WishComponent from './WishComponent.vue';
+import WatchingComponent from './WatchingComponent.vue';
+import CommentComponent from './CommentComponent.vue';
+import LikeComponent from './LikeComponent.vue';
 export default {
     components: {
         InfoComponent,
-        WishPage,
-        WatchingPage,
-        CommentPage,
-        LikePage,
+        WishComponent,
+        WatchingComponent,
+        CommentComponent,
+        LikeComponent,
     },
     data() {
         return {

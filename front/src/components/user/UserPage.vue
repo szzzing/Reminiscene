@@ -2,28 +2,28 @@
     <div class="container">
         <info-component v-bind:user="user" v-bind:category="category"
         @clickCategory="clickCategory"></info-component>
-        <wish-page v-if="this.category=='wish'" v-bind:user="user"></wish-page>
-        <watching-page v-if="this.category=='watching'" v-bind:user="user"></watching-page>
-        <comment-page v-if="this.category=='comment'" v-bind:user="user"></comment-page>
-        <like-page v-if="this.category=='like'" v-bind:user="user"></like-page>
+        <wish-component v-if="this.category=='wish'" v-bind:user="user"></wish-component>
+        <watching-component v-if="this.category=='watching'" v-bind:user="user"></watching-component>
+        <comment-component v-if="this.category=='comment'" v-bind:user="user"></comment-component>
+        <like-component v-if="this.category=='like'" v-bind:user="user"></like-component>
     </div>
 </template>
 
 <script>
 import moment from "moment";
 import InfoComponent from '../user/InfoComponent.vue';
-import LikePage from "./LikePage.vue";
-import WishPage from "./WishPage.vue";
-import WatchingPage from '../user/WatchingPage.vue';
-import CommentPage from "./CommentPage.vue";
+import LikeComponent from "./LikeComponent.vue";
+import WishComponent from "./WishComponent.vue";
+import WatchingComponent from './WatchingComponent.vue';
+import CommentComponent from "./CommentComponent.vue";
 
 export default {
     components: {
     InfoComponent,
-    LikePage,
-    WishPage,
-    WatchingPage,
-    CommentPage,
+    LikeComponent,
+    WishComponent,
+    WatchingComponent,
+    CommentComponent,
 },
 
     created() {

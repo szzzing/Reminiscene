@@ -7,7 +7,7 @@ import java.util.ArrayList;
 @Data
 public class MovieSelectDto {
     private Integer page;
-    private final int limit = 12;
+    private final int limit = 7;
     private int offset;
     private String sort;
     private String loginUser;    // 로그인시 코멘트 좋아요 여부 체크

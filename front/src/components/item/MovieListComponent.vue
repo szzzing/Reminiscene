@@ -42,7 +42,7 @@ export default {
     width: 14%;
 }
 .item {
-    width: calc((100% - 100px)/6);
+    width: calc((100% - 120px)/7);
     flex-grow: 0;
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@ export default {
 }
 @media screen and (max-width:1079px) {
     .item {
-        width: calc((100% - 80px)/5);
+        width: calc((100% - 100px)/6);
     }
     .hide .item {
         width: 16%;
@@ -58,34 +58,42 @@ export default {
 }
 @media screen and (max-width:960px) {
     .item {
-        width: calc((100% - 60px)/4);
+        width: calc((100% - 80px)/5);
     }
     .hide .item {
         width: 20%;
     }
 }
-@media screen and (max-width:676px) {
+@media screen and (max-width:768px) {
     .item {
-        width: calc((100% - 40px)/3);
+        width: calc((100% - 60px)/4);
     }
     .hide .item {
         width: 25%;
     }
 }
-@media screen and (max-width:476px) {
+@media screen and (max-width:525px) {
     .item {
-        width: calc((100% - 20px)/2);
+        width: calc((100% - 40px)/3);
     }
     .hide .item {
         width: 35%;
     }
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 360px) {
+    .item {
+        width: calc((100% - 20px)/2);
+    }
+    .hide .item {
+        width: 40%;
+    }
+}
+@media screen and (max-width: 270px) {
     .item {
         width: 100%;
     }
     .hide .item {
-        width: 40%;
+        width: 70%;
     }
 }
 .poster {
