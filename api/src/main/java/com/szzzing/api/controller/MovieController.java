@@ -210,4 +210,10 @@ public class MovieController {
         ArrayList<GenreDto> result = movieService.getGenreList();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/movie/search/{query}")
+    public ResponseEntity getSearchList(@PathVariable String query) {
+        ArrayList<MovieDto> result = movieService.getSearchList(query);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

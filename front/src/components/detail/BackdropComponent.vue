@@ -61,6 +61,7 @@ export default {
 .title {
     font-size: 36px;
     font-weight: 700;
+    line-height: 1.2;
 }
 .genre-release {
     margin-top: 8px;

@@ -34,4 +34,6 @@ public interface MovieService {
     public MovieRankListDto getMovieRankList();
 
     ArrayList<GenreDto> getGenreList();
+
+    ArrayList<MovieDto> getSearchList(String query);
 }

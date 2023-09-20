@@ -148,6 +148,20 @@
         from genre
     </select>
 
+    <select id="selectSearchList" resultMap="movieResultMap">
+        select movie_id, movie_title, movie_release_date
+        from movie
+        where
+            movie_title like concat('%', #{query}, '%')
+            or movie_original_title like concat('%', #{query}, '%')
+            or movie_title_initial like concat('%', #{query}, '%')
+        order by
+            position(#{query} in movie_title) asc,
+            position(#{query} in movie_original_title) asc,
+            position(#{query} in movie_title_initial) asc
+        limit 10 offset 0
+    </select>
+
     <resultMap id="movieResultMap" type="com.szzzing.api.dto.movie.MovieDto">
         <id column="movie_id" property="id"/>
         <result column="movie_title" property="title"/>

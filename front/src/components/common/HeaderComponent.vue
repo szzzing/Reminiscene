@@ -3,25 +3,37 @@
         <div class="container">
             <div class="inner">
                 <router-link to="/" class="logo shadow">🌙</router-link>
+                
                 <div class="search" v-if="this.$route.path!='/'">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" v-on:keyup.enter="clickSearch" v-model="this.query" placeholder="영화, 유저를 검색해보세요.">
+                    <input type="text" @click="console.log(this.query)" v-on:keyup.enter="clickSearch" v-model="this.query" @input="this.checkInput($event)" placeholder="영화, 유저를 검색해보세요.">
                 </div>
+                
                 <div class="themeBtn shadow"
                 @click="this.$store.commit('local/setTheme')">
                 {{ this.$store.state.local.theme ? "🌞" : "🌝" }}
                 </div>
+                
                 <router-link v-if="this.$store.state.auth.user==null" to="/login" class="small-button">로그인</router-link>
+                
                 <div v-if="user && user.profileImage" @click="clickProfile"
                 class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
                 <div class="no-image" v-if="user && !user.profileImage" @click="clickProfile"><i class="fa-solid fa-user"></i></div>
             </div>
         </div>
+        <search-suggest-component v-if="this.$route.path!='/' && this.query.trim()!=''"
+        v-bind:query="query">
+        </search-suggest-component>
     </div>
 </template>
 
 <script>
+import SearchSuggestComponent from './SearchSuggestComponent.vue';
+
 export default {
+    components: {
+        SearchSuggestComponent,
+    },
     data() {
         return {
             query: '',
@@ -42,8 +54,18 @@ export default {
                 this.$router.push("/search/"+this.query.trim());
                 this.query = '';
             }
-        }
-    }
+        },
+        checkInput(event) {
+            this.query = event.target.value;
+        },
+        fetchData() {
+            console.log("이동")
+            this.query = '';
+        },
+    },
+    watch: {
+        '$route.path': 'fetchData',
+    },
 }
 </script>
 
@@ -55,12 +77,13 @@ export default {
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
+    height: 52px;
     z-index: 9997;
 }
 .inner {
     display: flex;
     gap: 16px;
-    width: 100%;
     align-items: center;
     justify-content: space-between;
 }

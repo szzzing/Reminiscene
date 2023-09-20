@@ -98,4 +98,9 @@ public class MovieServiceImpl implements MovieService {
     public ArrayList<GenreDto> getGenreList() {
         return movieRepository.selectGenreList();
     }
+
+    @Override
+    public ArrayList<MovieDto> getSearchList(String query) {
+        return movieRepository.selectSearchList(query);
+    }
 }
