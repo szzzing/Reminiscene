@@ -45,7 +45,7 @@
     --GREEN: rgba(99, 206, 86);
 }
 
-:root.dark {
+/* :root.dark {
     --O100: #ffffff09;
     --O200: #ffffff08;
     --O300: #ffffff18;
@@ -55,7 +55,7 @@
     --O700: #ffffff71;
     --O800: #ffffff80;
     --O900: #ffffff91;
-}
+} */
 
 :root {
     --BLUR: #fafafa80;

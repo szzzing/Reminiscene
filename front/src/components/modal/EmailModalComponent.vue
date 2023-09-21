@@ -4,7 +4,7 @@
             <div class="modal-wrapper">
                 <div class="modal-container item-fill" @click.stop="">
                     <div class="inner">
-                        <div class="emoji shadow">🧙</div>
+                        <div class="emoji shadow">{{ emoji }}</div>
                         <div class="sub-title" ref="status" v-if="this.status==null">{{ "인증번호를 입력해주세요." }}</div>
                         <div class="sub-title status-success" v-if="this.status==true" ref="status">이메일 인증에 성공했어요.</div>
                         <div class="sub-title status-fail" v-if="this.status==false" ref="status">인증번호를 다시 확인해주세요.</div>
@@ -14,10 +14,10 @@
                             <input class="code" type="text" size="6" v-model="input" @input="this.checkInput()" maxlength="6">
                         </div>
                     </div>
-                    <!-- <div class="inner">
+                    <div class="inner">
                         <div class="text">메일이 안왔나요?</div>
                         <span class="send-button" @click="this.sendEmail()">다시 보내기</span>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,6 +32,7 @@ export default {
             input: null,
             code: null,
             status: null,
+            emoji: "😐",
         }
     },
     props: [
@@ -59,6 +60,7 @@ export default {
             if(this.input.length==6) {
                 if(this.input == this.code) {
                     this.status = true;
+                    this.emoji = "😀";
                     setTimeout(() => {
                         this.$emit('closeEmailModal');
                         this.$emit('succeedEmail');
@@ -66,9 +68,11 @@ export default {
                 } else {
                     this.$refs.code.classList.add("vibration");
                     this.status = false;
+                    this.emoji = "😢";
                     setTimeout(() => {
                         this.$refs.code.classList.remove("vibration");
                         this.status = null;
+                        this.emoji = "😐";
                     }, 1000);
                 }
                 clearTimeout();
@@ -131,6 +135,7 @@ export default {
     text-align: center;
     color: var(--G500);
     word-break: keep-all;
+    font-weight: 600;
 }
 .close {
     cursor: pointer;
@@ -153,7 +158,7 @@ export default {
     background: var(--G100);
 }
 .text {
-    color: var(--G400);
+    color: var(--G500);
 }
 .send-button {
     color: var(--FOCUS);

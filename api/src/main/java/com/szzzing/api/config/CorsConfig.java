@@ -12,21 +12,19 @@ import org.springframework.web.filter.CorsFilter;
 @ComponentScan(basePackages = "com.szzzing.api")
 @Configuration
 public class CorsConfig {
-    @Value("${front.url}") static String url;
-
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:8088");    // 허용할 출처
-        configuration.addAllowedHeader("*");    // 허용할 헤더
+        configuration.addAllowedOrigin("http://localhost:8082");    // 허용할 출처
+        configuration.addAllowedHeader("*");
+        configuration.addExposedHeader("token");
+        configuration.addExposedHeader("user");
         configuration.addAllowedMethod("*");    // 허용할 메서드
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-        source.registerCorsConfiguration("/login", configuration);
 
         return new CorsFilter(source);
     }
-
 }

@@ -2,6 +2,7 @@ package com.szzzing.api.service.impl;
 
 import com.szzzing.api.dto.common.EmailDto;
 import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.repository.MailRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.service.MailService;
 import jakarta.mail.MessagingException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl implements MailService {
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
+    private final MailRepository mailRepository;
 
     // 난수 코드 생성
     public int createCode() {

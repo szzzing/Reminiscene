@@ -31,7 +31,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     // 인증 요청시 실행되는 함수 -> /login
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        logger.info("인증 요청");
         // request에 있는 id,pw를 파싱해서 자바 Object로 받기
         ObjectMapper om = new ObjectMapper();
         UserDto authInfo = null;
@@ -45,8 +44,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(authInfo.getId(), authInfo.getPw());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        // 로그인 성공 시 로직
 
         return authentication;
     }
@@ -71,7 +68,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     // 인증 실패 로직
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        logger.info("로그인 실패");
         response.setStatus(401);
     }
 }
