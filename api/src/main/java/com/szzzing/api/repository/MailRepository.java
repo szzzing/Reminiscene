@@ -16,7 +16,9 @@ import java.util.concurrent.TimeUnit;
 public class MailRepository {
     private final RedisTemplate redisTemplate;
 
-    public void save(MailRedisDto mailRedisDto) {
+    public boolean save(MailRedisDto mailRedisDto) {
+        boolean result = false;
+
         String key = mailRedisDto.getEmail() +"_"+ mailRedisDto.getType();
         
         // 기존 인증번호 삭제
@@ -25,12 +27,13 @@ public class MailRepository {
         // 새로운 인증번호 추가
         ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key, Integer.valueOf(String.valueOf(mailRedisDto.getCode())));
-        redisTemplate.expire(key, 60L, TimeUnit.SECONDS);
+        redisTemplate.expire(key, 180L, TimeUnit.SECONDS);
 
         // log
         Integer code = valueOperations.get(key);
-        log.info(key);
-        log.info(code.toString());
+        result = true;
+
+        return result;
     }
 
     public boolean match(CodeDto codeDto) {

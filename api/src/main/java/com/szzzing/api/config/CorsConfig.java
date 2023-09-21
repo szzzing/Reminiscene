@@ -14,7 +14,7 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:8082");    // 허용할 출처
+        configuration.addAllowedOrigin("http://localhost:8081");    // 허용할 출처
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("token");
         configuration.addExposedHeader("user");

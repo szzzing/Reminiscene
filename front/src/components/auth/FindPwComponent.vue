@@ -1,7 +1,7 @@
 <template>
     <email-modal-component v-if="this.emailModal"
-    v-bind:email="email"
     v-bind:url="url"
+    v-bind:type="type"
     v-bind:params="params"
     @closeEmailModal="this.emailModal=false"
     @succeedEmail="this.$emit('succeedEmail', this.id)">
@@ -39,6 +39,7 @@ export default {
             email: null,
             emailModal: false,
             url: "/email/find/pw",
+            type: "P",
             params: null,
             emailSuccess: false,
         }

@@ -251,5 +251,6 @@ input {
 .email-button {
     cursor: pointer;
     color: var(--FOCUS);
+    font-weight: 600;
 }
 </style>

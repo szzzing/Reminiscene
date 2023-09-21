@@ -6,5 +6,5 @@ import lombok.Data;
 public class CodeDto {
     private String email;
     private int code;
-    private int type;  // 이메일인증: E, 비밀번호찾기: P
+    private String type;  // 이메일인증: E, 비밀번호찾기: P
 }

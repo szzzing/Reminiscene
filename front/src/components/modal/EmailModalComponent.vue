@@ -8,6 +8,9 @@
                         <div class="sub-title" ref="status" v-if="this.status==null">{{ "인증번호를 입력해주세요." }}</div>
                         <div class="sub-title status-success" v-if="this.status==true" ref="status">이메일 인증에 성공했어요.</div>
                         <div class="sub-title status-fail" v-if="this.status==false" ref="status">인증번호를 다시 확인해주세요.</div>
+                        <div class="timer"
+                        :class="{ 'status-fail' : this.timer.expired }"
+                        >{{ timer.text }}</div>
                     </div>
                     <div class="inner">
                         <div class="input-box" ref="code">
@@ -33,6 +36,11 @@ export default {
             status: null,
             emoji: "😐",
             succeed: false,
+            timer: {
+                time: 180,
+                text: "3 : 00",
+                expired: false,
+            },
         }
     },
     props: [
@@ -49,21 +57,40 @@ export default {
             this.axios.post(this.url, this.params)
             .then((response)=>{
                 if(response.data) {
+                    this.startTimer();
                     this.succeed = true;
                 }
             })
         },
         checkInput() {
             this.input = this.input.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-        }
+        },
+        startTimer() {
+            this.timer.expired = false;
+            this.timer.text = "3 : 00";
+            this.timer.time = 179;
+
+            const interval = setInterval(()=>{
+                const min = parseInt(this.timer.time/60);
+                const sec = String(this.timer.time%60).padStart(2, "0");
+                this.timer.text = min + " : " + sec;
+                this.timer.time--;
+
+                if(this.timer.time<0) {
+                    this.timer.expired = true;
+                    this.timer.text = "인증 가능한 시간이 지났어요.";
+                    clearInterval(interval);
+                }
+            }, 1000);
+        },
     },
     watch: {
         input() {
-            if(this.input.length==6) {
+            if(this.input.length==6 && this.timer.expired==false) {
                 
                 const params = {
                     email: this.params.to,
-                    code: this.input,
+                    codeå: this.input,
                     type: this.type,
                 };
                 this.axios.get("/email/match", {params})
@@ -134,7 +161,6 @@ export default {
 .emoji {
     text-align: center;
     font-size: 48px;
-    line-height: 1.2;
 }
 .title {
     flex-grow: 1;
@@ -142,11 +168,14 @@ export default {
     font-weight: 700;
     text-align: center;
 }
-.sub-title {
+.sub-title, .timer {
     text-align: center;
-    color: var(--G500);
     word-break: keep-all;
     font-weight: 600;
+    line-height: 1.4;
+}
+.timer {
+    color: var(--G500);
 }
 .close {
     cursor: pointer;

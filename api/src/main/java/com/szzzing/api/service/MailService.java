@@ -15,7 +15,7 @@ public interface MailService {
 
     public boolean sendFindId(MailDto mailDto);
 
-    public int sendFindPw(MailDto mailDto);
+    public boolean sendFindPw(MailDto mailDto);
 
     boolean matchCode(CodeDto codeDto);
 }

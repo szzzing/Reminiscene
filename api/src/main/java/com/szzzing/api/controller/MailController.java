@@ -51,7 +51,7 @@ public class MailController {
      */
     @PostMapping("/email/find/pw")
     public ResponseEntity sendFindPw(@RequestBody MailDto mailDto) {
-        int result = mailService.sendFindPw(mailDto);
+        boolean result = mailService.sendFindPw(mailDto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

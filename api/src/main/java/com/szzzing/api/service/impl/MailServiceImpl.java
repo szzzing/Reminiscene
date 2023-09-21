@@ -25,12 +25,10 @@ public class MailServiceImpl implements MailService {
     // 난수 코드 생성
     public int createCode() {
         int code = (int)(Math.random() * (90000)) + 100000;
-        log.info(code+"");
         return code;
     }
     // 이메일 전송
     public void sendMail(MailDto mailDto) {
-        log.info(mailDto.toString());
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
             message.setRecipients(MimeMessage.RecipientType.TO, mailDto.getTo());
@@ -43,6 +41,8 @@ public class MailServiceImpl implements MailService {
     }
 
     public boolean sendAuthCode(MailDto mailDto) {
+        boolean result = false;
+
         int code = createCode();
         String body = "<h3>️🧙 이메일 인증번호</h3>";
         body += "<b>"+code+"</b>";
@@ -57,9 +57,9 @@ public class MailServiceImpl implements MailService {
         mailRedisDto.setType("E");
         mailRedisDto.setCode(code);
 
-        mailRepository.save(mailRedisDto);
+        result = mailRepository.save(mailRedisDto);
 
-        return true;
+        return result;
     }
 
     public boolean sendFindId(MailDto mailDto) {
@@ -80,7 +80,8 @@ public class MailServiceImpl implements MailService {
         return true;
     }
 
-    public int sendFindPw(MailDto mailDto) {
+    public boolean sendFindPw(MailDto mailDto) {
+        boolean result = false;
         int code = createCode();
 
         String body = "<h3>️🧙 비밀번호 재설정 인증번호</h3>";
@@ -96,9 +97,9 @@ public class MailServiceImpl implements MailService {
         mailRedisDto.setType("P");
         mailRedisDto.setCode(code);
 
-        mailRepository.save(mailRedisDto);
+        result = mailRepository.save(mailRedisDto);
 
-        return code;
+        return result;
     }
 
     @Override
