@@ -42,7 +42,7 @@ public class MailServiceImpl implements MailService {
         javaMailSender.send(message);
     }
 
-    public int sendAuthCode(MailDto mailDto) {
+    public boolean sendAuthCode(MailDto mailDto) {
         int code = createCode();
         String body = "<h3>️🧙 이메일 인증번호</h3>";
         body += "<b>"+code+"</b>";
@@ -59,7 +59,7 @@ public class MailServiceImpl implements MailService {
 
         mailRepository.save(mailRedisDto);
 
-        return code;
+        return true;
     }
 
     public boolean sendFindId(MailDto mailDto) {

@@ -27,8 +27,7 @@ public class MailController {
      */
     @PostMapping("/email/auth/code")
     public ResponseEntity sendAuthCode(@RequestBody MailDto mailDto) {
-        int result = mailService.sendAuthCode(mailDto);
-
+        boolean result = mailService.sendAuthCode(mailDto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
@@ -56,6 +55,12 @@ public class MailController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    /**
+     * 발송한 인증코드와 입력한 인증코드 비교
+     *
+     * @param codeDto 입력한 인증번호, 이메일, 타입
+     * @return 결과
+     */
     @GetMapping("/email/match")
     public ResponseEntity matchCode(@ModelAttribute CodeDto codeDto) {
         boolean result = mailService.matchCode(codeDto);

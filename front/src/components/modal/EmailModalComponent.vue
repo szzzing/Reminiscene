@@ -1,5 +1,5 @@
 <template>
-    <transition name="smooth">
+    <transition name="smooth" v-if="this.succeed">
         <div id="email-modal" class="modal-mask" @click="$emit('closeEmailModal')">
             <div class="modal-wrapper">
                 <div class="modal-container item-fill" @click.stop="">
@@ -32,6 +32,7 @@ export default {
             input: null, // 입력한 값
             status: null,
             emoji: "😐",
+            succeed: false,
         }
     },
     props: [
@@ -46,6 +47,11 @@ export default {
         // 이메일 전송
         sendEmail() {
             this.axios.post(this.url, this.params)
+            .then((response)=>{
+                if(response.data) {
+                    this.succeed = true;
+                }
+            })
         },
         checkInput() {
             this.input = this.input.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');

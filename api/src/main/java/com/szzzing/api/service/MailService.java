@@ -11,7 +11,7 @@ public interface MailService {
     // 이메일 전송
     public void sendMail(MailDto mailDto);
 
-    public int sendAuthCode(MailDto mailDto);
+    public boolean sendAuthCode(MailDto mailDto);
 
     public boolean sendFindId(MailDto mailDto);
 

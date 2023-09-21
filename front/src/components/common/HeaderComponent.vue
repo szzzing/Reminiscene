@@ -61,7 +61,6 @@ export default {
             }
         },
         checkInput(event) {
-            console.log("check")
             this.query = event.target.value.trim().replaceAll("/", "");
             this.$store.commit("local/setSuggest", true);
             if(this.query!='') {
