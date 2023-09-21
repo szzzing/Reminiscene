@@ -11,19 +11,19 @@
 
         <div class="inner" v-if="this.monthBestList">
             <div class="title">{{ new Date().getMonth()+1+"월의 영화" }}</div>
-            <div class="sub-title">이번 달 가장 많은 관심을 받은 작품들이예요.</div>
+            <div class="sub-title">이번 달 가장 많은 관심을 받은 작품</div>
             <movie-list-component v-bind:list="monthBestList" v-bind:hide="true" v-bind:rank="true"></movie-list-component>
         </div>
 
         <div class="inner" v-if="this.monthBestList">
             <div class="title">클래식은 영원하다</div>
-            <div class="sub-title">그동안 가장 높은 별점을 받은 작품들이예요.</div>
+            <div class="sub-title">가장 높은 별점을 받은 작품</div>
             <movie-list-component v-bind:list="bestRateList" v-bind:hide="true" v-bind:rank="true"></movie-list-component>
         </div>
 
         <div class="inner" v-if="this.monthBestList">
             <div class="title">최근 개봉한 영화</div>
-            <div class="sub-title">새로운 작품이 당신을 기다리고 있어요.</div>
+            <div class="sub-title">새로운 작품이 기다리고 있어요</div>
             <movie-list-component v-bind:list="newList" v-bind:hide="true"></movie-list-component>
         </div>
 

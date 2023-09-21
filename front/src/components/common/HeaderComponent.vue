@@ -61,8 +61,8 @@ export default {
             }
         },
         checkInput(event) {
-            this.query = event.target.value.trim().replaceAll("/", "");
             this.$store.commit("local/setSuggest", true);
+            this.query = encodeURIComponent(event.target.value.trim().replaceAll("/", ""));
             if(this.query!='') {
                 this.axios.get(`/movie/search/${this.query}`)
                 .then((response)=>{
