@@ -29,16 +29,15 @@
 export default {
     data() {
         return {
-            input: null,
-            code: null,
+            input: null, // 입력한 값
             status: null,
             emoji: "😐",
         }
     },
     props: [
-        'email',
         'url',
         'params',
+        'type',
     ],
     created() {
         this.sendEmail();
@@ -47,9 +46,6 @@ export default {
         // 이메일 전송
         sendEmail() {
             this.axios.post(this.url, this.params)
-            .then((response)=>{
-                this.code = response.data;
-            })
         },
         checkInput() {
             this.input = this.input.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
@@ -58,24 +54,33 @@ export default {
     watch: {
         input() {
             if(this.input.length==6) {
-                if(this.input == this.code) {
-                    this.status = true;
-                    this.emoji = "😀";
-                    setTimeout(() => {
-                        this.$emit('closeEmailModal');
-                        this.$emit('succeedEmail');
-                    }, 1000);
-                } else {
-                    this.$refs.code.classList.add("vibration");
-                    this.status = false;
-                    this.emoji = "😢";
-                    setTimeout(() => {
-                        this.$refs.code.classList.remove("vibration");
-                        this.status = null;
-                        this.emoji = "😐";
-                    }, 1000);
-                }
-                clearTimeout();
+                
+                const params = {
+                    email: this.params.to,
+                    code: this.input,
+                    type: this.type,
+                };
+                this.axios.get("/email/match", {params})
+                .then((response)=>{
+                    if(response.data) {
+                        this.status = true;
+                        this.emoji = "😀";
+                        setTimeout(() => {
+                            this.$emit('closeEmailModal');
+                            this.$emit('succeedEmail');
+                        }, 1000);
+                    } else {
+                        this.$refs.code.classList.add("vibration");
+                        this.status = false;
+                        this.emoji = "😢";
+                        setTimeout(() => {
+                            this.$refs.code.classList.remove("vibration");
+                            this.status = null;
+                            this.emoji = "😐";
+                        }, 1000);
+                    }
+                    clearTimeout();
+                });
             }
         }
     }

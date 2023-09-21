@@ -1,14 +1,13 @@
 package com.szzzing.api.controller;
 
-import com.szzzing.api.dto.common.EmailDto;
+import com.szzzing.api.dto.common.MailDto;
+import com.szzzing.api.dto.mail.CodeDto;
 import com.szzzing.api.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The type Mail controller.
@@ -21,14 +20,14 @@ public class MailController {
     private final MailService mailService;
 
     /**
-     * 회원가입 - 인증번호 발송
+     * 이메일 - 인증번호 발송
      *
-     * @param emailDto the email dto
+     * @param mailDto the email dto
      * @return the response entity
      */
-    @RequestMapping("/email/auth/code")
-    public ResponseEntity sendAuthCode(@RequestBody EmailDto emailDto) {
-        int result = mailService.sendAuthCode(emailDto);
+    @PostMapping("/email/auth/code")
+    public ResponseEntity sendAuthCode(@RequestBody MailDto mailDto) {
+        int result = mailService.sendAuthCode(mailDto);
 
         return new ResponseEntity(result, HttpStatus.OK);
     }
@@ -36,24 +35,30 @@ public class MailController {
     /**
      * 아이디 찾기 - 아이디 정보 힌트 발송.
      *
-     * @param emailDto the email dto
+     * @param mailDto the email dto
      * @return the response entity
      */
-    @RequestMapping("/email/find/id")
-    public ResponseEntity sendFindId(@RequestBody EmailDto emailDto) {
-        boolean result = mailService.sendFindId(emailDto);
+    @PostMapping("/email/find/id")
+    public ResponseEntity sendFindId(@RequestBody MailDto mailDto) {
+        boolean result = mailService.sendFindId(mailDto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     /**
      * 비밀번호 찾기 - 인증번호 발송
      *
-     * @param emailDto the email dto
+     * @param mailDto the email dto
      * @return the response entity
      */
-    @RequestMapping("/email/find/pw")
-    public ResponseEntity sendFindPw(@RequestBody EmailDto emailDto) {
-        int result = mailService.sendFindPw(emailDto);
+    @PostMapping("/email/find/pw")
+    public ResponseEntity sendFindPw(@RequestBody MailDto mailDto) {
+        int result = mailService.sendFindPw(mailDto);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/email/match")
+    public ResponseEntity matchCode(@ModelAttribute CodeDto codeDto) {
+        boolean result = mailService.matchCode(codeDto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 }

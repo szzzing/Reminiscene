@@ -1,6 +1,8 @@
 package com.szzzing.api.service.impl;
 
-import com.szzzing.api.dto.common.EmailDto;
+import com.szzzing.api.dto.common.MailDto;
+import com.szzzing.api.dto.mail.CodeDto;
+import com.szzzing.api.dto.mail.MailRedisDto;
 import com.szzzing.api.dto.user.UserDto;
 import com.szzzing.api.repository.MailRepository;
 import com.szzzing.api.repository.UserRepository;
@@ -27,32 +29,41 @@ public class MailServiceImpl implements MailService {
         return code;
     }
     // 이메일 전송
-    public void sendMail(EmailDto emailDto) {
+    public void sendMail(MailDto mailDto) {
+        log.info(mailDto.toString());
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
-            message.setRecipients(MimeMessage.RecipientType.TO, emailDto.getTo());
-            message.setSubject(emailDto.getSubject());
-            message.setText(emailDto.getBody(),"UTF-8", "html");
+            message.setRecipients(MimeMessage.RecipientType.TO, mailDto.getTo());
+            message.setSubject(mailDto.getSubject());
+            message.setText(mailDto.getBody(),"UTF-8", "html");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
         javaMailSender.send(message);
     }
 
-    public int sendAuthCode(EmailDto emailDto) {
+    public int sendAuthCode(MailDto mailDto) {
         int code = createCode();
-        String body = "<h3>️🧙 회원가입 인증번호</h3>";
+        String body = "<h3>️🧙 이메일 인증번호</h3>";
         body += "<b>"+code+"</b>";
         
-        emailDto.setBody(body);
-        emailDto.setSubject("Reminiscene 회원가입 인증번호를 보내드립니다.");
-        sendMail(emailDto);
+        mailDto.setBody(body);
+        mailDto.setSubject("Reminiscene 이메일 인증번호를 보내드립니다.");
+        sendMail(mailDto);
+        
+        // redis 저장
+        MailRedisDto mailRedisDto = new MailRedisDto();
+        mailRedisDto.setEmail(mailDto.getTo());
+        mailRedisDto.setType("E");
+        mailRedisDto.setCode(code);
+
+        mailRepository.save(mailRedisDto);
 
         return code;
     }
 
-    public boolean sendFindId(EmailDto emailDto) {
-        UserDto userDto = userRepository.selectOneByEmail(emailDto.getTo());
+    public boolean sendFindId(MailDto mailDto) {
+        UserDto userDto = userRepository.selectOneByEmail(mailDto.getTo());
         if(userDto==null) return false;
         String id = userDto.getId();
         id = id.substring(0, 4);
@@ -62,23 +73,36 @@ public class MailServiceImpl implements MailService {
         body += "이 이메일로 가입하신 아이디는<br>";
         body += "<b>"+id+"</b>입니다.";
 
-        emailDto.setBody(body);
-        emailDto.setSubject("Reminiscene 아이디 찾기 결과 보내드립니다.");
-        sendMail(emailDto);
+        mailDto.setBody(body);
+        mailDto.setSubject("Reminiscene 아이디 찾기 결과 보내드립니다.");
+        sendMail(mailDto);
 
         return true;
     }
 
-    public int sendFindPw(EmailDto emailDto) {
+    public int sendFindPw(MailDto mailDto) {
         int code = createCode();
 
         String body = "<h3>️🧙 비밀번호 재설정 인증번호</h3>";
         body += "<b>"+code+"</b>";
 
-        emailDto.setBody(body);
-        emailDto.setSubject("Reminiscene 비밀번호 찾기 인증번호를 보내드립니다.");
-        sendMail(emailDto);
+        mailDto.setBody(body);
+        mailDto.setSubject("Reminiscene 비밀번호 찾기 인증번호를 보내드립니다.");
+        sendMail(mailDto);
+
+        // redis 저장
+        MailRedisDto mailRedisDto = new MailRedisDto();
+        mailRedisDto.setEmail(mailDto.getTo());
+        mailRedisDto.setType("P");
+        mailRedisDto.setCode(code);
+
+        mailRepository.save(mailRedisDto);
 
         return code;
+    }
+
+    @Override
+    public boolean matchCode(CodeDto codeDto) {
+        return mailRepository.match(codeDto);
     }
 }

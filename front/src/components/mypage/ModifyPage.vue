@@ -1,8 +1,8 @@
 <template>
     <div id="modify" class="container">
         <email-modal-component v-if="this.emailModal"
-        v-bind:email="email"
         v-bind:url="url"
+        v-bind:type="type"
         v-bind:params="params"
         @closeEmailModal="this.emailModal=false"
         @succeedEmail="this.emailSuccess=true">
@@ -115,6 +115,7 @@ export default {
             emailSuccess: false,
             url: "/email/auth/code",
             params: null,
+            type: "E",
         }
     },
     watch: {
