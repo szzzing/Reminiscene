@@ -1,7 +1,9 @@
 package com.szzzing.api.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.szzzing.api.dto.user.TokenRedisDto;
 import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.repository.TokenRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.security.auth.AuthUtil;
 import com.szzzing.api.security.auth.PrincipalDetails;
@@ -27,6 +29,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
 
     // 인증 요청시 실행되는 함수 -> /login
     @Override
@@ -45,6 +48,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
                 = new UsernamePasswordAuthenticationToken(authInfo.getId(), authInfo.getPw());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
+
         return authentication;
     }
 
@@ -59,6 +63,8 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         String jwtToken = JwtUtil.createToken(principalDetails);
         // 응답 헤더에 토큰 추가
         response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
+        // Redis에 토큰 저장
+        tokenRepository.save(new TokenRedisDto(principalDetails.getUserDto().getId(), jwtToken, "A"));
 
         // 응답 헤더에 사용자 정보 추가
         UserDto userDto = userRepository.selectOneUser(principalDetails.getUserDto().getId());

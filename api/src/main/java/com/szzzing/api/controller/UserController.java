@@ -84,7 +84,7 @@ public class UserController {
      * 아이디로 유저 조회
      *
      * @param id 조회할 유저 아이디
-     * @return 유저
+     * @return 유저 user
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable String id) {

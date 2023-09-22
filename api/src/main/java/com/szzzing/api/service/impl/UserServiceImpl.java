@@ -1,11 +1,9 @@
 package com.szzzing.api.service.impl;
 
 import com.szzzing.api.dto.common.FileDto;
-import com.szzzing.api.dto.user.UserDto;
-import com.szzzing.api.dto.user.UserListDto;
-import com.szzzing.api.dto.user.UserModifyDto;
-import com.szzzing.api.dto.user.UserSelectDto;
+import com.szzzing.api.dto.user.*;
 import com.szzzing.api.repository.FileRepository;
+import com.szzzing.api.repository.TokenRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.service.UserService;
 import com.szzzing.api.util.FileUtil;
@@ -24,6 +22,7 @@ import java.util.HashMap;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
     private final FileRepository fileRepository;
     private final PasswordEncoder passwordEncoder;
     private final String profieDir = "/upload/profile/";

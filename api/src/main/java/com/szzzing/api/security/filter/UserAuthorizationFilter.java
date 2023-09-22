@@ -30,8 +30,6 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        logger.info("토큰 검증 - "+request.getRequestURI());
-
         // 헤더에 토큰을 담아 보냈는지(인증받은 사용자인지) 검사하는 과정
         String token = JwtUtil.getToken(request);
 

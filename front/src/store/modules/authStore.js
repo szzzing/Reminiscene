@@ -1,5 +1,6 @@
-import store from '@/store/index'
+import store from '@/store/index';
 import router from '@/router';
+import axios from '@/axios/index';
 
 const auth = {
     namespaced: true,
@@ -33,7 +34,8 @@ const auth = {
         setToken(state, payload) {
             state.token = payload;
         },
-        logout(state) {
+        async logout(state) {
+            await store.dispatch("auth/logout");
             state.user = null;
             state.token = null;
             store.commit("modal/setProfile", false);
@@ -49,7 +51,9 @@ const auth = {
         },
     },
     actions: {
-
+        logout() {
+            axios.post(`/logout/${store.state.auth.user.id}`)
+        },
     }
 };
 

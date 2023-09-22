@@ -43,6 +43,7 @@ export default {
                 text: "3 : 00",
                 expired: false,
             },
+            interval: null,
             code: [null, null, null, null, null, null],  // 입력값
         }
     },
@@ -115,8 +116,9 @@ export default {
             this.timer.expired = false;
             this.timer.text = "3분 00초 남았어요.";
             this.timer.time = 179;
+            clearInterval(this.interval);
 
-            const interval = setInterval(()=>{
+            this.interval = setInterval(()=>{
                 const min = parseInt(this.timer.time/60);
                 const sec = String(this.timer.time%60).padStart(2, "0");
                 this.timer.text = `${min}분 ${sec}초 남았어요.`;
@@ -125,7 +127,7 @@ export default {
                 if(this.timer.time<0) {
                     this.timer.expired = true;
                     this.timer.text = "인증 가능한 시간이 지났어요.";
-                    clearInterval(interval);
+                    clearInterval(this.interval);
                 }
             }, 1000);
         },

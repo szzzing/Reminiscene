@@ -1,9 +1,14 @@
 package com.szzzing.api.config;
 
+import com.szzzing.api.dto.user.TokenRedisDto;
+import com.szzzing.api.repository.TokenRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.security.filter.UserAuthenticationFilter;
 import com.szzzing.api.security.filter.UserAuthorizationFilter;
+import com.szzzing.api.security.handler.RemoveRedisTokenHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +18,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,14 +30,12 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
-
-    @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
+    private final TokenRepository tokenRepository;
     private final CorsConfig corsConfig;
 
     @Bean
@@ -47,35 +51,44 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
-            .addFilter(corsConfig.corsFilter());
+        http.csrf(csrf -> csrf
+            .disable()
+            .addFilter(corsConfig.corsFilter()));
 
         http
-            .addFilter(new UserAuthenticationFilter(authenticationManager(), userRepository))
+            .addFilter(new UserAuthenticationFilter(authenticationManager(), userRepository, tokenRepository))
             .addFilter(new UserAuthorizationFilter(authenticationManager(), userRepository));
 
         // 페이지별 권한 설정
-        http.authorizeHttpRequests()
+        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
             // 라우터 관련
             .requestMatchers("/route/auth/**", "/route/login").anonymous()
-            .requestMatchers("/route/mypage/**").authenticated()
+            .requestMatchers("/route/mypage", "/route/mypage/**").hasRole("U")
             .requestMatchers("/route/admin/**").hasRole("A")
-            .anyRequest().permitAll();
+            .anyRequest().permitAll()
+        );
+
+        http.logout(logout -> logout
+            .logoutUrl("/logout/{id}")
+            .logoutSuccessHandler(new RemoveRedisTokenHandler(tokenRepository))
+        );
 
         // 권한 관련 상태코드 설정
-        http.exceptionHandling()
-            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));    // 미인증 사용자 접근시 401 반환
+        http.exceptionHandling(exceptionHandling -> exceptionHandling
+            // 미인증 사용자 접근시 401 반환
+            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+        );
 
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .formLogin().disable()
-            .httpBasic().disable();
+        http.sessionManagement(sessionManagement -> sessionManagement
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
+
+        http.formLogin(AbstractHttpConfigurer::disable);
+        http.httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
 
-    // configure(WebSecurity web) is deprecated
-    // 시큐리티 필터를 무시하는 경로 지정
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/upload/**", "*.ico");    // 정적 저장소에 접근하면 시큐리티 설정을 무시하도록 함

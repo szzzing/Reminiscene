@@ -34,7 +34,6 @@ axios.interceptors.response.use(
             }
             // 2) 로그인 페이지로 이동
             router.replace({ path: '/login' });
-            store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"로그인이 필요한 페이지예요." });
         }
 
         // 2. 권한 부족으로 인한 에러
