@@ -12,10 +12,13 @@
                         :class="{ 'status-fail' : this.timer.expired }"
                         >{{ timer.text }}</div>
                     </div>
-                    <div class="inner">
-                        <div class="input-box" ref="code">
-                            <input class="code" type="text" size="6" v-model="input" @input="this.checkInput()" maxlength="6">
-                        </div>
+                    <div class="inner input-area" ref="code">
+                        <input class="code" type="text" v-model="code[0]" size="1" @input="this.checkcode($event,0)" maxlength="1">
+                        <input class="code" type="text" v-model="code[1]" size="1" @input="this.checkcode($event,1)" maxlength="1">
+                        <input class="code" type="text" v-model="code[2]" size="1" @input="this.checkcode($event,2)" maxlength="1">
+                        <input class="code" type="text" v-model="code[3]" size="1" @input="this.checkcode($event,3)" maxlength="1">
+                        <input class="code" type="text" v-model="code[4]" size="1" @input="this.checkcode($event,4)" maxlength="1">
+                        <input class="code" type="text" v-model="code[5]" size="1" @input="this.checkcode($event,5)" maxlength="1">
                     </div>
                     <div class="inner">
                         <div class="text">메일이 안왔나요?</div>
@@ -32,7 +35,6 @@
 export default {
     data() {
         return {
-            input: null, // 입력한 값
             status: null,
             emoji: "😐",
             succeed: false,
@@ -41,6 +43,7 @@ export default {
                 text: "3 : 00",
                 expired: false,
             },
+            code: [null, null, null, null, null, null],  // 입력값
         }
     },
     props: [
@@ -65,15 +68,58 @@ export default {
         checkInput() {
             this.input = this.input.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
         },
+        checkcode(event, index) {
+            this.code[index] = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+            if(this.code[index].length>0 && index<5) {
+                event.target.nextSibling.focus();
+            }
+            let value = '';
+            for(const n of this.code) {
+                if(n) value = value+n;
+            }
+            if(value.length==6) {
+                this.match(value);
+            }
+        },
+        match(value) {
+            const params = {
+                email: this.params.to,
+                code: value,
+                type: this.type,
+            };
+            this.axios.get("/email/match", {params})
+            .then((response)=>{
+                if(response.data) {
+                    this.status = true;
+                    this.emoji = "😀";
+                    setTimeout(() => {
+                        this.$emit('closeEmailModal');
+                        this.$emit('succeedEmail');
+                    }, 1000);
+                } else {
+                    this.$refs.code.classList.add("vibration");
+                    this.status = false;
+                    this.emoji = "😢";
+                    setTimeout(() => {
+                        this.code = [null, null, null, null, null, null];
+                        document.getElementsByClassName("code")[0].focus();
+                        this.$refs.code.classList.remove("vibration");
+                        this.status = null;
+                        this.emoji = "😐";
+                    }, 1000);
+                }
+                clearTimeout();
+            });
+        },
         startTimer() {
             this.timer.expired = false;
-            this.timer.text = "3 : 00";
+            this.timer.text = "3분 00초 남았어요.";
             this.timer.time = 179;
 
             const interval = setInterval(()=>{
                 const min = parseInt(this.timer.time/60);
                 const sec = String(this.timer.time%60).padStart(2, "0");
-                this.timer.text = min + " : " + sec;
+                this.timer.text = `${min}분 ${sec}초 남았어요.`;
                 this.timer.time--;
 
                 if(this.timer.time<0) {
@@ -84,39 +130,6 @@ export default {
             }, 1000);
         },
     },
-    watch: {
-        input() {
-            if(this.input.length==6 && this.timer.expired==false) {
-                
-                const params = {
-                    email: this.params.to,
-                    codeå: this.input,
-                    type: this.type,
-                };
-                this.axios.get("/email/match", {params})
-                .then((response)=>{
-                    if(response.data) {
-                        this.status = true;
-                        this.emoji = "😀";
-                        setTimeout(() => {
-                            this.$emit('closeEmailModal');
-                            this.$emit('succeedEmail');
-                        }, 1000);
-                    } else {
-                        this.$refs.code.classList.add("vibration");
-                        this.status = false;
-                        this.emoji = "😢";
-                        setTimeout(() => {
-                            this.$refs.code.classList.remove("vibration");
-                            this.status = null;
-                            this.emoji = "😐";
-                        }, 1000);
-                    }
-                    clearTimeout();
-                });
-            }
-        }
-    }
 }
 </script>
 
@@ -150,7 +163,7 @@ export default {
     flex-direction: column;
 }
 .inner:nth-child(2) {
-    gap: 6px;
+    gap: 4px;
     flex-grow: 1;
     justify-content: center;
 }
@@ -177,25 +190,14 @@ export default {
 .timer {
     color: var(--G500);
 }
-.close {
-    cursor: pointer;
-}
-.medium-button {
-    width: 80px;
-    margin-left: auto;
-}
 .code {
     font-size: 24px;
-    line-height: 60px;
-    letter-spacing: 10px;
+    width: 44px;
+    border-radius: 8px;
     text-align: center;
-    width: 180px;
-}
-.input-box {
-    padding: 0;
-}
-.dark .input-box {
-    background: var(--G100);
+    padding: 4px 0;
+    background: var(--G50);
+    border: 1px solid var(--G100);
 }
 .text {
     color: var(--G500);
