@@ -46,13 +46,18 @@ const auth = {
             if(path.startsWith('/mypage')) {
                 router.replace({path: "/"});
             } else if(path.startsWith('/admin')) {
-                router.push({path: "/login"});
+                router.replace({path: "/login"});
             }
         },
     },
     actions: {
-        logout() {
-            axios.post(`/logout/${store.state.auth.user.id}`)
+        logout(context) {
+            if(context.state.user) {
+                axios.post(`/logout/${context.state.user.id}`)
+                .then(()=>{
+                    context.commit("logout");
+                })
+            }
         },
     }
 };

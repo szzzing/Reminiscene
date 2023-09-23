@@ -28,7 +28,7 @@ public class TokenRepository {
         // 새로운 인증번호 추가, Strings는 기존 key값 대체
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key, tokenRedisDto.getToken());
-        redisTemplate.expire(key, JwtProperties.EXPIRATION_TIME, TimeUnit.MICROSECONDS);
+        redisTemplate.expire(key, JwtProperties.EXPIRATION_TIME, TimeUnit.MILLISECONDS);
 
         log.info(key);
         log.info(valueOperations.get(key));
@@ -40,6 +40,7 @@ public class TokenRepository {
     public boolean delete(TokenRedisDto tokenRedisDto) {
         String key = tokenRedisDto.getId()+"_"+tokenRedisDto.getType();
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+
         log.info(key);
         log.info(valueOperations.get(key));
         return redisTemplate.delete(key);

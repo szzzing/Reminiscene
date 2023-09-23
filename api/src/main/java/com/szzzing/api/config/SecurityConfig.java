@@ -71,6 +71,7 @@ public class SecurityConfig {
         http.logout(logout -> logout
             .logoutUrl("/logout/{id}")
             .logoutSuccessHandler(new RemoveRedisTokenHandler(tokenRepository))
+            .permitAll()
         );
 
         // 권한 관련 상태코드 설정

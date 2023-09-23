@@ -23,6 +23,7 @@ public class RemoveRedisTokenHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        log.info("맞나" +(authentication==null) +"");
         String id = request.getRequestURI().toString().split("/")[2];
         boolean result = tokenRepository.delete(new TokenRedisDto(id, null, "A"));
         log.info(result+"");
