@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import java.io.IOException;
@@ -23,14 +22,6 @@ public class RemoveRedisTokenHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("맞나" +(authentication==null) +"");
-        String id = request.getRequestURI().toString().split("/")[2];
-        boolean result = tokenRepository.delete(new TokenRedisDto(id, null, "A"));
-        log.info(result+"");
-        if(result) {
-            response.setStatus(200);
-        } else {
-            response.setStatus(401);
-        }
+        response.setStatus(200);
     }
 }

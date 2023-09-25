@@ -52,7 +52,7 @@ export default {
                 this.axios.post("/login",{id, pw})
                 .then(response=>{
                     // 토큰 저장
-                    this.$store.commit("auth/setToken", response.headers.token);
+                    this.$store.commit("auth/setAccessToken", response.headers.access_token);
                     // 사용자 정보 저장
                     this.$store.commit("auth/setUser", JSON.parse(response.headers.user));
                     // 페이지 이동

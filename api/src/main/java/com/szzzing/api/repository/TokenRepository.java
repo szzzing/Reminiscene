@@ -1,11 +1,9 @@
 package com.szzzing.api.repository;
 
-import com.szzzing.api.dto.mail.CodeDto;
 import com.szzzing.api.dto.user.TokenRedisDto;
 import com.szzzing.api.security.jwt.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -13,36 +11,55 @@ import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Token repository.
+ */
 @Repository
 @RequiredArgsConstructor
 @Slf4j
 @ComponentScan("com.szzzing.api")
 public class TokenRepository {
     private final RedisTemplate redisTemplate;
+    private static final String TYPE = "R";
 
-    public void save(TokenRedisDto tokenRedisDto) {
-        boolean result = false;
-
-        String key = tokenRedisDto.getId() +"_"+ tokenRedisDto.getType();
+    /**
+     * 리프레시 토큰 저장
+     *
+     * @param accessToken  key
+     * @param refreshToken value
+     */
+    public void saveRefreshToken(String accessToken, String refreshToken) {
+        String key = accessToken +"_"+ TYPE;
 
         // 새로운 인증번호 추가, Strings는 기존 key값 대체
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(key, tokenRedisDto.getToken());
-        redisTemplate.expire(key, JwtProperties.EXPIRATION_TIME, TimeUnit.MILLISECONDS);
-
-        log.info(key);
-        log.info(valueOperations.get(key));
+        valueOperations.set(key, refreshToken);
+        redisTemplate.expire(key, JwtProperties.REFRESH_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
     }
 
-    public void match(CodeDto codeDto) {
+    /**
+     * 액세스 토큰을 통해 리프레시 토큰 검색
+     *
+     * @param accessToken key
+     * @return the string
+     */
+    public String findRefreshToken(String accessToken) {
+        String key = accessToken + "_" + TYPE;
+
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        return valueOperations.get(key);
     }
 
-    public boolean delete(TokenRedisDto tokenRedisDto) {
-        String key = tokenRedisDto.getId()+"_"+tokenRedisDto.getType();
+    /**
+     * 리프레시 토큰 삭제
+     *
+     * @param accessToken  key
+     * @return the boolean
+     */
+    public boolean deleteRefreshToken(String accessToken) {
+        String key = accessToken+"_" + TYPE;
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
 
-        log.info(key);
-        log.info(valueOperations.get(key));
         return redisTemplate.delete(key);
     }
 }

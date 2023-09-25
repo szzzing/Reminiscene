@@ -14,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,7 @@ import java.io.IOException;
 // 인증 관련 필터
 // 폼로그인을 비활성화했기 때문에 직접 UsernamePasswordAuthenticationFilter를 구현해주어야 함
 @RequiredArgsConstructor
+@Slf4j
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -55,14 +57,15 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-        logger.info("로그인 성공 : "+principalDetails);
+        log.info("로그인 성공 : "+principalDetails.getUserDto().getId());
 
-        // 토큰 생성
-        String jwtToken = JwtUtil.createToken(principalDetails);
-        // 응답 헤더에 토큰 추가
-        response.addHeader(JwtProperties.ACCESS_TOKEN_HEADER_STRING, jwtToken);
-        // Redis에 토큰 저장
-        tokenRepository.save(new TokenRedisDto(principalDetails.getUserDto().getId(), jwtToken, "A"));
+        // 응답 헤더에 액세스 토큰 저장
+        String accessToken = JwtUtil.createAccessToken(principalDetails.getUsername());
+        response.addHeader(JwtProperties.HEADER_STRING, accessToken);
+
+        // Redis에 리프레시 토큰 저장
+        String refreshToken = JwtUtil.createRefreshToken(principalDetails.getUsername());
+        tokenRepository.saveRefreshToken(accessToken, refreshToken);    // key: 액세스 토큰
 
         // 응답 헤더에 사용자 정보 추가
         UserDto userDto = userRepository.selectOneUser(principalDetails.getUserDto().getId());

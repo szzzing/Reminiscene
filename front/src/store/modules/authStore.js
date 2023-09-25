@@ -6,7 +6,7 @@ const auth = {
     namespaced: true,
     state: {
         user: null,
-        token: null,
+        accessToken: null,
     },
     mutations: {
         setUser(state, payload) {
@@ -31,12 +31,12 @@ const auth = {
             }
             state.user = payload;
         },
-        setToken(state, payload) {
-            state.token = payload;
+        setAccessToken(state, payload) {
+            state.accessToken = payload;
         },
         logout(state) {
             state.user = null;
-            state.token = null;
+            state.accessToken = null;
             store.commit("modal/setProfile", false);
             store.commit("modal/setAlert", { alertEmoji:"🖐️", alertText:"로그아웃 되었어요." });
 

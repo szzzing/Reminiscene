@@ -58,13 +58,13 @@ public class SecurityConfig {
 
         http
             .addFilter(new UserAuthenticationFilter(authenticationManager(), userRepository, tokenRepository))
-            .addFilter(new UserAuthorizationFilter(authenticationManager(), userRepository));
+            .addFilter(new UserAuthorizationFilter(authenticationManager(), userRepository, tokenRepository));
 
         // 페이지별 권한 설정
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
             // 라우터 관련
             .requestMatchers("/route/auth/**", "/route/login").anonymous()
-            .requestMatchers("/route/mypage", "/route/mypage/**").hasRole("U")
+            .requestMatchers("/route/mypage").hasRole("U")
             .requestMatchers("/route/admin/**").hasRole("A")
             .requestMatchers(HttpMethod.POST, "/rate", "/wish", "/watching", "/comment", "/reply","/like", "/report").hasRole("U")
             .requestMatchers(HttpMethod.PUT, "/rate", "/wish", "/watching", "/comment", "/reply","/like", "/report").hasRole("U")
