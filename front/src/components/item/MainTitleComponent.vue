@@ -1,6 +1,6 @@
 <template>
     <div id="logo">
-        <div class="emoji">🧙‍♀️</div>
+        <img class="emoji" src="../../../public/logo.svg">
         <div class="text">어떤 영화를 보여줄까?</div>
     </div>
 </template>
@@ -16,10 +16,11 @@ export default {
     text-align: center;
 }
 .emoji {
-    font-size: 72px;
+    width: 48px;
     line-height: 1.2;
 }
 .text {
-    color: var(--G400);
+    color: var(--G500);
+    font-weight: 600;
 }
 </style>

@@ -93,7 +93,7 @@ export default {
     justify-content: space-between;
 }
 .copyright, .copyright div, .copyright b {
-    color: var(--G500);
+    color: var(--G300);
     font-size: 12px;
 }
 .item {

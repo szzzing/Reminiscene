@@ -5,7 +5,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.szzzing.api.security.auth.PrincipalDetails;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
@@ -13,8 +15,8 @@ import java.util.Date;
  * The type Jwt util.
  */
 @Slf4j
+@RequiredArgsConstructor
 public class JwtUtil {
-
     /**
      * 액세스 토큰 생성
      *
