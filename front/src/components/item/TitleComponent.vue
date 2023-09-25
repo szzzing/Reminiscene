@@ -23,7 +23,7 @@ export default {
     }
     .title {
         font-size: 24px;
-        font-weight: 600;
+        font-weight: 700;
         line-height: 1.4;
     }
 </style>

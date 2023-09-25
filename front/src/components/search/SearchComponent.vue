@@ -3,7 +3,7 @@
 
         <div class="inner">
             <div class="menu">
-                <div class="title">🎥 작품 검색결과</div>
+                <div class="title">영화 검색결과</div>
                 <router-link :to="`/search/movie/${this.query}`" v-if="this.movieList.length!=0">더보기</router-link>
             </div>
             <movie-list-component v-bind:list="movieList" v-bind:hide="true"></movie-list-component>
@@ -16,7 +16,7 @@
         
         <div class="inner">
             <div class="menu">
-                <div class="title">🎭 유저 검색결과</div>
+                <div class="title">유저 검색결과</div>
                 <router-link :to="`/search/user/${this.query}`" v-if="this.userList.length!=0">더보기</router-link>
             </div>
             <user-list-component v-bind:list="userList" v-bind:hide="true"></user-list-component>
@@ -94,11 +94,12 @@ export default {
     justify-content: space-between;
     align-items: flex-end;
     padding: 8px 0px;
+    border-bottom: 1px solid var(--G100);
 }
 .title {
-    color: var(--G700);
+    color: var(--G600);
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
 }
 a {
     color: var(--FOCUS);

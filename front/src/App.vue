@@ -49,6 +49,12 @@ export default {
             document.documentElement.classList.add('dark');
         }
     },
+    // 소멸 전 로그아웃 처리
+    beforeUnmount() {
+        if(this.$store.state.auth.user) {
+            this.axios.post(`/logout/${this.$store.state.auth.user.id}`);
+        }
+    }
 }
 </script>
 

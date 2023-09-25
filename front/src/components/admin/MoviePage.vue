@@ -157,8 +157,8 @@ export default {
 }
 input[type=text], input[type=number] {
     padding: 4px 12px;
-    border: 1px solid var(--G200);
-    background: var(--G100);
+    border: 1px solid var(--G100);
+    background: var(--G50);
     border-radius: 8px;
     font-size: 16px;
 }

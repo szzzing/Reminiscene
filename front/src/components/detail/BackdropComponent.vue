@@ -31,6 +31,16 @@ export default {
     height: 70vh;
     position: relative;
 }
+@media screen and (max-width:960px) {
+    .backdrop {
+        height: 60vh;
+    }
+}
+@media screen and (max-width:474px) {
+    .backdrop {
+        height: 50vh;
+    }
+}
 .dark .backdrop {
     background-color: var(--G50);
 }

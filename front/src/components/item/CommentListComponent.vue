@@ -98,6 +98,8 @@ export default {
     border-radius: 16px;
     border: 1px solid var(--G200);
     background: var(--G0);
+    color: var(--G700);
+    font-weight: 600;
     padding: 3px 10px;
     font-size: 14px;
     flex-shrink: 0;

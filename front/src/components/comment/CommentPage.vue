@@ -13,9 +13,18 @@
                 </div>
             </div>
 
-            <div class="status" v-if="comment.rate!=0 || comment.wish || comment.watching">
-                {{ comment.rate!=0 ? "⭐️ "+comment.rate : comment.wish ? "🙏 보고싶어요" : comment.watching ? "😎 보는중" : "" }}
+            <div class="status">
+                <div class="item" v-if="comment.rate!=0">
+                    {{ "⭐️ "+comment.rate }}
+                </div>
+                <div class="item" v-if="comment.watching">
+                    {{ "😎 보는 중" }}
+                </div>
+                <div class="item" v-if="comment.wish">
+                    {{ "🙏 보고싶어요" }}
+                </div>
             </div>
+
             <div class="content">
                 <div class="text">{{ comment.content }}</div>
             </div>
@@ -143,14 +152,22 @@ export default {
     font-size: 14px;
 }
 .status {
+    flex-shrink: 0;
+    margin-right: auto;
+    display: flex;
+    gap: 8px;
+}
+.status .item {
     border-radius: 16px;
     border: 1px solid var(--G200);
+    color: var(--G700);
+    font-weight: 600;
     padding: 3px 10px;
     font-size: 14px;
     flex-shrink: 0;
     margin-right: auto;
 }
-.dark .status {
+.dark .status .item {
     background: var(--G100);
     /* border: none; */
 }
