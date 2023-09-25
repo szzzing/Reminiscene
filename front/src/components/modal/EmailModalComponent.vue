@@ -13,7 +13,7 @@
                         >{{ timer.text }}</div>
                     </div>
                     <div class="inner input-area" ref="code">
-                        <input class="code" type="text" v-model="code[0]" size="1" @input="this.checkcode($event,0)" maxlength="1">
+                        <input class="code" type="1" v-model="code[0]" size="1" @input="this.checkcode($event,0)" maxlength="1">
                         <input class="code" type="text" v-model="code[1]" size="1" @input="this.checkcode($event,1)" maxlength="1">
                         <input class="code" type="text" v-model="code[2]" size="1" @input="this.checkcode($event,2)" maxlength="1">
                         <input class="code" type="text" v-model="code[3]" size="1" @input="this.checkcode($event,3)" maxlength="1">
@@ -66,11 +66,8 @@ export default {
                 }
             })
         },
-        checkInput() {
-            this.input = this.input.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-        },
         checkcode(event, index) {
-            this.code[index] = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+            this.code[index] = event.target.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
             if(this.code[index].length>0 && index<5) {
                 event.target.nextSibling.focus();
             }

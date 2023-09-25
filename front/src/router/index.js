@@ -57,7 +57,7 @@ const routes = [
         ]
     },
     {
-        path: '/login',
+        path: '/auth/login',
         component: LoginPage
     },
     {
@@ -145,7 +145,7 @@ router.beforeEach(function (to, from, next) {
     store.commit("modal/setProfile", false);
 
     // 페이지 위치 정보 저장
-    if(to.path!='/login' && !to.path.startsWith('/auth') && !to.path.endsWith("/error") && !to.path.startsWith("/admin")) {
+    if(to.path!='/auth/login' && !to.path.startsWith('/auth') && !to.path.endsWith("/error") && !to.path.startsWith("/admin")) {
         store.state.local.location = to.path;
     }
 

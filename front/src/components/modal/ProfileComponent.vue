@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         logout() {
-            this.$store.commit('auth/logout');
+            this.$store.dispatch('auth/logout');
         },
         closeProfile() {
             this.$store.commit("modal/setProfile", false);

@@ -9,10 +9,18 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
+/**
+ * The type Jwt util.
+ */
 @Slf4j
 public class JwtUtil {
 
-    // 액세스 토큰 생성
+    /**
+     * 액세스 토큰 생성
+     *
+     * @param id 아이디
+     * @return 액세스 토큰
+     */
     public static String createAccessToken(String id) {
         String token = JWT.create()
                 .withSubject("ACCESS")    // jwt 이름
@@ -23,7 +31,12 @@ public class JwtUtil {
         return JwtProperties.TOKEN_PREFIX + token;
     }
 
-    // 리프레시 토큰 생성
+    /**
+     * 리프레시 토큰 생성
+     *
+     * @param id 아이디
+     * @return 리프레시 토큰
+     */
     public static String createRefreshToken(String id) {
         String token = JWT.create()
                 .withSubject("REFRESH")    // jwt 이름
@@ -34,15 +47,26 @@ public class JwtUtil {
         return JwtProperties.TOKEN_PREFIX + token;
     }
 
-    // request에서 토큰 가져오기
+    /**
+     * 헤더에서 액세스 토큰 가져오기
+     *
+     * @param request the request
+     * @return 액세스 토큰
+     */
     public static String getToken(HttpServletRequest request) {
         return request.getHeader(JwtProperties.HEADER_STRING);
     }
 
-    // 토큰 유효성 검증
-    public static boolean validateToken(String header) {
+    /**
+     * 토큰 유효성 검증
+     *
+     * @param token 검증할 토큰
+     * @return 검증결과
+     */
+    public static boolean validateToken(String token) {
+        if(token==null) return false;
         try {
-            String token = header.replace(JwtProperties.TOKEN_PREFIX, "");
+            token = token.replace(JwtProperties.TOKEN_PREFIX, "");
             JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token);
         } catch(TokenExpiredException e) {
             log.info(e.getMessage());
@@ -51,9 +75,14 @@ public class JwtUtil {
         return true;
     }
 
-    // 토큰에서 아이디 정보 획득
-    public static String getId(String header) {
-        String token = header.replace(JwtProperties.TOKEN_PREFIX, "");
+    /**
+     * 토큰에서 아이디 정보 획득
+     *
+     * @param token 토큰
+     * @return the id
+     */
+    public static String getId(String token) {
+        token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         return JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asString();
     }
 }

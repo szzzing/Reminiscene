@@ -63,12 +63,12 @@ public class SecurityConfig {
         // 페이지별 권한 설정
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
             // 라우터 관련
-            .requestMatchers("/route/auth/**", "/route/login").anonymous()
+            .requestMatchers("/route/auth/**").anonymous()
             .requestMatchers("/route/mypage").hasRole("U")
             .requestMatchers("/route/admin/**").hasRole("A")
             .requestMatchers(HttpMethod.POST, "/rate", "/wish", "/watching", "/comment", "/reply","/like", "/report").hasRole("U")
             .requestMatchers(HttpMethod.PUT, "/rate", "/wish", "/watching", "/comment", "/reply","/like", "/report").hasRole("U")
-            .requestMatchers(HttpMethod.DELETE, "/rate/**", "/wish/**", "/watching/**", "/reply/**","/like/**").hasRole("U")
+                .requestMatchers(HttpMethod.DELETE, "/rate/**", "/wish/**", "/watching/**", "/comment/**", "/reply/**","/like/**", "/report/**").hasRole("U")
             .anyRequest().permitAll()
         );
 

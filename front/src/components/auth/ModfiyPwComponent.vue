@@ -1,5 +1,5 @@
 <template>
-    <route-modal-component v-bind:route="`/login`" v-if="this.emailChanged">
+    <route-modal-component v-bind:route="`/auth/login`" v-if="this.emailChanged">
         <template v-slot:emoji>😀</template>
         <template v-slot:text>비밀번호를 다시 설정했어요.</template>
         <template v-slot:route>로그인하러 가기</template>

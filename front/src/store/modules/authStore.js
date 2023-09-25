@@ -45,7 +45,7 @@ const auth = {
             if(path.startsWith('/mypage')) {
                 router.replace({path: "/"});
             } else if(path.startsWith('/admin')) {
-                router.replace({path: "/login"});
+                router.replace({path: "/auth/login"});
             }
         },
     },

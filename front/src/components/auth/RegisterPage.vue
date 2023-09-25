@@ -176,7 +176,7 @@ export default {
                     .then((response) => {
                         if(response.status==201) {
                             this.$store.commit("modal/setAlert", { alertEmoji:"🎉", alertText:"회원가입에 성공했어요." });
-                            this.$router.push({ path: '/login' });
+                            this.$router.push({ path: '/auth/login' });
                         }
                     })
             }

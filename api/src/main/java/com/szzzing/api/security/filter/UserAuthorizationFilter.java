@@ -35,22 +35,24 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        log.info(request.getRequestURI());
+
         // 헤더에 토큰을 담아 보냈는지(인증받은 사용자인지) 검사하는 과정
         String accessToken = JwtUtil.getToken(request);
 
-        // 헤더에 토큰이 없는 경우 (미인증 사용자)
+        // 토큰 부재 - 리턴
         if(accessToken == null) {
             chain.doFilter(request, response);
             return;
         }
 
+        // 토큰 존재
         try {
             // 액세스 토큰 만료
             if(!JwtUtil.validateToken(accessToken)) {
                 String refreshToken = tokenRepository.findRefreshToken(accessToken);
-                // 리프레시 토큰도 만료
+                // 리프레시 토큰도 만료 - 리턴
                 if(!JwtUtil.validateToken(refreshToken)) {
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
                     return;
                 // 리프레시 토큰은 유효 - 새로운 액세스 토큰 발급
                 } else {
@@ -58,6 +60,7 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
                     tokenRepository.saveRefreshToken(accessToken, refreshToken);
                 }
             }
+            
             // 액세스 토큰에 저장된 아이디를 통해 사용자 존재 여부/권한 확인
             UserDto userDto = userRepository.selectOneUser(JwtUtil.getId(accessToken));
 
@@ -71,7 +74,7 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
             response.setHeader("user", AuthUtil.userToJson(userDto));
 
         } catch(Exception e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             return;
         }
 

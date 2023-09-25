@@ -18,7 +18,7 @@
                 {{ this.$store.state.local.theme ? "🌞" : "🌝" }}
                 </div>
                 
-                <router-link v-if="this.$store.state.auth.user==null" to="/login" class="small-button">로그인</router-link>
+                <router-link v-if="this.$store.state.auth.user==null" to="/auth/login" class="small-button">로그인</router-link>
                 
                 <div v-if="user && user.profileImage" @click="clickProfile"
                 class="profile-image" :style="{'background-image': 'url(' + user.profileImage + ')' }"></div>
