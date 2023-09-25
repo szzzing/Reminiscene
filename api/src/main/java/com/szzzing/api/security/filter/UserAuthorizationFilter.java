@@ -60,7 +60,7 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
             String newToken = JwtUtil.createToken(principalDetails);
 
             // 응답 헤더에 토큰, 유저 정보, 인증 정보 추가
-            response.setHeader(JwtProperties.HEADER_STRING, newToken);
+            response.setHeader(JwtProperties.ACCESS_TOKEN_HEADER_STRING, newToken);
             response.setHeader("user", AuthUtil.userToJson(userDto));
         }
 

@@ -34,8 +34,7 @@ const auth = {
         setToken(state, payload) {
             state.token = payload;
         },
-        async logout(state) {
-            await store.dispatch("auth/logout");
+        logout(state) {
             state.user = null;
             state.token = null;
             store.commit("modal/setProfile", false);

@@ -44,10 +44,8 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         }
 
         // usernamepassword 토큰 생성 : 인증을 위해 id, pw 정보를 가지고 있는 토큰
-        UsernamePasswordAuthenticationToken authenticationToken
-                = new UsernamePasswordAuthenticationToken(authInfo.getId(), authInfo.getPw());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(authInfo.getId(), authInfo.getPw());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
 
         return authentication;
     }
@@ -62,7 +60,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         // 토큰 생성
         String jwtToken = JwtUtil.createToken(principalDetails);
         // 응답 헤더에 토큰 추가
-        response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
+        response.addHeader(JwtProperties.ACCESS_TOKEN_HEADER_STRING, jwtToken);
         // Redis에 토큰 저장
         tokenRepository.save(new TokenRedisDto(principalDetails.getUserDto().getId(), jwtToken, "A"));
 

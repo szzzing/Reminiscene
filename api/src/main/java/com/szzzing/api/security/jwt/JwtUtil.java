@@ -28,7 +28,7 @@ public class JwtUtil {
 
     // request에서 토큰 가져오기
     public static String getToken(HttpServletRequest request) {
-        return request.getHeader(JwtProperties.HEADER_STRING);
+        return request.getHeader(JwtProperties.ACCESS_TOKEN_HEADER_STRING);
     }
 
     // 토큰 유효성 검증

@@ -12,6 +12,7 @@ import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -65,6 +66,9 @@ public class SecurityConfig {
             .requestMatchers("/route/auth/**", "/route/login").anonymous()
             .requestMatchers("/route/mypage", "/route/mypage/**").hasRole("U")
             .requestMatchers("/route/admin/**").hasRole("A")
+            .requestMatchers(HttpMethod.POST, "/rate", "/wish", "/watching", "/comment", "/reply","/like", "/report").hasRole("U")
+            .requestMatchers(HttpMethod.PUT, "/rate", "/wish", "/watching", "/comment", "/reply","/like", "/report").hasRole("U")
+            .requestMatchers(HttpMethod.DELETE, "/rate/**", "/wish/**", "/watching/**", "/reply/**","/like/**").hasRole("U")
             .anyRequest().permitAll()
         );
 
