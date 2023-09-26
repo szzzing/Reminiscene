@@ -2,7 +2,6 @@
     <div class="container">
 
         <email-modal-component v-if="this.emailModal"
-        v-bind:email="email"
         v-bind:url="url"
         v-bind:params="params"
         @closeEmailModal="this.emailModal=false"
@@ -50,7 +49,8 @@
 
             <div class="inner email" ref="email">
                 <div class="title">📧 이메일</div>
-                <div class="sub-title">비밀번호를 찾을 때 사용할 이메일을 입력해주세요.
+                <div class="sub-title">
+                    {{ checkedEmail && emailSuccess ? timer : "자주 사용하는 이메일을 인증해주세요." }}
                     <span class="email-button" v-if="this.checkedEmail && !this.emailSuccess" @click="this.clickEmailButton()">인증받기</span>
                 </div>
                 <div class="input-box"
@@ -96,8 +96,11 @@ export default {
             //  이메일 인증 모달
             emailModal: false,
             emailSuccess: false,
-            url: "/email/auth/code",
+            url: "/email/code",
             params: null,
+            // 이메일 인증 유효시간 체크
+            interval: null,
+            timer: null,
         }
     },
     watch: {
@@ -131,7 +134,28 @@ export default {
             if (checked) {
                 this.checkEmail();
             }
-        }
+        },
+        // 이메일 인증 후 3분동안 유지
+        emailSuccess() {
+            if(this.emailSuccess) {
+                clearInterval(this.interval);
+                this.timer = `인증은 3분 0초 동안 유지할 수 있어요.`
+                let time = 179;
+    
+                this.interval = setInterval(()=>{
+                    const min = parseInt(time/60);
+                    const sec = String(time%60);
+                    this.timer = `인증은 ${min}분 ${sec}초 동안 유지할 수 있어요.`;
+                    time--;
+    
+                    if(time<0) {
+                        this.emailSuccess = false;
+                        this.email = '';
+                        clearInterval(this.interval);
+                    }
+                }, 1000);
+            }
+        },
     },
     methods: {
         //  아이디 중복 여부 체크
@@ -143,9 +167,9 @@ export default {
                 })
         },
         //  이메일 중복 여부 체크
-        checkEmail() {
+        async checkEmail() {
             const params = {email : this.email};
-            this.axios.get("/user/check", {params})
+            await this.axios.get("/user/check", {params})
                 .then((response) => {
                     this.checkedEmail = response.data;
                 })
@@ -183,11 +207,19 @@ export default {
         },
         // 인증하기 버튼 클릭
         clickEmailButton() {
-            this.params = {
-                to: this.email.trim(),
-            }
-            this.emailModal = true;
-        }
+            const params = {email : this.email};
+            this.axios.get("/user/check", {params})
+            .then((response) => {
+                if(response.data==true) {
+                    this.params = {
+                        to: this.email.trim(),
+                    }
+                    this.emailModal = true;
+                } else {
+                    this.$store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"다른 이메일로 시도해주세요." });
+                }
+            })
+        },
     }
 }
 </script>
@@ -209,7 +241,7 @@ export default {
 }
 
 .sub-title {
-    color: var(--G400);
+    color: var(--G500);
     word-break: keep-all;
 }
 

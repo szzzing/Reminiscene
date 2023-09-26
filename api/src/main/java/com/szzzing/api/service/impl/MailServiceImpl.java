@@ -54,7 +54,6 @@ public class MailServiceImpl implements MailService {
         // redis 저장
         MailRedisDto mailRedisDto = new MailRedisDto();
         mailRedisDto.setEmail(mailDto.getTo());
-        mailRedisDto.setType("E");
         mailRedisDto.setCode(code);
 
         return mailRepository.saveCode(mailRedisDto);
@@ -93,7 +92,6 @@ public class MailServiceImpl implements MailService {
         // redis 저장
         MailRedisDto mailRedisDto = new MailRedisDto();
         mailRedisDto.setEmail(mailDto.getTo());
-        mailRedisDto.setType("P");
         mailRedisDto.setCode(code);
 
         return mailRepository.saveCode(mailRedisDto);

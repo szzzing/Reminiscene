@@ -1,9 +1,6 @@
 package com.szzzing.api.controller;
 
-import com.szzzing.api.dto.user.UserDto;
-import com.szzzing.api.dto.user.UserListDto;
-import com.szzzing.api.dto.user.UserModifyDto;
-import com.szzzing.api.dto.user.UserSelectDto;
+import com.szzzing.api.dto.user.*;
 import com.szzzing.api.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +45,9 @@ public class UserController {
      * @return 체크 결과
      */
     @GetMapping("/check")
-    public ResponseEntity check(@RequestParam(value="id", required=false) String id, @RequestParam(value="email", required=false) String email, @RequestParam(value="nickname", required=false) String nickname, HttpServletRequest request) {
+    public ResponseEntity check(@ModelAttribute UserCheckDto userCheckDto, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
-        boolean result = userService.check(principal, id, email, nickname);
+        boolean result = userService.check(principal, userCheckDto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
@@ -64,7 +61,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity mypageModify(@ModelAttribute UserModifyDto userModifyDto, HttpServletRequest request) {
         userModifyDto.setId(request.getUserPrincipal().getName());
-        boolean result = userService.mypageModify(userModifyDto);
+        boolean result = userService.modifyUser(userModifyDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

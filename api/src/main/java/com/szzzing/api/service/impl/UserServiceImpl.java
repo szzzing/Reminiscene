@@ -3,6 +3,7 @@ package com.szzzing.api.service.impl;
 import com.szzzing.api.dto.common.FileDto;
 import com.szzzing.api.dto.user.*;
 import com.szzzing.api.repository.FileRepository;
+import com.szzzing.api.repository.MailRepository;
 import com.szzzing.api.repository.TokenRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.service.UserService;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
+    private final MailRepository mailRepository;
     private final FileRepository fileRepository;
     private final PasswordEncoder passwordEncoder;
     private final String profieDir = "/upload/profile/";
@@ -39,8 +40,7 @@ public class UserServiceImpl implements UserService {
 
     // 내 정보 수정
     @Transactional
-    public boolean mypageModify(UserModifyDto userModifyDto) throws RuntimeException {
-        log.info(userModifyDto.toString());
+    public boolean modifyUser(UserModifyDto userModifyDto) throws RuntimeException {
         int result = 0;
 
         if(userModifyDto.getOriginalImage()!=null) userModifyDto.setOriginalImage(userModifyDto.getOriginalImage().replace(profieDir, ""));
@@ -93,17 +93,25 @@ public class UserServiceImpl implements UserService {
         return result>0;
     }
 
-    public boolean check(Principal principal, String id, String email, String nickname) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("loginUser", principal==null ? null : principal.getName());
-        map.put("id", id);
-        map.put("email", email);
-        map.put("nickname", nickname);
-
-        if(id!=null && email!=null) return userRepository.selectOneByIdEmail(map) != null;
-        else if(id!=null) return userRepository.selectCountById(map) == 0;
-        else if(nickname!=null) return userRepository.selectCountByNickname(map) == 0;
-        else return userRepository.selectCountByEmail(map) == 0;
+    public boolean check(Principal principal, UserCheckDto userCheckDto) {
+        userCheckDto.setLoginUser(principal==null ? null : principal.getName());
+        
+        // 아이디, 이메일 일치 여부
+        if(userCheckDto.getId()!=null && userCheckDto.getEmail()!=null) {
+            return userRepository.selectOneByIdEmail(userCheckDto) != null;
+        }
+        // 아이디 존재 여부
+        else if(userCheckDto.getId()!=null) {
+            return userRepository.selectCountById(userCheckDto) == 0;
+        }
+        // 닉네임 존재 여부
+        else if(userCheckDto.getNickname()!=null) {
+            return userRepository.selectCountByNickname(userCheckDto) == 0;
+        }
+        // 이메일 존재 여부
+        else {
+            return userRepository.selectCountByEmail(userCheckDto) == 0 && mailRepository.getMailStatus(userCheckDto.getEmail());
+        }
     }
 
     public UserListDto getUserList(UserSelectDto userSelectDto) {

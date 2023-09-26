@@ -1,5 +1,6 @@
 package com.szzzing.api.repository;
 
+import com.szzzing.api.dto.user.UserCheckDto;
 import com.szzzing.api.dto.user.UserDto;
 import com.szzzing.api.dto.user.UserModifyDto;
 import com.szzzing.api.dto.user.UserSelectDto;
@@ -29,16 +30,16 @@ public class UserRepository {
         return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByEmail", email);
     }
 
-    public int selectCountById(HashMap map) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountById", map);
+    public int selectCountById(UserCheckDto userCheckDto) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountById", userCheckDto);
     }
 
-    public int selectCountByEmail(HashMap map) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountByEmail", map);
+    public int selectCountByEmail(UserCheckDto userCheckDto) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountByEmail", userCheckDto);
     }
 
-    public int selectCountByNickname(HashMap map) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountByNickname", map);
+    public int selectCountByNickname(UserCheckDto userCheckDto) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectCountByNickname", userCheckDto);
     }
 
     public int updateOne(UserModifyDto userModifyDto) {
@@ -49,8 +50,8 @@ public class UserRepository {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectUserList", userSelectDto);
     }
 
-    public UserDto selectOneByIdEmail(HashMap<String, String> map) {
-        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByIdEmail", map);
+    public UserDto selectOneByIdEmail(UserCheckDto userCheckDto) {
+        return sqlSessionTemplate.selectOne(NAME_SPACE+"selectOneByIdEmail", userCheckDto);
     }
 
     public int updateOnePw(UserModifyDto userModifyDto) {

@@ -45,7 +45,7 @@ export default {
         sendEmail() {
             const params = { to: this.email.trim() };
 
-            this.axios.post("/email/find/id", params)
+            this.axios.post("/email/id", params)
             .then((response)=>{
                 if(response.data==true) {
                     this.emailModal = true;

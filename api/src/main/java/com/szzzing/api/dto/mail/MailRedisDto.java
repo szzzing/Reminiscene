@@ -1,5 +1,6 @@
 package com.szzzing.api.dto.mail;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -12,5 +13,4 @@ import lombok.Data;
 public class MailRedisDto {
     private String email;
     private int code;
-    private String type;
 }

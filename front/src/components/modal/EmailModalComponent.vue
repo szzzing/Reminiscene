@@ -13,7 +13,7 @@
                         >{{ timer.text }}</div>
                     </div>
                     <div class="inner input-area" ref="code">
-                        <input class="code" type="1" v-model="code[0]" size="1" @input="this.checkcode($event,0)" maxlength="1">
+                        <input class="code" type="text" v-model="code[0]" size="1" @input="this.checkcode($event,0)" maxlength="1">
                         <input class="code" type="text" v-model="code[1]" size="1" @input="this.checkcode($event,1)" maxlength="1">
                         <input class="code" type="text" v-model="code[2]" size="1" @input="this.checkcode($event,2)" maxlength="1">
                         <input class="code" type="text" v-model="code[3]" size="1" @input="this.checkcode($event,3)" maxlength="1">
@@ -50,7 +50,6 @@ export default {
     props: [
         'url',
         'params',
-        'type',
     ],
     created() {
         this.sendEmail();
@@ -83,7 +82,6 @@ export default {
             const params = {
                 email: this.params.to,
                 code: value,
-                type: this.type,
             };
             this.axios.get("/email/match", {params})
             .then((response)=>{
@@ -111,13 +109,13 @@ export default {
         },
         startTimer() {
             this.timer.expired = false;
-            this.timer.text = "3분 00초 남았어요.";
+            this.timer.text = "3분 0초 남았어요.";
             this.timer.time = 179;
             clearInterval(this.interval);
 
             this.interval = setInterval(()=>{
                 const min = parseInt(this.timer.time/60);
-                const sec = String(this.timer.time%60).padStart(2, "0");
+                const sec = String(this.timer.time%60);
                 this.timer.text = `${min}분 ${sec}초 남았어요.`;
                 this.timer.time--;
 

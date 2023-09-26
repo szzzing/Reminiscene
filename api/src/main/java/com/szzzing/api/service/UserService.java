@@ -1,10 +1,7 @@
 package com.szzzing.api.service;
 
 import com.szzzing.api.dto.common.FileDto;
-import com.szzzing.api.dto.user.UserDto;
-import com.szzzing.api.dto.user.UserListDto;
-import com.szzzing.api.dto.user.UserModifyDto;
-import com.szzzing.api.dto.user.UserSelectDto;
+import com.szzzing.api.dto.user.*;
 import com.szzzing.api.repository.FileRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.util.FileUtil;
@@ -23,9 +20,9 @@ public interface UserService {
     public boolean register(UserDto userDto);
 
     // 내 정보 수정
-    public boolean mypageModify(UserModifyDto userModifyDto);
+    public boolean modifyUser(UserModifyDto userModifyDto);
 
-    public boolean check(Principal principal, String id, String email, String nickname);
+    public boolean check(Principal principal, UserCheckDto userCheckDto);
 
     public UserListDto getUserList(UserSelectDto userSelectDto);
 

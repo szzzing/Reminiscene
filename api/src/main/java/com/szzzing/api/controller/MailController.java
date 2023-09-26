@@ -25,7 +25,7 @@ public class MailController {
      * @param mailDto the email dto
      * @return the response entity
      */
-    @PostMapping("/email/auth/code")
+    @PostMapping("/email/code")
     public ResponseEntity sendAuthCode(@RequestBody MailDto mailDto) {
         boolean result = mailService.sendAuthCode(mailDto);
         return new ResponseEntity(result, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class MailController {
      * @param mailDto the email dto
      * @return the response entity
      */
-    @PostMapping("/email/find/id")
+    @PostMapping("/email/id")
     public ResponseEntity sendFindId(@RequestBody MailDto mailDto) {
         boolean result = mailService.sendFindId(mailDto);
         return new ResponseEntity(result, HttpStatus.OK);
@@ -49,7 +49,7 @@ public class MailController {
      * @param mailDto the email dto
      * @return the response entity
      */
-    @PostMapping("/email/find/pw")
+    @PostMapping("/email/pw")
     public ResponseEntity sendFindPw(@RequestBody MailDto mailDto) {
         boolean result = mailService.sendFindPw(mailDto);
         return new ResponseEntity(result, HttpStatus.OK);
