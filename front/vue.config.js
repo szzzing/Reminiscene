@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+
 module.exports = defineConfig({
     transpileDependencies: true,
     lintOnSave: false, // 컴포넌트명 단일 명칭 에러

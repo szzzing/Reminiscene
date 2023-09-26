@@ -16,8 +16,7 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:8081");    // 허용할 출처
         configuration.addAllowedHeader("*");
-        configuration.addExposedHeader("token");
-        configuration.addExposedHeader("user");
+        configuration.addExposedHeader("*");
         configuration.addAllowedMethod("*");    // 허용할 메서드
         configuration.setAllowCredentials(true);
 
