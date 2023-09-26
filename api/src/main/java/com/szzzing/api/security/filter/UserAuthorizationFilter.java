@@ -22,28 +22,35 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import java.io.IOException;
 
+/**
+ * The type User authorization filter.
+ */
 @Slf4j
 public class UserAuthorizationFilter extends BasicAuthenticationFilter {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
 
+    /**
+     * Instantiates a new User authorization filter.
+     *
+     * @param authenticationManager the authentication manager
+     * @param userRepository        the user repository
+     * @param tokenRepository       the token repository
+     */
     public UserAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, TokenRepository tokenRepository) {
         super(authenticationManager);
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
     }
 
+    // 헤더에 토큰을 담아 보냈는지 검증하는 과정
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info(request.getRequestURI());
-
-        // 헤더에 토큰을 담아 보냈는지(인증받은 사용자인지) 검사하는 과정
         String accessToken = JwtUtil.getToken(request);
 
         // 토큰 부재 - 리턴
         if(accessToken == null) {
             chain.doFilter(request, response);
-            return;
         }
 
         // 토큰 존재

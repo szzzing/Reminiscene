@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,8 +24,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 
-// 인증 관련 필터
-// 폼로그인을 비활성화했기 때문에 직접 UsernamePasswordAuthenticationFilter를 구현해주어야 함
+/**
+ * 인증 관련 필터
+ * 폼로그인을 비활성화했기 때문에 직접 UsernamePasswordAuthenticationFilter 구현
+ */
 @RequiredArgsConstructor
 @Slf4j
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -75,6 +78,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     // 인증 실패 로직
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        response.setStatus(401);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
     }
 }

@@ -4,6 +4,7 @@ import com.szzzing.api.dto.user.TokenRedisDto;
 import com.szzzing.api.security.jwt.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -19,8 +20,13 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @ComponentScan("com.szzzing.api")
 public class TokenRepository {
-    private final RedisTemplate redisTemplate;
-    private static final String TYPE = "R";
+    private static final String TYPE = "TOKEN : ";
+    @Qualifier("tokenRedisTemplate")
+    private final RedisTemplate<String, String> redisTemplate;
+
+    private static String getKey(String accessToken) {
+        return TYPE + accessToken;
+    }
 
     /**
      * 리프레시 토큰 저장
@@ -29,7 +35,7 @@ public class TokenRepository {
      * @param refreshToken value
      */
     public void saveRefreshToken(String accessToken, String refreshToken) {
-        String key = accessToken +"_"+ TYPE;
+        String key = getKey(accessToken);
 
         // 새로운 인증번호 추가, Strings는 기존 key값 대체
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
@@ -44,7 +50,7 @@ public class TokenRepository {
      * @return the string
      */
     public String findRefreshToken(String accessToken) {
-        String key = accessToken + "_" + TYPE;
+        String key = getKey(accessToken);
 
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         return valueOperations.get(key);
@@ -57,9 +63,7 @@ public class TokenRepository {
      * @return the boolean
      */
     public boolean deleteRefreshToken(String accessToken) {
-        String key = accessToken+"_" + TYPE;
-        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-
-        return redisTemplate.delete(key);
+        String key = getKey(accessToken);
+        return Boolean.TRUE.equals(redisTemplate.delete(key));
     }
 }

@@ -32,7 +32,7 @@
 
     <select id="selectOneByIdEmail" resultMap="userResultMap">
         select * from user
-        where binary user_email=#{email} and user_id=#{id}
+        where binary user_id=#{id} and user_email=#{email}
     </select>
 
     <select id="selectCountById" resultType="_int">
@@ -43,6 +43,7 @@
     <select id="selectCountByNickname" resultType="_int">
         select count(*) from user
         where user_nickname=#{nickname}
+            and user_enable=true
         <if test="loginUser!=null">
             and binary user_id!=#{loginUser}
         </if>
@@ -51,6 +52,7 @@
     <select id="selectCountByEmail" resultType="_int">
         select count(*) from user
         where user_email=#{email}
+            and user_enable=true
         <if test="loginUser!=null">
             and binary user_id!=#{loginUser}
         </if>

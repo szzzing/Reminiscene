@@ -35,19 +35,19 @@ public class MailServiceImpl implements MailService {
             message.setSubject(mailDto.getSubject());
             message.setText(mailDto.getBody(),"UTF-8", "html");
         } catch (MessagingException e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
         javaMailSender.send(message);
     }
 
     public boolean sendAuthCode(MailDto mailDto) {
-        boolean result = false;
+        StringBuilder body = new StringBuilder();
 
         int code = createCode();
-        String body = "<h3>️🧙 이메일 인증번호</h3>";
-        body += "<b>"+code+"</b>";
+        body.append("<h3>️🧙 이메일 인증번호</h3>")
+            .append("<b>").append(code).append("</b>");
         
-        mailDto.setBody(body);
+        mailDto.setBody(body.toString());
         mailDto.setSubject("Reminiscene 이메일 인증번호를 보내드립니다.");
         sendMail(mailDto);
         
@@ -57,9 +57,7 @@ public class MailServiceImpl implements MailService {
         mailRedisDto.setType("E");
         mailRedisDto.setCode(code);
 
-        result = mailRepository.save(mailRedisDto);
-
-        return result;
+        return mailRepository.saveCode(mailRedisDto);
     }
 
     public boolean sendFindId(MailDto mailDto) {
@@ -69,11 +67,12 @@ public class MailServiceImpl implements MailService {
         id = id.substring(0, 4);
         id += "****";
 
-        String body = "<h3>️🧙 아이디 검색 결과</h3>";
-        body += "이 이메일로 가입하신 아이디는<br>";
-        body += "<b>"+id+"</b>입니다.";
+        StringBuilder body = new StringBuilder();
+        body.append("<h3>️🧙 아이디 검색 결과</h3>")
+            .append("이 이메일로 가입하신 아이디는<br>")
+            .append("<b>").append(id).append("</b>입니다.");
 
-        mailDto.setBody(body);
+        mailDto.setBody(body.toString());
         mailDto.setSubject("Reminiscene 아이디 찾기 결과 보내드립니다.");
         sendMail(mailDto);
 
@@ -81,13 +80,13 @@ public class MailServiceImpl implements MailService {
     }
 
     public boolean sendFindPw(MailDto mailDto) {
-        boolean result = false;
         int code = createCode();
 
-        String body = "<h3>️🧙 비밀번호 재설정 인증번호</h3>";
-        body += "<b>"+code+"</b>";
+        StringBuilder body = new StringBuilder();
+        body.append("<h3>️🧙 비밀번호 재설정 인증번호</h3>")
+            .append("<b>").append(code).append("</b>");
 
-        mailDto.setBody(body);
+        mailDto.setBody(body.toString());
         mailDto.setSubject("Reminiscene 비밀번호 찾기 인증번호를 보내드립니다.");
         sendMail(mailDto);
 
@@ -97,13 +96,11 @@ public class MailServiceImpl implements MailService {
         mailRedisDto.setType("P");
         mailRedisDto.setCode(code);
 
-        result = mailRepository.save(mailRedisDto);
-
-        return result;
+        return mailRepository.saveCode(mailRedisDto);
     }
 
     @Override
     public boolean matchCode(CodeDto codeDto) {
-        return mailRepository.match(codeDto);
+        return mailRepository.matchCode(codeDto);
     }
 }
