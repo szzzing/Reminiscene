@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-
         <div class="inner">
             <main-title-component></main-title-component>
             <div class="search">

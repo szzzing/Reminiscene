@@ -25,9 +25,8 @@ router.beforeEach(function (to, from, next) {
     if(to.path!='/auth/login' && !to.path.startsWith('/auth') && !to.path.endsWith("/error") && !to.path.startsWith("/admin")) {
         store.state.local.location = to.path;
     }
-
     // 인증 처리
-    axios.get("/route"+to.path).then(() => {
+    axios.get(`/${to.path.split("/")[1]}`).then(() => {
         next();
     });
 });

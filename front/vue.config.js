@@ -8,10 +8,10 @@ module.exports = defineConfig({
     // target : 백엔드 port가 들어감
     // changeOrigin -> true로 해야 CORS 문제 해결할 수 있음
     devServer: {
-        port: 8080,
+        port: 1024,
         proxy: {
             '/': {
-                target: 'http://localhost:8080',
+                target: 'http://localhost:1000',
                 changeOrigin: true,
                 ws: false, // 웹소켓 off
             }

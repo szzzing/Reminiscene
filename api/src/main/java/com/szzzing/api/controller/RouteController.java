@@ -24,25 +24,4 @@ public class RouteController {
     @GetMapping("/{path1}")
     public void route2() {
     }
-
-    /**
-     * Route 3.
-     */
-    @GetMapping("/{path1}/{path2}")
-    public void route3() {
-    }
-
-    /**
-     * Route 4.
-     */
-    @GetMapping("/{path1}/{path2}/{path3}")
-    public void route4() {
-    }
-
-    /**
-     * Route 5.
-     */
-    @GetMapping("/{path1}/{path2}/{path3}/{path4}")
-    public void route5() {
-    }
 }
