@@ -1,6 +1,6 @@
 <template>
     <transition-group v-if="this.list.length!=0" v-bind:class="{'hide' : this.hide}" id="profile-list" tag="div" class="list">
-        <router-link class="item" v-for="(user) in this.list" :key="user" :to="`/user/${user.id}`">
+        <router-link class="item" v-for="(user) in this.list" :key="user" :to="`/userpage/${user.id}`">
             <div class="image">
                 <div class="profile-image" v-if="user.profileImage" :style="{'background-image': `url(${user.profileImage}` }">
                 </div>

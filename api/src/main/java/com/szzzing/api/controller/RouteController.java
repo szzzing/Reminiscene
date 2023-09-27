@@ -11,17 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class RouteController {
 
-    /**
-     * Route 1.
-     */
     @GetMapping("/")
-    public void route1() {
-    }
+    public void route1() {}
 
-    /**
-     * Route 2.
-     */
     @GetMapping("/{path1}")
-    public void route2() {
-    }
+    public void route2() {}
 }

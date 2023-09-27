@@ -2,21 +2,26 @@ import MainPage from '@/components/main/MainPage'
 import ErrorPage from '@/components/error/ErrorPage'
 import LoginPage from '@/components/auth/LoginPage'
 import RegisterPage from '@/components/auth/RegisterPage'
+
 import FindPage from '@/components/auth/FindPage'
 import FindComponent from '@/components/auth/FindComponent'
 import FindIdPage from '@/components/auth/FindIdPage'
 import FindPwPage from '@/components/auth/FindPwPage'
+
 import DetailPage from '@/components/movie/DetailPage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
+
 import MyPage from '@/components/mypage/MyPage'
 import WithdrawPage from '@/components/mypage/WithdrawPage'
 import ModifyPage from '@/components/mypage/ModifyPage'
+import UserPage from '@/components/userpage/UserPage'
+
 import SearchPage from '@/components/search/SearchPage'
 import SearchComponent from '@/components/search/SearchComponent'
 import SearchUserComponent from '@/components/search/SearchUserComponent'
 import SearchMovieComponent from '@/components/search/SearchMovieComponent'
-import UserPage from '@/components/user/UserPage'
+
 import AdminMainPage from '@/components/admin/MainPage'
 import AdminUserPage from '@/components/admin/UserPage'
 import AdminMoviePage from '@/components/admin/MoviePage'
@@ -99,7 +104,7 @@ const routes = [
         ]
     },
     {
-        path: '/user/:id',
+        path: '/userpage/:id',
         component: UserPage,
     },
     {

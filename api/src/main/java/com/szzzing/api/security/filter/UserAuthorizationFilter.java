@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.io.IOException;
 
 /**
- * The type User authorization filter.
+ * 요청 시 인증
  */
 @Slf4j
 public class UserAuthorizationFilter extends BasicAuthenticationFilter {
@@ -47,6 +47,7 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String accessToken = JwtUtil.getToken(request);
+        log.info(request.getRequestURI());
 
         // 토큰 부재 - 리턴
         if(accessToken == null) {

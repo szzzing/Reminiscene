@@ -43,8 +43,8 @@
         <transition-group name="list" tag="div" id="reply-list">
             <div class="reply" v-for="(reply) in this.list" :key="reply">
                 <div class="profile" v-if="reply.userEnable">
-                    <router-link v-if="reply.profileImage" class="profile-image" :style="{'background-image': `url(${reply.profileImage})` }" :to="`/user/${reply.userId}`"></router-link>
-                    <router-link class="no-image" v-if="!reply.profileImage" :to="`/user/${reply.userId}`"><i class="fa-solid fa-user"></i></router-link>
+                    <router-link v-if="reply.profileImage" class="profile-image" :style="{'background-image': `url(${reply.profileImage})` }" :to="`/userpage/${reply.userId}`"></router-link>
+                    <router-link class="no-image" v-if="!reply.profileImage" :to="`/userpage/${reply.userId}`"><i class="fa-solid fa-user"></i></router-link>
                 </div>
                 <div class="profile" v-else>
                     <div v-if="reply.profileImage" class="profile-image" @click="withdrawUser" :style="{'background-image': `url(${reply.profileImage})`}"></div>

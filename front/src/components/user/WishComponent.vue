@@ -7,6 +7,7 @@
                 보고싶은 영화가 없어요.
             </template>
         </empty-component>
+        
         <infinite-loading @infinite="getList"></infinite-loading>
     </div>
 </template>
@@ -27,29 +28,18 @@ export default {
             list: null,
             page: 1,
             state: null,
+            // user: this.$store.state.auth.user,
         }
     },
     props: [
-        'user',
+        'user'
     ],
     methods: {
-        fetchData() {
-            const params = {
-                userId: this.$route.params.id,
-                page: 1,
-            }
-            this.axios.get("/wish", {params})
-            .then((response)=>{
-                this.list = response.data.list;
-                this.page = response.data.page + 1;
-                this.state.reset();
-            })
-        },
         getList($state) {
             this.state = $state;
 
             const params = {
-                userId: this.$route.params.id,
+                userId: this.user.id,
                 page: this.page,
             }
             this.axios.get("/wish", {params})
@@ -69,10 +59,6 @@ export default {
                 }
             })
         },
-    },
-
-    watch: {
-        '$route.params.id': 'fetchData',
     },
 }
 </script>

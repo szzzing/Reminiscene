@@ -4,19 +4,19 @@
         v-bind:category="category"
         @clickCategory="clickCategory"></info-component>
 
-        <wish-component v-if="this.category=='wish'"></wish-component>
-        <watching-component v-if="this.category=='watching'"></watching-component>
-        <comment-component v-if="this.category=='comment'"></comment-component>
-        <like-component v-if="this.category=='like'"></like-component>
+        <wish-component v-bind:user="user" v-if="this.category=='wish'"></wish-component>
+        <watching-component v-bind:user="user" v-if="this.category=='watching'"></watching-component>
+        <comment-component v-bind:user="user" v-if="this.category=='comment'"></comment-component>
+        <like-component v-bind:user="user" v-if="this.category=='like'"></like-component>
     </div>
 </template>
 
 <script>
 import InfoComponent from './InfoComponent.vue'
-import WishComponent from './WishComponent.vue';
-import WatchingComponent from './WatchingComponent.vue';
-import CommentComponent from './CommentComponent.vue';
-import LikeComponent from './LikeComponent.vue';
+import WishComponent from '../user/WishComponent.vue';
+import WatchingComponent from '../user/WatchingComponent.vue';
+import CommentComponent from '../user/CommentComponent.vue';
+import LikeComponent from '../user/LikeComponent.vue';
 export default {
     components: {
         InfoComponent,

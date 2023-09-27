@@ -28,30 +28,18 @@ export default {
             list: null,
             state: null,
             showMovie: true,
+            // user: this.$store.state.auth.user,
         }
     },
     props: [
-        'user',
+        'user'
     ],
     methods: {
-        fetchData() {
-            const params = {
-                userId: this.$route.params.id,
-                page: 1,
-                loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
-            }
-            this.axios.get("/like", {params})
-            .then((response)=>{
-                this.list = response.data.list;
-                this.page = response.data.page + 1;
-                this.state.reset();
-            });
-        },
         getList($state) {
             this.state = $state;
 
             const params = {
-                userId: this.$route.params.id,
+                userId: this.user.id,
                 page: this.page,
                 loginUser: this.$store.state.auth.user ? this.$store.state.auth.user.id : null,
             }
@@ -72,9 +60,6 @@ export default {
                 }
             })
         },
-    },
-    watch: {
-        '$route.params.id': 'fetchData',
     },
 }
 </script>

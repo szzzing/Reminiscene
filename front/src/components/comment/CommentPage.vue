@@ -2,8 +2,8 @@
     <div id="comment" class="container" v-if="this.comment">
         <div class="inner">
             <div class="profile">
-                <router-link v-if="comment.userEnable && comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }" :to="`/user/${comment.userId}`"></router-link>
-                <router-link v-if="comment.userEnable && !comment.profileImage" class="no-image" :to="`/user/${comment.userId}`"><i class="fa-solid fa-user"></i></router-link>
+                <router-link v-if="comment.userEnable && comment.profileImage" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }" :to="`/userpage/${comment.userId}`"></router-link>
+                <router-link v-if="comment.userEnable && !comment.profileImage" class="no-image" :to="`/userpage/${comment.userId}`"><i class="fa-solid fa-user"></i></router-link>
                 <div v-if="!comment.userEnable && comment.profileImage" @click="withdrawUser" class="profile-image" :style="{'background-image': `url(${comment.profileImage})` }"></div>
                 <div v-if="!comment.userEnable && !comment.profileImage" class="no-image" @click="withdrawUser"><i class="fa-solid fa-user"></i></div>
                 <div>

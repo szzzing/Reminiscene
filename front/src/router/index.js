@@ -26,7 +26,7 @@ router.beforeEach(function (to, from, next) {
         store.state.local.location = to.path;
     }
     // 인증 처리
-    axios.get(`/${to.path.split("/")[1]}`).then(() => {
+    axios.get(`/route/${to.path.split("/")[1]}`).then(() => {
         next();
     });
 });

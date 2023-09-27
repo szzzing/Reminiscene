@@ -11,11 +11,11 @@
 
 <script>
 import moment from "moment";
-import InfoComponent from '../user/InfoComponent.vue';
-import LikeComponent from "./LikeComponent.vue";
-import WishComponent from "./WishComponent.vue";
-import WatchingComponent from './WatchingComponent.vue';
-import CommentComponent from "./CommentComponent.vue";
+import InfoComponent from '../userpage/InfoComponent.vue';
+import LikeComponent from "../user/LikeComponent.vue";
+import WishComponent from "../user/WishComponent.vue";
+import WatchingComponent from '../user/WatchingComponent.vue';
+import CommentComponent from "../user/CommentComponent.vue";
 
 export default {
     components: {

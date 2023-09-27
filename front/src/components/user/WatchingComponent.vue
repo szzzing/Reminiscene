@@ -16,7 +16,7 @@ import InfiniteLoading from 'infinite-loading-vue3-ts';
 import EmptyComponent from '../item/EmptyComponent.vue';
 import MovieListComponent from '../item/MovieListComponent.vue';
 
-export default {
+export default { 
     components: {
         InfiniteLoading,
         EmptyComponent,
@@ -27,29 +27,18 @@ export default {
             list: null,
             page: 1,
             state: null,
+            // user: this.$store.state.auth.user,
         }
     },
     props: [
-        'user',
+        'user'
     ],
     methods: {
-        fetchData() {
-            const params = {
-                userId: this.$route.params.id,
-                page: 1,
-            }
-            this.axios.get("/watching", {params})
-            .then((response)=>{
-                this.page = response.data.page + 1;
-                this.list = response.data.list;
-                this.state.reset();
-            })
-        },
         getList($state) {
             this.state = $state;
             
             const params = {
-                userId: this.$route.params.id,
+                userId: this.user.id,
                 page: this.page,
             }
             this.axios.get("/watching", {params})
@@ -69,9 +58,6 @@ export default {
                 }
             })
         },
-    },
-    watch: {
-        '$route.params.id': 'fetchData',
     },
 }
 </script>
