@@ -1,6 +1,6 @@
 <template>
     <transition-group v-if="this.list && this.list.length!=0" v-bind:class="{'hide' : this.hide}" id="movie-list" tag="div" class="list">
-        <router-link class="item" v-for="(movie, index) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+        <router-link class="item" v-for="(movie, index) in this.list" :key="movie" :to="`/content/movie/${movie.id}`">
             <div class="poster" :style="{'background-image': `url(/upload/poster/${movie.posterPath}` }">
                 <div v-if="this.rank" class="rank">{{ index==0 ? "🥇" : (index==1 ? "🥈" : (index==2 ? "🥉" : "")) }}</div>
             </div>

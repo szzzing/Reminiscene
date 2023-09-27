@@ -1,5 +1,4 @@
 <template>
-
     <div id="comment" class="container" v-if="this.comment">
         <div class="inner">
             <div class="profile">
@@ -30,7 +29,7 @@
             </div>
         </div>
         <div class="inner">
-            <router-link class="movie item-border" v-if="this.movie" :to="`/detail/${movie.id}`">
+            <router-link class="movie item-border" v-if="this.movie" :to="`/content/movie/${movie.id}`">
                 <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`">
                 <div class="info">
                     <div class="title">{{ movie.title }}</div>
@@ -145,7 +144,7 @@ export default {
     font-size: 20px;
 }
 .nickname {
-    font-weight: 500;
+    font-weight: 600;
 }
 .create-date {
     color: var(--G400);

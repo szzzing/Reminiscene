@@ -1,6 +1,6 @@
 <template>
     <transition-group name="list" tag="div" class="inner" v-if="this.list">
-        <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
+        <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/content/comment/${comment.id}`">
             <div class="profile">
                 <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
                 <div class="no-image" v-if="!comment.profileImage"><i class="fa-solid fa-user"></i></div>

@@ -38,4 +38,11 @@ public class RouteController {
     @GetMapping("/{path1}/{path2}/{path3}")
     public void route4() {
     }
+
+    /**
+     * Route 5.
+     */
+    @GetMapping("/{path1}/{path2}/{path3}/{path4}")
+    public void route5() {
+    }
 }

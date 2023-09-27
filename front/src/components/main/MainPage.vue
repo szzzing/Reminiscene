@@ -57,8 +57,9 @@ export default {
     },
     methods: {
         clickSearch() {
-            if(this.query.trim()!='') {
-                this.$router.push("/search/"+this.query.trim());
+            const query = this.query.trim().replace(/[^0-9a-zA-Zㄱ-ㅎ가-힣]/g, "");
+            if(query!='') {
+                this.$router.push("/search/"+query);
                 this.query = '';
             }
         }

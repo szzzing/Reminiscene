@@ -275,7 +275,7 @@ export default {
     cursor: pointer;
 }
 .nickname {
-    font-weight: 500;
+    font-weight: 600;
 }
 /* .profile {
     display: flex;
@@ -295,8 +295,8 @@ export default {
 .like-reply {
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid var(--G200);
-    border-bottom: 1px solid var(--G200);
+    border-top: 1px solid var(--G100);
+    border-bottom: 1px solid var(--G100);
     gap: 2px;
 }
 .like-reply > * {
@@ -312,13 +312,11 @@ export default {
     align-items: center;
 }
 .like-reply * {
-    transition: all 0.2s;
+    transition: opacity 0.2s;
 }
 .like-reply .text {
     color: var(--G600);
-}
-.like-button .emoji {
-    opacity: 0.5;
+    font-weight: 600;
 }
 .selected.like-button .emoji,
 .selected.like-button .text {

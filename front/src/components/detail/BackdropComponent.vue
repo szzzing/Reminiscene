@@ -1,13 +1,13 @@
 <template>
-    <div id="backdrop" v-if="this.movie!=null">
+    <div id="backdrop" v-if="this.movie">
         <div class="backdrop" :style="{'background-image': 'url('+movie.backdropPath+')' }">
             <div class="container">
-                <div class="title shadow" v-html="movie.title"></div>
-                <div class="original-title shadow" v-if="movie.title !=movie.originalTitle" v-html="movie.originalTitle"></div>
-                <div class="genre-release shadow" v-if="movie.genre+movie.release_date!=''">
+                <div class="title" v-html="movie.title"></div>
+                <div class="original-title" v-if="movie.title !=movie.originalTitle" v-html="movie.originalTitle"></div>
+                <div class="genre-release" v-if="movie.genre+movie.release_date!=''">
                     {{ movie.genre!='' && movie.releaseDate!='' ? [movie.genre, movie.releaseDate].join(" ・ ") : movie.genre + movie.releaseDate }}
                 </div>
-                <div class="runtime shadow" v-if="movie.runtime!=0">
+                <div class="runtime" v-if="movie.runtime!=0">
                     {{ movie.runtime+'분' }}
                 </div>
             </div>
@@ -30,16 +30,6 @@ export default {
     background-position: center;
     height: 70vh;
     position: relative;
-}
-@media screen and (max-width:960px) {
-    .backdrop {
-        height: 60vh;
-    }
-}
-@media screen and (max-width:474px) {
-    .backdrop {
-        height: 50vh;
-    }
 }
 .dark .backdrop {
     background-color: var(--G50);
@@ -72,11 +62,25 @@ export default {
     font-size: 30px;
     font-weight: 700;
     line-height: 1.2;
+    word-break: keep-all;
 }
 .genre-release {
     margin-top: 8px;
 }
 .genre-release, .runtime {
     font-weight: 500;
+}
+@media screen and (max-width:960px) {
+    .backdrop {
+        height: 60vh;
+    }
+}
+@media screen and (max-width:474px) {
+    .backdrop {
+        height: 50vh;
+    }
+    .title {
+        font-size: 24px;
+    }
 }
 </style>

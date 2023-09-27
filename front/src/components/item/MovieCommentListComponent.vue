@@ -1,6 +1,6 @@
 <template>
     <transition-group name="list" tag="div" class="inner" v-if="this.list">
-        <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
+        <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/content/comment/${comment.id}`">
             <img class="poster" :src="`/upload/poster/${comment.moviePosterPath}`">
             <div class="comment">
                 <div class="profile">

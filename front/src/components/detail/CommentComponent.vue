@@ -5,11 +5,11 @@
                 코멘트
                 <span class="sub-title">{{ this.listCount }}</span>
             </div>
-            <router-link v-if="this.list.length>0" class="view-more" :to="`/detail/${this.movie.id}/comment`">더보기</router-link>
+            <router-link v-if="this.list.length>0" class="view-more" :to="`/content/movie/${this.movie.id}/comments`">더보기</router-link>
         </div>
 
         <transition-group name="list" tag="div" class="best-comment">
-            <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/comment/${comment.id}`">
+            <router-link class="item" v-for="(comment) in this.list" :key="comment" :to="`/content/comment/${comment.id}`">
                 <div class="profile">
                     <div v-if="comment.profileImage" class="profile-image" :style="{'background-image': 'url(' + comment.profileImage + ')' }"></div>
                     <div class="no-image" v-if="!comment.profileImage"><i class="fa-solid fa-user"></i></div>

@@ -1,7 +1,7 @@
 <template>
     <div id="search-suggest" v-if="this.list.length!=0">
         <div class="container">
-            <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+            <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/content/movie/${movie.id}`">
                 <div class="title">{{ movie.title }}</div>
                 <div class="release-date">{{ movie.releaseDate.substring(0, 4) }}</div>
             </router-link>

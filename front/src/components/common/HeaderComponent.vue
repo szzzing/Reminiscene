@@ -27,7 +27,7 @@
         </div>
         <div id="search-suggest" @click.stop="" v-if="this.$store.state.local.suggest && this.list.length!=0 && this.query.trim()!=''">
             <div class="container">
-                <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/detail/${movie.id}`">
+                <router-link class="item" v-for="(movie) in this.list" :key="movie" :to="`/content/movie/${movie.id}`">
                     <div class="title">{{ movie.title }}</div>
                     <div class="release-date">{{ movie.releaseDate.substring(0, 4) }}</div>
                 </router-link>
@@ -62,7 +62,7 @@ export default {
         },
         checkInput(event) {
             this.$store.commit("local/setSuggest", true);
-            this.query = encodeURIComponent(event.target.value.trim().replaceAll("/", ""));
+            this.query = encodeURIComponent(event.target.value.trim().replace(/[^0-9a-zA-Zㄱ-ㅎ가-힣]/g, ""));
             if(this.query!='') {
                 this.axios.get(`/movie/search/${this.query}`)
                 .then((response)=>{
