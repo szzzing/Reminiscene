@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * The type Mail redis dto.
- * type
- * E: 이메일 인증
- * P: 비밀번호 찾기 인증
+ * Redis 전송용 메일 Dto
  */
 @Data
 public class MailRedisDto {

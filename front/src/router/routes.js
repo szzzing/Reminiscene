@@ -8,7 +8,7 @@ import FindComponent from '@/components/auth/FindComponent'
 import FindIdPage from '@/components/auth/FindIdPage'
 import FindPwPage from '@/components/auth/FindPwPage'
 
-import DetailPage from '@/components/movie/DetailPage'
+import MoviePage from '@/components/movie/MoviePage'
 import CommentListPage from '@/components/comment/CommentListPage'
 import CommentPage from '@/components/comment/CommentPage'
 
@@ -63,7 +63,7 @@ const routes = [
     },
     {
         path: '/content/movie/:id',
-        component: DetailPage,
+        component: MoviePage,
     },
     {
         path: '/content/movie/:id/comments',

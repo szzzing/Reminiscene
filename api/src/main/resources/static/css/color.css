@@ -13,6 +13,7 @@
     --G800: #272727;
     --G900: #202020;
     --G1000: #181818;
+    --BLUR: #fafafa80;
 }
 
 :root.dark {
@@ -28,6 +29,7 @@
     --G800: #f4f4f5;
     --G900: #fafafa;
     --G1000: #ffffff;
+    --BLUR: #27272790;
 }
 
 :root {
@@ -43,23 +45,4 @@
     --FOCUS: #ffc400;
     --RED: rgba(237, 106, 94);
     --GREEN: rgba(99, 206, 86);
-}
-
-/* :root.dark {
-    --O100: #ffffff09;
-    --O200: #ffffff08;
-    --O300: #ffffff18;
-    --O400: #ffffff31;
-    --O500: #ffffff46;
-    --O600: #ffffff58;
-    --O700: #ffffff71;
-    --O800: #ffffff80;
-    --O900: #ffffff91;
-} */
-
-:root {
-    --BLUR: #fafafa80;
-}
-:root.dark {
-    --BLUR: #27272790;
 }

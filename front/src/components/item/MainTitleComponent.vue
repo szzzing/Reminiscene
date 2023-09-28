@@ -1,7 +1,9 @@
 <template>
     <div id="logo">
         <div class="emoji">🌙</div>
-        <div class="text">어떤 영화를 보여줄까?</div>
+        <div class="text">
+            너의 기억을 들려줘.
+        </div>
     </div>
 </template>
 

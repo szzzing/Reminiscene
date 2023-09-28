@@ -6,7 +6,7 @@
 
     <insert id="insertOne">
         insert into user
-        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default, null, pandora3_ojt.fn_initial_search_trim(#{nickname}))
+        values(#{id}, #{pw}, #{nickname}, #{email}, #{role}, default, #{type}, #{birthday}, #{gender}, default, default, null, fn_initial_search_trim(#{nickname}))
     </insert>
 
     <select id="selectAll" resultMap="userResultMap">
@@ -18,8 +18,8 @@
         select u.*,
             (select count(*) from wish where wish_user_id=#{id}) as user_wish_count,
             (select count(*) from watching where watching_user_id=#{id}) as user_watching_count,
-            (select count(*) from pandora3_ojt.like where like_user_id=#{id}) as user_like_count,
-            (select count(*) from pandora3_ojt.comment where comment_user_id=#{id}) as user_comment_count,
+            (select count(*) from reminiscene.like where like_user_id=#{id}) as user_like_count,
+            (select count(*) from comment where comment_user_id=#{id}) as user_comment_count,
             round((select avg(rate_star) from rate where rate_user_id = #{id}), 1) user_avg_rate
         from user u
         where binary user_id=#{id} and user_enable=true
@@ -66,7 +66,7 @@
             user_birthday = #{birthday},
             user_mod_date = current_timestamp,
             user_profile_image = #{newImage},
-            user_nickname_initial = pandora3_ojt.fn_initial_search_trim(#{nickname})
+            user_nickname_initial = fn_initial_search_trim(#{nickname})
         where binary user_id = #{id}
     </update>
 
@@ -93,8 +93,8 @@
                 and
                 (user_id like concat('%',#{query},'%')
                 or user_nickname like concat('%',#{query},'%')
-                or pandora3_ojt.fn_initial_search_trim(user_id) like concat('%', #{query},'%')
-                or pandora3_ojt.fn_initial_search_trim(user_nickname) like concat('%', #{query},'%'))
+                or fn_initial_search_trim(user_id) like concat('%', #{query},'%')
+                or fn_initial_search_trim(user_nickname) like concat('%', #{query},'%'))
                 order by CHAR_LENGTH(user_nickname)
             </if>
         limit #{limit} offset #{offset}

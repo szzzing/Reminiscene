@@ -17,12 +17,12 @@
     <select id="selectOneComment" resultMap="commentResultMap">
         select c.*, u.*, m.*,
             ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate,
-            (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
-            (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
-            (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
-            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
+            (select count(*) from reminiscene.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
+            (select count(*) from reminiscene.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
+            (select count(*) from reminiscene.like where like_comment_id=c.comment_id) as like_count,
+            (select count(*) from reminiscene.reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
             <if test="loginUser!=null">
-                ,(select count(*)>0 from pandora3_ojt.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
+                ,(select count(*)>0 from reminiscene.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
             </if>
             <if test="loginUser==null">
                 ,false as user_like
@@ -44,12 +44,12 @@
     <select id="selectCommentList" resultMap="commentResultMap">
         select c.*, u.*, m.*,
             ifnull((select rate_star from rate where rate_user_id=c.comment_user_id and rate_movie_id=c.comment_movie_id), 0) as comment_rate,
-            (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
-            (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
-            (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
-            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
+            (select count(*) from watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
+            (select count(*) from wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
+            (select count(*) from reminiscene.like where like_comment_id=c.comment_id) as like_count,
+            (select count(*) from reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
             <if test="loginUser!=null">
-                ,(select count(*)>0 from pandora3_ojt.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
+                ,(select count(*)>0 from reminiscene.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
             </if>
             <if test="loginUser==null">
                 ,false as user_like
@@ -82,29 +82,29 @@
 
 
     <insert id="insertOneLike">
-        insert into pandora3_ojt.like
+        insert into reminiscene.like
         values(#{userId}, #{commentId}, default)
     </insert>
 
     <delete id="deleteOneLike">
-        delete from pandora3_ojt.like
+        delete from reminiscene.like
         where like_user_id = #{userId} and like_comment_id = #{commentId}
     </delete>
 
     <select id="selectLikeList" resultMap="commentResultMap">
         select c.*, u.*, m.*,
-            (select count(*) from pandora3_ojt.watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
-            (select count(*) from pandora3_ojt.wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
-            (select count(*) from pandora3_ojt.like where like_comment_id=c.comment_id) as like_count,
-            (select count(*) from pandora3_ojt.reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
+            (select count(*) from watching where watching_movie_id=c.comment_movie_id and watching_user_id=c.comment_user_id) as is_watching,
+            (select count(*) from wish where wish_movie_id=c.comment_movie_id and wish_user_id=c.comment_user_id) as is_wish,
+            (select count(*) from reminiscene.like where like_comment_id=c.comment_id) as like_count,
+            (select count(*) from reply where reply_ref_id=c.comment_id and reply_enable=true) as reply_count
             <if test="loginUser!=null">
-                ,(select count(*)>0 from pandora3_ojt.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
+                ,(select count(*)>0 from reminiscene.like where like_comment_id=c.comment_id and like_user_id=#{loginUser}) as user_like
             </if>
             <if test="loginUser==null">
                 ,false as user_like
             </if>
-        from pandora3_ojt.comment c
-            join pandora3_ojt.like on comment_id = like_comment_id
+        from comment c
+            join reminiscene.like on comment_id = like_comment_id
             join user u on comment_user_id = user_id
             join movie m on comment_movie_id = movie_id
         where like_user_id=#{userId}
@@ -114,7 +114,7 @@
 
     <select id="selectCommentCount" resultType="_int">
         select count(*)
-        from pandora3_ojt.comment
+        from comment
     </select>
 
 
