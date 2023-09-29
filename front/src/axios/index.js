@@ -58,7 +58,7 @@ axios.interceptors.response.use(
         }
 
         // 4. 서버 에러
-        if(error.response.status==500) {
+        if(error.response.status==405 || error.response.status==500) {
             store.commit("modal/setAlert", { alertEmoji:"⚠️", alertText:"다시 시도해주세요." });
         }
 

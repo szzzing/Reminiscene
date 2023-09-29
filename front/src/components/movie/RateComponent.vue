@@ -63,6 +63,9 @@ export default {
     props: [
        'movie',
     ],
+    emits: [
+        'changeStatus',
+    ],
     computed: {
         checkUser() {
             return this.$store.state.auth.user;
@@ -133,6 +136,9 @@ export default {
                 });
             }
         },
+        changeStatus() {
+            this.$emit("changeStatus");
+        },
         // 코멘트 작성/수정
         changeCommentStatus(content, spoiler) {
             this.isComment=true;
@@ -152,6 +158,7 @@ export default {
                     .then(()=>{
                         this.rate = star;
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
+                        this.changeStatus();
                     });
                 }
                 // 별점 수정
@@ -160,6 +167,7 @@ export default {
                     .then(()=>{
                         this.rate = star;
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"에 "+star+"점을 주었어요." });
+                        this.changeStatus();
                     });
                 }
                 // 별점 삭제
@@ -168,8 +176,10 @@ export default {
                     .then(()=>{
                         this.rate = 0;
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"의 별점을 삭제했어요." });
+                        this.changeStatus();
                     });
                 }
+
             } else {
                 this.$store.commit("modal/setAlert", { alertEmoji: "✋", alertText: "로그인 후 이용해주세요." });
             }
@@ -183,6 +193,7 @@ export default {
                     this.axios.delete("/wish/"+this.$route.params.id)
                     .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶지 않아요." });
+                        this.changeStatus();
                     });
                 }
                 // 삽입
@@ -190,6 +201,7 @@ export default {
                     this.axios.post("/wish", {movieId: this.$route.params.id})
                     .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고싶어요." });
+                        this.changeStatus();
                     });
                 }
                 this.isWish = !this.isWish;
@@ -207,6 +219,7 @@ export default {
                     this.axios.delete("/watching/"+this.$route.params.id)
                     .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 그만볼래요." });
+                        this.changeStatus();
                     });
                 }
                 // 삽입
@@ -214,6 +227,7 @@ export default {
                     this.axios.post("/watching", {movieId: this.$route.params.id})
                     .then(()=>{
                         this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: this.movie.title+"를 보고있어요." });
+                        this.changeStatus();
                     });
                 }
                 this.isWatching = !this.isWatching;

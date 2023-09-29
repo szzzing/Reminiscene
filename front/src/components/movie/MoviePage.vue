@@ -1,7 +1,8 @@
 <template>
     <backdrop-component v-bind:movie="movie"></backdrop-component>
     <div class="container">
-        <detail-component v-bind:movie="movie"></detail-component>
+        <detail-component v-bind:movie="movie"
+        @changeStatus="fetchMovie"></detail-component>
         <comment-component v-bind:movie="movie"></comment-component>
     </div>
 </template>
@@ -26,6 +27,9 @@ export default {
             commentFlag: false, // 코멘트 입력 감지
         }
     },
+    emits: [
+        'changeStatus',
+    ],
     methods: {
         fetchMovie() {
             this.axios.get('/movie/'+this.$route.params.id)

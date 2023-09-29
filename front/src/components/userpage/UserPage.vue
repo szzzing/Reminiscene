@@ -6,6 +6,7 @@
         <watching-component v-if="this.category=='watching'" v-bind:user="user"></watching-component>
         <comment-component v-if="this.category=='comment'" v-bind:user="user"></comment-component>
         <like-component v-if="this.category=='like'" v-bind:user="user"></like-component>
+        <rate-component v-if="this.category=='rate'" v-bind:user="user"></rate-component>
     </div>
 </template>
 
@@ -16,6 +17,7 @@ import LikeComponent from "../user/LikeComponent.vue";
 import WishComponent from "../user/WishComponent.vue";
 import WatchingComponent from '../user/WatchingComponent.vue';
 import CommentComponent from "../user/CommentComponent.vue";
+import RateComponent from "../user/RateComponent.vue";
 
 export default {
     components: {
@@ -24,6 +26,7 @@ export default {
     WishComponent,
     WatchingComponent,
     CommentComponent,
+    RateComponent,
 },
 
     created() {

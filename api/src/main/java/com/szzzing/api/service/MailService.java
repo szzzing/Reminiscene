@@ -1,6 +1,6 @@
 package com.szzzing.api.service;
 
-import com.szzzing.api.dto.common.MailDto;
+import com.szzzing.api.dto.mail.MailDto;
 import com.szzzing.api.dto.mail.CodeDto;
 
 public interface MailService {

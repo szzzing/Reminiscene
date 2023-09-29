@@ -14,6 +14,8 @@ public interface MovieService {
 
     public boolean deleteRate(RateDto rateDto);
 
+    public MovieListDto getRateList(CommonSelectDto commonSelectDto);
+
     public StatusDto getStatus(HashMap<String, String> map);
 
     public boolean addWish(WishDto wishDto);
@@ -21,6 +23,7 @@ public interface MovieService {
     public boolean deleteWish(WishDto wishDto);
 
     public boolean addWatching(WatchingDto watchingDto);
+
     public boolean deleteWatching(WatchingDto watchingDto);
 
     public MovieListDto getWishList(CommonSelectDto commonSelectDto);
@@ -33,7 +36,7 @@ public interface MovieService {
 
     public MovieRankListDto getMovieRankList();
 
-    ArrayList<GenreDto> getGenreList();
+    public ArrayList<GenreDto> getGenreList();
 
-    ArrayList<MovieDto> getSearchList(String query);
+    public ArrayList<MovieDto> getSearchList(String query);
 }

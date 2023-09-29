@@ -1,4 +1,4 @@
-package com.szzzing.api.dto.common;
+package com.szzzing.api.dto.mail;
 
 import lombok.Data;
 

@@ -85,6 +85,18 @@ public class MovieController {
     }
 
     /**
+     * 유저 별점 영화 조회
+     *
+     * @param commonSelectDto 유저 아이디, 가져올 페이지
+     * @return 시청중인 영화 리스트
+     */
+    @GetMapping("/rate")
+    public ResponseEntity<MovieListDto> getRateList(@ModelAttribute CommonSelectDto commonSelectDto) {
+        MovieListDto result = movieService.getRateList(commonSelectDto);
+        return new ResponseEntity(result, result!=null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * 위시리스트 추가
      *
      * @param request 사용자 정보

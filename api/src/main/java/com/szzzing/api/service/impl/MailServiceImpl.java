@@ -1,6 +1,6 @@
 package com.szzzing.api.service.impl;
 
-import com.szzzing.api.dto.common.MailDto;
+import com.szzzing.api.dto.mail.MailDto;
 import com.szzzing.api.dto.mail.CodeDto;
 import com.szzzing.api.dto.mail.MailRedisDto;
 import com.szzzing.api.dto.user.UserDto;

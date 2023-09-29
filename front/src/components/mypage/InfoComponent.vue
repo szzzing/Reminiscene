@@ -27,6 +27,7 @@
         <div class="category">
             <div class="option" @click="this.$emit('clickCategory', 'wish')" :class="{'active': this.category=='wish'}">보고싶어요</div>
             <div class="option" @click="this.$emit('clickCategory', 'watching')" :class="{'active': this.category=='watching'}">보는 중</div>
+            <div class="option" @click="this.$emit('clickCategory', 'rate')" :class="{'active': this.category=='rate'}">별점</div>
             <div class="option" @click="this.$emit('clickCategory', 'comment')" :class="{'active': this.category=='comment'}">코멘트</div>
             <div class="option" @click="this.$emit('clickCategory', 'like')" :class="{'active': this.category=='like'}">좋아요</div>
             <div class="option"></div>

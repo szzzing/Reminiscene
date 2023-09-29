@@ -30,6 +30,17 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.deleteOneRate(rateDto) > 0;
     }
 
+    public MovieListDto getRateList(CommonSelectDto commonSelectDto) {
+        if(commonSelectDto.getPage()==null) commonSelectDto.setPage(1);
+        commonSelectDto.setOffset();
+
+        MovieListDto movieListDto = new MovieListDto();
+        movieListDto.setList(movieRepository.selectRateList(commonSelectDto));
+        movieListDto.setPage(commonSelectDto.getPage());
+
+        return movieListDto;
+    }
+
     public StatusDto getStatus(HashMap<String, String> map) {
         return movieRepository.selectOneStatus(map);
     }

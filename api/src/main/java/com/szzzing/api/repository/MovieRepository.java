@@ -86,4 +86,8 @@ public class MovieRepository {
     public ArrayList<MovieDto> selectNewMovieList() {
         return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectNewMovieList");
     }
+
+    public ArrayList<MovieDto> selectRateList(CommonSelectDto commonSelectDto) {
+        return (ArrayList)sqlSessionTemplate.selectList(NAME_SPACE+"selectRateList", commonSelectDto);
+    }
 }

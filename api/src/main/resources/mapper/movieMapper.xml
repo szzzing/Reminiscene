@@ -57,14 +57,7 @@
         select w.*, m.*
         from wish w
             join movie m on wish_movie_id = movie_id
-        <choose>
-            <when test="userId!=null">
-                where wish_user_id=#{userId}
-            </when>
-            <when test="movieId!=null">
-                where wish_movie_id=#{movieId}
-            </when>
-        </choose>
+        where wish_user_id=#{userId}
         order by wish_cre_date desc
         limit #{limit} offset #{offset}
     </select>
@@ -73,15 +66,18 @@
         select w.*, m.*
         from watching w
             join movie m on watching_movie_id = movie_id
-        <choose>
-            <when test="userId!=null">
-                where watching_user_id=#{userId}
-            </when>
-            <when test="movieId!=null">
-                where watching_movie_id=#{movieId}
-            </when>
-        </choose>
+        where watching_user_id=#{userId}
         order by watching_cre_date desc
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="selectRateList" resultMap="movieResultMap">
+        select r.*, m.*,
+           (select rate_star from rate where rate_movie_id = m.movie_id and rate_user_id = #{userId}) as avg_rate
+        from rate r
+           join movie m on rate_movie_id = movie_id
+        where rate_user_id=#{userId}
+        order by rate_cre_date desc
         limit #{limit} offset #{offset}
     </select>
 
@@ -136,7 +132,7 @@
             (select count(*) from rate where rate_movie_id = movie_id) rate_count,
             (select count(*) from user where user_enable = true) user_count
         from movie m
-        order by rate_count + avg_rate*user_count desc, movie_id desc
+        order by avg_rate + rate_count/user_count desc, movie_id desc
             limit 10 offset 0
     </select>
 

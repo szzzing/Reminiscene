@@ -1,6 +1,6 @@
 package com.szzzing.api.controller;
 
-import com.szzzing.api.dto.common.MailDto;
+import com.szzzing.api.dto.mail.MailDto;
 import com.szzzing.api.dto.mail.CodeDto;
 import com.szzzing.api.service.MailService;
 import lombok.RequiredArgsConstructor;

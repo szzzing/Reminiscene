@@ -7,14 +7,17 @@
             </div>
             
             <div class="info">
-                <rate-component v-bind:movie="movie"></rate-component>
+
+                <rate-component v-bind:movie="movie"
+                @changeStatus="this.$emit('changeStatus')"></rate-component>
+
                 <div class="info-area max-size" v-if="movie.overview!=''">
                     <div class="tagline" v-if="movie.tagline!=''" v-html="movie.tagline"></div>
                     <div class="overview" v-html="movie.overview"></div>
                 </div>
             </div>
         </div>
-
+ 
         <div class="statistics-area">
             <div class="avg-rate">
                 <div class="emoji">⭐️</div>
@@ -44,7 +47,7 @@ export default {
     },
     props: [
         'movie',
-    ]
+    ],
 }
 </script>
 
