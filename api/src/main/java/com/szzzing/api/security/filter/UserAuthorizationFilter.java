@@ -47,7 +47,6 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String accessToken = JwtUtil.getToken(request);
-        log.info(request.getRequestURI());
 
         // 토큰 부재 - 리턴
         if(accessToken == null) {
@@ -64,6 +63,7 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
                     return;
                 // 리프레시 토큰은 유효 - 새로운 액세스 토큰 발급
                 } else {
+                    tokenRepository.deleteRefreshToken(accessToken);
                     accessToken = JwtUtil.createAccessToken(JwtUtil.getId(refreshToken));
                     tokenRepository.saveRefreshToken(accessToken, refreshToken);
                 }
