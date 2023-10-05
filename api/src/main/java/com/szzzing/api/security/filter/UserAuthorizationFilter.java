@@ -51,6 +51,7 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
         // 토큰 부재 - 리턴
         if(accessToken == null) {
             chain.doFilter(request, response);
+            return;
         }
 
         // 토큰 존재
@@ -58,8 +59,11 @@ public class UserAuthorizationFilter extends BasicAuthenticationFilter {
             // 액세스 토큰 만료
             if(!JwtUtil.validateToken(accessToken)) {
                 String refreshToken = tokenRepository.findRefreshToken(accessToken);
-                // 리프레시 토큰도 만료 - 리턴
+                // 리프레시 토큰도 만료 - 리프레시 토큰 redis에서 삭제 후 리턴
                 if(!JwtUtil.validateToken(refreshToken)) {
+                    tokenRepository.deleteRefreshToken(accessToken);
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    chain.doFilter(request, response);
                     return;
                 // 리프레시 토큰은 유효 - 새로운 액세스 토큰 발급
                 } else {
