@@ -77,7 +77,7 @@ export default {
                 id: this.id,
                 pw: this.pw,
             }
-            this.axios.put("/user/pw", params)
+            this.axios.put("/user?type=pw", params)
             .then((response)=>{
                 if(response.data==true) {
                     this.emailChanged = true;

@@ -4,23 +4,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * 정적 자원 설정
+ */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    private final String profilePath = "../upload/profile/";
-    private final String backdropPath = "../upload/backdrop/";
-    private final String posterPath = "../upload/poster/";
 
-    // 프로필 이미지 경로를 정적 자원으로 인식해 접근하도록 설정
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         registry.addResourceHandler("/upload/profile/**")
-                .addResourceLocations("file:"+profilePath)
+                .addResourceLocations("file:../upload/profile/")
                 .setCachePeriod(30);
+
         registry.addResourceHandler("/upload/backdrop/**")
-                .addResourceLocations("file:"+backdropPath)
+                .addResourceLocations("file:../upload/backdrop/")
                 .setCachePeriod(30);
+
         registry.addResourceHandler("/upload/poster/**")
-                .addResourceLocations("file:"+posterPath)
+                .addResourceLocations("file:../upload/poster/")
                 .setCachePeriod(30);
 
     }

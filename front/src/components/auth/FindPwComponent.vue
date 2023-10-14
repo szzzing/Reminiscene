@@ -83,7 +83,7 @@ export default {
                 id: this.id,
                 email: this.email,
             };
-            this.axios.get("/user/check", {params})
+            this.axios.get("/user?type=check", {params})
             .then((response) => {
                 if(response.data==true) {
                     this.params = {

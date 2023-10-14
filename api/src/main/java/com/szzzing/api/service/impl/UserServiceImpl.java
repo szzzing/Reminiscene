@@ -4,10 +4,10 @@ import com.szzzing.api.dto.common.FileDto;
 import com.szzzing.api.dto.user.*;
 import com.szzzing.api.repository.FileRepository;
 import com.szzzing.api.repository.MailRepository;
-import com.szzzing.api.repository.TokenRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.service.UserService;
 import com.szzzing.api.util.FileUtil;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.HashMap;
 
 @Slf4j
 @Service("userService")
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final MailRepository mailRepository;
     private final FileRepository fileRepository;
     private final PasswordEncoder passwordEncoder;
-    private final String profieDir = "/upload/profile/";
+    private static final String PROFILE_DIR = "/upload/profile/";
 
     // 회원가입
     public boolean register(UserDto userDto) {
@@ -43,8 +42,8 @@ public class UserServiceImpl implements UserService {
     public boolean modifyUser(UserModifyDto userModifyDto) throws RuntimeException {
         int result = 0;
 
-        if(userModifyDto.getOriginalImage()!=null) userModifyDto.setOriginalImage(userModifyDto.getOriginalImage().replace(profieDir, ""));
-        if(userModifyDto.getNewImage()!=null) userModifyDto.setNewImage(userModifyDto.getNewImage().replace(profieDir, ""));
+        if(userModifyDto.getOriginalImage()!=null) userModifyDto.setOriginalImage(userModifyDto.getOriginalImage().replace(PROFILE_DIR, ""));
+        if(userModifyDto.getNewImage()!=null) userModifyDto.setNewImage(userModifyDto.getNewImage().replace(PROFILE_DIR, ""));
         FileDto fileDto = FileUtil.getFileDto(userModifyDto.getUploadFile(), "profile");
 
         /*
@@ -65,7 +64,7 @@ public class UserServiceImpl implements UserService {
         // 2. 프로필 사진 업로드 - 기본프사였음
         } else if(userModifyDto.getOriginalImage()==null) {
             fileRepository.insertFile(fileDto);
-            userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
+            userModifyDto.setNewImage(PROFILE_DIR +fileDto.getRenameName());
             result = userRepository.updateOne(userModifyDto);
 
             // 업로드
@@ -73,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
         // 3. 프로필 사진 업로드 - 기존사진삭제
         } else if(!userModifyDto.getOriginalImage().equals(userModifyDto.getNewImage())) {
-            userModifyDto.setNewImage(profieDir+fileDto.getRenameName());
+            userModifyDto.setNewImage(PROFILE_DIR +fileDto.getRenameName());
             result = userRepository.updateOne(userModifyDto);
 
             fileRepository.insertFile(fileDto);
@@ -86,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
         // 4. 프로필 사진 그대로
         else {
-            userModifyDto.setNewImage(profieDir+userModifyDto.getOriginalImage());
+            userModifyDto.setNewImage(PROFILE_DIR +userModifyDto.getOriginalImage());
             result = userRepository.updateOne(userModifyDto);
         }
 

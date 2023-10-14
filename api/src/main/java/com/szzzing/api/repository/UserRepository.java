@@ -4,7 +4,9 @@ import com.szzzing.api.dto.user.UserCheckDto;
 import com.szzzing.api.dto.user.UserDto;
 import com.szzzing.api.dto.user.UserModifyDto;
 import com.szzzing.api.dto.user.UserSelectDto;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +15,8 @@ import java.util.HashMap;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class UserRepository {
-
     private final SqlSessionTemplate sqlSessionTemplate;
     private final String NAME_SPACE = "userMapper.";
 

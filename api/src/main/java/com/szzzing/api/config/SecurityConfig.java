@@ -6,6 +6,7 @@ import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.security.filter.UserAuthenticationFilter;
 import com.szzzing.api.security.filter.UserAuthorizationFilter;
 import com.szzzing.api.security.handler.RemoveRedisTokenHandler;
+import com.szzzing.api.security.jwt.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.el.parser.Token;
@@ -37,6 +38,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final JwtProperties jwtProperties;
     private final CorsConfig corsConfig;
 
     @Bean
@@ -94,8 +96,8 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/upload/**", "*.ico");    // 정적 저장소에 접근하면 시큐리티 설정을 무시하도록 함
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/upload/**", "*.ico");    // 정적 저장소에 접근하면 시큐리티 설정을 무시하도록 함
+//    }
 }

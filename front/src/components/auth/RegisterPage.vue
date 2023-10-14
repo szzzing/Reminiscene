@@ -161,7 +161,7 @@ export default {
         //  아이디 중복 여부 체크
         checkId() {
             const params = {id : this.id};
-            this.axios.get("/user/check", {params})
+            this.axios.get("/user?type=check", {params})
                 .then((response) => {
                     this.checkedId = response.data;
                 })
@@ -169,7 +169,7 @@ export default {
         //  이메일 중복 여부 체크
         async checkEmail() {
             const params = {email : this.email};
-            await this.axios.get("/user/check", {params})
+            await this.axios.get("/user?type=check", {params})
                 .then((response) => {
                     this.checkedEmail = response.data;
                 })
@@ -208,7 +208,7 @@ export default {
         // 인증하기 버튼 클릭
         clickEmailButton() {
             const params = {email : this.email};
-            this.axios.get("/user/check", {params})
+            this.axios.get("/user?type=check", {params})
             .then((response) => {
                 if(response.data==true) {
                     this.params = {

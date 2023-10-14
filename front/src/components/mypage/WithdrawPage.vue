@@ -47,7 +47,7 @@ export default {
                 return;
             }
             const params = { pw: this.pw, };
-            this.axios.get("/user/match/pw", {params})
+            this.axios.get("/user?type=matchPw", {params})
             .then((response)=>{
                 if(response.data==true) {
                     this.withdrawModal = true;

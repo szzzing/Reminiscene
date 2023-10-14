@@ -45,14 +45,12 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         try {
             authInfo = om.readValue(request.getInputStream(), UserDto.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
 
         // usernamepassword 토큰 생성 : 인증을 위해 id, pw 정보를 가지고 있는 토큰
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(authInfo.getId(), authInfo.getPw());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        return authentication;
+        return authenticationManager.authenticate(authenticationToken);
     }
 
     // 인증 성공 로직 : Jwt 토큰 생성, 응답 헤더에 담아 전송

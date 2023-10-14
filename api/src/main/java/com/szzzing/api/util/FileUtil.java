@@ -1,7 +1,7 @@
 package com.szzzing.api.util;
 
 import com.szzzing.api.dto.common.FileDto;
-import error.FileException;
+import com.szzzing.api.exception.FileException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 

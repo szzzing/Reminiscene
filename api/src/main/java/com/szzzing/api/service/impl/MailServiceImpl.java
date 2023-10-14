@@ -4,6 +4,7 @@ import com.szzzing.api.dto.mail.MailDto;
 import com.szzzing.api.dto.mail.CodeDto;
 import com.szzzing.api.dto.mail.MailRedisDto;
 import com.szzzing.api.dto.user.UserDto;
+import com.szzzing.api.exception.MailSendException;
 import com.szzzing.api.repository.MailRepository;
 import com.szzzing.api.repository.UserRepository;
 import com.szzzing.api.service.MailService;
@@ -14,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type Mail service.
+ */
 @Service("mailService")
 @Slf4j
 @RequiredArgsConstructor
@@ -24,9 +28,9 @@ public class MailServiceImpl implements MailService {
 
     // 난수 코드 생성
     public int createCode() {
-        int code = (int)(Math.random() * (90000)) + 100000;
-        return code;
+        return (int)(Math.random() * (90000)) + 100000;
     }
+
     // 이메일 전송
     public void sendMail(MailDto mailDto) {
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -34,16 +38,16 @@ public class MailServiceImpl implements MailService {
             message.setRecipients(MimeMessage.RecipientType.TO, mailDto.getTo());
             message.setSubject(mailDto.getSubject());
             message.setText(mailDto.getBody(),"UTF-8", "html");
-        } catch (MessagingException e) {
-            e.fillInStackTrace();
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            throw new MailSendException();
         }
-        javaMailSender.send(message);
     }
 
     public boolean sendAuthCode(MailDto mailDto) {
         StringBuilder body = new StringBuilder();
-
         int code = createCode();
+
         body.append("<h3>️🧙 이메일 인증번호</h3>")
             .append("<b>").append(code).append("</b>");
         
@@ -97,7 +101,6 @@ public class MailServiceImpl implements MailService {
         return mailRepository.saveCode(mailRedisDto);
     }
 
-    @Override
     public boolean matchCode(CodeDto codeDto) {
         return mailRepository.matchCode(codeDto);
     }

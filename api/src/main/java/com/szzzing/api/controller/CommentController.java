@@ -30,9 +30,9 @@ public class CommentController {
      * @return the response entity
      */
     @PostMapping("/comment")
-    public ResponseEntity addComment(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<Boolean> addComment(@RequestBody CommentDto commentDto) {
         boolean result = commentService.addComment(commentDto);
-        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
 
     /**
@@ -42,9 +42,10 @@ public class CommentController {
      * @return the response entity
      */
     @PutMapping("/comment")
-    public ResponseEntity modifyComment(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<Boolean> modifyComment(@RequestBody CommentDto commentDto, HttpServletRequest request) {
+        commentDto.setUserId(request.getUserPrincipal().getName());
         boolean result = commentService.modifyComment(commentDto);
-        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
 
     /**
@@ -78,7 +79,7 @@ public class CommentController {
         commentSelectDto.setLoginUser(loginUser);
 
         CommentListDto result = commentService.getCommentList(commentSelectDto);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /**
@@ -88,9 +89,9 @@ public class CommentController {
      * @return the response entity
      */
     @PostMapping("/like")
-    public ResponseEntity addLike(@RequestBody LikeDto likeDto) {
+    public ResponseEntity<Boolean> addLike(@RequestBody LikeDto likeDto) {
         boolean result = commentService.addLike(likeDto);
-        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
 
     /**
@@ -101,14 +102,14 @@ public class CommentController {
      * @return the response entity
      */
     @DeleteMapping ("/like/{commentId}")
-    public ResponseEntity deleteLike(@PathVariable String commentId, HttpServletRequest request) {
+    public ResponseEntity<Boolean> deleteLike(@PathVariable String commentId, HttpServletRequest request) {
         LikeDto likeDto = new LikeDto();
         String userId = request.getUserPrincipal().getName();
         likeDto.setCommentId(Integer.valueOf(commentId));
         likeDto.setUserId(userId);
 
         boolean result = commentService.deleteLike(likeDto);
-        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
 
     /**
@@ -118,9 +119,9 @@ public class CommentController {
      * @return the like comment list
      */
     @GetMapping("/like")
-    public ResponseEntity getLikeCommentList(@ModelAttribute CommentSelectDto commentSelectDto) {
-        CommentListDto commentListDto = commentService.getLikeCommentList(commentSelectDto);
-        return new ResponseEntity(commentListDto, HttpStatus.OK);
+    public ResponseEntity<CommentListDto> getLikeCommentList(@ModelAttribute CommentSelectDto commentSelectDto) {
+        CommentListDto result = commentService.getLikeCommentList(commentSelectDto);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /**
@@ -129,8 +130,8 @@ public class CommentController {
      * @return the comment count
      */
     @GetMapping("/comment/count")
-    public ResponseEntity getCommentCount() {
+    public ResponseEntity<Integer> getCommentCount() {
         int result = commentService.getCommentCount();
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

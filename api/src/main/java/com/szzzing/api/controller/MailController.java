@@ -26,9 +26,9 @@ public class MailController {
      * @return the response entity
      */
     @PostMapping("/email/code")
-    public ResponseEntity sendAuthCode(@RequestBody MailDto mailDto) {
+    public ResponseEntity<Boolean> sendAuthCode(@RequestBody MailDto mailDto) {
         boolean result = mailService.sendAuthCode(mailDto);
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /**
@@ -38,9 +38,9 @@ public class MailController {
      * @return the response entity
      */
     @PostMapping("/email/id")
-    public ResponseEntity sendFindId(@RequestBody MailDto mailDto) {
+    public ResponseEntity<Boolean> sendFindId(@RequestBody MailDto mailDto) {
         boolean result = mailService.sendFindId(mailDto);
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /**
@@ -50,9 +50,9 @@ public class MailController {
      * @return the response entity
      */
     @PostMapping("/email/pw")
-    public ResponseEntity sendFindPw(@RequestBody MailDto mailDto) {
+    public ResponseEntity<Boolean> sendFindPw(@RequestBody MailDto mailDto) {
         boolean result = mailService.sendFindPw(mailDto);
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /**
@@ -62,8 +62,8 @@ public class MailController {
      * @return 결과
      */
     @GetMapping("/email/match")
-    public ResponseEntity matchCode(@ModelAttribute CodeDto codeDto) {
+    public ResponseEntity<Boolean> matchCode(@ModelAttribute CodeDto codeDto) {
         boolean result = mailService.matchCode(codeDto);
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

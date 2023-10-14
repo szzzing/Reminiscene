@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 
 /**
  * The type User controller.
@@ -30,7 +31,7 @@ public class UserController {
      * @return the response entity
      */
     @PostMapping("")
-    public ResponseEntity register(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> register(@RequestBody UserDto userDto) {
         boolean result = userService.register(userDto);
         return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -38,17 +39,15 @@ public class UserController {
     /**
      * 아이디/이메일/닉네임 중복 체크
      *
-     * @param id       체크할 아이디
-     * @param email    체크할 이메일
-     * @param nickname 체크할 닉네임
+     * @param userCheckDto 체크할 요소
      * @param request  로그인 유저 정보 - 로그인한 유저가 있는 경우 해당 유저의 아이디/이메일/닉네임은 제외하고 결과를 조회한다.
      * @return 체크 결과
      */
-    @GetMapping("/check")
-    public ResponseEntity check(@ModelAttribute UserCheckDto userCheckDto, HttpServletRequest request) {
+    @GetMapping(value="", params="type=check")
+    public ResponseEntity<?> check(@ModelAttribute UserCheckDto userCheckDto, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         boolean result = userService.check(principal, userCheckDto);
-        return new ResponseEntity(result, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /**
@@ -62,7 +61,7 @@ public class UserController {
     public ResponseEntity mypageModify(@ModelAttribute UserModifyDto userModifyDto, HttpServletRequest request) {
         userModifyDto.setId(request.getUserPrincipal().getName());
         boolean result = userService.modifyUser(userModifyDto);
-        return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(result, result ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -95,7 +94,7 @@ public class UserController {
      * @param userModifyDto 변경할 유저 정보
      * @return 변경 결과
      */
-    @PutMapping("/pw")
+    @PutMapping(params="type=pw")
     public ResponseEntity modifyPw(@RequestBody UserModifyDto userModifyDto) {
         boolean result = userService.modifyPw(userModifyDto);
         return new ResponseEntity(result, result ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
@@ -108,7 +107,7 @@ public class UserController {
      * @param request 사용자 정보
      * @return 일치 여부
      */
-    @GetMapping("/match/pw")
+    @GetMapping(params="type=matchPw")
     public ResponseEntity checkUserPw(@RequestParam(value="pw") String pw, HttpServletRequest request) {
         String id = request.getUserPrincipal().getName();
         boolean result = userService.checkUserPw(id, pw);

@@ -77,7 +77,7 @@ export default {
                     content: this.text,
                     spoiler: this.isSpoiler,
                 }
-                this.axios.put("/comment", params)
+                this.axios.put(`/comment`, params)
                 .then(()=>{
                     this.$emit("changeCommentStatus", this.text, this.isSpoiler);
                     this.$store.commit("modal/setAlert", { alertEmoji: "✨", alertText: "코멘트를 수정했어요." });

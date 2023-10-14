@@ -14,6 +14,6 @@ public class RouteController {
     @GetMapping("/")
     public void route1() {}
 
-    @GetMapping("/{path1}")
+    @GetMapping("/{path}")
     public void route2() {}
 }

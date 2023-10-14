@@ -41,8 +41,8 @@ public class MailRepository {
         valueOperations.set(key, Integer.valueOf(String.valueOf(mailRedisDto.getCode())));
         redisTemplate.expire(key, EXPIRE, TimeUnit.SECONDS);
 
-        log.info("인증번호 : " + Objects.requireNonNull(valueOperations.get(key)).toString());
-        return true;
+        log.info("인증번호 : " + Objects.requireNonNull(valueOperations.get(key)));
+        return valueOperations.get(key) != null;
     }
 
     /**
