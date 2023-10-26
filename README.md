@@ -7,6 +7,7 @@
 - Jwt
 - MyBatis
 - MySQL
+- Redis
 
 ### Frontend
 - Vue.js
