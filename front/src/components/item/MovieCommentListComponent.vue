@@ -118,7 +118,6 @@ export default {
 }
 .dark .status {
     background: var(--G100);
-    /* border: none; */
 }
 .profile-image, .no-image {
     width: 36px;
